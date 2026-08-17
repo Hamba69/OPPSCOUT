@@ -17,7 +17,7 @@ async function walk(directory) {
 
 for (const root of roots) await walk(root);
 if (violations.length) {
-  console.error(`Phase One contains unfinished markers:\n${violations.join("\n")}`);
+  console.error(`Implementation contains unfinished markers:\n${violations.join("\n")}`);
   process.exit(1);
 }
-console.log("Phase One stub-marker check passed.");
+console.log("All-phase stub-marker check passed.");
