@@ -7,5 +7,7 @@ export const FEATURE_FLAGS = {
   kpiDashboard: true,
   aiMatching: false,
   automatedScraping: false,
+  aiComparison: true,
+  scrapingShadowMode: true,
   ussd: false,
 } as const;

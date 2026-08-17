@@ -1,7 +1,8 @@
 import type { Opportunity } from "@/core/entities/domain";
+import type { MatchEngine } from "@/core/interfaces/match-engine";
 import type { Repository, StoredMatchResult } from "@/lib/repository/types";
 import { evaluateHardGates } from "@/services/matching/rule-based/hard-gates";
-import { RuleBasedMatchEngine } from "@/services/matching/rule-based/engine";
+import { resolveMatchEngine } from "@/services/matching/engine-selector";
 
 export interface RankedMatch extends StoredMatchResult {
   urgencyRank: number;
@@ -16,11 +17,10 @@ function deadlineUrgency(opportunity: Opportunity, currentTime: Date): number {
   return 0;
 }
 
-export async function buildRankedFeed(repository: Repository, userId: string, now = new Date()): Promise<RankedMatch[]> {
+export async function buildRankedFeed(repository: Repository, userId: string, now = new Date(), engine: MatchEngine = resolveMatchEngine()): Promise<RankedMatch[]> {
   const profile = await repository.getProfile(userId);
   if (!profile) return [];
   const opportunities = await repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] });
-  const engine = new RuleBasedMatchEngine();
   const matches: RankedMatch[] = [];
 
   for (const opportunity of opportunities) {

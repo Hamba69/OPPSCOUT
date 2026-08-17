@@ -17,6 +17,7 @@
     "db:seed": "tsx scripts/seed/index.ts",
     "worker:notifications": "tsx scripts/worker/notifications.ts",
     "worker:freshness": "tsx scripts/worker/freshness.ts",
+    "validate:ai": "tsx scripts/validate-ai-matching.ts",
     "verify": "npm run prisma:validate && npm run typecheck && npm run test && npm run build && npm run check:stubs",
     "check:stubs": "node scripts/check-phase-one-stubs.mjs"
   },

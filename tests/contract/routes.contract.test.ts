@@ -18,6 +18,7 @@ import * as organizationsRoute from "@/app/api/v1/organizations/route";
 import * as analyticsRoute from "@/app/api/v1/organizations/[id]/analytics/route";
 import * as organizationRoute from "@/app/api/v1/organizations/[id]/route";
 import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
+import * as scrapingShadowRoute from "@/app/api/v1/ingestion/scraping/shadow/route";
 import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
@@ -113,6 +114,8 @@ describe("every Phase 1 /api/v1 route", () => {
     const kpis = await kpiRoute.GET(request("/api/v1/monitoring/kpis", "GET", undefined, adminHeaders));
     expect(kpis.status).toBe(200);
     expect((await data<{ metrics: unknown[] }>(kpis)).metrics).toHaveLength(10);
+    expect((await scrapingShadowRoute.GET(request("/api/v1/ingestion/scraping/shadow", "GET", undefined, adminHeaders))).status).toBe(200);
+    expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "http://unsafe.example", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(422);
     expect((await refreshRoute.POST(request("/api/v1/opportunities/refresh", "POST", undefined, adminHeaders))).status).toBe(200);
     expect((await profileRoute.DELETE(request("/api/v1/profile", "DELETE"))).status).toBe(204);
   });
