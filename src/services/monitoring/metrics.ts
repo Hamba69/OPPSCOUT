@@ -1,6 +1,7 @@
 import { SLO_TARGETS } from "@/config/slo-targets";
 import { INGESTION_RULES } from "@/config/ingestion-rules";
 import type { Repository } from "@/lib/repository/types";
+import { getUssdCompletionMetric } from "@/ussd/metrics";
 
 interface ApiSample {
   ok: boolean;
@@ -29,6 +30,7 @@ export interface SloSnapshot {
   dataFreshness: { value: number | null; target: number; samples: number };
   matchRelevance: { value: number | null; target: null; samples: number };
   trustTurnaround: { value: number | null; target: number; samples: number };
+  ussdCompletion: { value: number | null; target: number; samples: number };
 }
 
 export async function getSloSnapshot(repository: Repository): Promise<SloSnapshot> {
@@ -49,6 +51,7 @@ export async function getSloSnapshot(repository: Repository): Promise<SloSnapsho
     ? Number((reviewed.reduce((sum, item) => sum + (item.reviewedAt!.getTime() - item.publicationDate.getTime()) / 3_600_000, 0) / reviewed.length).toFixed(2))
     : null;
   const delivered = notificationRows.filter((item) => item.status === "delivered" || item.status === "sent").length;
+  const ussd = getUssdCompletionMetric();
   return {
     generatedAt: new Date().toISOString(),
     apiUptime: { value: rate(samples.filter((item) => item.ok).length, samples.length), target: SLO_TARGETS.coreApi.target, samples: samples.length },
@@ -56,5 +59,6 @@ export async function getSloSnapshot(repository: Repository): Promise<SloSnapsho
     dataFreshness: { value: rate(freshnessCompliant, opportunities.length), target: SLO_TARGETS.dataFreshness.target, samples: opportunities.length },
     matchRelevance: { value: rate(engagements, views), target: null, samples: views },
     trustTurnaround: { value: reviewHours, target: SLO_TARGETS.trustTurnaround.target, samples: reviewed.length },
+    ussdCompletion: { value: ussd.value, target: SLO_TARGETS.ussdCompletion.target, samples: ussd.samples },
   };
 }

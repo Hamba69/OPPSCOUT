@@ -14,4 +14,5 @@ Phase One flags are defined in `src/config/feature-flags.ts`.
 | `aiComparison` | on | Side-by-side rule/AI precision harness is available. |
 | `scrapingShadowMode` | on | Discovery writes private shadow artifacts only, never live opportunities. |
 | `automatedScraping` | off | Live cutover remains blocked until the measured shadow error targets pass. |
-| `ussd` | off | Phase 4. |
+| `ussd` | on | Menu, persistence, authentication, notification adapter, and gateway are implemented. |
+| `ussdPublicRollout` | off | Requires a real Africa's Talking sandbox run at the isolated 95% completion SLO. |

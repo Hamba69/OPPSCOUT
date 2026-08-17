@@ -36,6 +36,7 @@ function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findU
   return {
     ...value,
     preferredChannel: value.preferredChannel,
+    notificationFrequency: value.notificationFrequency,
     secondaryChannels: value.secondaryChannels,
     workExperience: value.workExperience as unknown as UserProfile["workExperience"],
     internshipExperience: value.internshipExperience as unknown as UserProfile["internshipExperience"],

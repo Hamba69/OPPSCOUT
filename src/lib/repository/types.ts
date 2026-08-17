@@ -56,6 +56,7 @@ export interface ProfileInput {
   preferredChannel?: PreferredChannel;
   secondaryChannels?: PreferredChannel[];
   notificationsEnabled?: boolean;
+  notificationFrequency?: UserProfile["notificationFrequency"];
   educationLevel?: string | null;
   institution?: string | null;
   fieldOfStudy?: string | null;

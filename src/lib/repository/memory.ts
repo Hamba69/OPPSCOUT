@@ -28,6 +28,7 @@ const initialProfile: UserProfile = {
   preferredChannel: "email",
   secondaryChannels: ["sms"],
   notificationsEnabled: true,
+  notificationFrequency: "instant",
   educationLevel: "bachelors",
   institution: "Makerere University",
   fieldOfStudy: "computer science",

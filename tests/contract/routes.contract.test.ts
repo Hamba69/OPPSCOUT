@@ -19,6 +19,8 @@ import * as analyticsRoute from "@/app/api/v1/organizations/[id]/analytics/route
 import * as organizationRoute from "@/app/api/v1/organizations/[id]/route";
 import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
 import * as scrapingShadowRoute from "@/app/api/v1/ingestion/scraping/shadow/route";
+import * as ussdCredentialsRoute from "@/app/api/v1/ussd/credentials/route";
+import * as ussdSessionRoute from "@/app/api/v1/ussd/session/route";
 import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
@@ -116,6 +118,10 @@ describe("every Phase 1 /api/v1 route", () => {
     expect((await data<{ metrics: unknown[] }>(kpis)).metrics).toHaveLength(10);
     expect((await scrapingShadowRoute.GET(request("/api/v1/ingestion/scraping/shadow", "GET", undefined, adminHeaders))).status).toBe(200);
     expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "http://unsafe.example", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(422);
+    expect((await ussdCredentialsRoute.POST(request("/api/v1/ussd/credentials", "POST", { userId: "11111111-1111-4111-8111-111111111111", pin: "1234" }, adminHeaders))).status).toBe(201);
+    const ussdBody = new URLSearchParams({ sessionId: "contract-session", phoneNumber: "+256700000001", text: "" });
+    const ussdResponse = await ussdSessionRoute.POST(new Request("http://localhost/api/v1/ussd/session", { method: "POST", body: ussdBody }));
+    expect(ussdResponse.status).toBe(200); expect(await ussdResponse.text()).toMatch(/^CON /);
     expect((await refreshRoute.POST(request("/api/v1/opportunities/refresh", "POST", undefined, adminHeaders))).status).toBe(200);
     expect((await profileRoute.DELETE(request("/api/v1/profile", "DELETE"))).status).toBe(204);
   });

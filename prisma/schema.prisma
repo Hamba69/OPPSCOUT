@@ -59,6 +59,12 @@ enum NotificationStatus {
   failed
 }
 
+enum NotificationFrequency {
+  instant
+  daily
+  weekly
+}
+
 enum SavedOpportunityStatus {
   saved
   applied
@@ -81,6 +87,7 @@ model UserProfile {
   preferredChannel         PreferredChannel   @default(web)
   secondaryChannels        PreferredChannel[] @default([])
   notificationsEnabled     Boolean            @default(true)
+  notificationFrequency   NotificationFrequency @default(instant)
   educationLevel           String?
   institution              String?
   fieldOfStudy             String?

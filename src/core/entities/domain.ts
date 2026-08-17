@@ -1,4 +1,5 @@
 export type PreferredChannel = "web" | "email" | "sms" | "ussd";
+export type NotificationFrequency = "instant" | "daily" | "weekly";
 export type WorkMode = "remote" | "onsite" | "hybrid";
 export type VerificationStatus = "unverified" | "pending" | "verified" | "flagged";
 export type OpportunitySource = "org_submitted" | "scraped" | "partner_feed";
@@ -34,6 +35,7 @@ export interface UserProfile {
   preferredChannel: PreferredChannel;
   secondaryChannels: PreferredChannel[];
   notificationsEnabled: boolean;
+  notificationFrequency: NotificationFrequency;
   educationLevel: string | null;
   institution: string | null;
   fieldOfStudy: string | null;

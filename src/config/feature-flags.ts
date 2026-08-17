@@ -9,5 +9,6 @@ export const FEATURE_FLAGS = {
   automatedScraping: false,
   aiComparison: true,
   scrapingShadowMode: true,
-  ussd: false,
+  ussd: true,
+  ussdPublicRollout: false,
 } as const;

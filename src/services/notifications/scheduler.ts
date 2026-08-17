@@ -5,6 +5,7 @@ import type { Repository, StoredMatchResult } from "@/lib/repository/types";
 export interface ChannelRegistry {
   email: NotificationChannel;
   sms: NotificationChannel;
+  ussd?: NotificationChannel;
 }
 
 export interface DeliveryAttempt {
@@ -36,7 +37,9 @@ async function deliver(
 ): Promise<DeliveryAttempt> {
   const profile = await repository.getProfile(match.userId);
   if (!profile || !profile.notificationsEnabled) return { userId: match.userId, opportunityId: match.opportunityId, triggerKey, status: "skipped", reason: "notifications-disabled" };
-  const kind = profile.preferredChannel === "sms" ? "sms" : "email";
+  const kind = profile.preferredChannel === "ussd" ? "ussd" : profile.preferredChannel === "sms" ? "sms" : "email";
+  const selected = channels[kind];
+  if (!selected) return { userId: match.userId, opportunityId: match.opportunityId, triggerKey, status: "failed", reason: `${kind}-channel-not-configured` };
   const notification = await repository.createNotification({
     userId: match.userId,
     matchId: match.id,
@@ -46,7 +49,7 @@ async function deliver(
     message,
   });
   try {
-    const status = await channels[kind].send({ userId: match.userId, matchId: match.id, message, priority });
+    const status = await selected.send({ userId: match.userId, matchId: match.id, message, priority });
     await repository.updateNotificationStatus(notification.id, status);
     return { userId: match.userId, opportunityId: match.opportunityId, triggerKey, status };
   } catch (error) {

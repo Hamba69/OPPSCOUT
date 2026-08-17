@@ -1,0 +1,3 @@
+import { USSD_RULES } from "@/config/ussd-rules";
+export function truncateUssd(value: string, budget: number = USSD_RULES.characterBudget): string { if (value.length <= budget) return value; const suffix = "..."; const slice = value.slice(0, Math.max(0, budget - suffix.length + 1)); const boundary = slice.lastIndexOf(" "); return `${slice.slice(0, boundary > budget * 0.6 ? boundary : budget - suffix.length)}${suffix}`; }
+export function formatUssdScreen(continueSession: boolean, message: string): string { const prefix = `${continueSession ? "CON" : "END"} `; return `${prefix}${truncateUssd(message, USSD_RULES.characterBudget - prefix.length)}`; }

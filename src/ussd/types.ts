@@ -1,0 +1,3 @@
+export type UssdStep = "pin" | "main" | "profile_education" | "profile_field" | "profile_location" | "profile_categories" | "matches" | "save_choice" | "save_link" | "deadlines" | "preferences" | "frequency";
+export interface UssdSession { sessionId: string; phoneNumber: string; userId: string | null; token: string | null; step: UssdStep; attempts: number; matchIds: string[]; selectedOpportunityId: string | null; draft: { educationLevel?: string; fieldOfStudy?: string; location?: string; opportunityCategories?: string[] }; updatedAt: string; }
+export interface UssdScreen { continueSession: boolean; message: string; completed: boolean; }

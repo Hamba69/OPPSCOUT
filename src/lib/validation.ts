@@ -13,6 +13,7 @@ export const profileSchema = z.object({
   preferredChannel: z.enum(["web", "email", "sms", "ussd"]).optional(),
   secondaryChannels: z.array(z.enum(["web", "email", "sms", "ussd"])).max(4).optional(),
   notificationsEnabled: z.boolean().optional(),
+  notificationFrequency: z.enum(["instant", "daily", "weekly"]).optional(),
   educationLevel: nullableText,
   institution: nullableText,
   fieldOfStudy: nullableText,
