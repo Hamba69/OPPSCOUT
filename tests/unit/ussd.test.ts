@@ -36,4 +36,8 @@ describe("USSD accessibility", () => {
     await service.handle({ sessionId: "full-2", phoneNumber: "+256700000001", text: "1234" }); const deadlines = await service.handle({ sessionId: "full-2", phoneNumber: "+256700000001", text: "1234*4" }); expect(deadlines.message).toMatch(/Internship|Scholarship/);
     await service.handle({ sessionId: "full-3", phoneNumber: "+256700000001", text: "1234" }); await service.handle({ sessionId: "full-3", phoneNumber: "+256700000001", text: "1234*5" }); await service.handle({ sessionId: "full-3", phoneNumber: "+256700000001", text: "1234*5*2" }); await service.handle({ sessionId: "full-3", phoneNumber: "+256700000001", text: "1234*5*2*3" }); expect((await repository.getProfile(DEMO_USER_ID))?.notificationFrequency).toBe("weekly");
   });
+
+  it("rejects a resumed session from a different phone", async () => {
+    const repository = new MemoryRepository(); const sessions = new MemoryUssdSessionStore(); const credentials = new MemoryUssdCredentialStore(); await credentials.set({ phoneNumber: "+256700000001", userId: DEMO_USER_ID, pinHash: hashUssdPin("1234") }); const service = new UssdMenuService(repository, sessions, credentials, new RecordingNotificationChannel()); await service.handle({ sessionId: "bound-1", phoneNumber: "+256700000001", text: "" }); const result = await service.handle({ sessionId: "bound-1", phoneNumber: "+256700000099", text: "1234" }); expect(result.completed).toBe(true); expect(result.message).toContain("another phone");
+  });
 });

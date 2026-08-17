@@ -15,7 +15,9 @@ function screen(message: string, continueSession = true, completed = false): Uss
 export class UssdMenuService {
   public constructor(private readonly repository: Repository, private readonly sessions: UssdSessionStore, private readonly credentials: UssdCredentialStore, private readonly sms: NotificationChannel) {}
   public async handle(input: { sessionId: string; phoneNumber: string; text: string }): Promise<UssdScreen> {
-    const value = latest(input.text); let session = await this.sessions.get(input.sessionId) ?? fresh(input.sessionId, input.phoneNumber);
+    const value = latest(input.text); const existing = await this.sessions.get(input.sessionId);
+    if (existing && existing.phoneNumber !== input.phoneNumber) { await this.sessions.delete(input.sessionId); return screen("This session cannot be used from another phone.", false, true); }
+    let session = existing ?? fresh(input.sessionId, input.phoneNumber);
     if (!session.userId || !session.token || !verifyUssdToken(session.token)) {
       if (!value) return this.persist(session, screen("Welcome to OppScout. Enter your 4-digit PIN:"));
       const credential = await this.credentials.get(input.phoneNumber); session.attempts += 1;
