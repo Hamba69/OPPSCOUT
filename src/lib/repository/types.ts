@@ -114,6 +114,7 @@ export interface Repository {
   getOrganization(id: string): Promise<Organization | null>;
   createOrganization(input: OrganizationInput): Promise<Organization>;
   updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization>;
+  updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization>;
   upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult>;
   listMatches(userId: string): Promise<StoredMatchResult[]>;
   getMatch(userId: string, id: string): Promise<StoredMatchResult | null>;

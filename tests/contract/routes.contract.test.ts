@@ -21,6 +21,7 @@ import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
 import * as scrapingShadowRoute from "@/app/api/v1/ingestion/scraping/shadow/route";
 import * as ussdCredentialsRoute from "@/app/api/v1/ussd/credentials/route";
 import * as ussdSessionRoute from "@/app/api/v1/ussd/session/route";
+import * as monetizationRoute from "@/app/api/v1/organizations/[id]/monetization/route";
 import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
@@ -100,6 +101,9 @@ describe("every Phase 1 /api/v1 route", () => {
     expect(JSON.stringify(await response.json())).not.toMatch(/userId|email|phone/i);
     expect((await organizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
     expect((await organizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "PATCH", { sector: "Inclusive technology" }, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
+    const readiness = await monetizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
+    expect(readiness.status).toBe(200); expect(JSON.stringify(await readiness.json())).not.toMatch(/userId|email|phone/i);
+    expect((await monetizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "PATCH", { subscriptionTier: "growth", monetizationEnabled: true }, adminHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(409);
   });
 
   it("routes suspicious reports into the admin review queue and records decisions", async () => {

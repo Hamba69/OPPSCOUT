@@ -48,6 +48,7 @@ function organizationFromDb(value: Awaited<ReturnType<typeof prisma.organization
     ...value,
     verificationStatus: value.verificationStatus,
     postingHistory: value.postingHistory as unknown as Organization["postingHistory"],
+    promotionPolicy: value.promotionPolicy as Record<string, unknown>,
   };
 }
 
@@ -173,6 +174,10 @@ export class PrismaRepository implements Repository {
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
     const value = await prisma.organization.update({ where: { id }, data: input });
     return organizationFromDb(value);
+  }
+
+  public async updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization> {
+    const value = await prisma.organization.update({ where: { id }, data: { ...input, promotionPolicy: input.promotionPolicy ? asJson(input.promotionPolicy) : undefined } }); return organizationFromDb(value);
   }
 
   public async upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult> {

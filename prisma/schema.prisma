@@ -65,6 +65,20 @@ enum NotificationFrequency {
   weekly
 }
 
+enum SubscriptionTier {
+  free
+  growth
+  partner
+}
+
+enum SubscriptionStatus {
+  inactive
+  trial
+  active
+  past_due
+  cancelled
+}
+
 enum SavedOpportunityStatus {
   saved
   applied
@@ -126,6 +140,11 @@ model Organization {
   postingHistory     Json               @default("[]")
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+  subscriptionTier  SubscriptionTier   @default(free)
+  subscriptionStatus SubscriptionStatus @default(inactive)
+  monetizationEnabled Boolean           @default(false)
+  promotedListingCredits Int            @default(0)
+  promotionPolicy    Json               @default("{}")
   opportunities      Opportunity[]
 
   @@index([verificationStatus])

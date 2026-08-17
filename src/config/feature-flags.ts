@@ -11,4 +11,7 @@ export const FEATURE_FLAGS = {
   scrapingShadowMode: true,
   ussd: true,
   ussdPublicRollout: false,
+  monetizationReadiness: true,
+  payments: false,
+  promotedListings: false,
 } as const;

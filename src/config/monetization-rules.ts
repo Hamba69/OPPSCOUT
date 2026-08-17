@@ -1,0 +1,2 @@
+function optionalNumber(name: string): number | null { const value = process.env[name]; if (!value) return null; const parsed = Number(value); return Number.isFinite(parsed) ? parsed : null; }
+export const MONETIZATION_RULES = { legalReviewReference: process.env.OPPSCOUT_MONETIZATION_LEGAL_REVIEW ?? null, minimumOrganizationRetentionPercent: optionalNumber("OPPSCOUT_MIN_ORG_RETENTION_PERCENT"), maximumTrustTurnaroundHours: optionalNumber("OPPSCOUT_MAX_TRUST_TURNAROUND_HOURS"), minimumOrganizationSample: optionalNumber("OPPSCOUT_MIN_ORG_SAMPLE") } as const;

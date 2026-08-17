@@ -16,3 +16,6 @@ Phase One flags are defined in `src/config/feature-flags.ts`.
 | `automatedScraping` | off | Live cutover remains blocked until the measured shadow error targets pass. |
 | `ussd` | on | Menu, persistence, authentication, notification adapter, and gateway are implemented. |
 | `ussdPublicRollout` | off | Requires a real Africa's Talking sandbox run at the isolated 95% completion SLO. |
+| `monetizationReadiness` | on | Legal, trust, retention, verification, and sample gates are implemented fail-closed. |
+| `payments` | off | Payment code is prohibited until documented Uganda legal review is supplied. |
+| `promotedListings` | off | Activation requires the same legal and healthy-metric gate; discovery remains free. |

@@ -61,6 +61,11 @@ const initialOrganization: Organization = {
   postingHistory: [],
   createdAt: now,
   updatedAt: now,
+  subscriptionTier: "free",
+  subscriptionStatus: "inactive",
+  monetizationEnabled: false,
+  promotedListingCredits: 0,
+  promotionPolicy: {},
 };
 
 const initialOpportunities: Opportunity[] = [
@@ -244,7 +249,7 @@ export class MemoryRepository implements Repository {
   public async createOrganization(input: OrganizationInput): Promise<Organization> {
     const timestamp = new Date();
     const organization: Organization = {
-      ...copy(input), id: randomUUID(), verificationStatus: "pending", postingHistory: [], createdAt: timestamp, updatedAt: timestamp,
+      ...copy(input), id: randomUUID(), verificationStatus: "pending", postingHistory: [], subscriptionTier: "free", subscriptionStatus: "inactive", monetizationEnabled: false, promotedListingCredits: 0, promotionPolicy: {}, createdAt: timestamp, updatedAt: timestamp,
     };
     this.organizations.set(organization.id, organization);
     return copy(organization);
@@ -256,6 +261,10 @@ export class MemoryRepository implements Repository {
     const organization = { ...current, ...copy(input), id, updatedAt: new Date() };
     this.organizations.set(id, organization);
     return copy(organization);
+  }
+
+  public async updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization> {
+    const current = this.organizations.get(id); if (!current) throw new NotFoundError("Organization"); const organization = { ...current, ...copy(input), updatedAt: new Date() }; this.organizations.set(id, organization); return copy(organization);
   }
 
   public async upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult> {

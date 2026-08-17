@@ -5,6 +5,8 @@ export type VerificationStatus = "unverified" | "pending" | "verified" | "flagge
 export type OpportunitySource = "org_submitted" | "scraped" | "partner_feed";
 export type OpportunityStatus = "open" | "closing_soon" | "closed" | "stale" | "removed";
 export type SavedStatus = "saved" | "applied" | "expired";
+export type SubscriptionTier = "free" | "growth" | "partner";
+export type SubscriptionStatus = "inactive" | "trial" | "active" | "past_due" | "cancelled";
 export type EventType = "view" | "save" | "click" | "apply_intent" | "report";
 
 export interface ExperienceEntry {
@@ -68,6 +70,11 @@ export interface Organization {
   postingHistory: Array<{ opportunityId: string; postedAt: string }>;
   createdAt: Date;
   updatedAt: Date;
+  subscriptionTier: SubscriptionTier;
+  subscriptionStatus: SubscriptionStatus;
+  monetizationEnabled: boolean;
+  promotedListingCredits: number;
+  promotionPolicy: Record<string, unknown>;
 }
 
 export interface TrustChecklist {
