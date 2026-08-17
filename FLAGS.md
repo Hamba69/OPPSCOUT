@@ -8,6 +8,8 @@ Phase One flags are defined in `src/config/feature-flags.ts`.
 | `organizationSubmission` | on | Submissions enter the manual verification queue. |
 | `notifications` | on | Trigger logic, safeguards, worker, and provider adapters are implemented. Provider credentials remain environment-owned. |
 | `trustReview` | on | Reports and pre-publication checks share the admin queue. |
+| `providerTools` | on | Self-serve publishing, organization details, and aggregate-only analytics are complete. |
+| `kpiDashboard` | on | All ten master-plan KPIs are computed from canonical records. |
 | `aiMatching` | off | Phase 3. |
 | `automatedScraping` | off | Phase 3 shadow-mode work. |
 | `ussd` | off | Phase 4. |

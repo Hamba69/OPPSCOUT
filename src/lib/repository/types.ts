@@ -112,6 +112,7 @@ export interface Repository {
   listOrganizations(): Promise<Organization[]>;
   getOrganization(id: string): Promise<Organization | null>;
   createOrganization(input: OrganizationInput): Promise<Organization>;
+  updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization>;
   upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult>;
   listMatches(userId: string): Promise<StoredMatchResult[]>;
   getMatch(userId: string, id: string): Promise<StoredMatchResult | null>;

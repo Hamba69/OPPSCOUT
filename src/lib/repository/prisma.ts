@@ -136,7 +136,12 @@ export class PrismaRepository implements Repository {
   }
 
   public async createOpportunity(input: OpportunityInput): Promise<Opportunity> {
-    const value = await prisma.opportunity.create({ data: this.opportunityCreateData(input), include: { organization: true } });
+    const value = await prisma.$transaction(async (transaction) => {
+      const created = await transaction.opportunity.create({ data: this.opportunityCreateData(input), include: { organization: true } });
+      const history = created.organization.postingHistory as unknown as Organization["postingHistory"];
+      await transaction.organization.update({ where: { id: input.organizationId }, data: { postingHistory: asJson([...history, { opportunityId: created.id, postedAt: created.publicationDate.toISOString() }]) } });
+      return created;
+    });
     return opportunityFromDb(value);
   }
 
@@ -161,6 +166,11 @@ export class PrismaRepository implements Repository {
 
   public async createOrganization(input: OrganizationInput): Promise<Organization> {
     const value = await prisma.organization.create({ data: { ...input, verificationStatus: "pending", postingHistory: [] } });
+    return organizationFromDb(value);
+  }
+
+  public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
+    const value = await prisma.organization.update({ where: { id }, data: input });
     return organizationFromDb(value);
   }
 

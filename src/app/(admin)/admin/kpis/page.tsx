@@ -1,0 +1,5 @@
+import { requirePageAuth } from "@/lib/auth";
+import { getRepository } from "@/lib/repository";
+import { getKpiSnapshot } from "@/services/kpi/dashboard";
+export const dynamic = "force-dynamic";
+export default async function KpiPage(): Promise<React.JSX.Element> { await requirePageAuth(["admin"]); const snapshot = await getKpiSnapshot(await getRepository()); return <main className="page-shell"><p className="eyebrow">Product health</p><h1 className="mt-2 text-4xl font-black">Ten KPIs, no guesswork.</h1><p className="mt-2 text-ink/60">Live calculations from canonical records. Window: {snapshot.periodDays} days.</p><div className="mt-8 grid gap-4 md:grid-cols-2">{snapshot.metrics.map((item) => <section className="card" key={item.key}><div className="flex items-start justify-between gap-4"><div><h2 className="font-black">{item.label}</h2><p className="mt-1 text-xs text-ink/50">Sample {item.sampleSize}</p></div><p className="text-3xl font-black">{item.value}{item.unit === "percent" ? "%" : item.unit === "ratio" ? "×" : ""}</p></div></section>)}</div></main>; }

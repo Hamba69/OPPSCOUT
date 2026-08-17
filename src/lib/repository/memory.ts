@@ -214,6 +214,9 @@ export class MemoryRepository implements Repository {
       reviewedAt: null,
     };
     this.opportunities.set(opportunity.id, opportunity);
+    organization.postingHistory = [...organization.postingHistory, { opportunityId: opportunity.id, postedAt: opportunity.publicationDate.toISOString() }];
+    organization.updatedAt = new Date();
+    this.organizations.set(organization.id, organization);
     return copy(opportunity);
   }
 
@@ -243,6 +246,14 @@ export class MemoryRepository implements Repository {
       ...copy(input), id: randomUUID(), verificationStatus: "pending", postingHistory: [], createdAt: timestamp, updatedAt: timestamp,
     };
     this.organizations.set(organization.id, organization);
+    return copy(organization);
+  }
+
+  public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
+    const current = this.organizations.get(id);
+    if (!current) throw new NotFoundError("Organization");
+    const organization = { ...current, ...copy(input), id, updatedAt: new Date() };
+    this.organizations.set(id, organization);
     return copy(organization);
   }
 

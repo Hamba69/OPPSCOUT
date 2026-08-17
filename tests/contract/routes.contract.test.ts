@@ -16,6 +16,8 @@ import * as preferencesRoute from "@/app/api/v1/notifications/preferences/route"
 import * as notificationRunRoute from "@/app/api/v1/notifications/run/route";
 import * as organizationsRoute from "@/app/api/v1/organizations/route";
 import * as analyticsRoute from "@/app/api/v1/organizations/[id]/analytics/route";
+import * as organizationRoute from "@/app/api/v1/organizations/[id]/route";
+import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
 import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
@@ -93,6 +95,8 @@ describe("every Phase 1 /api/v1 route", () => {
     const response = await analyticsRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/analytics`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
     expect(response.status).toBe(200);
     expect(JSON.stringify(await response.json())).not.toMatch(/userId|email|phone/i);
+    expect((await organizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
+    expect((await organizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "PATCH", { sector: "Inclusive technology" }, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
   });
 
   it("routes suspicious reports into the admin review queue and records decisions", async () => {
@@ -106,6 +110,9 @@ describe("every Phase 1 /api/v1 route", () => {
 
   it("serves the admin SLO snapshot and profile deletion route", async () => {
     expect((await sloRoute.GET(request("/api/v1/monitoring/slo", "GET", undefined, adminHeaders))).status).toBe(200);
+    const kpis = await kpiRoute.GET(request("/api/v1/monitoring/kpis", "GET", undefined, adminHeaders));
+    expect(kpis.status).toBe(200);
+    expect((await data<{ metrics: unknown[] }>(kpis)).metrics).toHaveLength(10);
     expect((await refreshRoute.POST(request("/api/v1/opportunities/refresh", "POST", undefined, adminHeaders))).status).toBe(200);
     expect((await profileRoute.DELETE(request("/api/v1/profile", "DELETE"))).status).toBe(204);
   });

@@ -3,6 +3,8 @@ export const FEATURE_FLAGS = {
   organizationSubmission: true,
   notifications: true,
   trustReview: true,
+  providerTools: true,
+  kpiDashboard: true,
   aiMatching: false,
   automatedScraping: false,
   ussd: false,
