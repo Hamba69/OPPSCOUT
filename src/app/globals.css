@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: #fffdf5;
+  --ink: #27251f;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--background); }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% 5%, rgba(246, 201, 69, .22), transparent 22rem),
+    radial-gradient(circle at 94% 20%, rgba(239, 116, 92, .10), transparent 18rem),
+    var(--background);
+  font-family: ui-rounded, "Nunito", "Avenir Next", system-ui, sans-serif;
+}
+
+::selection { background: #f6c945; color: #27251f; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+@layer components {
+  .page-shell { @apply mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8; }
+  .card { @apply rounded-blob border-2 border-ink/10 bg-white p-5 shadow-soft; }
+  .button { @apply inline-flex min-h-11 items-center justify-center rounded-full border-2 border-ink bg-sun px-5 py-2.5 font-extrabold text-ink transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-sun/40 disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex min-h-11 items-center justify-center rounded-full border-2 border-ink/20 bg-white px-5 py-2.5 font-bold transition hover:border-ink focus:outline-none focus:ring-4 focus:ring-sun/30; }
+  .field { @apply w-full rounded-2xl border-2 border-ink/15 bg-white px-4 py-3 outline-none transition placeholder:text-ink/40 focus:border-ink focus:ring-4 focus:ring-sun/25; }
+  .label { @apply mb-1.5 block text-sm font-extrabold; }
+  .eyebrow { @apply text-xs font-black uppercase tracking-[0.16em] text-leaf; }
+  .pill { @apply inline-flex items-center rounded-full bg-butter px-3 py-1 text-xs font-extrabold; }
+}

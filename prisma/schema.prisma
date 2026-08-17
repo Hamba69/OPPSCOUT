@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PreferredChannel {
+  web
+  email
+  sms
+  ussd
+}
+
+enum WorkMode {
+  remote
+  onsite
+  hybrid
+}
+
+enum VerificationStatus {
+  unverified
+  pending
+  verified
+  flagged
+}
+
+enum OpportunitySource {
+  org_submitted
+  scraped
+  partner_feed
+}
+
+enum OpportunityStatus {
+  open
+  closing_soon
+  closed
+  stale
+  removed
+}
+
+enum GeneratedBy {
+  rules
+  ai
+}
+
+enum NotificationChannelType {
+  email
+  sms
+  ussd
+  app
+}
+
+enum NotificationStatus {
+  sent
+  delivered
+  failed
+}
+
+enum SavedOpportunityStatus {
+  saved
+  applied
+  expired
+}
+
+enum EventType {
+  view
+  save
+  click
+  apply_intent
+  report
+}
+
+model UserProfile {
+  id                       String             @id @db.Uuid
+  name                     String
+  phone                    String?            @unique
+  email                    String?            @unique
+  preferredChannel         PreferredChannel   @default(web)
+  secondaryChannels        PreferredChannel[] @default([])
+  notificationsEnabled     Boolean            @default(true)
+  educationLevel           String?
+  institution              String?
+  fieldOfStudy             String?
+  graduationStatus         String?
+  skills                   String[]           @default([])
+  workExperience           Json               @default("[]")
+  internshipExperience     Json               @default("[]")
+  certifications           String[]           @default([])
+  location                 String?
+  preferredLocations       String[]           @default([])
+  careerInterests          String[]           @default([])
+  opportunityCategories    String[]           @default([])
+  workModePreference       WorkMode?
+  languages                String[]           @default([])
+  profileCompletenessScore Int                @default(0)
+  createdAt                DateTime           @default(now())
+  updatedAt                DateTime           @updatedAt
+  matches                  MatchResult[]
+  notifications            Notification[]
+  savedOpportunities       SavedOpportunity[]
+  events                   EventLog[]
+
+  @@index([preferredChannel])
+}
+
+model Organization {
+  id                 String             @id @default(uuid()) @db.Uuid
+  name               String
+  sector             String
+  officialLinks      String[]           @default([])
+  officialEmail      String?
+  registrationProof  String?
+  accountableContact String?
+  verificationStatus VerificationStatus @default(unverified)
+  dashboardUsers     String[]           @default([])
+  postingHistory     Json               @default("[]")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  opportunities      Opportunity[]
+
+  @@index([verificationStatus])
+}
+
+model Opportunity {
+  id                 String             @id @default(uuid()) @db.Uuid
+  title              String
+  organizationId     String             @db.Uuid
+  category           String
+  description        String
+  eligibility        Json
+  requiredSkills     String[]           @default([])
+  preferredSkills    String[]           @default([])
+  location           String
+  workMode           WorkMode
+  deadline           DateTime
+  applicationMethod  String
+  sourceUrl           String
+  verificationStatus VerificationStatus @default(pending)
+  source             OpportunitySource  @default(org_submitted)
+  publicationDate    DateTime            @default(now())
+  checkedAt          DateTime            @default(now())
+  status             OpportunityStatus  @default(open)
+  reviewChecklist    Json               @default("{}")
+  reviewNotes        String?
+  reviewerId         String?
+  reviewedAt         DateTime?
+  organization       Organization       @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  matches            MatchResult[]
+  savedBy            SavedOpportunity[]
+  events             EventLog[]
+
+  @@index([verificationStatus, status, deadline])
+  @@index([organizationId, title, deadline])
+}
+
+model MatchResult {
+  id             String       @id @default(uuid()) @db.Uuid
+  userId         String       @db.Uuid
+  opportunityId  String       @db.Uuid
+  score           Int
+  matchedFactors Json
+  missingFactors Json
+  generatedBy    GeneratedBy  @default(rules)
+  createdAt      DateTime     @default(now())
+  user           UserProfile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity    Opportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  notifications  Notification[]
+
+  @@unique([userId, opportunityId])
+  @@index([userId, score])
+}
+
+model Notification {
+  id            String                  @id @default(uuid()) @db.Uuid
+  userId        String                  @db.Uuid
+  matchId       String?                 @db.Uuid
+  channel       NotificationChannelType
+  status        NotificationStatus
+  triggerKey    String
+  message       String
+  sentAt        DateTime                @default(now())
+  deliveredAt   DateTime?
+  user          UserProfile             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  match         MatchResult?            @relation(fields: [matchId], references: [id], onDelete: SetNull)
+
+  @@index([userId, sentAt])
+  @@index([userId, triggerKey, sentAt])
+}
+
+model SavedOpportunity {
+  id            String                 @id @default(uuid()) @db.Uuid
+  userId        String                 @db.Uuid
+  opportunityId String                 @db.Uuid
+  status        SavedOpportunityStatus @default(saved)
+  reminderSent  Boolean                @default(false)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  user          UserProfile            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity   Opportunity            @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, opportunityId])
+  @@index([userId, status])
+}
+
+model EventLog {
+  id            String        @id @default(uuid()) @db.Uuid
+  eventType     EventType
+  userId        String?       @db.Uuid
+  opportunityId String?       @db.Uuid
+  timestamp     DateTime      @default(now())
+  metadata      Json          @default("{}")
+  user          UserProfile?  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  opportunity   Opportunity?  @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
+  @@index([eventType, timestamp])
+  @@index([userId, timestamp])
+}
