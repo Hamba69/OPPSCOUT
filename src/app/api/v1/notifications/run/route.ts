@@ -6,6 +6,7 @@ import { RecordingNotificationChannel } from "@/services/notifications/recording
 import { ResendEmailChannel } from "@/services/notifications/email/resend-email-channel";
 import { AfricasTalkingSmsChannel } from "@/services/notifications/sms/africas-talking-sms-channel";
 import { runNotificationScheduler } from "@/services/notifications/scheduler";
+import { InAppNotificationChannel } from "@/services/notifications/in-app-channel";
 import { MemoryUssdInbox, RedisUssdInbox, UssdNotificationChannel } from "@/services/notifications/ussd/ussd-notification-channel";
 
 export async function POST(request: Request): Promise<Response> {
@@ -17,8 +18,8 @@ export async function POST(request: Request): Promise<Response> {
     const resolvePhone = async (userId: string): Promise<string | null> => (await repository.getProfile(userId))?.phone ?? null;
     const channel = new RecordingNotificationChannel();
     const channels = isMemoryDataMode()
-      ? { email: channel, sms: channel, ussd: new UssdNotificationChannel(new MemoryUssdInbox()) }
-      : { email: new ResendEmailChannel(resolveEmail), sms: new AfricasTalkingSmsChannel(resolvePhone), ussd: new UssdNotificationChannel(new RedisUssdInbox()) };
+      ? { app: channel, email: channel, sms: channel, ussd: new UssdNotificationChannel(new MemoryUssdInbox()) }
+      : { app: new InAppNotificationChannel(), email: new ResendEmailChannel(resolveEmail), sms: new AfricasTalkingSmsChannel(resolvePhone), ussd: new UssdNotificationChannel(new RedisUssdInbox()) };
     const userId = new URL(request.url).searchParams.get("userId") ?? auth.userId;
     if (auth.role !== "admin" && userId !== auth.userId) throw new AppError("Cannot run notifications for another user.", 403, "FORBIDDEN");
     return success(await runNotificationScheduler(repository, channels, userId));

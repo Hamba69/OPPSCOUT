@@ -9,6 +9,7 @@ export interface ProfileFormInitial {
   educationLevel: string;
   fieldOfStudy: string;
   graduationStatus: string;
+  dateOfBirth: string;
   location: string;
   skills: string;
   careerInterests: string;
@@ -31,7 +32,7 @@ export function ProfileForm({ initial }: { initial: ProfileFormInitial }): React
     const body = {
       name: String(data.get("name")), email: String(data.get("email")) || null, phone: String(data.get("phone")) || null,
       educationLevel: String(data.get("educationLevel")) || null, fieldOfStudy: String(data.get("fieldOfStudy")) || null,
-      graduationStatus: String(data.get("graduationStatus")) || null, location: String(data.get("location")) || null,
+      graduationStatus: String(data.get("graduationStatus")) || null, dateOfBirth: String(data.get("dateOfBirth")) || null, location: String(data.get("location")) || null,
       skills: list(data.get("skills")), careerInterests: list(data.get("careerInterests")), preferredLocations: list(data.get("preferredLocations")),
       opportunityCategories: list(data.get("opportunityCategories")), languages: list(data.get("languages")),
       workModePreference: String(data.get("workModePreference")) || null,
@@ -46,5 +47,5 @@ export function ProfileForm({ initial }: { initial: ProfileFormInitial }): React
     ["skills", "Skills", "research, communication, data analysis"], ["careerInterests", "Career interests", "technology, social impact"],
     ["opportunityCategories", "Opportunity types", "internship, scholarship"], ["languages", "Languages", "English, Luganda"],
   ];
-  return <form onSubmit={submit} className="card mt-8 grid gap-5 md:grid-cols-2">{fields.map(([name, label, placeholder]) => <label key={name}><span className="label">{label}</span><input className="field" name={name} defaultValue={initial[name]} placeholder={placeholder} required={name === "name"} /></label>)}<label><span className="label">Work mode</span><select className="field" name="workModePreference" defaultValue={initial.workModePreference}><option value="">No preference</option><option value="remote">Remote</option><option value="onsite">On-site</option><option value="hybrid">Hybrid</option></select></label><div className="flex items-end"><button className="button w-full" disabled={busy}>{busy ? "Saving…" : "Save my profile"}</button></div>{message && <p className="md:col-span-2 rounded-2xl bg-butter p-3 font-bold" role="status">{message}</p>}</form>;
+  return <form onSubmit={submit} className="card mt-8 grid gap-5 md:grid-cols-2">{fields.map(([name, label, placeholder]) => <label key={name}><span className="label">{label}</span><input className="field" name={name} defaultValue={initial[name]} placeholder={placeholder} required={name === "name"} /></label>)}<label><span className="label">Date of birth</span><input className="field" type="date" name="dateOfBirth" defaultValue={initial.dateOfBirth} max={new Date().toISOString().slice(0, 10)} /></label><label><span className="label">Work mode</span><select className="field" name="workModePreference" defaultValue={initial.workModePreference}><option value="">No preference</option><option value="remote">Remote</option><option value="onsite">On-site</option><option value="hybrid">Hybrid</option></select></label><div className="flex items-end"><button className="button w-full" disabled={busy}>{busy ? "Saving…" : "Save my profile"}</button></div>{message && <p className="md:col-span-2 rounded-2xl bg-butter p-3 font-bold" role="status">{message}</p>}</form>;
 }

@@ -1,7 +1,7 @@
 import type { ProfileInput } from "@/lib/repository/types";
 
 const PROFILE_COMPLETENESS_FIELDS: ReadonlyArray<keyof ProfileInput> = [
-  "name", "phone", "email", "educationLevel", "fieldOfStudy", "graduationStatus", "skills", "location",
+  "name", "phone", "email", "educationLevel", "fieldOfStudy", "graduationStatus", "dateOfBirth", "skills", "location",
   "preferredLocations", "careerInterests", "opportunityCategories", "workModePreference", "languages",
 ];
 

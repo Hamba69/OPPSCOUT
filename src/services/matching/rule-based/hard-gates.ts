@@ -8,6 +8,14 @@ export interface GateResult {
   failed: MatchFactor[];
 }
 
+function ageOn(dateOfBirth: Date, at: Date): number {
+  let age = at.getUTCFullYear() - dateOfBirth.getUTCFullYear();
+  const beforeBirthday = at.getUTCMonth() < dateOfBirth.getUTCMonth()
+    || (at.getUTCMonth() === dateOfBirth.getUTCMonth() && at.getUTCDate() < dateOfBirth.getUTCDate());
+  if (beforeBirthday) age -= 1;
+  return age;
+}
+
 export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity): GateResult {
   const passed: MatchFactor[] = [];
   const failed: MatchFactor[] = [];
@@ -33,9 +41,17 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
   }
 
   if (eligibility.minimumAge !== undefined || eligibility.maximumAge !== undefined) {
-    failed.push({
+    const age = profile.dateOfBirth ? ageOn(profile.dateOfBirth, opportunity.deadline) : null;
+    const matches = age !== null
+      && (eligibility.minimumAge === undefined || age >= eligibility.minimumAge)
+      && (eligibility.maximumAge === undefined || age <= eligibility.maximumAge);
+    (matches ? passed : failed).push({
       label: "Age eligibility",
-      detail: "This programme has an age rule, but the profile has no verified age value.",
+      detail: age === null
+        ? "Add your date of birth to verify this programme's age rule."
+        : matches
+          ? `Age ${age} meets the programme rule.`
+          : `Age ${age} is outside the required range${eligibility.minimumAge !== undefined ? ` from ${eligibility.minimumAge}` : ""}${eligibility.maximumAge !== undefined ? ` to ${eligibility.maximumAge}` : ""}.`,
     });
   }
 

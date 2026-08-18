@@ -106,6 +106,7 @@ model UserProfile {
   institution              String?
   fieldOfStudy             String?
   graduationStatus         String?
+  dateOfBirth              DateTime?          @db.Date
   skills                   String[]           @default([])
   workExperience           Json               @default("[]")
   internshipExperience     Json               @default("[]")

@@ -9,7 +9,7 @@ export default async function ProfilePage(): Promise<React.JSX.Element> {
   const profile = await (await getRepository()).getProfile(userId);
   const initial = {
     name: profile?.name ?? "", email: profile?.email ?? "", phone: profile?.phone ?? "", educationLevel: profile?.educationLevel ?? "",
-    fieldOfStudy: profile?.fieldOfStudy ?? "", graduationStatus: profile?.graduationStatus ?? "", location: profile?.location ?? "",
+    fieldOfStudy: profile?.fieldOfStudy ?? "", graduationStatus: profile?.graduationStatus ?? "", dateOfBirth: profile?.dateOfBirth?.toISOString().slice(0, 10) ?? "", location: profile?.location ?? "",
     skills: profile?.skills.join(", ") ?? "", careerInterests: profile?.careerInterests.join(", ") ?? "", preferredLocations: profile?.preferredLocations.join(", ") ?? "",
     opportunityCategories: profile?.opportunityCategories.join(", ") ?? "", languages: profile?.languages.join(", ") ?? "", workModePreference: profile?.workModePreference ?? "" as const,
   };

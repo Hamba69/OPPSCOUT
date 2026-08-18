@@ -17,6 +17,8 @@ import * as notificationRunRoute from "@/app/api/v1/notifications/run/route";
 import * as organizationsRoute from "@/app/api/v1/organizations/route";
 import * as analyticsRoute from "@/app/api/v1/organizations/[id]/analytics/route";
 import * as organizationRoute from "@/app/api/v1/organizations/[id]/route";
+import * as organizationReviewRoute from "@/app/api/v1/organizations/review/route";
+import * as organizationReviewItemRoute from "@/app/api/v1/organizations/review/[id]/route";
 import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
 import * as scrapingShadowRoute from "@/app/api/v1/ingestion/scraping/shadow/route";
 import * as ussdCredentialsRoute from "@/app/api/v1/ussd/credentials/route";
@@ -48,7 +50,7 @@ describe("every Phase 1 /api/v1 route", () => {
 
   it("supports profile CRUD and completeness", async () => {
     expect((await profileRoute.GET(request("/api/v1/profile"))).status).toBe(200);
-    expect((await profileRoute.PATCH(request("/api/v1/profile", "PATCH", { location: "Entebbe" }))).status).toBe(200);
+    expect((await profileRoute.PATCH(request("/api/v1/profile", "PATCH", { location: "Entebbe", dateOfBirth: "2002-05-14" }))).status).toBe(200);
     expect((await completenessRoute.GET(request("/api/v1/profile/completeness"))).status).toBe(200);
   });
 
@@ -95,7 +97,13 @@ describe("every Phase 1 /api/v1 route", () => {
   });
 
   it("creates organizations and returns aggregate-only analytics", async () => {
-    expect((await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }))).status).toBe(201);
+    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }));
+    expect(createdOrganizationResponse.status).toBe(201);
+    const createdOrganization = await data<{ id: string }>(createdOrganizationResponse);
+    const organizationQueue = await organizationReviewRoute.GET(request("/api/v1/organizations/review", "GET", undefined, adminHeaders));
+    expect(organizationQueue.status).toBe(200);
+    expect((await data<Array<{ id: string }>>(organizationQueue)).some((item) => item.id === createdOrganization.id)).toBe(true);
+    expect((await organizationReviewItemRoute.PATCH(request(`/api/v1/organizations/review/${createdOrganization.id}`, "PATCH", { approved: true }, adminHeaders), { params: Promise.resolve({ id: createdOrganization.id }) })).status).toBe(200);
     const response = await analyticsRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/analytics`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
     expect(response.status).toBe(200);
     expect(JSON.stringify(await response.json())).not.toMatch(/userId|email|phone/i);

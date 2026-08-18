@@ -32,11 +32,19 @@ describe("Phase 1 rule matching", () => {
     expect(feed).toHaveLength(0);
   });
 
-  it("fails mandatory certification and unverified age gates conservatively", async () => {
+  it("passes a verified age and fails a missing mandatory certification", async () => {
     const { profile, opportunity } = await fixtures();
     const gated = { ...opportunity, eligibility: { ...opportunity.eligibility, mandatoryCertifications: ["CPA"], minimumAge: 18 } };
     const result = evaluateHardGates(profile, gated);
     expect(result.eligible).toBe(false);
-    expect(result.failed.map((factor) => factor.label)).toEqual(expect.arrayContaining(["Mandatory certifications", "Age eligibility"]));
+    expect(result.failed.map((factor) => factor.label)).toContain("Mandatory certifications");
+    expect(result.passed.map((factor) => factor.label)).toContain("Age eligibility");
+  });
+
+  it("fails an age rule conservatively when date of birth is absent", async () => {
+    const { profile, opportunity } = await fixtures();
+    const result = evaluateHardGates({ ...profile, dateOfBirth: null }, { ...opportunity, eligibility: { minimumAge: 18 } });
+    expect(result.eligible).toBe(false);
+    expect(result.failed[0]?.detail).toMatch(/date of birth/i);
   });
 });

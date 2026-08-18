@@ -33,6 +33,7 @@ const initialProfile: UserProfile = {
   institution: "Makerere University",
   fieldOfStudy: "computer science",
   graduationStatus: "final year",
+  dateOfBirth: new Date("2002-05-14T00:00:00.000Z"),
   skills: ["javascript", "research", "communication", "data analysis"],
   workExperience: [{ title: "Student researcher", organization: "Makerere AI Lab", months: 8 }],
   internshipExperience: [{ title: "Web intern", organization: "Kampala Civic Lab", months: 3 }],
@@ -242,6 +243,10 @@ export class MemoryRepository implements Repository {
     return copy([...this.organizations.values()]);
   }
 
+  public async listOrganizationReviewQueue(): Promise<Organization[]> {
+    return copy([...this.organizations.values()].filter((item) => item.verificationStatus === "pending" || item.verificationStatus === "flagged"));
+  }
+
   public async getOrganization(id: string): Promise<Organization | null> {
     return copy(this.organizations.get(id) ?? null);
   }
@@ -259,6 +264,14 @@ export class MemoryRepository implements Repository {
     const current = this.organizations.get(id);
     if (!current) throw new NotFoundError("Organization");
     const organization = { ...current, ...copy(input), id, updatedAt: new Date() };
+    this.organizations.set(id, organization);
+    return copy(organization);
+  }
+
+  public async reviewOrganization(id: string, approved: boolean): Promise<Organization> {
+    const current = this.organizations.get(id);
+    if (!current) throw new NotFoundError("Organization");
+    const organization = { ...current, verificationStatus: approved ? "verified" as const : "flagged" as const, updatedAt: new Date() };
     this.organizations.set(id, organization);
     return copy(organization);
   }

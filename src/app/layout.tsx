@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const nav = [
-  ["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"],
+  ["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Providers", "/onboarding/organization"], ["Account", "/login"],
 ] as const;
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): React.JSX.Element {

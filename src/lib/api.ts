@@ -26,7 +26,8 @@ export function apiHandler(handler: () => Promise<Response>): Promise<Response> 
     .catch((error: unknown) => {
       recordApiSample(false, performance.now() - startedAt);
       if (error instanceof AppError) {
-        return Response.json({ error: { code: error.code, message: error.message, details: error.details ?? null } }, { status: error.status });
+        const headers = error.status === 429 ? { "Retry-After": String((error.details as { retryAfterSeconds?: number } | undefined)?.retryAfterSeconds ?? 60) } : undefined;
+        return Response.json({ error: { code: error.code, message: error.message, details: error.details ?? null } }, { status: error.status, headers });
       }
       if (error instanceof ZodError) {
         return Response.json({ error: { code: "VALIDATION_ERROR", message: "Request validation failed.", details: error.flatten() } }, { status: 400 });

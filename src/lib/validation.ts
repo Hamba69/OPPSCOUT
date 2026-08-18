@@ -18,6 +18,7 @@ export const profileSchema = z.object({
   institution: nullableText,
   fieldOfStudy: nullableText,
   graduationStatus: nullableText,
+  dateOfBirth: z.coerce.date().max(new Date(), "Date of birth cannot be in the future.").nullable().optional(),
   skills: stringList.optional(),
   workExperience: z.array(experience).max(30).optional(),
   internshipExperience: z.array(experience).max(30).optional(),

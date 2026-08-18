@@ -18,14 +18,15 @@
     "worker:notifications": "tsx scripts/worker/notifications.ts",
     "worker:freshness": "tsx scripts/worker/freshness.ts",
     "validate:ai": "tsx scripts/validate-ai-matching.ts",
-    "verify": "npm run prisma:validate && npm run typecheck && npm run test && npm run build && npm run check:stubs",
+    "validate:env": "node scripts/validate-production-env.mjs",
+    "verify": "npm run prisma:validate && npm run typecheck && npm run lint && npm run test && npm run build && npm run check:stubs",
     "check:stubs": "node scripts/check-phase-one-stubs.mjs"
   },
   "dependencies": {
-    "@prisma/client": "6.19.0",
-    "@supabase/ssr": "0.7.0",
-    "@supabase/supabase-js": "2.112.3",
-    "next": "15.5.23",
+    "@prisma/client": "^6.19.3",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.112.3",
+    "next": "^16.3.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "server-only": "0.0.1",
@@ -41,19 +42,17 @@
     "autoprefixer": "10.4.21",
     "es-abstract": "^1.24.2",
     "eslint": "9.36.0",
-    "eslint-config-next": "15.5.23",
+    "eslint-config-next": "^16.3.1",
     "jsdom": "26.1.0",
-    "postcss": "8.5.6",
-    "prisma": "6.19.0",
+    "postcss": "^8.5.26",
+    "prisma": "^6.19.3",
     "tailwindcss": "3.4.17",
     "tsx": "4.20.6",
     "typescript": "5.9.2",
-    "vitest": "3.2.4"
+    "vitest": "^3.2.7"
   },
   "overrides": {
+    "deepmerge-ts": "8.0.0",
     "esbuild": "0.25.12"
-  },
-  "prisma": {
-    "seed": "tsx scripts/seed/index.ts"
   }
 }

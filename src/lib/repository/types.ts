@@ -61,6 +61,7 @@ export interface ProfileInput {
   institution?: string | null;
   fieldOfStudy?: string | null;
   graduationStatus?: string | null;
+  dateOfBirth?: Date | null;
   skills?: string[];
   workExperience?: UserProfile["workExperience"];
   internshipExperience?: UserProfile["internshipExperience"];
@@ -111,9 +112,11 @@ export interface Repository {
   updateOpportunity(id: string, input: Partial<OpportunityInput>): Promise<Opportunity>;
   deleteOpportunity(id: string): Promise<void>;
   listOrganizations(): Promise<Organization[]>;
+  listOrganizationReviewQueue(): Promise<Organization[]>;
   getOrganization(id: string): Promise<Organization | null>;
   createOrganization(input: OrganizationInput): Promise<Organization>;
   updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization>;
+  reviewOrganization(id: string, approved: boolean): Promise<Organization>;
   updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization>;
   upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult>;
   listMatches(userId: string): Promise<StoredMatchResult[]>;

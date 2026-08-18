@@ -161,6 +161,11 @@ export class PrismaRepository implements Repository {
     return values.map(organizationFromDb);
   }
 
+  public async listOrganizationReviewQueue(): Promise<Organization[]> {
+    const values = await prisma.organization.findMany({ where: { verificationStatus: { in: ["pending", "flagged"] } }, orderBy: { createdAt: "asc" } });
+    return values.map(organizationFromDb);
+  }
+
   public async getOrganization(id: string): Promise<Organization | null> {
     const value = await prisma.organization.findUnique({ where: { id } });
     return value ? organizationFromDb(value) : null;
@@ -173,6 +178,11 @@ export class PrismaRepository implements Repository {
 
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
     const value = await prisma.organization.update({ where: { id }, data: input });
+    return organizationFromDb(value);
+  }
+
+  public async reviewOrganization(id: string, approved: boolean): Promise<Organization> {
+    const value = await prisma.organization.update({ where: { id }, data: { verificationStatus: approved ? "verified" : "flagged" } });
     return organizationFromDb(value);
   }
 
