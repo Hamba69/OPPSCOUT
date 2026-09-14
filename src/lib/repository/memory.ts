@@ -2,6 +2,11 @@ import { randomUUID } from "node:crypto";
 
 import type { Opportunity, Organization, SavedOpportunity, TrustChecklist, UserProfile } from "@/core/entities/domain";
 import { NotFoundError } from "@/core/errors/app-error";
+import {
+  DEMO_ORG_ID,
+  SEED_SNAPSHOT_AT,
+} from "@/data/seed-catalog";
+import { getDemoCatalog } from "@/data/demo-catalog";
 import type {
   OpportunityFilters,
   OpportunityInput,
@@ -13,12 +18,10 @@ import type {
 } from "@/lib/repository/types";
 
 export const DEMO_USER_ID = "11111111-1111-4111-8111-111111111111";
+export const DEMO_SECOND_USER_ID = "11111111-1111-4111-8111-111111111112";
 export const DEMO_ADMIN_ID = "22222222-2222-4222-8222-222222222222";
 export const DEMO_ORG_USER_ID = "33333333-3333-4333-8333-333333333333";
-export const DEMO_ORG_ID = "44444444-4444-4444-8444-444444444444";
-
-const now = new Date();
-const futureDate = (days: number): Date => new Date(now.getTime() + days * 86_400_000);
+export { DEMO_ORG_ID };
 
 const initialProfile: UserProfile = {
   id: DEMO_USER_ID,
@@ -45,103 +48,9 @@ const initialProfile: UserProfile = {
   workModePreference: "hybrid",
   languages: ["English", "Luganda"],
   profileCompletenessScore: 100,
-  createdAt: now,
-  updatedAt: now,
+  createdAt: SEED_SNAPSHOT_AT,
+  updatedAt: SEED_SNAPSHOT_AT,
 };
-
-const initialOrganization: Organization = {
-  id: DEMO_ORG_ID,
-  name: "Nile Innovation Hub",
-  sector: "Technology and social impact",
-  officialLinks: ["https://example.org/nile-innovation"],
-  officialEmail: "opportunities@example.org",
-  registrationProof: "UG-NGO-2024-015",
-  accountableContact: "Programme Office",
-  verificationStatus: "verified",
-  dashboardUsers: [DEMO_ORG_USER_ID],
-  postingHistory: [],
-  createdAt: now,
-  updatedAt: now,
-  subscriptionTier: "free",
-  subscriptionStatus: "inactive",
-  monetizationEnabled: false,
-  promotedListingCredits: 0,
-  promotionPolicy: {},
-};
-
-const initialOpportunities: Opportunity[] = [
-  {
-    id: "55555555-5555-4555-8555-555555555551",
-    title: "Junior Data & Impact Internship",
-    organizationId: DEMO_ORG_ID,
-    organization: { id: DEMO_ORG_ID, name: initialOrganization.name, verificationStatus: "verified" },
-    category: "internship",
-    description: "Help a Kampala-based innovation team turn programme data into clear stories and useful decisions.",
-    eligibility: {
-      educationLevels: ["bachelors"],
-      fieldsOfStudy: ["computer science", "statistics", "information systems"],
-      minimumExperienceMonths: 0,
-      programmeRules: [{ field: "language", allowedValues: ["english"], label: "English working proficiency" }],
-    },
-    requiredSkills: ["data analysis", "communication"],
-    preferredSkills: ["javascript", "research"],
-    location: "Kampala",
-    workMode: "hybrid",
-    deadline: futureDate(7),
-    applicationMethod: "Apply on the official programme page",
-    sourceUrl: "https://example.org/nile-innovation/internship",
-    verificationStatus: "verified",
-    source: "org_submitted",
-    publicationDate: now,
-    checkedAt: now,
-    status: "open",
-    reviewChecklist: {
-      sourceAuthentic: true,
-      noInappropriateFees: true,
-      noSensitiveDataAsk: true,
-      deadlinePlausible: true,
-      duplicateChecked: true,
-    },
-    reviewNotes: "Official source and organization details confirmed.",
-    reviewerId: DEMO_ADMIN_ID,
-    reviewedAt: now,
-  },
-  {
-    id: "55555555-5555-4555-8555-555555555552",
-    title: "Uganda Women in Tech Scholarship",
-    organizationId: DEMO_ORG_ID,
-    organization: { id: DEMO_ORG_ID, name: initialOrganization.name, verificationStatus: "verified" },
-    category: "scholarship",
-    description: "A tuition and mentorship scholarship for final-year technology students building community-focused solutions.",
-    eligibility: {
-      educationLevels: ["bachelors"],
-      fieldsOfStudy: ["computer science", "information systems", "software engineering"],
-      programmeRules: [{ field: "graduationStatus", allowedValues: ["final year"], label: "Final-year student" }],
-    },
-    requiredSkills: ["communication"],
-    preferredSkills: ["research", "social impact"],
-    location: "Uganda",
-    workMode: "remote",
-    deadline: futureDate(14),
-    applicationMethod: "Complete the official online form",
-    sourceUrl: "https://example.org/nile-innovation/scholarship",
-    verificationStatus: "verified",
-    source: "org_submitted",
-    publicationDate: now,
-    checkedAt: now,
-    status: "open",
-    reviewChecklist: {
-      sourceAuthentic: true,
-      noInappropriateFees: true,
-      noSensitiveDataAsk: true,
-      deadlinePlausible: true,
-      duplicateChecked: true,
-    },
-    reviewNotes: "Verified against the official programme page.",
-    reviewerId: DEMO_ADMIN_ID,
-    reviewedAt: now,
-  },
-];
 
 function copy<T>(value: T): T {
   return structuredClone(value);
@@ -152,9 +61,19 @@ function includesText(value: string, expected?: string): boolean {
 }
 
 export class MemoryRepository implements Repository {
-  private readonly profiles = new Map<string, UserProfile>([[initialProfile.id, copy(initialProfile)]]);
-  private readonly organizations = new Map<string, Organization>([[initialOrganization.id, copy(initialOrganization)]]);
-  private readonly opportunities = new Map<string, Opportunity>(initialOpportunities.map((item) => [item.id, copy(item)]));
+  private readonly profiles = new Map<string, UserProfile>([
+    [initialProfile.id, copy(initialProfile)],
+    [DEMO_SECOND_USER_ID, { ...copy(initialProfile), id: DEMO_SECOND_USER_ID, name: "Daniel O.",
+      email: "daniel@example.com", phone: "+256700000002", fieldOfStudy: "agriculture",
+      institution: "Busitema University", educationLevel: "diploma", graduationStatus: "graduated",
+      skills: ["crop management", "communication"], location: "Mbale", preferredLocations: ["Mbale", "Jinja"],
+      careerInterests: ["agriculture", "community development"], workModePreference: "onsite",
+      workExperience: [{ title: "Farm assistant", organization: "Family farm", months: 4 }],
+      internshipExperience: [], certifications: [], profileCompletenessScore: 85 }],
+  ]);
+  private readonly demoCatalog = getDemoCatalog();
+  private readonly organizations = new Map<string, Organization>(this.demoCatalog.organizations.map((item) => [item.id, copy(item)]));
+  private readonly opportunities = new Map<string, Opportunity>(this.demoCatalog.opportunities.map((item) => [item.id, copy(item)]));
   private readonly matches = new Map<string, StoredMatchResult>();
   private readonly saved = new Map<string, SavedOpportunity>();
   private readonly notifications = new Map<string, StoredNotification>();

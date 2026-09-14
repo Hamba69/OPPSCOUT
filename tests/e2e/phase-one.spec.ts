@@ -6,6 +6,8 @@ test("user sees explained matches, saves one, and updates preferences", async ({
   await page.goto("/feed");
   await expect(page.getByRole("heading", { name: "Matches worth your time." })).toBeVisible();
   await expect(page.getByText("Why it fits").first()).toBeVisible();
+  const savedTitle = await page.locator("article").first().getByRole("heading", { level: 2 }).textContent();
+  expect(savedTitle).toBeTruthy();
   await Promise.all([
     page.waitForURL(/\/opportunity\//, { timeout: 30_000 }),
     page.getByRole("link", { name: "View match" }).first().click(),
@@ -14,7 +16,7 @@ test("user sees explained matches, saves one, and updates preferences", async ({
   await page.getByRole("button", { name: "Save opportunity" }).click();
   await expect(page.getByText(/Saved\. We’ll help/)).toBeVisible();
   await page.goto("/saved");
-  await expect(page.getByText("Junior Data & Impact Internship")).toBeVisible();
+  await expect(page.getByRole("heading", { name: savedTitle! })).toBeVisible();
   await page.goto("/settings");
   await page.getByRole("button", { name: "Save preferences" }).click();
   await expect(page.getByText("Preferences saved.")).toBeVisible();

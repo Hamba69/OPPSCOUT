@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SectionNav } from "@/components/section-nav";
+import { isMemoryDataMode } from "@/lib/repository";
 
 import "./globals.css";
 
@@ -9,23 +11,19 @@ export const metadata: Metadata = {
   description: "Clear, trustworthy opportunities matched to your next step.",
 };
 
-const nav = [
-  ["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Providers", "/onboarding/organization"], ["Account", "/login"],
-] as const;
-
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): React.JSX.Element {
+  const memory = isMemoryDataMode();
+  const nav = [["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"], ["Providers", memory ? "/dashboard" : "/onboarding/organization"], [memory ? "Switch persona" : "Account", "/login"]] as const;
   return (
     <html lang="en">
       <body>
         <header className="sticky top-0 z-30 border-b border-ink/10 bg-cream/90 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-            <Link href="/feed" className="flex items-center gap-2 text-xl font-black" aria-label="OppScout home">
+          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-2 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:gap-4 lg:px-8">
+            <Link href="/" className="flex shrink-0 items-center gap-2 text-xl font-black" aria-label="OppScout home">
               <span className="grid size-10 place-items-center rounded-2xl border-2 border-ink bg-sun" aria-hidden="true">☀</span>
               OppScout
             </Link>
-            <nav aria-label="Main navigation" className="flex items-center gap-1 overflow-x-auto">
-              {nav.map(([label, href]) => <Link key={href} href={href} className="rounded-full px-3 py-2 text-sm font-bold hover:bg-butter">{label}</Link>)}
-            </nav>
+            <SectionNav label="Main navigation" links={nav} />
           </div>
         </header>
         {children}

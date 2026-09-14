@@ -1,33 +1,138 @@
-import { PrismaClient } from "@prisma/client";
+import {
+  OpportunitySource,
+  OpportunityStatus,
+  Prisma,
+  PrismaClient,
+  VerificationStatus,
+  WorkMode,
+} from "@prisma/client";
+
+import type { Opportunity } from "../../src/core/entities/domain";
+import {
+  getSeedOpportunities,
+  getSeedOrganizations,
+  SEED_SNAPSHOT_AT,
+} from "../../src/data/seed-catalog";
 
 const prisma = new PrismaClient();
 const userId = "11111111-1111-4111-8111-111111111111";
-const organizationId = "44444444-4444-4444-8444-444444444444";
 
-async function main(): Promise<void> {
-  await prisma.userProfile.upsert({ where: { id: userId }, update: {}, create: {
-    id: userId, name: "Amina N.", phone: "+256700000001", email: "amina@example.com", preferredChannel: "email",
-    secondaryChannels: ["sms"], educationLevel: "bachelors", institution: "Makerere University", fieldOfStudy: "computer science",
-    graduationStatus: "final year", skills: ["javascript", "research", "communication", "data analysis"],
-    workExperience: [{ title: "Student researcher", organization: "Makerere AI Lab", months: 8 }],
-    internshipExperience: [{ title: "Web intern", organization: "Kampala Civic Lab", months: 3 }], certifications: ["google data analytics"],
-    location: "Kampala", preferredLocations: ["Kampala", "Remote"], careerInterests: ["technology", "social impact", "data"],
-    opportunityCategories: ["internship", "scholarship", "job"], workModePreference: "hybrid", languages: ["English", "Luganda"], profileCompletenessScore: 100,
-  } });
-  await prisma.organization.upsert({ where: { id: organizationId }, update: {}, create: {
-    id: organizationId, name: "Nile Innovation Hub", sector: "Technology and social impact", officialLinks: ["https://example.org/nile-innovation"],
-    officialEmail: "opportunities@example.org", registrationProof: "UG-NGO-2024-015", accountableContact: "Programme Office",
-    verificationStatus: "verified", dashboardUsers: ["33333333-3333-4333-8333-333333333333"], postingHistory: [],
-  } });
-  await prisma.opportunity.upsert({ where: { id: "55555555-5555-4555-8555-555555555551" }, update: {}, create: {
-    id: "55555555-5555-4555-8555-555555555551", title: "Junior Data & Impact Internship", organizationId, category: "internship",
-    description: "Help a Kampala-based innovation team turn programme data into clear stories and useful decisions.",
-    eligibility: { educationLevels: ["bachelors"], fieldsOfStudy: ["computer science", "statistics", "information systems"], minimumExperienceMonths: 0, programmeRules: [{ field: "language", allowedValues: ["english"], label: "English working proficiency" }] },
-    requiredSkills: ["data analysis", "communication"], preferredSkills: ["javascript", "research"], location: "Kampala", workMode: "hybrid",
-    deadline: new Date(Date.now() + 7 * 86_400_000), applicationMethod: "Apply on the official programme page", sourceUrl: "https://example.org/nile-innovation/internship",
-    verificationStatus: "verified", source: "org_submitted", status: "open", reviewChecklist: { sourceAuthentic: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true },
-    reviewNotes: "Official source and organization details confirmed.", reviewerId: "22222222-2222-4222-8222-222222222222", reviewedAt: new Date(),
-  } });
+function json(value: unknown): Prisma.InputJsonValue {
+  return value as Prisma.InputJsonValue;
 }
 
-main().finally(async () => prisma.$disconnect());
+function opportunityCreateData(opportunity: Opportunity): Prisma.OpportunityUncheckedCreateInput {
+  return {
+    id: opportunity.id,
+    title: opportunity.title,
+    organizationId: opportunity.organizationId,
+    category: opportunity.category,
+    description: opportunity.description,
+    eligibility: json(opportunity.eligibility),
+    requiredSkills: opportunity.requiredSkills,
+    preferredSkills: opportunity.preferredSkills,
+    location: opportunity.location,
+    workMode: opportunity.workMode as WorkMode,
+    deadline: opportunity.deadline,
+    applicationMethod: opportunity.applicationMethod,
+    sourceUrl: opportunity.sourceUrl,
+    verificationStatus: opportunity.verificationStatus as VerificationStatus,
+    source: opportunity.source as OpportunitySource,
+    publicationDate: opportunity.publicationDate,
+    checkedAt: opportunity.checkedAt,
+    status: opportunity.status as OpportunityStatus,
+    reviewChecklist: json(opportunity.reviewChecklist),
+    reviewNotes: opportunity.reviewNotes,
+    reviewerId: opportunity.reviewerId,
+    reviewedAt: opportunity.reviewedAt,
+  };
+}
+
+function validateCatalog(): void {
+  const organizations = getSeedOrganizations();
+  const opportunities = getSeedOpportunities();
+  const organizationIds = new Set(organizations.map((organization) => organization.id));
+  const opportunityIds = new Set(opportunities.map((opportunity) => opportunity.id));
+
+  if (organizationIds.size !== organizations.length) throw new Error("Seed organization IDs must be unique.");
+  if (opportunityIds.size !== opportunities.length) throw new Error("Seed opportunity IDs must be unique.");
+
+  for (const opportunity of opportunities) {
+    if (!organizationIds.has(opportunity.organizationId)) throw new Error(`Missing organization for ${opportunity.title}.`);
+    if (!opportunity.sourceUrl.startsWith("https://")) throw new Error(`Official source must use HTTPS: ${opportunity.title}.`);
+    if (opportunity.deadline <= SEED_SNAPSHOT_AT) throw new Error(`Seed deadline is not current at the catalogue snapshot: ${opportunity.title}.`);
+    if (Object.values(opportunity.reviewChecklist).some((value) => value !== true)) throw new Error(`Trust review is incomplete: ${opportunity.title}.`);
+  }
+}
+
+async function main(): Promise<void> {
+  validateCatalog();
+  const organizations = getSeedOrganizations();
+  const opportunities = getSeedOpportunities();
+
+  await prisma.$transaction(async (transaction) => {
+    await transaction.userProfile.upsert({
+      where: { id: userId },
+      update: {},
+      create: {
+        id: userId,
+        name: "Amina N.",
+        phone: "+256700000001",
+        email: "amina@example.com",
+        preferredChannel: "email",
+        secondaryChannels: ["sms"],
+        educationLevel: "bachelors",
+        institution: "Makerere University",
+        fieldOfStudy: "computer science",
+        graduationStatus: "final year",
+        dateOfBirth: new Date("2002-05-14T00:00:00.000Z"),
+        skills: ["javascript", "research", "communication", "data analysis"],
+        workExperience: [{ title: "Student researcher", organization: "Makerere AI Lab", months: 8 }],
+        internshipExperience: [{ title: "Web intern", organization: "Kampala Civic Lab", months: 3 }],
+        certifications: ["google data analytics"],
+        location: "Kampala",
+        preferredLocations: ["Kampala", "Remote"],
+        careerInterests: ["technology", "social impact", "data"],
+        opportunityCategories: ["internship", "scholarship", "job"],
+        workModePreference: "hybrid",
+        languages: ["English", "Luganda"],
+        profileCompletenessScore: 100,
+      },
+    });
+
+    for (const organization of organizations) {
+      const { id, createdAt, updatedAt, ...fields } = organization;
+      const data = {
+        ...fields,
+        verificationStatus: fields.verificationStatus as VerificationStatus,
+        postingHistory: json(fields.postingHistory),
+        promotionPolicy: json(fields.promotionPolicy),
+      };
+      await transaction.organization.upsert({
+        where: { id },
+        update: data,
+        create: { id, createdAt, updatedAt, ...data },
+      });
+    }
+
+    for (const opportunity of opportunities) {
+      const createData = opportunityCreateData(opportunity);
+      const updateData = { ...createData };
+      delete updateData.id;
+      await transaction.opportunity.upsert({
+        where: { id: opportunity.id },
+        update: updateData,
+        create: createData,
+      });
+    }
+  });
+
+  console.log(`Seeded ${organizations.length} organizations and ${opportunities.length} current opportunities (snapshot ${SEED_SNAPSHOT_AT.toISOString().slice(0, 10)}).`);
+}
+
+main()
+  .catch((error: unknown) => {
+    console.error(error instanceof Error ? error.message : "Unknown seed failure.");
+    process.exitCode = 1;
+  })
+  .finally(async () => prisma.$disconnect());

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
+import { PRIMARY_SEED_OPPORTUNITY_ID } from "@/data/seed-catalog";
 import { MemoryRepository, DEMO_USER_ID } from "@/lib/repository/memory";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { evaluateHardGates } from "@/services/matching/rule-based/hard-gates";
@@ -9,7 +10,7 @@ import { RuleBasedMatchEngine } from "@/services/matching/rule-based/engine";
 async function fixtures(): Promise<{ profile: UserProfile; opportunity: Opportunity }> {
   const repository = new MemoryRepository();
   const profile = await repository.getProfile(DEMO_USER_ID);
-  const opportunity = await repository.getOpportunity("55555555-5555-4555-8555-555555555551");
+  const opportunity = await repository.getOpportunity(PRIMARY_SEED_OPPORTUNITY_ID);
   if (!profile || !opportunity) throw new Error("Test fixtures are missing.");
   return { profile, opportunity };
 }
@@ -29,7 +30,7 @@ describe("Phase 1 rule matching", () => {
     const repository = new MemoryRepository();
     await repository.updateProfile(DEMO_USER_ID, { educationLevel: "secondary" });
     const feed = await buildRankedFeed(repository, DEMO_USER_ID);
-    expect(feed).toHaveLength(0);
+    expect(feed.map((match) => match.opportunityId)).not.toContain(PRIMARY_SEED_OPPORTUNITY_ID);
   });
 
   it("passes a verified age and fails a missing mandatory certification", async () => {
