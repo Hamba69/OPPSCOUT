@@ -16,6 +16,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx scripts/seed/index.ts",
     "worker:notifications": "tsx scripts/worker/notifications.ts",
+    "admin:create": "tsx scripts/create-admin.ts",
     "worker:freshness": "tsx scripts/worker/freshness.ts",
     "validate:ai": "tsx scripts/validate-ai-matching.ts",
     "validate:env": "node scripts/validate-production-env.mjs",
