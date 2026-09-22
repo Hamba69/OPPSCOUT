@@ -89,7 +89,34 @@ export class MemoryRepository implements Repository {
 
   public async createProfile(userId: string, input: ProfileInput): Promise<UserProfile> {
     const timestamp = new Date();
-    const profile: UserProfile = { ...copy(initialProfile), ...copy(input), id: userId, createdAt: timestamp, updatedAt: timestamp };
+    const profile: UserProfile = {
+      id: userId,
+      name: input.name ?? "",
+      phone: input.phone ?? null,
+      email: input.email ?? null,
+      preferredChannel: input.preferredChannel ?? "web",
+      secondaryChannels: input.secondaryChannels ?? [],
+      notificationsEnabled: input.notificationsEnabled ?? true,
+      notificationFrequency: input.notificationFrequency ?? "instant",
+      educationLevel: input.educationLevel ?? null,
+      institution: input.institution ?? null,
+      fieldOfStudy: input.fieldOfStudy ?? null,
+      graduationStatus: input.graduationStatus ?? null,
+      dateOfBirth: input.dateOfBirth ?? null,
+      skills: input.skills ?? [],
+      workExperience: input.workExperience ?? [],
+      internshipExperience: input.internshipExperience ?? [],
+      certifications: input.certifications ?? [],
+      location: input.location ?? null,
+      preferredLocations: input.preferredLocations ?? [],
+      careerInterests: input.careerInterests ?? [],
+      opportunityCategories: input.opportunityCategories ?? [],
+      workModePreference: input.workModePreference ?? null,
+      languages: input.languages ?? [],
+      profileCompletenessScore: input.profileCompletenessScore ?? 0,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    };
     this.profiles.set(userId, profile);
     return copy(profile);
   }

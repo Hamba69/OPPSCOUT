@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import type { Opportunity } from "@/core/entities/domain";
 import type { MatchEngine } from "@/core/interfaces/match-engine";
 import type { Repository, StoredMatchResult } from "@/lib/repository/types";
@@ -17,10 +19,32 @@ function deadlineUrgency(opportunity: Opportunity, currentTime: Date): number {
   return 0;
 }
 
-export async function buildRankedFeed(repository: Repository, userId: string, now = new Date(), engine: MatchEngine = resolveMatchEngine()): Promise<RankedMatch[]> {
+export interface RankedFeedOptions {
+  persist?: boolean;
+}
+
+export function recomputeRankedFeed(
+  repository: Repository,
+  userId: string,
+  now = new Date(),
+  engine: MatchEngine = resolveMatchEngine(),
+): Promise<RankedMatch[]> {
+  return buildRankedFeed(repository, userId, now, engine, { persist: true });
+}
+
+export async function buildRankedFeed(
+  repository: Repository,
+  userId: string,
+  now = new Date(),
+  engine: MatchEngine = resolveMatchEngine(),
+  options: RankedFeedOptions = {},
+): Promise<RankedMatch[]> {
   const profile = await repository.getProfile(userId);
   if (!profile) return [];
   const opportunities = await repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] });
+  const persistedMatches = options.persist === false
+    ? new Map((await repository.listMatches(userId)).map((match) => [match.opportunityId, match]))
+    : undefined;
   const matches: RankedMatch[] = [];
 
   for (const opportunity of opportunities) {
@@ -29,7 +53,15 @@ export async function buildRankedFeed(repository: Repository, userId: string, no
     if (!gates.eligible) continue;
     const result = await engine.score(profile, opportunity);
     result.matchedFactors.unshift(...gates.passed);
-    const stored = await repository.upsertMatch({ userId, opportunityId: opportunity.id, ...result });
+    const stored = options.persist === false
+      ? {
+          id: persistedMatches?.get(opportunity.id)?.id ?? randomUUID(),
+          userId,
+          opportunityId: opportunity.id,
+          ...result,
+          createdAt: persistedMatches?.get(opportunity.id)?.createdAt ?? now,
+        }
+      : await repository.upsertMatch({ userId, opportunityId: opportunity.id, ...result });
     matches.push({ ...stored, opportunity, urgencyRank: deadlineUrgency(opportunity, now) });
   }
 

@@ -14,13 +14,15 @@ Open `http://127.0.0.1:3000/feed`. The memory adapter contains realistic demonst
 
 ## PostgreSQL / Supabase setup
 
-1. Copy `.env.example` to `.env.local` and supply the environment-owned values.
+1. Copy `.env.example` to `.env.local` and supply the environment-owned values. `DATABASE_URL` must be the Supabase transaction pooler URL (`:6543`, `pgbouncer=true`, and a low `connection_limit`). `DIRECT_URL` must be the Supabase direct database URL (`:5432`) and is reserved for migrations, `db push`, and introspection.
 2. Run `npm run prisma:generate`.
 3. Apply the committed migration with `npm run db:migrate`.
 4. Seed development data with `npm run db:seed`.
 5. Schedule `npm run worker:freshness` and `npm run worker:notifications` in the chosen worker runtime.
 
 Run `npm run validate:env` in the production-equivalent environment to confirm that required variable names are present without printing their values. The complete deployment checklist and phase-by-phase evidence boundary are in [`docs/production-readiness.md`](docs/production-readiness.md).
+
+For Vercel, configure both database variables separately in **Production, Preview, and Development**. Preview must use a separate Supabase project/database, never the production URLs. Apply migrations deliberately with `DIRECT_URL` using `npm run db:migrate`; the Vercel build only runs `prisma generate` and `next build`.
 
 Later-phase integrations are deliberately gated:
 

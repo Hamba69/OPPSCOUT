@@ -11,7 +11,7 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   const repository = await getRepository();
   const { userId } = await requirePageAuth(["user"]);
   const profile = await repository.getProfile(userId);
-  const matches = await buildRankedFeed(repository, userId);
+  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false });
   const now = new Date();
   return (
     <main className="page-shell animate-in">

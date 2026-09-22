@@ -24,7 +24,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
     const [opportunities, organizations, matches] = await Promise.all([
       repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] }),
       repository.listOrganizations(),
-      buildRankedFeed(repository, process.env.OPPSCOUT_DEMO_USER_ID || DEMO_USER_ID),
+      buildRankedFeed(repository, process.env.OPPSCOUT_DEMO_USER_ID || DEMO_USER_ID, new Date(), undefined, { persist: false }),
     ]);
     return {
       matches, opportunities: opportunities.filter((item) => item.deadline > new Date()).length,

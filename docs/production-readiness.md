@@ -14,16 +14,23 @@ This file records the code-level verification against `AGENT_BUILD_GUIDE.md` and
 
 ## Required manual setup
 
-1. Copy `.env.example` to `.env.local` locally and configure the same names in the deployment environment. Run `npm run validate:env` in a production-equivalent shell; it reports names only and never prints values.
-2. Create the PostgreSQL/Supabase database, run `npm run prisma:generate`, then `npm run db:migrate`. Set production `OPPSCOUT_DATA_MODE=prisma`.
-3. In Supabase Auth, enable email/password, add `https://YOUR_DOMAIN/auth/callback` to redirect URLs, and create the first admin with `app_metadata.role=admin`. Normal users self-register. Provider users become organization-scoped automatically when they create an organization; optional metadata can still be used for centrally provisioned staff.
-4. Create a **private** Supabase Storage bucket named by `OPPSCOUT_SCRAPER_SHADOW_BUCKET`. Do not make this bucket public.
-5. Provision Upstash Redis. It stores USSD sessions/PIN hashes and enforces role-specific API/USSD rate limits.
-6. Configure Resend and Africa's Talking SMS credentials. Verify the sender/domain and use a real public `OPPSCOUT_APP_URL`; notification links and preference links are generated from it.
-7. Put a trusted reverse proxy/gateway in front of the USSD callback and have it inject `x-oppscout-ussd-secret`. Point Africa's Talking at `https://YOUR_DOMAIN/api/v1/ussd/session` through that gateway. Basic authentication is also accepted. Query-string secrets are disabled by default because URLs are commonly logged; enable `OPPSCOUT_USSD_ALLOW_QUERY_SECRET=true` only for a controlled sandbox.
-8. Schedule `npm run worker:freshness` and `npm run worker:notifications`. Alert on a non-zero worker exit. Drain structured application logs to the chosen observability backend so API uptime survives serverless instance recycling.
-9. Run `npm run validate:ai` on labelled held-out cases before setting both `OPPSCOUT_AI_COMPARISON_APPROVED=true` and `OPPSCOUT_AI_DEFAULT=true`. Keep automated live scraping disabled until shadow error targets pass.
-10. Complete the evidence in `docs/phase-5-legal-gate.md` before any monetization activation. The repository deliberately contains no checkout, processor, or payment-webhook implementation.
+1. Copy `.env.example` to `.env.local` locally and configure the same names in the deployment environment. `DATABASE_URL` is the runtime Supabase transaction pooler URL on port `6543` with `pgbouncer=true` and a low `connection_limit`; `DIRECT_URL` is the direct Supabase database URL on port `5432` for migrations, `db push`, and introspection only. Run `npm run validate:env` in a production-equivalent shell; it reports names only and never prints values.
+2. Create the PostgreSQL/Supabase database, run `npm run prisma:generate`, then run `DIRECT_URL="$DIRECT_URL" npm run db:migrate`. Set production `OPPSCOUT_DATA_MODE=prisma`. The migration `20260919000000_enable_public_rls` enables RLS on every Prisma-created public table and intentionally creates no policies.
+3. Run `npm run check:rls` against the migrated database. It fails if a required public Prisma table is missing or has RLS disabled.
+4. In Vercel, configure `DATABASE_URL`, `DIRECT_URL`, and all other variables in **Production, Preview, and Development**. Preview values must point to a separate Supabase project/database; do not reuse Production database URLs or credentials.
+5. The Vercel build runs `prisma generate && next build`. It never runs `migrate dev`; run `npm run db:migrate` as an explicit release/database step with `DIRECT_URL`.
+6. In Supabase Auth, enable email/password, add `https://YOUR_DOMAIN/auth/callback` to redirect URLs, and create the first admin with `app_metadata.role=admin`. Normal users self-register. Provider users become organization-scoped automatically when they create an organization; optional metadata can still be used for centrally provisioned staff.
+7. Create a **private** Supabase Storage bucket named by `OPPSCOUT_SCRAPER_SHADOW_BUCKET`. Do not make this bucket public.
+8. Provision Upstash Redis. It stores USSD sessions/PIN hashes and enforces role-specific API/USSD rate limits.
+9. Configure Resend and Africa's Talking SMS credentials. Verify the sender/domain and use a real public `OPPSCOUT_APP_URL`; notification links and preference links are generated from it.
+10. Put a trusted reverse proxy/gateway in front of the USSD callback and have it inject `x-oppscout-ussd-secret`. Point Africa's Talking at `https://YOUR_DOMAIN/api/v1/ussd/session` through that gateway. Basic authentication is also accepted. Query-string secrets are disabled by default because URLs are commonly logged; enable `OPPSCOUT_USSD_ALLOW_QUERY_SECRET=true` only for a controlled sandbox.
+11. Schedule `npm run worker:freshness` and `npm run worker:notifications`. Alert on a non-zero worker exit. Drain structured application logs to the chosen observability backend so API uptime survives serverless instance recycling.
+12. Run `npm run validate:ai` on labelled held-out cases before setting both `OPPSCOUT_AI_COMPARISON_APPROVED=true` and `OPPSCOUT_AI_DEFAULT=true`. Keep automated live scraping disabled until shadow error targets pass.
+13. Complete the evidence in `docs/phase-5-legal-gate.md` before any monetization activation. The repository deliberately contains no checkout, processor, or payment-webhook implementation.
+
+## Region audit
+
+The repository does not contain Supabase Management API credentials or a Vercel project configuration, so the live Supabase region and current Vercel function region cannot be verified from source control. Do not guess either value. Confirm the Supabase project region in **Supabase Dashboard → Project Settings → General**, confirm the Vercel function region in **Vercel Project → Settings → Functions**, and set Vercel's function region to the same region before production rollout. Record both values in the deployment runbook and rerun the latency check after changing the setting.
 
 ## Release commands
 

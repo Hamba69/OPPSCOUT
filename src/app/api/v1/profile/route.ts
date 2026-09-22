@@ -4,6 +4,7 @@ import { apiHandler, noContent, success } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { calculateProfileCompleteness } from "@/services/profile/completeness";
+import { recomputeRankedFeed } from "@/services/matching/feed";
 import { parseJson, profileSchema } from "@/lib/validation";
 
 export async function GET(request: Request): Promise<Response> {
@@ -20,7 +21,9 @@ export async function POST(request: Request): Promise<Response> {
     const input = await parseJson(request, profileSchema.extend({ name: z.string().trim().min(2).max(120) }));
     const repository = await getRepository();
     const profileCompletenessScore = calculateProfileCompleteness(input);
-    return success(await repository.createProfile(auth.userId, { ...input, profileCompletenessScore }), 201);
+    const profile = await repository.createProfile(auth.userId, { ...input, profileCompletenessScore });
+    await recomputeRankedFeed(repository, auth.userId);
+    return success(profile, 201);
   });
 }
 
@@ -31,7 +34,11 @@ export async function PATCH(request: Request): Promise<Response> {
     const repository = await getRepository();
     const current = await repository.getProfile(auth.userId);
     const profileCompletenessScore = calculateProfileCompleteness({ ...current, ...input });
-    return success(await repository.updateProfile(auth.userId, { ...input, profileCompletenessScore }));
+    const profile = current
+      ? await repository.updateProfile(auth.userId, { ...input, profileCompletenessScore })
+      : await repository.createProfile(auth.userId, { ...input, profileCompletenessScore });
+    await recomputeRankedFeed(repository, auth.userId);
+    return success(profile);
   });
 }
 

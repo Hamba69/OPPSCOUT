@@ -6,7 +6,7 @@ import { buildRankedFeed } from "@/services/matching/feed";
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(async () => {
     const auth = await requireAuth(request);
-    const matches = await buildRankedFeed(await getRepository(), auth.userId);
+    const matches = await buildRankedFeed(await getRepository(), auth.userId, new Date(), undefined, { persist: false });
     const freshest = matches.reduce((date, item) => item.opportunity && item.opportunity.checkedAt > date ? item.opportunity.checkedAt : date, new Date(0));
     return success(matches, 200, freshest.getTime() ? freshest : new Date());
   });

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -20,7 +20,8 @@
     "validate:ai": "tsx scripts/validate-ai-matching.ts",
     "validate:env": "node scripts/validate-production-env.mjs",
     "verify": "npm run prisma:validate && npm run typecheck && npm run lint && npm run test && npm run build && npm run check:stubs",
-    "check:stubs": "node scripts/check-phase-one-stubs.mjs"
+    "check:stubs": "node scripts/check-phase-one-stubs.mjs",
+    "check:rls": "tsx scripts/check-rls.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

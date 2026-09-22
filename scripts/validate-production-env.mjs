@@ -1,5 +1,6 @@
 const baseRequired = [
   "DATABASE_URL",
+  "DIRECT_URL",
   "OPPSCOUT_APP_URL",
   "NEXT_PUBLIC_SUPABASE_URL",
   "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
@@ -12,6 +13,23 @@ const baseRequired = [
   "OPPSCOUT_EMAIL_FROM",
   "AFRICASTALKING_USERNAME",
   "AFRICASTALKING_API_KEY",
+  "ANTHROPIC_MODEL",
+  "ANTHROPIC_API_KEY",
+  "OPPSCOUT_SCRAPER_SHADOW_BUCKET",
+  "OPPSCOUT_DATA_MODE",
+  "OPPSCOUT_DEMO_MODE",
+  "OPPSCOUT_DEMO_USER_ID",
+  "OPPSCOUT_AI_DEFAULT",
+  "OPPSCOUT_AI_COMPARISON_APPROVED",
+  "OPPSCOUT_MONETIZATION_LEGAL_REVIEW",
+  "OPPSCOUT_MIN_ORG_RETENTION_PERCENT",
+  "OPPSCOUT_MAX_TRUST_TURNAROUND_HOURS",
+  "OPPSCOUT_MIN_ORG_SAMPLE",
+  "NOTIFICATION_DAILY_CAP",
+  "RATE_LIMIT_USER_PER_MINUTE",
+  "RATE_LIMIT_ORGANIZATION_PER_MINUTE",
+  "RATE_LIMIT_ADMIN_PER_MINUTE",
+  "RATE_LIMIT_USSD_PER_MINUTE",
 ];
 
 const optionalGates = [
@@ -19,18 +37,64 @@ const optionalGates = [
   ["OPPSCOUT_AI_DEFAULT", "OPPSCOUT_AI_COMPARISON_APPROVED"],
 ];
 
-const missing = baseRequired.filter((name) => !process.env[name]);
-for (const [gate, name] of optionalGates) {
-  if (process.env[gate] === "true" && process.env[name] !== "true" && !process.env[name]) missing.push(name);
+function isProductionUrl(value) {
+  if (!value) return false;
+  try {
+    const { hostname } = new URL(value);
+    return hostname !== "localhost" && hostname !== "127.0.0.1" && hostname !== "0.0.0.0" && !hostname.endsWith(".local");
+  } catch {
+    return false;
+  }
 }
+
+function isProductionEnvironment() {
+  if (process.env.VERCEL_ENV === "production") return true;
+  if (process.env.NODE_ENV !== "production") return false;
+  return isProductionUrl(process.env.OPPSCOUT_APP_URL);
+}
+
+const missing = baseRequired.filter((name) => !process.env[name] || String(process.env[name]).trim() === "");
+for (const [gate, name] of optionalGates) {
+  if (process.env[gate] === "true" && (!process.env[name] || String(process.env[name]).trim() === "")) {
+    missing.push(name);
+  }
+}
+
 if (process.env.OPPSCOUT_DATA_MODE && process.env.OPPSCOUT_DATA_MODE !== "prisma") {
   console.error("OPPSCOUT_DATA_MODE must be prisma for production.");
   process.exitCode = 1;
 }
+
+if (process.env.OPPSCOUT_DEMO_MODE === "1" && isProductionEnvironment()) {
+  console.error("Demo mode is disabled in production. Remove OPPSCOUT_DEMO_MODE=1.");
+  process.exitCode = 1;
+}
+
 if (process.env.OPPSCOUT_AI_DEFAULT === "true" && process.env.OPPSCOUT_AI_COMPARISON_APPROVED !== "true") {
   console.error("AI default is blocked until OPPSCOUT_AI_COMPARISON_APPROVED=true.");
   process.exitCode = 1;
 }
+
+if (process.env.DATABASE_URL && process.env.DIRECT_URL) {
+  try {
+    const runtime = new URL(process.env.DATABASE_URL);
+    const direct = new URL(process.env.DIRECT_URL);
+    const connectionLimit = Number(runtime.searchParams.get("connection_limit"));
+    if (runtime.port !== "6543" || !runtime.hostname.includes(".pooler.supabase.com") ||
+      runtime.searchParams.get("pgbouncer") !== "true" || !Number.isInteger(connectionLimit) || connectionLimit < 1 || connectionLimit > 5) {
+      console.error("DATABASE_URL must use the Supabase transaction pooler on port 6543 with pgbouncer=true and connection_limit between 1 and 5.");
+      process.exitCode = 1;
+    }
+    if (direct.port !== "5432" || !direct.hostname.startsWith("db.") || direct.searchParams.get("pgbouncer")) {
+      console.error("DIRECT_URL must use the Supabase direct database connection on port 5432 without pgbouncer.");
+      process.exitCode = 1;
+    }
+  } catch {
+    console.error("DATABASE_URL and DIRECT_URL must be valid PostgreSQL URLs.");
+    process.exitCode = 1;
+  }
+}
+
 if (missing.length) {
   console.error(`Missing production variables: ${[...new Set(missing)].sort().join(", ")}`);
   process.exitCode = 1;
