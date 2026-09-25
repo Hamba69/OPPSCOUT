@@ -7,7 +7,7 @@ export function OpportunityForm({ organizationId }: { organizationId: string }):
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); setMessage("Sending for review…");
     const body = { title: String(data.get("title")), organizationId, category: String(data.get("category")), description: String(data.get("description")), eligibility: { educationLevels: String(data.get("educationLevels")).split(",").map((v) => v.trim()).filter(Boolean), fieldsOfStudy: String(data.get("fieldsOfStudy")).split(",").map((v) => v.trim()).filter(Boolean) }, requiredSkills: String(data.get("requiredSkills")).split(",").map((v) => v.trim()).filter(Boolean), preferredSkills: [], location: String(data.get("location")), workMode: String(data.get("workMode")), deadline: new Date(String(data.get("deadline"))).toISOString(), applicationMethod: String(data.get("applicationMethod")), sourceUrl: String(data.get("sourceUrl")), verificationStatus: "pending", source: "org_submitted", status: "open" };
-    const response = await fetch("/api/v1/opportunities", { method: "POST", headers: { "Content-Type": "application/json", "x-oppscout-demo-role": "organization" }, body: JSON.stringify(body) });
+    const response = await fetch("/api/v1/opportunities", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     setMessage(response.ok ? "Submitted. It is safely waiting for review." : "Could not submit. Check the official URL and required fields.");
     if (response.ok) form.reset();
   }

@@ -1,10 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { isMemoryDataMode } from "@/lib/repository";
 import { refreshSession } from "@/lib/supabase/proxy";
 
 export default async function proxy(request: NextRequest): Promise<NextResponse> {
-  if (isMemoryDataMode()) return NextResponse.next();
   const session = await refreshSession(request);
   if (!session.configured) return NextResponse.redirect(new URL("/login?error=configuration", request.url));
   if (!session.user) {

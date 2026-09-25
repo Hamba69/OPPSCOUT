@@ -2,15 +2,14 @@
 
 Uganda-first opportunity discovery with deterministic eligibility, explained rule/AI matching, verified manual and shadow-discovered listings, provider analytics, web/USSD access, selective alerts, and fail-closed monetization readiness.
 
-## Local demonstration
+## Local development
 
 ```powershell
 npm install
-$env:OPPSCOUT_DATA_MODE="memory"
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000/feed`. The memory adapter contains realistic demonstration records and is enabled only when explicitly selected, in tests, or when a non-production development environment has no database URL.
+Open `http://127.0.0.1:3000/login`. Runtime data and authentication always use PostgreSQL and Supabase Auth. Configure `.env.local` with real Supabase and database values before starting the app. The in-memory adapter is available only to automated tests.
 
 ## PostgreSQL / Supabase setup
 

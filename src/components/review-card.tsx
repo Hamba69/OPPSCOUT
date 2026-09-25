@@ -18,7 +18,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
     const checklist = Object.fromEntries(checks.map(([name]) => [name, data.get(name) === "on"]));
-    const response = await fetch(`/api/v1/reports/review/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json", "x-oppscout-demo-role": "admin" }, body: JSON.stringify({ checklist, approved, notes: String(data.get("notes") ?? "") }) });
+    const response = await fetch(`/api/v1/reports/review/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checklist, approved, notes: String(data.get("notes") ?? "") }) });
     setMessage(response.ok ? (approved ? "Approved and ready for matching." : "Kept out of feeds for follow-up.") : "Review could not be saved. Approval requires every check.");
     if (response.ok) setDone(true);
   }

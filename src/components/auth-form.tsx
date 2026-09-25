@@ -10,6 +10,7 @@ export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element 
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [confirmationPending, setConfirmationPending] = useState(false);
   const emailInput = useRef<HTMLInputElement>(null);
 
   async function recoverPassword(): Promise<void> {
@@ -49,8 +50,25 @@ export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element 
     setBusy(false);
     if (error) { setMessage(error.message); return; }
     if (result.session) { router.push(nextPath); router.refresh(); }
-    else setMessage("Check your email to confirm your account, then sign in.");
+    else { setConfirmationPending(true); setMessage("Check your email to confirm your account, then sign in. If it does not arrive, resend it below."); }
   }
 
-  return <section className="card mx-auto mt-8 max-w-lg"><div className="flex rounded-full bg-butter p-1"><button type="button" disabled={busy} className={`flex-1 rounded-full px-4 py-2 font-black ${mode === "signin" ? "bg-white" : ""}`} onClick={() => { setMode("signin"); setMessage(""); }}>Sign in</button><button type="button" disabled={busy} className={`flex-1 rounded-full px-4 py-2 font-black ${mode === "signup" ? "bg-white" : ""}`} onClick={() => { setMode("signup"); setMessage(""); }}>Create account</button></div><form className="mt-6 space-y-4" onSubmit={submit}><label><span className="label">Email</span><input ref={emailInput} className="field" type="email" name="email" autoComplete="email" required /></label><label><span className="label">Password</span><input className="field" type="password" name="password" minLength={8} autoComplete={mode === "signin" ? "current-password" : "new-password"} required /></label><button className="button w-full" disabled={busy}>{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</button>{mode === "signin" && <button type="button" className="text-sm font-bold underline underline-offset-4" disabled={busy} onClick={recoverPassword}>Forgot your password?</button>}{message && <p className="rounded-2xl bg-butter p-3 text-sm font-bold" role="status">{message}</p>}</form></section>;
+  async function resendConfirmation(): Promise<void> {
+    if (!emailInput.current?.reportValidity()) return;
+    setBusy(true); setMessage("");
+    try {
+      const { error } = await createClient().auth.resend({
+        type: "signup",
+        email: emailInput.current.value.trim(),
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` },
+      });
+      setMessage(error ? error.message : "Confirmation email resent. Check your inbox and spam folder.");
+    } catch {
+      setMessage("Unable to resend the confirmation email. Please try again later.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return <section className="card mx-auto mt-8 max-w-lg"><div className="flex rounded-full bg-butter p-1"><button type="button" disabled={busy} className={`flex-1 rounded-full px-4 py-2 font-black ${mode === "signin" ? "bg-white" : ""}`} onClick={() => { setMode("signin"); setConfirmationPending(false); setMessage(""); }}>Sign in</button><button type="button" disabled={busy} className={`flex-1 rounded-full px-4 py-2 font-black ${mode === "signup" ? "bg-white" : ""}`} onClick={() => { setMode("signup"); setMessage(""); }}>Create account</button></div><form className="mt-6 space-y-4" onSubmit={submit}><label><span className="label">Email</span><input ref={emailInput} className="field" type="email" name="email" autoComplete="email" required /></label><label><span className="label">Password</span><input className="field" type="password" name="password" minLength={8} autoComplete={mode === "signin" ? "current-password" : "new-password"} required /></label><button className="button w-full" disabled={busy}>{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</button>{mode === "signin" && <button type="button" className="text-sm font-bold underline underline-offset-4" disabled={busy} onClick={recoverPassword}>Forgot your password?</button>}{confirmationPending && <button type="button" className="text-sm font-bold underline underline-offset-4" disabled={busy} onClick={resendConfirmation}>Resend confirmation email</button>}{message && <p className="rounded-2xl bg-butter p-3 text-sm font-bold" role="status">{message}</p>}</form></section>;
 }

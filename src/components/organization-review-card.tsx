@@ -20,7 +20,7 @@ export function OrganizationReviewCard(props: OrganizationReviewCardProps): Reac
   async function decide(approved: boolean): Promise<void> {
     const response = await fetch(`/api/v1/organizations/review/${props.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "x-oppscout-demo-role": "admin" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ approved }),
     });
     setMessage(response.ok ? (approved ? "Organization verified." : "Organization held for follow-up.") : "Decision could not be saved.");

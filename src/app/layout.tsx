@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import { SectionNav } from "@/components/section-nav";
-import { isMemoryDataMode } from "@/lib/repository";
 
 import "./globals.css";
 
@@ -19,8 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): React.JSX.Element {
-  const memory = isMemoryDataMode();
-  const nav = [["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"], ["Providers", memory ? "/dashboard" : "/onboarding/organization"], [memory ? "Switch persona" : "Account", "/login"]] as const;
+  const nav = [["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"], ["Providers", "/onboarding/organization"], ["Account", "/login"]] as const;
   return (
     <html lang="en" className={sans.variable}>
       <body>
