@@ -6,7 +6,7 @@ export async function GET(request: Request): Promise<Response> {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
   const requested = requestUrl.searchParams.get("next");
-  const nextPath = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/feed";
+  const nextPath = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/profile";
   if (!code) return NextResponse.redirect(new URL("/login?error=callback", request.url));
   let client;
   try { client = await createClient(); }

@@ -163,7 +163,7 @@ model Opportunity {
   preferredSkills    String[]           @default([])
   location           String
   workMode           WorkMode
-  deadline           DateTime
+  deadline           DateTime?
   applicationMethod  String
   sourceUrl           String
   verificationStatus VerificationStatus @default(pending)

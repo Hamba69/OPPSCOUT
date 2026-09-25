@@ -38,7 +38,7 @@ export async function getSloSnapshot(repository: Repository): Promise<SloSnapsho
   const opportunities = await repository.listOpportunities();
   const now = new Date();
   const freshnessCompliant = opportunities.filter((item) => {
-    if (item.deadline <= now) return item.status === "closed" || item.status === "removed";
+    if (item.deadline && item.deadline <= now) return item.status === "closed" || item.status === "removed";
     const staleDays = item.source === "scraped" ? INGESTION_RULES.scrapedStaleAfterDays : INGESTION_RULES.organizationStaleAfterDays;
     const shouldBeStale = now.getTime() - item.checkedAt.getTime() > staleDays * 86_400_000;
     return shouldBeStale ? item.status === "stale" : item.status === "open" || item.status === "closing_soon";

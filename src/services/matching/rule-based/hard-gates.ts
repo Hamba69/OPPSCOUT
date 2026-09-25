@@ -41,7 +41,7 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
   }
 
   if (eligibility.minimumAge !== undefined || eligibility.maximumAge !== undefined) {
-    const age = profile.dateOfBirth ? ageOn(profile.dateOfBirth, opportunity.deadline) : null;
+    const age = profile.dateOfBirth ? ageOn(profile.dateOfBirth, opportunity.deadline ?? new Date()) : null;
     const matches = age !== null
       && (eligibility.minimumAge === undefined || age >= eligibility.minimumAge)
       && (eligibility.maximumAge === undefined || age <= eligibility.maximumAge);

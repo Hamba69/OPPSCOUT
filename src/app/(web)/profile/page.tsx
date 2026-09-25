@@ -1,12 +1,12 @@
 import { ProfileForm } from "@/components/profile-form";
 import { requirePageAuth } from "@/lib/auth";
-import { getRepository } from "@/lib/repository";
+import { getUserProfile } from "@/lib/profile-store";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProfilePage(): Promise<React.JSX.Element> {
   const { userId } = await requirePageAuth(["user"]);
-  const profile = await (await getRepository()).getProfile(userId);
+  const profile = await getUserProfile(userId);
   const initial = {
     name: profile?.name ?? "", email: profile?.email ?? "", phone: profile?.phone ?? "", educationLevel: profile?.educationLevel ?? "",
     fieldOfStudy: profile?.fieldOfStudy ?? "", graduationStatus: profile?.graduationStatus ?? "", dateOfBirth: profile?.dateOfBirth?.toISOString().slice(0, 10) ?? "", location: profile?.location ?? "",

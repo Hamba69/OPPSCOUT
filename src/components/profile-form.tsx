@@ -37,8 +37,14 @@ export function ProfileForm({ initial }: { initial: ProfileFormInitial }): React
       opportunityCategories: list(data.get("opportunityCategories")), languages: list(data.get("languages")),
       workModePreference: String(data.get("workModePreference")) || null,
     };
-    const response = await fetch("/api/v1/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-    setBusy(false); setMessage(response.ok ? "Profile saved — your matches are ready." : "We could not save that yet. Check the fields and try again.");
+    try {
+      const response = await fetch("/api/v1/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      setMessage(response.ok ? "Profile saved. We’ll use it to find relevant opportunities." : "We could not save that yet. Check the fields and try again.");
+    } catch {
+      setMessage("We could not connect to save your profile. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
   const fields: Array<[keyof ProfileFormInitial, string, string]> = [
     ["name", "Your name", "Amina N."], ["email", "Email", "you@example.com"], ["phone", "Phone", "+256…"],

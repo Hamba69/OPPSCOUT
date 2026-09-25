@@ -485,13 +485,15 @@ export function getSeedOrganizations(): Organization[] {
   }));
 }
 
-export function getSeedOpportunities(): Opportunity[] {
+export function getSeedOpportunities(): Array<Opportunity & { deadline: Date }> {
   const organizations = new Map(getSeedOrganizations().map((organization) => [organization.id, organization]));
   return opportunitySeeds.map((seed) => {
     const organization = organizations.get(seed.organizationId);
     if (!organization) throw new Error(`Seed organization ${seed.organizationId} is missing.`);
+    if (!seed.deadline) throw new Error(`Seed opportunity ${seed.title} must have a closing date.`);
     return {
       ...copy(seed),
+      deadline: seed.deadline,
       organization: {
         id: organization.id,
         name: organization.name,

@@ -6,7 +6,7 @@ const checks = [
   ["sourceAuthentic", "Official source is authentic"],
   ["noInappropriateFees", "No inappropriate application fee"],
   ["noSensitiveDataAsk", "No unnecessary sensitive-data request"],
-  ["deadlinePlausible", "Deadline is plausible"],
+  ["deadlinePlausible", "Closing date is accurate or marked rolling"],
   ["duplicateChecked", "Duplicate check completed"],
 ] as const;
 

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { AppError, ForbiddenError } from "@/core/errors/app-error";
+import { findOrganizationIdForDashboardUser } from "@/lib/profile-store";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { createBearerClient, createClient } from "@/lib/supabase/server";
 
@@ -18,10 +19,10 @@ async function contextFromUser(user: { id: string; app_metadata: Record<string, 
   const organizationId = typeof user.app_metadata.organization_id === "string" ? user.app_metadata.organization_id : null;
   if (role === "organization" && organizationId) return { userId: user.id, role, organizationId };
   if (role === "admin") return { userId: user.id, role, organizationId: null };
-  const organization = (await (await import("@/lib/repository")).getRepository()).listOrganizations()
-    .then((items) => items.find((item) => item.dashboardUsers.includes(user.id)));
-  const owned = await organization;
-  return owned ? { userId: user.id, role: "organization", organizationId: owned.id } : { userId: user.id, role: "user", organizationId: null };
+  const ownedOrganizationId = await findOrganizationIdForDashboardUser(user.id);
+  return ownedOrganizationId
+    ? { userId: user.id, role: "organization", organizationId: ownedOrganizationId }
+    : { userId: user.id, role: "user", organizationId: null };
 }
 
 export async function requireAuth(request: Request): Promise<AuthContext> {

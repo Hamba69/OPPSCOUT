@@ -98,7 +98,7 @@ export interface Opportunity {
   preferredSkills: string[];
   location: string;
   workMode: WorkMode;
-  deadline: Date;
+  deadline: Date | null;
   applicationMethod: string;
   sourceUrl: string;
   verificationStatus: VerificationStatus;

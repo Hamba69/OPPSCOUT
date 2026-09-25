@@ -18,7 +18,7 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
     setBusy(true);
     try {
     const response = await fetch("/api/v1/saved", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ opportunityId }) });
-    setMessage(response.ok ? "Saved. We’ll help you remember the deadline." : "Could not save this yet.");
+    setMessage(response.ok ? "Saved. We’ll keep track of any closing date." : "Could not save this yet.");
     } catch { setMessage("Could not connect. Please try saving again."); }
     finally { setBusy(false); }
   }

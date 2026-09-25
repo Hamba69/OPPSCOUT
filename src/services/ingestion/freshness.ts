@@ -14,7 +14,7 @@ export async function refreshOpportunityLifecycle(repository: Repository, now = 
   const result: FreshnessRun = { checked: opportunities.length, changed: 0, closed: 0, stale: 0 };
   for (const opportunity of opportunities) {
     let status: Opportunity["status"] = opportunity.status;
-    if (opportunity.deadline <= now && !["closed", "removed"].includes(opportunity.status)) {
+    if (opportunity.deadline && opportunity.deadline <= now && !["closed", "removed"].includes(opportunity.status)) {
       status = "closed";
       result.closed += 1;
     } else if (!["closed", "removed"].includes(opportunity.status)) {

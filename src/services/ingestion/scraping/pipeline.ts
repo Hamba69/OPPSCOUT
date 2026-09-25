@@ -13,9 +13,11 @@ export async function runShadowDiscovery(input: { sourceUrl: string; organizatio
   try {
     const response = await fetcher(url, { signal: controller.signal, headers: { "user-agent": "OppScoutBot/1.0 (+data-quality-shadow-mode)" } }); if (!response.ok) throw new AppError(`Source returned ${response.status}.`, 502, "SCRAPE_SOURCE_ERROR");
     const html = (await response.text()).slice(0, SCRAPING_RULES.maximumDocumentBytes); const extracted = await extractor.extract(url.toString(), plainText(html));
-    const liveInput = { ...extracted, organizationId: input.organizationId, deadline: new Date(extracted.deadline), sourceUrl: url.toString(), source: "scraped" as const, verificationStatus: "unverified" as const, status: "open" as const };
-    const trust = await assessAutomatedTrust(repository, liveInput); const deadline = liveInput.deadline;
-    const candidate: ShadowCandidate = { id: randomUUID(), sourceUrl: url.toString(), capturedAt: now.toISOString(), input: { ...liveInput, deadline: deadline.toISOString() }, duplicateOpportunityId: trust.duplicateOpportunityId, freshnessError: deadline.getTime() <= now.getTime(), trustSignals: trust.signals };
+    const deadline = extracted.deadline === null ? null : new Date(extracted.deadline);
+    if (deadline && !Number.isFinite(deadline.getTime())) throw new AppError("The extracted closing date is invalid.", 422, "INVALID_DEADLINE");
+    const liveInput = { ...extracted, organizationId: input.organizationId, deadline, sourceUrl: url.toString(), source: "scraped" as const, verificationStatus: "unverified" as const, status: "open" as const };
+    const trust = await assessAutomatedTrust(repository, liveInput);
+    const candidate: ShadowCandidate = { id: randomUUID(), sourceUrl: url.toString(), capturedAt: now.toISOString(), input: { ...liveInput, deadline: deadline?.toISOString() ?? null }, duplicateOpportunityId: trust.duplicateOpportunityId, freshnessError: deadline !== null && deadline.getTime() <= now.getTime(), trustSignals: trust.signals };
     await store.put(candidate); return candidate;
   } finally { clearTimeout(timeout); }
 }
