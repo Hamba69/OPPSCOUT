@@ -73,7 +73,7 @@ export async function runNotificationScheduler(repository: Repository, channels:
 
   for (const match of matches) {
     const opportunity = await repository.getOpportunity(match.opportunityId) ?? match.opportunity;
-    if (!opportunity || opportunity.deadline <= now) continue;
+    if (!opportunity || (opportunity.deadline && opportunity.deadline <= now)) continue;
     const majorChange = savedIds.has(opportunity.id) && opportunity.checkedAt.getTime() > match.createdAt.getTime();
     const changeKey = `${opportunity.id}:major-change:${opportunity.checkedAt.toISOString()}`;
     if (majorChange && !recent.some((item) => item.triggerKey === changeKey && item.status !== "failed")) {
@@ -83,7 +83,7 @@ export async function runNotificationScheduler(repository: Repository, channels:
     if (profile.notificationFrequency !== "instant") continue;
     const alreadySent = recent.some((item) => item.triggerKey.startsWith(`${opportunity.id}:`) && item.status !== "failed");
     if (alreadySent) { attempts.push({ userId, opportunityId: opportunity.id, triggerKey: `${opportunity.id}:deduplicated`, status: "skipped", reason: "48-hour-deduplication" }); continue; }
-    const window = deadlineWindow(hoursUntil(opportunity.deadline, now));
+    const window = opportunity.deadline ? deadlineWindow(hoursUntil(opportunity.deadline, now)) : null;
     const deadlineEligible = window !== null && (savedIds.has(opportunity.id) || match.score >= NOTIFICATION_RULES.reminderFitScore);
     const optedIntoCategory = profile.opportunityCategories.length === 0 || profile.opportunityCategories.includes(opportunity.category);
     const highFitEligible = match.score >= NOTIFICATION_RULES.highFitScore && optedIntoCategory;

@@ -57,7 +57,10 @@ export const opportunitySchema = z.object({
   preferredSkills: stringList.default([]),
   location: z.string().trim().min(2).max(120),
   workMode: z.enum(["remote", "onsite", "hybrid"]),
-  deadline: z.coerce.date().refine((date) => date > new Date(), "Deadline must be in the future."),
+  deadline: z.union([
+    z.coerce.date().refine((date) => date > new Date(), "Deadline must be in the future.").nullable(),
+    z.literal("").transform(() => null),
+  ]),
   applicationMethod: z.string().trim().min(5).max(500),
   sourceUrl: z.string().url().refine((url) => url.startsWith("https://"), "Official source URL must use HTTPS."),
   verificationStatus: z.enum(["unverified", "pending", "verified", "flagged"]).default("pending"),
@@ -88,7 +91,7 @@ export const trustChecklistSchema = z.object({
   duplicateChecked: z.boolean(),
 }).strict();
 
-export async function parseJson<T>(request: Request, schema: z.ZodType<T>): Promise<T> {
+export async function parseJson<TSchema extends z.ZodTypeAny>(request: Request, schema: TSchema): Promise<z.output<TSchema>> {
   let body: unknown;
   try {
     body = await request.json();

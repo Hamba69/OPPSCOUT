@@ -15,7 +15,7 @@ export interface OpportunityAnalyzer {
 export interface ExtractedOpportunityData {
   title: string; category: string; description: string; eligibility: Eligibility;
   requiredSkills: string[]; preferredSkills: string[]; location: string; workMode: WorkMode;
-  deadline: string; applicationMethod: string;
+  deadline: string | null; applicationMethod: string;
 }
 
 export interface OpportunityTextExtractor {

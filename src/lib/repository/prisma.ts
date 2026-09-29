@@ -128,7 +128,7 @@ export class PrismaRepository implements Repository {
         { description: { contains: filters.search, mode: "insensitive" } },
       ] : undefined,
     };
-    const values = await prisma.opportunity.findMany({ where, include: { organization: true }, orderBy: { deadline: "asc" } });
+    const values = await prisma.opportunity.findMany({ where, include: { organization: true }, orderBy: { deadline: { sort: "asc", nulls: "last" } } });
     return values.map(opportunityFromDb);
   }
 

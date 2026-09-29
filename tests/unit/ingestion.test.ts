@@ -26,7 +26,7 @@ describe("ingestion quality", () => {
   it("automatically closes deadline-passed listings", async () => {
     const repository = new MemoryRepository();
     const opportunities = await repository.listOpportunities();
-    const afterLatestDeadline = new Date(Math.max(...opportunities.map((item) => item.deadline.getTime())) + 1);
+    const afterLatestDeadline = new Date(Math.max(...opportunities.map((item) => item.deadline?.getTime() ?? Number.NEGATIVE_INFINITY)) + 1);
     const result = await refreshOpportunityLifecycle(repository, afterLatestDeadline);
     expect(result.closed).toBeGreaterThan(0);
     expect((await repository.listOpportunities()).every((item) => item.status === "closed")).toBe(true);

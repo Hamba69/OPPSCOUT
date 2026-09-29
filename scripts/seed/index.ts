@@ -61,7 +61,9 @@ function validateCatalog(): void {
     if (!organizationIds.has(opportunity.organizationId)) throw new Error(`Missing organization for ${opportunity.title}.`);
     if (!opportunity.sourceUrl.startsWith("https://")) throw new Error(`Official source must use HTTPS: ${opportunity.title}.`);
     if (opportunity.deadline <= SEED_SNAPSHOT_AT) throw new Error(`Seed deadline is not current at the catalogue snapshot: ${opportunity.title}.`);
-    if (Object.values(opportunity.reviewChecklist).some((value) => value !== true)) throw new Error(`Trust review is incomplete: ${opportunity.title}.`);
+    if (opportunity.verificationStatus === "verified" && Object.values(opportunity.reviewChecklist).some((value) => value !== true)) {
+      throw new Error(`Verified opportunities require a complete trust review: ${opportunity.title}.`);
+    }
   }
 }
 
@@ -127,7 +129,7 @@ async function main(): Promise<void> {
     }
   });
 
-  console.log(`Seeded ${organizations.length} organizations and ${opportunities.length} current opportunities (snapshot ${SEED_SNAPSHOT_AT.toISOString().slice(0, 10)}).`);
+  console.log(`Seeded ${organizations.length} organizations and ${opportunities.length} catalog opportunities, including items awaiting trust review (snapshot ${SEED_SNAPSHOT_AT.toISOString().slice(0, 10)}).`);
 }
 
 main()
