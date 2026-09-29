@@ -63,13 +63,13 @@ export function ResetPasswordForm(): React.JSX.Element {
   }
 
   return <main className="page-shell animate-in">
-    <div className="text-center"><p className="eyebrow">Your account</p><h1 className="mt-2 text-4xl font-black">Reset your password.</h1><p className="mx-auto mt-3 max-w-xl text-ink/60">Choose a new password with at least eight characters.</p></div>
+    <div className="text-center"><h1 className="text-3xl font-extrabold text-ink sm:text-4xl">Reset your password.</h1><p className="mx-auto mt-3 max-w-xl text-navy">Choose a new password with at least eight characters.</p></div>
     <section className="card mx-auto mt-8 max-w-lg">
       <form className="space-y-4" onSubmit={submit}>
         <label><span className="label">New password</span><input className="field" type="password" name="password" minLength={8} autoComplete="new-password" required disabled={busy || !sessionValid || complete} /></label>
         <button className="button w-full" disabled={busy || !sessionValid || complete}>{busy ? "Please wait…" : "Update password"}</button>
-        {message && <p className="rounded-2xl bg-butter p-3 text-sm font-bold" role="status">{message}</p>}
-        {!complete && <Link href="/login" className="inline-block text-sm font-bold underline underline-offset-4">Request a new reset email</Link>}
+        {message && <p className="rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+        {!complete && <Link href="/login" className="inline-block text-sm font-semibold text-navy underline underline-offset-4">Request a new reset email</Link>}
       </form>
     </section>
   </main>;

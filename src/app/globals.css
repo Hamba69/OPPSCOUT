@@ -4,8 +4,8 @@
 
 :root {
   color-scheme: light;
-  --background: #fefefc;
-  --ink: #17181c;
+  --background: #f9f9f6;
+  --ink: #1e293b;
 }
 
 * { box-sizing: border-box; }
@@ -13,63 +13,51 @@ html { background: var(--background); }
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 6% 4%, rgba(255, 210, 31, .32), transparent 26rem),
-    radial-gradient(circle at 96% 14%, rgba(255, 210, 31, .16), transparent 22rem),
-    radial-gradient(circle at 50% 105%, rgba(23, 24, 28, .03), transparent 26rem),
-    var(--background);
-  font-family: var(--font-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  background: var(--background);
+  font-family: var(--font-sans), Montserrat, ui-sans-serif, system-ui, sans-serif;
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
 }
+@media (min-width: 768px) { body { padding-bottom: 0; } }
 
-::selection { background: #ffd21f; color: #17181c; }
+::selection { background: #ffd700; color: #1e293b; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
 @layer components {
-  .page-shell { @apply mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8; }
-  .card { @apply rounded-blob border border-ink/[.06] bg-white p-5 shadow-soft; }
-  .button { @apply inline-flex min-h-11 items-center justify-center rounded-full bg-sun px-5 py-2.5 font-bold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-sun hover:shadow-soft active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-sun/40 disabled:cursor-not-allowed disabled:opacity-50; }
-  .button-secondary { @apply inline-flex min-h-11 items-center justify-center rounded-full border border-ink/[.12] bg-white px-5 py-2.5 font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:shadow-soft focus:outline-none focus:ring-4 focus:ring-sun/30; }
-  .field { @apply w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 outline-none transition placeholder:text-ink/40 focus:border-sun focus:ring-4 focus:ring-sun/25; }
-  .label { @apply mb-1.5 block text-sm font-bold; }
-  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.14em] text-ink/60; }
-  .pill { @apply inline-flex items-center rounded-full bg-butter px-3 py-1 text-xs font-bold; }
-  .badge-verified { @apply inline-flex items-center gap-1 rounded-full bg-sun px-3 py-1 text-xs font-bold text-ink; }
-  .badge-urgent { @apply inline-flex items-center gap-1 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white; }
-  .badge-urgent-soft { @apply inline-flex items-center gap-1 rounded-full bg-coral/15 px-3 py-1 text-xs font-bold text-coral; }
-  /* Floating rating-style pill, like the star badge overlapping a card corner in the reference */
-  .rating-pill { @apply inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-sm font-extrabold text-ink shadow-soft; }
-  /* Circular filled stat badge, like the time / servings / difficulty icons in the reference */
-  .stat-badge { @apply flex flex-col items-center justify-center gap-0.5 rounded-2xl bg-sun px-2 py-3 text-center leading-none shadow-soft; }
-  .stat-badge .stat-value { @apply text-xs font-extrabold text-ink; }
-  .stat-badge .stat-label { @apply text-[10px] font-semibold text-ink/60; }
-  /* Floating capsule nav, like the bottom nav pill in the reference */
-  .nav-capsule { @apply flex items-center gap-1 rounded-full border border-ink/[.06] bg-white p-1.5 shadow-soft; }
-  .nav-capsule a { @apply rounded-full px-4 py-2 text-sm font-semibold text-ink/60 transition; }
-  .nav-capsule a.active { @apply bg-sun text-ink shadow-soft; }
+  .page-shell { @apply mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8; }
+  .card { @apply rounded-blob border border-ink/[.08] bg-white p-5 shadow-soft; }
+  .button { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-sun px-6 py-3 font-bold text-ink shadow-[0_4px_0_#F6CA57] transition hover:brightness-105 active:translate-y-0.5 active:shadow-[0_2px_0_#F6CA57] focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40 disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex min-h-12 items-center justify-center gap-1.5 rounded-2xl border-2 border-honey bg-white px-5 py-3 font-semibold text-ink transition hover:bg-butter focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40; }
+  .field { @apply w-full rounded-2xl border-2 border-ink/10 bg-white px-4 py-3 text-ink outline-none transition placeholder:text-navy/60 focus:border-honey focus:ring-4 focus:ring-leaf/20; }
+  .label { @apply mb-1.5 block text-sm font-bold text-ink; }
+  .eyebrow { @apply text-sm font-semibold text-navy; }
+  .pill { @apply inline-flex items-center rounded-full border border-honey bg-butter px-3 py-1 text-xs font-bold text-ink; }
+  .chip { @apply inline-flex min-h-9 shrink-0 items-center rounded-full border-2 border-ink/10 bg-white px-4 text-sm font-semibold text-navy transition hover:border-honey focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40; }
+  .chip[aria-pressed="true"] { @apply border-amber bg-amber text-ink; }
+  .badge-verified { @apply inline-flex items-center gap-1 rounded-full bg-leaf/10 px-3 py-1 text-xs font-bold text-leaf; }
+  .badge-urgent { @apply inline-flex items-center gap-1 rounded-full bg-coral px-3 py-1 text-xs font-bold text-ink; }
+  .badge-urgent-soft { @apply inline-flex items-center gap-1 rounded-full bg-coral/25 px-3 py-1 text-xs font-bold text-ink; }
+  .match-score { @apply text-sm font-extrabold text-leaf; }
+  .stat-badge { @apply flex flex-col items-center justify-center gap-0.5 rounded-2xl border border-honey/60 bg-butter px-2 py-3 text-center leading-tight; }
+  .stat-badge .stat-value { @apply text-xs font-bold capitalize text-ink; }
+  .stat-badge .stat-label { @apply text-[11px] font-medium text-navy; }
+  .nav-capsule { @apply flex items-center gap-1 rounded-full border border-ink/[.08] bg-white p-1.5; }
+  .nav-capsule a { @apply rounded-full px-4 py-2 text-sm font-semibold text-navy transition; }
+  .nav-capsule a.active { @apply bg-honey text-ink; }
   .nav-capsule a:hover:not(.active) { @apply text-ink; }
 }
 
-@keyframes page-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes score-enter {
-  from { opacity: 0; transform: scale(.88); }
-  to { opacity: 1; transform: scale(1); }
-}
-
+@keyframes page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .animate-in { animation: page-enter 320ms ease-out both; }
-.score-enter { animation: score-enter 260ms ease-out 90ms both; }
 .match-lift { transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .match-lift:hover { transform: translateY(-3px) scale(1.005); box-shadow: 0 16px 36px rgb(23 24 28 / .12); border-color: rgb(23 24 28 / .1); }
+  .match-lift:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgb(30 41 59 / .12); border-color: #f6ca57; }
 }
-.match-lift:focus-within { border-color: rgb(23 24 28 / .25); }
+.match-lift:focus-within { border-color: #f6ca57; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .button:hover { transform: none; }
 }
