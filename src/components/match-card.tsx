@@ -11,7 +11,10 @@ export interface MatchCardProps {
 export function MatchCard(props: MatchCardProps): React.JSX.Element {
   const daysLeft = props.daysLeft;
   const fit = props.matched.find((factor) => factor.label === "Skills") ?? props.matched[0];
+<<<<<<< HEAD
   const gap = props.missing[0];
+=======
+>>>>>>> e432442b8938ed60e121bd1272488719c9ec4569
   const deadlineLabel = props.deadline ? new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" }) : "Rolling";
   return (
     <article className="card match-lift flex h-full flex-col">
@@ -22,8 +25,12 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
         </span>
         <span className="match-score">{props.score}% match</span>
       </div>
+<<<<<<< HEAD
       <h2 className="mt-3 text-lg font-extrabold leading-snug text-ink">{props.title}</h2>
       <p className="mt-1 text-sm font-medium text-navy">{props.organization}</p>
+=======
+      {daysLeft !== null && daysLeft > 0 && daysLeft <= 3 && <p className="badge-urgent mt-3 self-start">⏱ Closes in {daysLeft} {daysLeft === 1 ? "day" : "days"}</p>}
+>>>>>>> e432442b8938ed60e121bd1272488719c9ec4569
 
       <div className="mt-4 grid grid-cols-3 gap-2">
         <div className="stat-badge"><span className="stat-value">{props.workMode}</span><span className="stat-label">Work mode</span></div>

@@ -1,4 +1,5 @@
 import type { Opportunity, Organization, TrustChecklist } from "@/core/entities/domain";
+import { getDiscoveredOpportunities, getDiscoveredOrganizations } from "@/data/discovered-catalog";
 
 export const SEED_SNAPSHOT_AT = new Date("2026-08-21T12:00:00.000Z");
 
@@ -475,7 +476,7 @@ function copy<T>(value: T): T {
 }
 
 export function getSeedOrganizations(): Organization[] {
-  return organizationSeeds.map((seed) => ({
+  const existing = organizationSeeds.map((seed) => ({
     ...copy(seed),
     postingHistory: opportunitySeeds
       .filter((opportunity) => opportunity.organizationId === seed.id)
@@ -483,20 +484,27 @@ export function getSeedOrganizations(): Organization[] {
     createdAt: SEED_SNAPSHOT_AT,
     updatedAt: SEED_SNAPSHOT_AT,
   }));
+  return [...existing, ...getDiscoveredOrganizations()];
 }
 
-export function getSeedOpportunities(): Opportunity[] {
+export function getSeedOpportunities(): Array<Opportunity & { deadline: Date }> {
   const organizations = new Map(getSeedOrganizations().map((organization) => [organization.id, organization]));
-  return opportunitySeeds.map((seed) => {
+  const attachOrganization = (seed: SeedOpportunity | Opportunity): Opportunity & { deadline: Date } => {
     const organization = organizations.get(seed.organizationId);
     if (!organization) throw new Error(`Seed organization ${seed.organizationId} is missing.`);
+    if (!seed.deadline) throw new Error(`Seed opportunity ${seed.title} must have a closing date.`);
     return {
       ...copy(seed),
+      deadline: seed.deadline,
       organization: {
         id: organization.id,
         name: organization.name,
         verificationStatus: organization.verificationStatus,
       },
     };
-  });
+  };
+  return [
+    ...opportunitySeeds.map(attachOrganization),
+    ...getDiscoveredOpportunities().map(attachOrganization),
+  ];
 }

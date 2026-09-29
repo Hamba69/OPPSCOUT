@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
+<<<<<<< HEAD
 import { BottomTabs } from "@/components/bottom-tabs";
 import { Logo } from "@/components/logo";
 import { HeaderNav } from "@/components/header-nav";
+=======
+import { SectionNav } from "@/components/section-nav";
+>>>>>>> e432442b8938ed60e121bd1272488719c9ec4569
 
 import "./globals.css";
 
@@ -20,7 +24,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): React.JSX.Element {
+<<<<<<< HEAD
   const nav = [["Home", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"], ["Providers", "/onboarding/organization"], ["Account", "/login"]] as const;
+=======
+  const nav = [["Matches", "/feed"], ["Saved", "/saved"], ["Profile", "/profile"], ["Settings", "/settings"], ["Providers", "/onboarding/organization"], ["Account", "/login"]] as const;
+>>>>>>> e432442b8938ed60e121bd1272488719c9ec4569
   return (
     <html lang="en" className={sans.variable}>
       <body>

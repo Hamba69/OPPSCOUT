@@ -11,6 +11,7 @@ export interface RankedMatch extends StoredMatchResult {
 }
 
 function deadlineUrgency(opportunity: Opportunity, currentTime: Date): number {
+  if (!opportunity.deadline) return 0;
   const hours = (opportunity.deadline.getTime() - currentTime.getTime()) / 3_600_000;
   if (hours <= 0) return -1;
   if (hours <= 24) return 3;
@@ -48,7 +49,7 @@ export async function buildRankedFeed(
   const matches: RankedMatch[] = [];
 
   for (const opportunity of opportunities) {
-    if (opportunity.deadline <= now) continue;
+    if (opportunity.deadline && opportunity.deadline <= now) continue;
     const gates = evaluateHardGates(profile, opportunity);
     if (!gates.eligible) continue;
     const result = await engine.score(profile, opportunity);
@@ -65,5 +66,11 @@ export async function buildRankedFeed(
     matches.push({ ...stored, opportunity, urgencyRank: deadlineUrgency(opportunity, now) });
   }
 
-  return matches.sort((a, b) => b.score - a.score || b.urgencyRank - a.urgencyRank || a.opportunity!.deadline.getTime() - b.opportunity!.deadline.getTime());
+  return matches.sort((a, b) => {
+    const score = b.score - a.score || b.urgencyRank - a.urgencyRank;
+    if (score) return score;
+    const left = a.opportunity!.deadline?.getTime() ?? Number.POSITIVE_INFINITY;
+    const right = b.opportunity!.deadline?.getTime() ?? Number.POSITIVE_INFINITY;
+    return left - right;
+  });
 }

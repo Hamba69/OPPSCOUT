@@ -83,8 +83,3 @@ export function getDemoCatalog(now = new Date()): { organizations: Organization[
   });
   return { organizations, opportunities };
 }
-
-export function demoSourceHref(sourceUrl: string): string {
-  const prefix = "https://example.org/oppscout-demo/";
-  return sourceUrl.startsWith(prefix) ? `/demo/source/${sourceUrl.slice(prefix.length)}` : sourceUrl;
-}

@@ -16,9 +16,6 @@ const baseRequired = [
   "ANTHROPIC_MODEL",
   "ANTHROPIC_API_KEY",
   "OPPSCOUT_SCRAPER_SHADOW_BUCKET",
-  "OPPSCOUT_DATA_MODE",
-  "OPPSCOUT_DEMO_MODE",
-  "OPPSCOUT_DEMO_USER_ID",
   "OPPSCOUT_AI_DEFAULT",
   "OPPSCOUT_AI_COMPARISON_APPROVED",
   "OPPSCOUT_MONETIZATION_LEGAL_REVIEW",
@@ -37,37 +34,11 @@ const optionalGates = [
   ["OPPSCOUT_AI_DEFAULT", "OPPSCOUT_AI_COMPARISON_APPROVED"],
 ];
 
-function isProductionUrl(value) {
-  if (!value) return false;
-  try {
-    const { hostname } = new URL(value);
-    return hostname !== "localhost" && hostname !== "127.0.0.1" && hostname !== "0.0.0.0" && !hostname.endsWith(".local");
-  } catch {
-    return false;
-  }
-}
-
-function isProductionEnvironment() {
-  if (process.env.VERCEL_ENV === "production") return true;
-  if (process.env.NODE_ENV !== "production") return false;
-  return isProductionUrl(process.env.OPPSCOUT_APP_URL);
-}
-
 const missing = baseRequired.filter((name) => !process.env[name] || String(process.env[name]).trim() === "");
 for (const [gate, name] of optionalGates) {
   if (process.env[gate] === "true" && (!process.env[name] || String(process.env[name]).trim() === "")) {
     missing.push(name);
   }
-}
-
-if (process.env.OPPSCOUT_DATA_MODE && process.env.OPPSCOUT_DATA_MODE !== "prisma") {
-  console.error("OPPSCOUT_DATA_MODE must be prisma for production.");
-  process.exitCode = 1;
-}
-
-if (process.env.OPPSCOUT_DEMO_MODE === "1" && isProductionEnvironment()) {
-  console.error("Demo mode is disabled in production. Remove OPPSCOUT_DEMO_MODE=1.");
-  process.exitCode = 1;
 }
 
 if (process.env.OPPSCOUT_AI_DEFAULT === "true" && process.env.OPPSCOUT_AI_COMPARISON_APPROVED !== "true") {

@@ -1,0 +1,14 @@
+{
+  "total": 100,
+  "https_fail": [],
+  "deadline_not_future": [],
+  "suspicious": [],
+  "duplicates": [
+    [
+      "Territory Field Sales Representative, Gulu",
+      "Territory Field Sales Representative, Mukono",
+      0.857
+    ]
+  ],
+  "passed": 99
+}
