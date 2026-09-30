@@ -1,5 +1,6 @@
 "use client";
 
+import { ExternalIcon } from "@/components/icons";
 import { useEffect, useRef, useState } from "react";
 
 export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId: string; sourceUrl: string }): React.JSX.Element {
@@ -47,5 +48,5 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
     finally { setBusy(false); }
   }
 
-  return <div className="mt-6"><div className="flex flex-wrap gap-3"><button className="button" disabled={busy} onClick={save}>Save opportunity</button><a className="button-secondary" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}>Apply on official site ↗</a><button className="button-secondary" disabled={busy || intentRecorded} onClick={recordIntent}>{intentRecorded ? "Plan noted" : "I plan to apply"}</button><button className="rounded-full px-4 py-2 text-sm font-bold text-coral hover:bg-coral/10" onClick={report}>Report listing</button></div>{message && <p className="mt-3 rounded-2xl bg-butter p-3 text-sm font-bold" role="status">{message}</p>}</div>;
+  return <div className="mt-6"><div className="flex flex-wrap gap-3"><a className="button" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}>Apply on official site <ExternalIcon /></a><button className="button-secondary" disabled={busy} onClick={save}>Save opportunity</button><button className="button-secondary" disabled={busy || intentRecorded} onClick={recordIntent}>{intentRecorded ? "Plan noted" : "I plan to apply"}</button><button className="min-h-11 rounded-2xl px-4 py-2 text-sm font-bold text-ink underline decoration-coral decoration-2 underline-offset-4 hover:bg-coral/15" onClick={report}>Report listing</button></div>{message && <p className="mt-3 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</div>;
 }

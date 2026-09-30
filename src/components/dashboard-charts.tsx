@@ -3,9 +3,9 @@ import type { SloTarget } from "@/config/slo-targets";
 
 export function InterestFunnel({ items }: { items: ReadonlyArray<readonly [string, number]> }): React.JSX.Element {
   const maximum = Math.max(1, ...items.map(([, value]) => value));
-  const colors = ["text-sun", "text-leaf", "text-coral", "text-ink"];
+  const colors = ["text-amber", "text-leaf", "text-coral", "text-navy"];
   return <figure className="card mt-6">
-    <figcaption><h2 className="text-xl font-black">From discovery to a next step</h2><p className="mt-2 text-sm text-ink/60">Actions across your listings, on one scale. These are event totals, not unique people or a tracked cohort.</p></figcaption>
+    <figcaption><h2 className="text-xl font-extrabold text-ink">From discovery to a next step</h2><p className="mt-2 text-sm text-navy">Actions across your listings, on one scale. These are event totals, not unique people or a tracked cohort.</p></figcaption>
     <div className="mt-6 space-y-5">{items.map(([label, value], index) => <div key={label}>
       <div className="mb-2 flex justify-between gap-3 text-sm"><span className="font-bold">{label}</span><span className="tabular-nums">{value}</span></div>
       <svg viewBox="0 0 600 20" className={`h-5 w-full ${colors[index]}`} preserveAspectRatio="none" role="img" aria-label={`${label}: ${value} events`}>
@@ -13,7 +13,7 @@ export function InterestFunnel({ items }: { items: ReadonlyArray<readonly [strin
         <rect width={value / maximum * 600} height="20" rx="10" fill="currentColor" />
       </svg>
     </div>)}</div>
-    {items.every(([, value]) => value === 0) && <p className="mt-5 rounded-2xl border border-dashed border-ink/20 p-4 text-sm text-ink/60">Ready for your first visitor. Views, saves, and source visits will appear here as people explore your listings.</p>}
+    {items.every(([, value]) => value === 0) && <p className="mt-5 rounded-2xl border border-dashed border-ink/20 p-4 text-sm text-navy">Ready for your first visitor. Views, saves, and source visits will appear here as people explore your listings.</p>}
   </figure>;
 }
 
@@ -30,12 +30,12 @@ function illustrativeSeries(metric: KpiMetric): number[] {
 }
 
 export function KpiTrend({ metric, periodDays, illustrative }: { metric: KpiMetric; periodDays: number; illustrative: boolean }): React.JSX.Element {
-  if (!illustrative) return <p className="mt-5 rounded-xl border border-dashed border-ink/15 p-3 text-xs text-ink/55">Trend history is not available yet.</p>;
+  if (!illustrative) return <p className="mt-5 rounded-xl border border-dashed border-ink/15 p-3 text-xs text-navy">Trend history is not available yet.</p>;
   const series = illustrativeSeries(metric);
   const delta = series[6] - series[0];
   const waiting = metric.sampleSize === 0;
-  const tone = waiting ? "text-ink/40" : delta > 0.01 ? "text-leaf" : delta < -0.01 ? "text-coral" : "text-ink/65";
-  const dot = waiting ? "bg-ink/20" : delta > 0.01 ? "bg-leaf" : delta < -0.01 ? "bg-coral" : "bg-sun";
+  const tone = waiting ? "text-navy" : delta > 0.01 ? "text-leaf" : delta < -0.01 ? "text-coral" : "text-navy";
+  const dot = waiting ? "bg-ink/20" : delta > 0.01 ? "bg-leaf" : delta < -0.01 ? "bg-coral" : "bg-honey";
   const label = waiting ? "Collecting data" : delta > 0.01 ? "Improving illustration" : delta < -0.01 ? "Declining illustration" : "Steady illustration";
   const maximum = Math.max(1, ...series) * 1.12;
   return <figure className={`mt-5 ${tone}`}>
@@ -43,9 +43,9 @@ export function KpiTrend({ metric, periodDays, illustrative }: { metric: KpiMetr
       <path d="M0 63 H280" className="stroke-ink/10" />
       {series.map((value, index) => <rect key={index} x={index * 40 + 5} y={63 - value / maximum * 60} width="26" height={Math.max(1, value / maximum * 60)} rx="4" fill="currentColor" opacity={index === 6 ? 1 : 0.3 + index * 0.08} />)}
     </svg>
-    <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+    <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-ink">
       <span className="flex items-center gap-2 font-bold"><span className={`size-2 rounded-full ${dot}`} aria-hidden="true" />{label}</span>
-      <span className="text-ink/50">Illustrative · {periodDays} days</span>
+      <span className="text-navy">Illustration only, {periodDays} days</span>
     </figcaption>
   </figure>;
 }
