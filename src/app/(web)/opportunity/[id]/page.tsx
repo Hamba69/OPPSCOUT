@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { OpportunityActions } from "@/components/opportunity-actions";
-import { requirePageAuth } from "@/lib/auth";
+import { requireSeekerProfile } from "@/lib/page-access";
 import { getRepository } from "@/lib/repository";
 import { buildRankedFeed } from "@/services/matching/feed";
 
@@ -15,8 +15,8 @@ export function generateMetadata(): Metadata {
 
 export default async function OpportunityPage({ params }: Props): Promise<React.JSX.Element> {
   const { id } = await params;
+  const { userId } = await requireSeekerProfile(`/opportunity/${id}`);
   const repository = await getRepository();
-  const { userId } = await requirePageAuth(["user"]);
   const opportunity = await repository.getOpportunity(id);
   if (!opportunity || opportunity.verificationStatus !== "verified") notFound();
   const match = (await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false })).find((item) => item.opportunityId === id);

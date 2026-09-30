@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 const steps = [
-  ["01", "Build your profile", "Your study field, skills, and preferred locations give us a useful starting point."],
-  ["02", "See explained matches", "Eligibility comes first. See what fits and what needs a little preparation."],
-  ["03", "Apply with confidence", "Save your next step, check the deadline, and follow the official source."],
+  ["01", "Create an account", "Sign up or sign in to keep your matches and saved opportunities private."],
+  ["02", "Add your profile", "Share your study field, skills, and preferred locations so we can find a useful fit."],
+  ["03", "Explore your matches", "See what fits, save promising options, and follow each official source."],
 ] as const;
 
 const promises = [
@@ -15,6 +16,26 @@ const promises = [
 ] as const;
 
 export default async function HomePage(): Promise<React.JSX.Element> {
+  let signedIn = false;
+  let signedInDestination = "/feed";
+  let signedInAction = "Open my matches";
+  let profileSettingsHref: string | null = "/settings?section=profile";
+  try {
+    const { data: { user } } = await (await createClient()).auth.getUser();
+    signedIn = Boolean(user);
+    if (user?.app_metadata.role === "organization") {
+      signedInDestination = "/dashboard";
+      signedInAction = "Open provider workspace";
+      profileSettingsHref = null;
+    } else if (user?.app_metadata.role === "admin") {
+      signedInDestination = "/admin/kpis";
+      signedInAction = "Open admin tools";
+      profileSettingsHref = null;
+    }
+  } catch {
+    // The public introduction stays available while authentication is not configured.
+  }
+
   return (
     <main className="page-shell animate-in">
       <div className="grid items-center gap-10 py-6 lg:grid-cols-[1.2fr_.8fr] lg:py-10">
@@ -22,7 +43,10 @@ export default async function HomePage(): Promise<React.JSX.Element> {
           <p className="eyebrow">Your next good thing</p>
           <h1 className="mt-3 max-w-3xl text-5xl font-black leading-[1.02] sm:text-7xl">Good opportunities, minus the guesswork.</h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-ink/70">OppScout checks eligibility first, ranks what genuinely fits, and tells you exactly why.</p>
-          <div className="mt-8 flex flex-wrap gap-3"><Link href="/feed" className="button">See my matches →</Link><Link href="/profile" className="button-secondary">Build my profile</Link></div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href={signedIn ? signedInDestination : "/login?mode=signup&next=%2Ffeed"} className="button">{signedIn ? signedInAction : "Create my account"}</Link>
+            {profileSettingsHref && <Link href={signedIn ? profileSettingsHref : "/login?next=%2Ffeed"} className="button-secondary">{signedIn ? "Update my profile" : "I already have an account"}</Link>}
+          </div>
         </section>
         <aside className="card relative overflow-hidden bg-butter">
           <div className="absolute -right-8 -top-8 size-32 rounded-full bg-sun" />
@@ -53,6 +77,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
           <h3 className="font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-ink/65">{description}</p>
         </div>)}</div>
       </section>
+      <p className="mt-8 text-center text-sm text-ink/60">Represent an organization? <Link className="font-bold underline underline-offset-4" href="/onboarding/organization">Set up a provider workspace</Link></p>
     </main>
   );
 }
