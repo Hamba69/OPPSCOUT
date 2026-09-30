@@ -6,6 +6,9 @@ const config: Config = {
     extend: {
       colors: {
         ink: "#27251f",
+        navy: "#1e293b",
+        honey: "#f6ca57",
+        amber: "#f6c945",
         sun: "#f6c945",
         butter: "#fff7cf",
         cream: "#fffdf5",
