@@ -2,6 +2,8 @@
 
 Uganda-first opportunity discovery with deterministic eligibility, explained rule/AI matching, verified manual and shadow-discovered listings, provider analytics, web/USSD access, selective alerts, and fail-closed monetization readiness.
 
+OrbitMatch is the deterministic, offline non-AI default; set `OPPSCOUT_MATCH_ENGINE=rules` to use the legacy engine. See [ORBITMATCH.md](ORBITMATCH.md) for the algorithm and simulation.
+
 ## Local development
 
 ```powershell

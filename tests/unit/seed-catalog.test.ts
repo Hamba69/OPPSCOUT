@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { getDiscoveredOpportunities, getDiscoveredOrganizations } from "@/data/discovered-catalog";
 
 import {
   getSeedOpportunities,
@@ -11,12 +12,17 @@ describe("current opportunity seed catalogue", () => {
     const organizations = getSeedOrganizations();
     const opportunities = getSeedOpportunities();
 
-    expect(organizations).toHaveLength(6);
-    expect(opportunities).toHaveLength(12);
+    const discoveredOrganizations = getDiscoveredOrganizations();
+    const discoveredOpportunities = getDiscoveredOpportunities();
+    expect(organizations).toHaveLength(6 + discoveredOrganizations.length);
+    expect(opportunities).toHaveLength(12 + discoveredOpportunities.length);
+    expect(organizations.filter((organization) => organization.verificationStatus === "verified")).toHaveLength(6);
+    const reviewed = opportunities.filter((opportunity) => opportunity.verificationStatus === "verified");
+    expect(reviewed).toHaveLength(12);
     expect(new Set(organizations.map((organization) => organization.id)).size).toBe(organizations.length);
     expect(new Set(opportunities.map((opportunity) => opportunity.id)).size).toBe(opportunities.length);
 
-    for (const opportunity of opportunities) {
+    for (const opportunity of reviewed) {
       expect(opportunity.deadline.getTime()).toBeGreaterThan(SEED_SNAPSHOT_AT.getTime());
       expect(opportunity.sourceUrl).toMatch(/^https:\/\//);
       expect(opportunity.verificationStatus).toBe("verified");
@@ -29,6 +35,15 @@ describe("current opportunity seed catalogue", () => {
         deadlinePlausible: true,
         duplicateChecked: true,
       });
+    }
+
+    // Archive claims stay outside the trusted catalog until independent review.
+    for (const imported of discoveredOpportunities) {
+      const opportunity = opportunities.find((item) => item.id === imported.id)!;
+      expect(["pending", "flagged"]).toContain(opportunity.verificationStatus);
+      expect(opportunity.organization?.verificationStatus).toBe("pending");
+      expect(opportunity.reviewedAt).toBeNull();
+      expect(opportunity.reviewChecklist.sourceAuthentic).toBe(false);
     }
   });
 

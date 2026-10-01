@@ -2,6 +2,7 @@ import { ProfileForm } from "@/components/profile-form";
 import { requirePageAuth } from "@/lib/auth";
 import { isMatchingProfileReady } from "@/lib/page-access";
 import { getUserProfile } from "@/lib/profile-store";
+import { getProfileChoices } from "@/lib/profile-options";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -24,8 +25,8 @@ export default async function ProfilePage({ searchParams }: ProfilePageProps): P
   const initial = {
     name: profile?.name ?? "", email: profile?.email ?? "", phone: profile?.phone ?? "", educationLevel: profile?.educationLevel ?? "",
     fieldOfStudy: profile?.fieldOfStudy ?? "", graduationStatus: profile?.graduationStatus ?? "", dateOfBirth: profile?.dateOfBirth?.toISOString().slice(0, 10) ?? "", location: profile?.location ?? "",
-    skills: profile?.skills.join(", ") ?? "", careerInterests: profile?.careerInterests.join(", ") ?? "", preferredLocations: profile?.preferredLocations.join(", ") ?? "",
-    opportunityCategories: profile?.opportunityCategories.join(", ") ?? "", languages: profile?.languages.join(", ") ?? "", workModePreference: profile?.workModePreference ?? "" as const,
+    skills: profile?.skills ?? [], careerInterests: profile?.careerInterests ?? [], preferredLocations: profile?.preferredLocations ?? [],
+    opportunityCategories: profile?.opportunityCategories ?? [], languages: profile?.languages ?? [], workModePreference: profile?.workModePreference ?? "" as const,
   };
   return <main className="page-shell animate-in">
     <p className="eyebrow">Step 2 of 2 · Your profile</p>
@@ -41,6 +42,6 @@ export default async function ProfilePage({ searchParams }: ProfilePageProps): P
       <p className="mt-2 text-sm leading-6 text-ink/70">Your skills, interests, locations, and work preferences help rank matches; they are not a checklist. Education, age, language, and programme rules can affect eligibility when a listing explicitly requires them. Add accurate details where you can, and leave anything you do not know blank.</p>
       <p className="mt-2 text-sm leading-6 text-ink/70">The feed shows only open, verified opportunities that meet the eligibility details in your profile. If there are no matches, it may be because no current listings pass review or fit the details provided—not because your profile is incomplete.</p>
     </section>
-    <ProfileForm initial={initial} afterSavePath={afterSavePath} />
+    <ProfileForm initial={initial} choices={await getProfileChoices()} afterSavePath={afterSavePath} />
   </main>;
 }

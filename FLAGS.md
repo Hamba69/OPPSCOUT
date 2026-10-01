@@ -2,6 +2,8 @@
 
 Phase One flags are defined in `src/config/feature-flags.ts`.
 
+OrbitMatch is the offline non-AI default; `OPPSCOUT_MATCH_ENGINE=rules` selects the legacy engine. This selector leaves feature flags unchanged, including `aiMatching: false`.
+
 | Flag | State | Reason |
 |---|---:|---|
 | `phaseOneCore` | on | Core profile, match, save, trust, and event paths are implemented and tested. |

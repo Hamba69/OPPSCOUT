@@ -1,4 +1,6 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import type { ProfileInput } from "@/lib/repository/types";
+import { recomputeRankedFeed } from "@/services/matching/feed";
 
 import * as profileRoute from "@/app/api/v1/profile/route";
 import * as completenessRoute from "@/app/api/v1/profile/completeness/route";
@@ -28,8 +30,29 @@ import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
 import * as sloRoute from "@/app/api/v1/monitoring/slo/route";
-import { setRepositoryForTests } from "@/lib/repository";
-import { DEMO_ORG_ID, MemoryRepository } from "@/lib/repository/memory";
+import { getRepository, setRepositoryForTests } from "@/lib/repository";
+import { DEMO_ADMIN_ID, DEMO_ORG_ID, DEMO_ORG_USER_ID, DEMO_USER_ID, MemoryRepository } from "@/lib/repository/memory";
+
+// These contracts use injected test identity/data, never a live auth provider.
+// Keep the real role authorization checks while replacing authentication only.
+vi.mock("@/lib/auth", async (importOriginal) => ({
+  ...await importOriginal<typeof import("@/lib/auth")>(),
+  requireAuth: async (request: Request) => {
+    const role = request.headers.get("x-oppscout-demo-role") ?? "user";
+    return {
+      userId: role === "admin" ? DEMO_ADMIN_ID : role === "organization" ? DEMO_ORG_USER_ID : DEMO_USER_ID,
+      role,
+      organizationId: role === "organization" ? DEMO_ORG_ID : null,
+    };
+  },
+}));
+
+vi.mock("@/lib/profile-store", () => ({
+  getUserProfile: async (userId: string) => (await getRepository()).getProfile(userId),
+  createUserProfile: async (userId: string, input: ProfileInput) => (await getRepository()).createProfile(userId, input),
+  updateUserProfile: async (userId: string, input: ProfileInput) => (await getRepository()).updateProfile(userId, input),
+  deleteUserProfile: async (userId: string) => (await getRepository()).deleteProfile(userId),
+}));
 
 const opportunityId = "55555555-5555-4555-8555-555555555551";
 const userHeaders = { "Content-Type": "application/json" };
@@ -72,6 +95,8 @@ describe("every Phase 1 /api/v1 route", () => {
   });
 
   it("returns ranked matches with complete explanations", async () => {
+    // The read-only feed reuses stored IDs; explanations require persisted matches.
+    await recomputeRankedFeed(await getRepository(), DEMO_USER_ID);
     const response = await matchesRoute.GET(request("/api/v1/matches"));
     expect(response.status).toBe(200);
     const matches = await data<Array<{ id: string; matchedFactors: unknown[]; missingFactors: unknown[] }>>(response);

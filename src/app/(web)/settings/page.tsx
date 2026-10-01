@@ -4,6 +4,7 @@ import { ProfileForm, type ProfileFormInitial } from "@/components/profile-form"
 import { SettingsForm } from "@/components/settings-form";
 import { requireSeekerProfile } from "@/lib/page-access";
 import { createClient } from "@/lib/supabase/server";
+import { getProfileChoices } from "@/lib/profile-options";
 
 export const dynamic = "force-dynamic";
 
@@ -36,14 +37,15 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps):
     graduationStatus: profile.graduationStatus ?? "",
     dateOfBirth: profile.dateOfBirth?.toISOString().slice(0, 10) ?? "",
     location: profile.location ?? "",
-    skills: profile.skills.join(", "),
-    careerInterests: profile.careerInterests.join(", "),
-    preferredLocations: profile.preferredLocations.join(", "),
-    opportunityCategories: profile.opportunityCategories.join(", "),
-    languages: profile.languages.join(", "),
+    skills: profile.skills,
+    careerInterests: profile.careerInterests,
+    preferredLocations: profile.preferredLocations,
+    opportunityCategories: profile.opportunityCategories,
+    languages: profile.languages,
     workModePreference: normalizedWorkMode,
   };
 
+  const profileChoices = section === "profile" ? await getProfileChoices() : undefined;
   return (
     <main className="page-shell animate-in">
       <p className="eyebrow">Your space, your choices</p>
@@ -61,7 +63,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps):
       {section === "profile" && <section className="mt-6">
         <h2 className="text-xl font-black">Your matching profile</h2>
         <p className="mt-1 text-sm text-ink/60">These details shape your matches and stay private to your account.</p>
-        <ProfileForm initial={initial} />
+        <ProfileForm initial={initial} choices={profileChoices} />
       </section>}
 
       {section === "notifications" && <section className="mt-6">

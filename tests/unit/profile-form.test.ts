@@ -1,0 +1,76 @@
+// @vitest-environment jsdom
+import { createElement } from "react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ProfileForm, type ProfileFormInitial } from "@/components/profile-form";
+import { profileSchema } from "@/lib/validation";
+import { buildProfileChoices } from "@/services/profile/choices";
+import { getDemoCatalog } from "@/data/demo-catalog";
+import { DEMO_USER_ID, MemoryRepository } from "@/lib/repository/memory";
+import { buildRankedFeed } from "@/services/matching/feed";
+import { OrbitMatchEngine } from "@/services/matching/orbit/engine";
+
+const mocks = vi.hoisted(() => ({ replace: vi.fn(), refresh: vi.fn(), fetch: vi.fn() }));
+vi.mock("next/navigation", () => ({ useRouter: () => mocks }));
+const initial: ProfileFormInitial = { name: "Nadia Kato", email: "", phone: "", educationLevel: "", fieldOfStudy: "", graduationStatus: "", dateOfBirth: "", location: "", skills: [], careerInterests: [], preferredLocations: [], opportunityCategories: [], languages: [], workModePreference: "" };
+beforeEach(() => { vi.clearAllMocks(); vi.stubGlobal("fetch", mocks.fetch); mocks.fetch.mockResolvedValue({ ok: true }); });
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+
+describe("selectable matching profile", () => {
+  it("sends exact scalar and array values, retaining selected skills after searching", async () => {
+    render(createElement(ProfileForm, { initial, choices: buildProfileChoices(getDemoCatalog().opportunities) }));
+    fireEvent.change(screen.getByLabelText("Education level"), { target: { value: "bachelors" } });
+    fireEvent.change(screen.getByLabelText("Field of study"), { target: { value: "computer science" } });
+    fireEvent.change(screen.getByLabelText("Study / graduation status"), { target: { value: "graduated" } });
+    fireEvent.change(screen.getByLabelText("Where you live now"), { target: { value: "Kampala" } });
+    fireEvent.change(screen.getByLabelText("Search skills"), { target: { value: "javascript" } });
+    fireEvent.click(screen.getByRole("checkbox", { name: "JavaScript" }));
+    fireEvent.change(screen.getByLabelText("Search skills"), { target: { value: "sql" } });
+    fireEvent.click(screen.getByRole("checkbox", { name: "SQL" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "English" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Jobs" }));
+    fireEvent.click(screen.getByRole("radio", { name: /Hybrid/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Save my profile/ }));
+    await screen.findByRole("status");
+    const [path, request] = mocks.fetch.mock.calls[0];
+    expect(path).toBe("/api/v1/profile");
+    const body = JSON.parse(request.body);
+    expect(body).toMatchObject({ educationLevel: "bachelors", fieldOfStudy: "computer science", graduationStatus: "graduated", location: "Kampala", skills: ["javascript", "sql"], languages: ["English"], opportunityCategories: ["job"], workModePreference: "hybrid" });
+    expect(body.careerInterests).toEqual([]);
+    const repo = new MemoryRepository();
+    const saved = await repo.updateProfile(DEMO_USER_ID, profileSchema.parse(body));
+    expect(saved.skills).toEqual(["javascript", "sql"]);
+    const matches = await buildRankedFeed(repo, DEMO_USER_ID, new Date(), new OrbitMatchEngine());
+    expect(matches.length).toBeGreaterThan(0);
+    expect(matches.every((match) => match.score >= 0 && match.score <= 100)).toBe(true);
+  });
+
+  it("preserves existing custom values and allows removing a selected entry", async () => {
+    render(createElement(ProfileForm, { initial: { ...initial, educationLevel: "legacy qualification", location: "My village", skills: ["rare craft", "research"], languages: ["Custom language"], preferredLocations: ["Kampala, Uganda"] } }));
+    expect((screen.getByLabelText("Education level") as HTMLSelectElement).value).toBe("legacy qualification");
+    fireEvent.click(screen.getByRole("button", { name: "Remove Research" }));
+    fireEvent.click(screen.getByRole("button", { name: /Save my profile/ }));
+    await waitFor(() => expect(mocks.fetch).toHaveBeenCalled());
+    expect(JSON.parse(mocks.fetch.mock.calls[0][1].body)).toMatchObject({ educationLevel: "legacy qualification", location: "My village", skills: ["rare craft"], languages: ["Custom language"], preferredLocations: ["Kampala, Uganda"] });
+  });
+
+  it("keeps choices on a failed save and displays the API validation message", async () => {
+    mocks.fetch.mockResolvedValue({ ok: false, status: 400, json: async () => ({ error: { details: { fieldErrors: { skills: ["Please review your skill entries."] } } } }) });
+    render(createElement(ProfileForm, { initial: { ...initial, skills: ["javascript"] } }));
+    fireEvent.click(screen.getByRole("button", { name: /Save my profile/ }));
+    expect((await screen.findByRole("alert")).textContent).toBe("Please review your skill entries.");
+    expect(screen.getByRole("button", { name: "Remove JavaScript" })).toBeTruthy();
+    expect(mocks.replace).not.toHaveBeenCalled();
+  });
+
+  it("saves an unlisted location as its real value rather than the UI sentinel", async () => {
+    render(createElement(ProfileForm, { initial }));
+    fireEvent.change(screen.getByLabelText("Where you live now"), { target: { value: "__custom" } });
+    fireEvent.change(screen.getByLabelText("Your location"), { target: { value: "Nansana" } });
+    fireEvent.click(screen.getByRole("button", { name: /Save my profile/ }));
+    await waitFor(() => expect(mocks.fetch).toHaveBeenCalled());
+    const body = JSON.parse(mocks.fetch.mock.calls[0][1].body);
+    expect(body.location).toBe("Nansana");
+    expect(profileSchema.safeParse(body).success).toBe(true);
+  });
+});
