@@ -1,6 +1,7 @@
-import "server-only";
+﻿import "server-only";
 
 import { randomUUID } from "node:crypto";
+import { parseDatabaseDate as asDate } from "@/lib/database-date";
 
 import type {
   EventLog,
@@ -26,10 +27,6 @@ import type {
 type DbRow = Record<string, unknown>;
 type DataClient = ReturnType<typeof createServiceRoleClient>;
 
-function asDate(value: unknown): Date | null {
-  if (value === null || value === undefined) return null;
-  return value instanceof Date ? value : new Date(String(value));
-}
 
 function organizationFromRow(row: DbRow): Organization {
   return {
