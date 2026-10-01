@@ -5,21 +5,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#27251f",
-        navy: "#1e293b",
-        honey: "#f6ca57",
-        amber: "#f6c945",
-        sun: "#f6c945",
-        butter: "#fff7cf",
-        cream: "#fffdf5",
-        leaf: "#46784b",
-        coral: "#ef745c"
+        ink: "#1E293B",
+        navy: "#3F4D62",
+        muted: "#3F4D62",
+        amber: "#FFD700",
+        sun: "#FFD15B",
+        honey: "#F6CA57",
+        butter: "#FFF9C4",
+        cream: "#F9F9F6",
+        leaf: "#1F7E6E",
+        coral: "#F28C7A"
       },
       boxShadow: {
-        soft: "0 12px 32px rgba(65, 52, 12, 0.10)"
+        soft: "0 8px 24px rgba(30, 41, 59, 0.08)"
       },
       borderRadius: {
-        blob: "1.75rem"
+        blob: "1.25rem"
       }
     }
   },
