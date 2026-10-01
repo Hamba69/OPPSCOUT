@@ -4,7 +4,7 @@ import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
 import { BottomTabs } from "@/components/bottom-tabs";
 import { Logo } from "@/components/logo";
-import { SectionNav } from "@/components/section-nav";
+import { HeaderNav } from "@/components/header-nav";
 
 import "./globals.css";
 
@@ -30,8 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
               <Logo size={36} />
               oppscout
             </Link>
-            <div className="hidden md:block"><SectionNav label="Main navigation" links={nav} /></div>
-            <Link href="/login" className="rounded-full border-2 border-honey px-4 py-1.5 text-sm font-semibold text-ink md:hidden">Sign in</Link>
+            <HeaderNav links={nav} />
           </div>
         </header>
         {children}
