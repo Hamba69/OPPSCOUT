@@ -7,5 +7,5 @@ export const dynamic = "force-dynamic";
 export default async function SettingsPage(): Promise<React.JSX.Element> {
   const { userId } = await requirePageAuth(["user"]);
   const profile = await (await getRepository()).getProfile(userId);
-  return <main className="page-shell animate-in"><h1 className="text-3xl font-extrabold text-ink sm:text-4xl">Alert settings</h1><SettingsForm channel={profile?.preferredChannel ?? "email"} secondaryChannels={profile?.secondaryChannels ?? []} frequency={profile?.notificationFrequency ?? "instant"} enabled={profile?.notificationsEnabled ?? true} /><form action="/auth/logout" method="post" className="mt-6 max-w-xl"><button className="button-secondary w-full">Sign out</button></form></main>;
+  return <main className="page-shell animate-in"><h1 className="text-2xl font-extrabold text-ink sm:text-4xl">Alert settings</h1><p className="mt-1 text-navy">Choose how and when we notify you about new matches and closing dates.</p><SettingsForm channel={profile?.preferredChannel ?? "email"} secondaryChannels={profile?.secondaryChannels ?? []} frequency={profile?.notificationFrequency ?? "instant"} enabled={profile?.notificationsEnabled ?? true} /></main>;
 }
