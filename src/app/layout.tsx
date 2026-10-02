@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { BottomTabs } from "@/components/bottom-tabs";
 import { SiteHeader } from "@/components/site-header";
 import { createClient } from "@/lib/supabase/server";
@@ -35,6 +36,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <SiteHeader signedIn={signedIn} />
         {children}
         <BottomTabs />
+        <Analytics />
       </body>
     </html>
   );
