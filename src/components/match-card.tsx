@@ -29,8 +29,10 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
       </p>
       {fit && <p className="mt-3 rounded-2xl bg-butter px-4 py-3 text-sm leading-6 text-ink">{fit.detail}</p>}
       <div className="mt-auto pt-4">
-        <Link className="button w-full" href={`/opportunity/${props.opportunityId}`}>View match</Link>
-      </div>
+  <Link className="text-link" href={`/opportunity/${props.opportunityId}`}>
+    View details
+  </Link>
+</div>
     </article>
   );
 }

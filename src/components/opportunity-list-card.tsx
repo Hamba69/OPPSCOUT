@@ -19,6 +19,10 @@ export function OpportunityListCard({ item, now }: { item: OpportunityListItem; 
     <h2 className="mt-3 text-lg font-extrabold leading-snug text-ink">{item.title}</h2>
     <p className="mt-0.5 text-sm font-medium text-navy">{item.organization}</p>
     <p className="mt-3 text-sm text-navy"><span className="capitalize">{item.location} · {item.workMode}</span> · {urgent ? <strong className="text-[#B3261E]">Closes in {days} {days === 1 ? "day" : "days"}</strong> : deadline}</p>
-    <div className="mt-auto pt-4"><Link href={`/opportunity/${item.id}`} className="button w-full">View details</Link></div>
+    <div className="mt-auto pt-4">
+  <Link href={`/opportunity/${item.id}`} className="text-link">
+    View details
+  </Link>
+</div>
   </article>;
 }
