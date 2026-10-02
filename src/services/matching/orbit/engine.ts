@@ -164,8 +164,8 @@ export class OrbitMatchEngine implements MatchEngine {
     const gated = (raw / max) * ((1 - this.o.anchor) + this.o.anchor * anchorRatio);
     const all = Object.values(dims);
     const matched = all.flatMap((d) => d.matched), missing = all.flatMap((d) => d.missing);
-    if (!matched.length) matched.push({ label: "Eligibility", detail: "You passed the mandatory eligibility checks." });
-    if (!missing.length) missing.push({ label: "Application readiness", detail: "Confirm the required documents and tailor your application before submitting." });
+    if (!matched.length) matched.push({ label: "Eligibility", detail: "You passed the mandatory eligibility checks against your profile." });
+    if (!missing.length) missing.push({ label: "Application readiness", detail: "Your profile aligns well. Confirm required documents on the official source and tailor your application before submitting." });
     return { score: Math.max(0, Math.min(100, Math.round(gated * 100))), matchedFactors: matched, missingFactors: missing, generatedBy: "rules" };
   }
 }

@@ -10,8 +10,9 @@ export interface GateResult {
 
 function ageOn(dateOfBirth: Date, at: Date): number {
   let age = at.getUTCFullYear() - dateOfBirth.getUTCFullYear();
-  const beforeBirthday = at.getUTCMonth() < dateOfBirth.getUTCMonth()
-    || (at.getUTCMonth() === dateOfBirth.getUTCMonth() && at.getUTCDate() < dateOfBirth.getUTCDate());
+  const beforeBirthday =
+    at.getUTCMonth() < dateOfBirth.getUTCMonth() ||
+    (at.getUTCMonth() === dateOfBirth.getUTCMonth() && at.getUTCDate() < dateOfBirth.getUTCDate());
   if (beforeBirthday) age -= 1;
   return age;
 }
@@ -22,12 +23,15 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
   const eligibility = opportunity.eligibility;
 
   if (eligibility.educationLevels?.length) {
-    const educationMatches = Boolean(profile.educationLevel) && includesNormalized(eligibility.educationLevels, profile.educationLevel ?? "");
+    const educationMatches =
+      Boolean(profile.educationLevel) && includesNormalized(eligibility.educationLevels, profile.educationLevel ?? "");
     (educationMatches ? passed : failed).push({
       label: "Education eligibility",
       detail: educationMatches
-        ? `${profile.educationLevel} is accepted.`
-        : `Requires one of: ${eligibility.educationLevels.join(", ")}.`,
+        ? `Your education level (${profile.educationLevel}${profile.institution ? `, ${profile.institution}` : ""}) is accepted for this opportunity.`
+        : profile.educationLevel
+          ? `Your education level is ${profile.educationLevel}; this opportunity requires one of: ${eligibility.educationLevels.join(", ")}.`
+          : `Add your education level. This opportunity requires one of: ${eligibility.educationLevels.join(", ")}.`,
     });
   }
 
@@ -36,38 +40,50 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
     const missing = requiredCertifications.filter((item) => !includesNormalized(profile.certifications, item));
     (missing.length ? failed : passed).push({
       label: "Mandatory certifications",
-      detail: missing.length ? `Missing: ${missing.join(", ")}.` : "All mandatory certifications are present.",
+      detail: missing.length
+        ? `Your profile is missing: ${missing.join(", ")}. You currently list: ${profile.certifications.length ? profile.certifications.join(", ") : "none"}.`
+        : `All mandatory certifications are present on your profile (${requiredCertifications.join(", ")}).`,
     });
   }
 
   if (eligibility.minimumAge !== undefined || eligibility.maximumAge !== undefined) {
     const age = profile.dateOfBirth ? ageOn(profile.dateOfBirth, opportunity.deadline ?? new Date()) : null;
-    const matches = age !== null
-      && (eligibility.minimumAge === undefined || age >= eligibility.minimumAge)
-      && (eligibility.maximumAge === undefined || age <= eligibility.maximumAge);
+    const matches =
+      age !== null &&
+      (eligibility.minimumAge === undefined || age >= eligibility.minimumAge) &&
+      (eligibility.maximumAge === undefined || age <= eligibility.maximumAge);
     (matches ? passed : failed).push({
       label: "Age eligibility",
-      detail: age === null
-        ? "Add your date of birth to verify this programme's age rule."
-        : matches
-          ? `Age ${age} meets the programme rule.`
-          : `Age ${age} is outside the required range${eligibility.minimumAge !== undefined ? ` from ${eligibility.minimumAge}` : ""}${eligibility.maximumAge !== undefined ? ` to ${eligibility.maximumAge}` : ""}.`,
+      detail:
+        age === null
+          ? "Add your date of birth on your profile to verify this programme's age rule."
+          : matches
+            ? `Your age (${age}) meets the programme rule${eligibility.minimumAge !== undefined ? ` (from ${eligibility.minimumAge}` : ""}${eligibility.maximumAge !== undefined ? ` to ${eligibility.maximumAge})` : ")"}.`
+            : `Your age (${age}) is outside the required range${eligibility.minimumAge !== undefined ? ` from ${eligibility.minimumAge}` : ""}${eligibility.maximumAge !== undefined ? ` to ${eligibility.maximumAge}` : ""}.`,
     });
   }
 
   for (const rule of eligibility.programmeRules ?? []) {
-    const values = rule.field === "language"
-      ? profile.languages
-      : [rule.field === "graduationStatus" ? profile.graduationStatus ?? "" : profile.location ?? ""];
-    const matches = rule.allowedValues.some((allowed) => values.some((value) => normalize(value) === normalize(allowed)));
+    const values =
+      rule.field === "language"
+        ? profile.languages
+        : [rule.field === "graduationStatus" ? profile.graduationStatus ?? "" : profile.location ?? ""];
+    const matches = rule.allowedValues.some((allowed) =>
+      values.some((value) => normalize(value) === normalize(allowed)),
+    );
     (matches ? passed : failed).push({
       label: rule.label,
-      detail: matches ? "Programme-specific requirement is met." : `Requires one of: ${rule.allowedValues.join(", ")}.`,
+      detail: matches
+        ? `Your profile meets “${rule.label}” (matched against: ${rule.allowedValues.join(", ")}).`
+        : `Requires one of: ${rule.allowedValues.join(", ")}. Update your profile if this should apply to you.`,
     });
   }
 
   if (!passed.length && !failed.length) {
-    passed.push({ label: "Eligibility gates", detail: "No mandatory exclusion rule applies." });
+    passed.push({
+      label: "Eligibility gates",
+      detail: "No mandatory exclusion rule applies to your profile for this listing.",
+    });
   }
 
   return { eligible: failed.length === 0, passed, failed };

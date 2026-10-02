@@ -22,8 +22,8 @@ export class RuleBasedMatchEngine implements MatchEngine {
     const raw = dimensions.reduce((sum, item) => sum + item.weight * item.value.ratio, 0);
     const matchedFactors = dimensions.flatMap((item) => item.value.matched);
     const missingFactors = dimensions.flatMap((item) => item.value.missing);
-    if (!matchedFactors.length) matchedFactors.push({ label: "Eligibility", detail: "You passed the mandatory eligibility checks." });
-    if (!missingFactors.length) missingFactors.push({ label: "Application readiness", detail: "Confirm the required documents and tailor your application before submitting." });
+    if (!matchedFactors.length) matchedFactors.push({ label: "Eligibility", detail: "You passed the mandatory eligibility checks against your profile." });
+    if (!missingFactors.length) missingFactors.push({ label: "Application readiness", detail: "Your profile aligns well. Confirm required documents on the official source and tailor your application before submitting." });
     return {
       score: Math.max(0, Math.min(100, Math.round((raw / MAX_WEIGHTED_SCORE) * 100))),
       matchedFactors,
