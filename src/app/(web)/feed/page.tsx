@@ -27,11 +27,13 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in">
-      <h1 className="text-2xl font-extrabold text-ink sm:text-3xl">{matches.length} {matches.length === 1 ? "match" : "matches"} for you</h1>
-      <p className="mt-1 text-sm text-navy">Best fit first. Every listing is verified.</p>
+      <h1 className="text-2xl font-extrabold text-ink sm:text-3xl">Matches</h1>
+      <p className="mt-1 text-sm text-navy">
+        We have found {matches.length} {matches.length === 1 ? "match" : "matches"}
+      </p>
       {matches.length ? <FeedBrowser items={items} /> : <div className="mt-6">{isProfileCompleteForMatching(profile)
         ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
         : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}</div>}
     </main>
-  );
+  );    
 }

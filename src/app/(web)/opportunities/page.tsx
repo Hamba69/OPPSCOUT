@@ -40,13 +40,13 @@ export default async function OpportunitiesPage({
     <main className="page-shell animate-in">
       <h1 className="text-2xl font-extrabold text-ink sm:text-3xl">Opportunities</h1>
       <p className="mt-1 text-sm text-navy">
-        All open, verified opportunities. Those that fit your profile are shown first.
+        All open opportunities, with your matches prioritised
       </p>
 
       <form action="/opportunities" method="get" role="search" className="mt-5">
         {type && <input type="hidden" name="type" value={type} />}
         <label>
-          <span className="label">Search</span>
+          <span className="sr-only">Search</span>
           <span className="flex gap-2">
             <input
               className="field"
