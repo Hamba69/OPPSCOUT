@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { getOptionalAuth, homePathForRole } from "@/lib/auth";
 
 import { AlertIcon, CheckIcon } from "@/components/icons";
 
@@ -24,7 +27,9 @@ function Stage({ title, text, flip, children }: { title: string; text: string; f
   </li>;
 }
 
-export default function HomePage(): React.JSX.Element {
+export default async function HomePage(): Promise<React.JSX.Element> {
+  const auth = await getOptionalAuth();
+  if (auth) redirect(homePathForRole(auth.role));
   return (
     <main className="animate-in">
       <div className="bg-gradient-to-b from-cream to-butter">

@@ -12,3 +12,9 @@ export function calculateProfileCompleteness(profile: ProfileInput): number {
   }).length;
   return Math.round((completed / PROFILE_COMPLETENESS_FIELDS.length) * 100);
 }
+
+/** The details matching depends on. A profile with all of these is "complete" for the purpose of finding matches. */
+export function isProfileCompleteForMatching(profile: ProfileInput): boolean {
+  return Boolean(profile.name?.trim() && profile.educationLevel && profile.fieldOfStudy && profile.location
+    && profile.skills?.length && profile.opportunityCategories?.length);
+}

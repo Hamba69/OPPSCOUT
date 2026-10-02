@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { getOptionalAuth, homePathForRole } from "@/lib/auth";
 import { Logo } from "@/components/logo";
 import { AuthForm } from "@/components/auth-form";
 
@@ -7,6 +9,8 @@ interface LoginPageProps { searchParams: Promise<{ next?: string; error?: string
 
 export default async function LoginPage({ searchParams }: LoginPageProps): Promise<React.JSX.Element> {
   const { next: requested, error } = await searchParams;
+  const auth = await getOptionalAuth();
+  if (auth) redirect(homePathForRole(auth.role));
   const nextPath = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/feed";
   return <main className="page-shell animate-in"><div className="text-center"><div className="flex justify-center"><Logo size={64} /></div><h1 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl">Welcome to OppScout</h1><p className="mx-auto mt-3 max-w-xl text-navy">Sign in or create an account to see opportunities that fit you.</p></div>{error === "callback" && <p className="mx-auto mt-6 max-w-lg rounded-2xl border border-coral bg-coral/15 p-3 text-sm font-bold text-ink" role="alert">Your email link is invalid or has expired. To reset your password, enter your email below and choose “Forgot your password?”.</p>}<AuthForm nextPath={nextPath} /></main>;
 }

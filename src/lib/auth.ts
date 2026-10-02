@@ -52,3 +52,19 @@ export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<Auth
   requireRole(context, roles);
   return context;
 }
+
+export function homePathForRole(role: AppRole): string {
+  return role === "organization" ? "/dashboard" : role === "admin" ? "/admin/kpis" : "/feed";
+}
+
+/** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */
+export async function getOptionalAuth(): Promise<AuthContext | null> {
+  try {
+    const client = await createClient();
+    const { data, error } = await client.auth.getUser();
+    if (error || !data.user) return null;
+    return await contextFromUser(data.user);
+  } catch {
+    return null;
+  }
+}
