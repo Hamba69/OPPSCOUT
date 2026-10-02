@@ -29,12 +29,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .card { @apply rounded-blob border border-ink/[.08] bg-white p-5 shadow-soft; }
 
   /* Soft primary — muted gold, no chunky 3D shadow */
-  .button {
-    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl bg-amber px-4 py-2
+    .button {
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl px-4 py-2
       text-sm font-semibold text-ink shadow-sm transition
       hover:brightness-105 active:translate-y-px
-      focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-[#FFD700]/40
       disabled:cursor-not-allowed disabled:opacity-50;
+    background-color: #ffd700;
   }
 
   .button-secondary {
