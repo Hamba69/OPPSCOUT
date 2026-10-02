@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: light;
-  --background: #f9f9f6;
+  --background: #fafaf6;
   --ink: #1e293b;
 }
 
@@ -19,7 +19,7 @@ body {
 }
 @media (min-width: 768px) { body { padding-bottom: 0; } }
 
-::selection { background: #ffd700; color: #1e293b; }
+::selection { background: #ffe566; color: #1e293b; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -27,24 +27,54 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @layer components {
   .page-shell { @apply mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8; }
   .card { @apply rounded-blob border border-ink/[.08] bg-white p-5 shadow-soft; }
-  .button { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-sun px-6 py-3 font-bold text-ink shadow-[0_4px_0_#F6CA57] transition hover:brightness-105 active:translate-y-0.5 active:shadow-[0_2px_0_#F6CA57] focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40 disabled:cursor-not-allowed disabled:opacity-50; }
-  .button-secondary { @apply inline-flex min-h-12 items-center justify-center gap-1.5 rounded-2xl border-2 border-honey bg-white px-5 py-3 font-semibold text-ink transition hover:bg-butter focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40; }
-  .field { @apply w-full rounded-2xl border-2 border-ink/10 bg-white px-4 py-3 text-ink outline-none transition placeholder:text-navy/60 focus:border-honey focus:ring-4 focus:ring-leaf/20; }
-  .label { @apply mb-1.5 block text-sm font-bold text-ink; }
+
+  /* Soft primary — muted gold, no chunky 3D shadow */
+  .button {
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl bg-amber px-4 py-2
+      text-sm font-semibold text-ink shadow-sm transition
+      hover:brightness-105 active:translate-y-px
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .button-secondary {
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl
+      border border-honey bg-white px-3.5 py-2 text-sm font-semibold text-ink
+      transition hover:bg-butter
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40;
+  }
+
+  /* Text-style action (View details, Clear, Official source) */
+  .text-link {
+    @apply inline-flex min-h-11 items-center text-sm font-semibold
+      text-[#B8860B] underline decoration-butter decoration-2 underline-offset-4
+      transition hover:text-ink hover:decoration-amber
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/40 focus-visible:ring-offset-2;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-ink outline-none transition
+      placeholder:text-navy/60 focus:border-honey focus:ring-4 focus:ring-leaf/20;
+  }
+  .label { @apply mb-1.5 block text-sm font-semibold text-ink; }
   .eyebrow { @apply text-sm font-semibold text-navy; }
-  .pill { @apply inline-flex items-center rounded-full border border-honey bg-butter px-3 py-1 text-xs font-bold text-ink; }
-  .chip { @apply inline-flex min-h-9 shrink-0 items-center rounded-full border-2 border-ink/10 bg-white px-4 text-sm font-semibold text-navy transition hover:border-honey focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40; }
+  .pill { @apply inline-flex items-center rounded-full border border-honey/80 bg-butter px-3 py-1 text-xs font-semibold text-ink; }
+  .chip {
+    @apply inline-flex min-h-9 shrink-0 items-center rounded-full border border-ink/10 bg-white px-4 text-sm font-semibold text-navy
+      transition hover:border-honey hover:bg-butter focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40;
+  }
   .chip[aria-pressed="true"] { @apply border-amber bg-amber text-ink; }
-  .badge-verified { @apply inline-flex items-center gap-1 rounded-full bg-leaf/10 px-3 py-1 text-xs font-bold text-leaf; }
-  .badge-urgent { @apply inline-flex items-center gap-1 rounded-full bg-coral px-3 py-1 text-xs font-bold text-ink; }
-  .badge-urgent-soft { @apply inline-flex items-center gap-1 rounded-full bg-coral/25 px-3 py-1 text-xs font-bold text-ink; }
-  .match-score { @apply text-sm font-extrabold text-leaf; }
-  .stat-badge { @apply flex flex-col items-center justify-center gap-0.5 rounded-2xl border border-honey/60 bg-butter px-2 py-3 text-center leading-tight; }
-  .stat-badge .stat-value { @apply text-xs font-bold capitalize text-ink; }
+  
+  .badge-verified { @apply inline-flex items-center gap-1 rounded-full bg-leaf/10 px-3 py-1 text-xs font-semibold text-leaf; }
+  .badge-urgent { @apply inline-flex items-center gap-1 rounded-full bg-coral/80 px-3 py-1 text-xs font-semibold text-ink; }
+  .badge-urgent-soft { @apply inline-flex items-center gap-1 rounded-full bg-coral/25 px-3 py-1 text-xs font-semibold text-ink; }
+  .match-score { @apply text-sm font-bold text-leaf; }
+  .stat-badge { @apply flex flex-col items-center justify-center gap-0.5 rounded-2xl border border-honey/40 bg-butter px-2 py-3 text-center leading-tight; }
+  .stat-badge .stat-value { @apply text-xs font-semibold capitalize text-ink; }
   .stat-badge .stat-label { @apply text-[11px] font-medium text-navy; }
   .nav-capsule { @apply flex items-center gap-1 rounded-full border border-ink/[.08] bg-white p-1.5; }
   .nav-capsule a { @apply rounded-full px-4 py-2 text-sm font-semibold text-navy transition; }
-  .nav-capsule a.active { @apply bg-honey text-ink; }
+  .nav-capsule a.active { @apply bg-amber text-ink; }
   .nav-capsule a:hover:not(.active) { @apply text-ink; }
 }
 
@@ -52,9 +82,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .animate-in { animation: page-enter 320ms ease-out both; }
 .match-lift { transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .match-lift:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgb(30 41 59 / .12); border-color: #f6ca57; }
+  .match-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgb(30 41 59 / .1);
+    border-color: #ffd700;
+  }
 }
-.match-lift:focus-within { border-color: #f6ca57; }
+.match-lift:focus-within { border-color: #ffd700; }
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 

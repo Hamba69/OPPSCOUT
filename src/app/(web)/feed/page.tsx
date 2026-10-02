@@ -3,21 +3,23 @@ import { FeedBrowser, type FeedItem } from "@/components/feed-browser";
 import { requirePageAuth } from "@/lib/auth";
 import { getUserProfile } from "@/lib/profile-store";
 import { getRepository } from "@/lib/repository";
+import { isProfileCompleteForMatching } from "@/services/profile/completeness";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default async function FeedPage(): Promise<React.JSX.Element> {
-  const { userId } = await requirePageAuth(["user"]);
+  const auth = await requirePageAuth(["user", "organization", "admin"]);
+  if (auth.role === "organization") redirect("/dashboard");
+  if (auth.role === "admin") redirect("/admin/kpis");
+  const { userId } = auth;
   const profile = await getUserProfile(userId);
   if (!profile) redirect("/profile");
 
   const repository = await getRepository();
   const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false });
   const now = new Date();
-  const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hour12: false, timeZone: "Africa/Kampala" }).format(now)) % 24;
-  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const items: FeedItem[] = matches.map((match) => {
     const opportunity = match.opportunity!;
     const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - now.getTime()) / 86_400_000) : null;
@@ -25,8 +27,11 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in">
-      <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">{greeting}, {profile?.name ?? "there"}</p><h1 className="mt-1 text-3xl font-extrabold text-ink sm:text-4xl">Matches worth your time.</h1><p className="mt-2 text-navy">Verified listings, ranked for your profile. Confirm all eligibility requirements with the provider.</p></div><span className="pill">{matches.length} {matches.length === 1 ? "match" : "matches"}</span></div>
-      {matches.length ? <FeedBrowser items={items} /> : <div className="mt-8"><EmptyState title="No clear matches yet" description="Our current verified listings may not cover your interests or eligibility yet. Check that your profile is accurate and return as new opportunities are reviewed." href="/profile" action="Review your profile" /></div>}
+      <h1 className="text-2xl font-extrabold text-ink sm:text-3xl">{matches.length} {matches.length === 1 ? "match" : "matches"} for you</h1>
+      <p className="mt-1 text-sm text-navy">Best fit first. Every listing is verified.</p>
+      {matches.length ? <FeedBrowser items={items} /> : <div className="mt-6">{isProfileCompleteForMatching(profile)
+        ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
+        : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}</div>}
     </main>
   );
 }
