@@ -37,11 +37,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Eleme
       <Link href={home} className="flex shrink-0 items-center gap-2 text-xl font-extrabold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} />oppscout</Link>
       {isSeeker && <div className="hidden md:block"><SectionNav label="Main navigation" links={seekerLinks} /></div>}
       {!bare && <div className="flex items-center gap-2">
-        {isLanding && !signedIn && <>
-          <Link href="/onboarding/organization" className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-navy hover:text-ink">For organizations</Link>
-          <Link href="/login" className="inline-flex min-h-11 items-center rounded-full border-2 border-honey px-4 text-sm font-semibold text-ink">Sign in</Link>
-        </>}
-                {!isLanding && (signedIn || isSeeker || isStaff) && <AccountMenu seeker={isSeeker} />}
+        {!isLanding && (signedIn || isSeeker || isStaff) && <AccountMenu seeker={isSeeker} />}
       </div>}
     </div>
   </header>;
