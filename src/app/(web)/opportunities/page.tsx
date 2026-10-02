@@ -38,7 +38,7 @@ export default async function OpportunitiesPage({
 
   return (
     <main className="page-shell animate-in">
-      <h1 className="text-2xl font-extrabold text-ink sm:text-3xl"> The Opportunities</h1>
+      <h1 className="text-2xl font-semibold text-ink sm:text-3xl"> The Opportunities</h1>
       <p className="mt-1 text-sm text-navy">
         All open opportunities, with your matches prioritised
       </p>

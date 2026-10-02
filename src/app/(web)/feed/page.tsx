@@ -27,7 +27,7 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in">
-      <h1 className="text-2xl font-extrabold text-ink sm:text-3xl"> Available Matches</h1>
+      <h1 className="text-2xl font-semibold text-ink sm:text-3xl"> Available Matches</h1>
       <p className="mt-1 text-sm text-navy">
         We've found you {matches.length} {matches.length === 1 ? "match" : "matches"}
       </p>
