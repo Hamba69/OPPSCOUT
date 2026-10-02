@@ -40,7 +40,7 @@ export default async function OpportunitiesPage({
     <main className="page-shell animate-in">
       <h1 className="text-2xl font-semibold text-ink sm:text-3xl"> The Opportunities</h1>
       <p className="mt-1 text-sm text-navy">
-        All open opportunities, with your matches prioritised
+        Open catalog listings, with verified matches prioritised
       </p>
 
       <form action="/opportunities" method="get" role="search" className="mt-5">
@@ -96,6 +96,11 @@ export default async function OpportunitiesPage({
           </Link>
         )}
       </div>
+      {items.some((item) => item.verificationStatus === "pending") && (
+        <p className="mt-3 rounded-2xl border border-honey bg-butter p-4 text-sm text-navy">
+          {items.filter((item) => item.verificationStatus === "verified").length} verified · {items.filter((item) => item.verificationStatus === "pending").length} awaiting review. Listings awaiting review have no match score or application link until their source and details are checked.
+        </p>
+      )}
 
       {items.length ? (
         <div className="mt-3 grid gap-5 md:grid-cols-2">
