@@ -12,13 +12,13 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
   const daysLeft = props.daysLeft;
   const fit = props.matched.find((factor) => factor.label === "Skills") ?? props.matched[0];
   const gap = props.missing[0];
-  const deadlineLabel = props.deadline ? new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" }) : "Rolling";
+  const deadlineLabel = props.deadline ? new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short", timeZone: "UTC" }) : "Not published";
   return (
-    <article className="card match-lift flex h-full flex-col">
+    <article className="card match-lift flex h-full min-w-0 flex-col break-words">
       <div className="flex items-start justify-between gap-3">
         <span className="badge-verified">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
-          Verified organization
+          Verified listing
         </span>
         <span className="match-score">{props.score}% match</span>
       </div>
@@ -36,7 +36,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
       {gap && <div className="mt-3 rounded-2xl bg-ink/[.04] p-4"><p className="text-sm font-bold text-ink">One thing to prepare</p><p className="mt-1 text-sm text-navy">{gap.detail}</p></div>}
       <p className="mt-4 text-xs text-navy">Published {new Date(props.publicationDate).toLocaleDateString("en-UG")}. Source checked {new Date(props.checkedAt).toLocaleDateString("en-UG")}.</p>
 
-      <div className="mt-auto flex gap-2 pt-5">
+      <div className="mt-auto flex flex-wrap gap-2 pt-5">
         <Link className="button flex-1" href={`/opportunity/${props.opportunityId}`}>View match</Link>
         <a className="button-secondary" href={props.sourceUrl} target="_blank" rel="noreferrer">
           Official source

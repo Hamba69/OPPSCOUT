@@ -9,7 +9,7 @@ export interface ApiSuccess<T> {
 }
 
 export function success<T>(data: T, status = 200, freshnessAt = new Date()): Response {
-  return Response.json({ data, meta: { freshnessAt: freshnessAt.toISOString() } } satisfies ApiSuccess<T>, { status });
+  return Response.json({ data, meta: { freshnessAt: freshnessAt.toISOString() } } satisfies ApiSuccess<T>, { status, headers: { "Cache-Control": "private, no-store" } });
 }
 
 export function noContent(): Response {

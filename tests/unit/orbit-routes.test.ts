@@ -11,10 +11,13 @@ import { setRepositoryForTests } from "@/lib/repository";
 import { requireSeekerProfile } from "@/lib/page-access";
 import { buildRankedFeed } from "@/services/matching/feed";
 import type { MatchResult } from "@/core/interfaces/match-engine";
+import { requirePageAuth } from "@/lib/auth";
+import { getUserProfile } from "@/lib/profile-store";
 
 // Inject authenticated identity only; render the real pages, cards and engine.
 vi.mock("@/lib/page-access", () => ({ requireSeekerProfile: vi.fn() }));
-vi.mock("@/lib/auth", () => ({ requireAuth: vi.fn(async () => ({ userId: "11111111-1111-4111-8111-111111111111", role: "user", organizationId: null })) }));
+vi.mock("@/lib/auth", () => ({ requireAuth: vi.fn(async () => ({ userId: "11111111-1111-4111-8111-111111111111", role: "user", organizationId: null })), requirePageAuth: vi.fn() }));
+vi.mock("@/lib/profile-store", () => ({ getUserProfile: vi.fn() }));
 
 describe("OrbitMatch route rendering", () => {
   let repository: MemoryRepository;
@@ -24,6 +27,8 @@ describe("OrbitMatch route rendering", () => {
     vi.stubEnv("OPPSCOUT_MATCH_ENGINE", undefined);
     repository = new MemoryRepository();
     setRepositoryForTests(repository);
+    vi.mocked(requirePageAuth).mockResolvedValue({ userId: DEMO_USER_ID, role: "user", organizationId: null });
+    vi.mocked(getUserProfile).mockResolvedValue((await repository.getProfile(DEMO_USER_ID))!);
     vi.mocked(requireSeekerProfile).mockResolvedValue({ userId: DEMO_USER_ID, profile: (await repository.getProfile(DEMO_USER_ID))! });
   });
 
@@ -41,7 +46,7 @@ describe("OrbitMatch route rendering", () => {
     for (const [index, match] of matches.entries()) {
       expect(match.score).toBeGreaterThanOrEqual(0);
       expect(match.score).toBeLessThanOrEqual(100);
-      expect(cards[index].querySelector(".rating-pill")?.textContent).toContain(`${match.score}%`);
+      expect(cards[index].querySelector(".match-score")?.textContent).toContain(`${match.score}%`);
       const fit = match.matchedFactors.find((factor) => factor.label === "Skills") ?? match.matchedFactors[0];
       expect(cards[index].textContent).toContain(fit.detail);
       expect(cards[index].textContent).toContain(match.missingFactors[0].detail);

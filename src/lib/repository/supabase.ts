@@ -130,8 +130,18 @@ export class SupabaseRepository implements Repository {
     if (filters.statuses) query = query.in("status", filters.statuses);
     if (filters.organizationId) query = query.eq("organizationId", filters.organizationId);
 
-    const { data, error } = await query.order("deadline", { ascending: true, nullsFirst: false });
-    const rows = checked(data, error, "Could not list opportunities");
+    // Read every page: the Data API otherwise silently caps a growing catalog.
+    const rows: DbRow[] = [];
+    let cursor: string | undefined;
+    for (;;) {
+      const pageQuery = query.order("id", { ascending: true }).limit(500);
+      const { data, error } = await (cursor ? pageQuery.gt("id", cursor) : pageQuery);
+      const page = checked(data, error, "Could not list opportunities");
+      rows.push(...page);
+      if (!page.length) break;
+      cursor = String(page[page.length - 1].id);
+    }
+    rows.sort((a, b) => (asDate(a.deadline)?.getTime() ?? Infinity) - (asDate(b.deadline)?.getTime() ?? Infinity));
     const filtered = rows.filter((row: DbRow) =>
       (!filters.location || String(row.location).toLocaleLowerCase().includes(filters.location.toLocaleLowerCase())) &&
       (!filters.search || `${row.title}\n${row.description}`.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())),
@@ -432,8 +442,11 @@ export class SupabaseRepository implements Repository {
   private async organizationsByIds(ids: string[]): Promise<Map<string, DbRow>> {
     const uniqueIds = [...new Set(ids)];
     if (uniqueIds.length === 0) return new Map();
-    const { data, error } = await this.client.from("Organization").select("id,name,verificationStatus").in("id", uniqueIds);
-    const rows = checked(data, error, "Could not read opportunity organizations");
-    return new Map(rows.map((row: DbRow) => [String(row.id), row]));
+    const organizations = new Map<string, DbRow>();
+    for (let offset = 0; offset < uniqueIds.length; offset += 100) {
+      const { data, error } = await this.client.from("Organization").select("id,name,verificationStatus").in("id", uniqueIds.slice(offset, offset + 100));
+      for (const row of checked(data, error, "Could not read opportunity organizations")) organizations.set(String(row.id), row);
+    }
+    return organizations;
   }
 }

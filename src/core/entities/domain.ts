@@ -16,6 +16,7 @@ export interface ExperienceEntry {
 }
 
 export interface Eligibility {
+  additionalRequirements?: string[];
   educationLevels?: string[];
   fieldsOfStudy?: string[];
   minimumExperienceMonths?: number;

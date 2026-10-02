@@ -31,7 +31,8 @@ export const profileSchema = z.object({
   languages: stringList.optional(),
 }).strict();
 
-const eligibilitySchema = z.object({
+export const eligibilitySchema = z.object({
+  additionalRequirements: z.array(z.string().trim().min(1).max(500)).max(30).optional(),
   educationLevels: stringList.optional(),
   fieldsOfStudy: stringList.optional(),
   minimumExperienceMonths: z.number().int().min(0).max(600).optional(),

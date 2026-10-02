@@ -1,0 +1,913 @@
+{
+  "capturedAt": "2026-10-02T07:20:55.522Z",
+  "scope": "100 concurrent service feed builds with synthetic profiles and the live shared catalog. No synthetic users/profile rows written. Excludes HTTP, authentication, Redis, browser and production hosting.",
+  "elapsedMs": 2467,
+  "success": 100,
+  "p50Ms": 2285,
+  "p95Ms": 2450,
+  "p99Ms": 2464,
+  "zeroPreferredCategory": 0,
+  "zeroStrongMatches": 0,
+  "results": [
+    {
+      "education": "secondary",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2285,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2221,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2281,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2024,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2298,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2293,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2259,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2226,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2041,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2119,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2007,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2215,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2157,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2052,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2045,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2049,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2126,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2289,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2029,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2302,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2034,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2115,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2111,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2037,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2001,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2020,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2193,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2031,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2320,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2047,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "computer science",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2016,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "agriculture",
+      "eligibleListings": 11,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2196,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "education",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2276,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "nursing",
+      "eligibleListings": 11,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2146,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "business",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2203,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "law",
+      "eligibleListings": 11,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2118,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "engineering",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2219,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "media",
+      "eligibleListings": 11,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2306,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "environment",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2347,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "social work",
+      "eligibleListings": 11,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 3,
+      "durationMs": 2351,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "computer science",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2189,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "agriculture",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2123,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "education",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2132,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "nursing",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2386,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "business",
+      "eligibleListings": 15,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2326,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "law",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2312,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "engineering",
+      "eligibleListings": 15,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2256,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "media",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2317,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "environment",
+      "eligibleListings": 15,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2272,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "social work",
+      "eligibleListings": 13,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 3,
+      "durationMs": 2240,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2331,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2380,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2450,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2162,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2262,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2459,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2367,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2205,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2141,
+      "ok": true
+    },
+    {
+      "education": "secondary",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2165,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2329,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2392,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2453,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2208,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2309,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2179,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2353,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2335,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2278,
+      "ok": true
+    },
+    {
+      "education": "certificate",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2333,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "computer science",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2425,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "agriculture",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2314,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "education",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2466,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "nursing",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2338,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "business",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2400,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "law",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2381,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "engineering",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2342,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "media",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 1,
+      "durationMs": 2390,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "environment",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 8,
+      "durationMs": 2355,
+      "ok": true
+    },
+    {
+      "education": "diploma",
+      "field": "social work",
+      "eligibleListings": 9,
+      "preferredCategoryMatches": 1,
+      "strongMatches": 3,
+      "durationMs": 2370,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "computer science",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2406,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "agriculture",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2395,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "education",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2362,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "nursing",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2419,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "business",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 10,
+      "durationMs": 2416,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "law",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2442,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "engineering",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2464,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "media",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 1,
+      "durationMs": 2388,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "environment",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2434,
+      "ok": true
+    },
+    {
+      "education": "bachelors",
+      "field": "social work",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 2,
+      "strongMatches": 3,
+      "durationMs": 2412,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "computer science",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2213,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "agriculture",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2375,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "education",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2447,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "nursing",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2265,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "business",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2177,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "law",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2378,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "engineering",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2138,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "media",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 1,
+      "durationMs": 2457,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "environment",
+      "eligibleListings": 14,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 9,
+      "durationMs": 2439,
+      "ok": true
+    },
+    {
+      "education": "masters",
+      "field": "social work",
+      "eligibleListings": 12,
+      "preferredCategoryMatches": 3,
+      "strongMatches": 3,
+      "durationMs": 2409,
+      "ok": true
+    }
+  ]
+}

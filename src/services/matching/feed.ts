@@ -53,6 +53,7 @@ export async function buildRankedFeed(
     const gates = evaluateHardGates(profile, opportunity);
     if (!gates.eligible) continue;
     const result = await engine.score(profile, opportunity);
+    result.missingFactors.unshift(...(opportunity.eligibility.additionalRequirements ?? []).map(detail => ({ label: "Confirm eligibility with provider", detail })));
     result.matchedFactors.unshift(...gates.passed);
     const stored = options.persist === false
       ? {

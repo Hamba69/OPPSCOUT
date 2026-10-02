@@ -1,0 +1,4252 @@
+[
+  {
+    "id": "77777777-7777-4777-8777-000000000004",
+    "title": "ASU Mastercard Foundation Innovation and Technology Scholarship 2027/2028",
+    "organizationId": "66666666-6666-4666-8666-000000000009",
+    "category": "scholarship",
+    "description": "A fully funded programme for young Africans, including Ugandans, to study technology and innovation at Arizona State University and return to the continent as leaders.",
+    "eligibility": {
+      "programmeRules": [
+        {
+          "field": "location",
+          "label": "Sub-Saharan Africa nationality/residency",
+          "allowedValues": [
+            "Uganda"
+          ]
+        }
+      ],
+      "educationLevels": [
+        "secondary",
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "academic excellence",
+      "leadership"
+    ],
+    "preferredSkills": [
+      "technology",
+      "innovation"
+    ],
+    "location": "United States",
+    "workMode": "onsite",
+    "deadline": "2026-09-27T23:59:00",
+    "applicationMethod": "Apply through the Arizona State University Mastercard Foundation Scholars Program application portal before the deadline.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-15T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.271Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "pageTitle": "Scholarships| Opportunities For Africans",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000005",
+    "title": "Government of Japan Exchange and Teaching (JET) Programme 2027",
+    "organizationId": "66666666-6666-4666-8666-000000000036",
+    "category": "scholarship",
+    "description": "A Japanese government-run programme placing international participants, including Ugandans, as assistant language teachers and coordinators for international relations across Japan.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "communication",
+      "teaching"
+    ],
+    "preferredSkills": [
+      "Japanese language"
+    ],
+    "location": "Japan",
+    "workMode": "onsite",
+    "deadline": "2026-10-16T23:59:00",
+    "applicationMethod": "Apply through the JET Programme application process via the nearest Japanese embassy or the official JET Programme website.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-20T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.347Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "pageTitle": "Scholarships| Opportunities For Africans",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000006",
+    "title": "Nordic Africa Institute Scholarship Programme 2027/2028",
+    "organizationId": "66666666-6666-4666-8666-000000000045",
+    "category": "scholarship",
+    "description": "A research scholarship for African scholars, including Ugandans, to conduct Africa-focused research in residence at the Nordic Africa Institute in Sweden.",
+    "eligibility": {
+      "educationLevels": [
+        "masters",
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "African studies"
+    ],
+    "location": "Sweden",
+    "workMode": "onsite",
+    "deadline": "2026-10-11T23:59:00",
+    "applicationMethod": "Submit a research proposal and application through the Nordic Africa Institute's official scholarship call.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.429Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "pageTitle": "Scholarships| Opportunities For Africans",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000001",
+    "title": "Chevening Scholarship 2027/2028 (Uganda)",
+    "organizationId": "66666666-6666-4666-8666-000000000013",
+    "category": "scholarship",
+    "description": "A UK government fully funded one-year master's scholarship for emerging Ugandan leaders, funded by the Foreign, Commonwealth and Development Office.",
+    "eligibility": {
+      "programmeRules": [
+        {
+          "field": "location",
+          "label": "Uganda citizenship and country-of-award requirement",
+          "allowedValues": [
+            "Uganda"
+          ]
+        },
+        {
+          "field": "language",
+          "label": "English proficiency for UK study",
+          "allowedValues": [
+            "English"
+          ]
+        }
+      ],
+      "minimumExperienceMonths": 24
+    },
+    "requiredSkills": [
+      "leadership",
+      "communication",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "public policy",
+      "networking"
+    ],
+    "location": "United Kingdom",
+    "workMode": "onsite",
+    "deadline": "2026-10-06T11:00:00",
+    "applicationMethod": "Review the Chevening eligibility criteria, secure an unconditional offer from an eligible one-year UK master's programme, and apply through the official Chevening online application system.",
+    "sourceUrl": "https://www.chevening.org/scholarship/uganda/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-04T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.736Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.chevening.org/scholarship/uganda/",
+    "pageTitle": "Uganda (Chevening Scholarship) | Chevening",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000008",
+    "title": "CIFAR Azrieli Global Scholars Program 2027/2029",
+    "organizationId": "66666666-6666-4666-8666-000000000014",
+    "category": "fellowship",
+    "description": "A two-year fellowship supporting early-career researchers worldwide, including African scholars, with mentorship, funding and access to CIFAR's global research networks.",
+    "eligibility": {
+      "educationLevels": [
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "interdisciplinary collaboration"
+    ],
+    "location": "Canada",
+    "workMode": "hybrid",
+    "deadline": "2026-11-04T17:00:00",
+    "applicationMethod": "Submit a research statement and application through the CIFAR Azrieli Global Scholars online application system.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-07-01T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.840Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "pageTitle": "Scholarships| Opportunities For Africans",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000003",
+    "title": "Commonwealth Master's Scholarships 2027/2028",
+    "organizationId": "66666666-6666-4666-8666-000000000016",
+    "category": "scholarship",
+    "description": "Fully funded one-year taught master's scholarships in the UK for Ugandan citizens who cannot otherwise afford to study in the UK.",
+    "eligibility": {
+      "programmeRules": [
+        {
+          "field": "location",
+          "label": "Commonwealth developing-country citizenship",
+          "allowedValues": [
+            "Uganda"
+          ]
+        }
+      ],
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "academic excellence",
+      "leadership"
+    ],
+    "preferredSkills": [
+      "development studies"
+    ],
+    "location": "United Kingdom",
+    "workMode": "onsite",
+    "deadline": "2026-10-20T23:59:00",
+    "applicationMethod": "Apply through the Commonwealth Scholarship Commission's online application portal, selecting an eligible UK master's course.",
+    "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-01T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.896Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/",
+    "pageTitle": "Commonwealth Master’s Scholarships - Commonwealth Scholarship Commission in the UK",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000009",
+    "title": "ARC Ltd-GSSP Scholarship Programme 2026",
+    "organizationId": "66666666-6666-4666-8666-000000000008",
+    "category": "scholarship",
+    "description": "A scholarship programme supporting outstanding African students, including Ugandans, pursuing advanced studies.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors",
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "academic excellence"
+    ],
+    "preferredSkills": [
+      "research"
+    ],
+    "location": "Various",
+    "workMode": "onsite",
+    "deadline": "2026-10-07T23:59:00",
+    "applicationMethod": "Apply through the official ARC Ltd-GSSP Scholarship Programme application portal before the deadline.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-10T00:00:00",
+    "checkedAt": "2026-10-02T07:00:46.925Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/category/scholarships/",
+    "pageTitle": "Scholarships| Opportunities For Africans",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000002",
+    "title": "Commonwealth PhD Scholarships 2027/2028",
+    "organizationId": "66666666-6666-4666-8666-000000000016",
+    "category": "scholarship",
+    "description": "Fully funded doctoral scholarships in the UK for citizens of Commonwealth developing countries, including Uganda, under the least-developed and vulnerable-states criteria.",
+    "eligibility": {
+      "programmeRules": [
+        {
+          "field": "location",
+          "label": "Commonwealth developing-country citizenship",
+          "allowedValues": [
+            "Uganda"
+          ]
+        }
+      ],
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "quantitative analysis"
+    ],
+    "location": "United Kingdom",
+    "workMode": "onsite",
+    "deadline": "2026-10-20T23:59:00",
+    "applicationMethod": "Apply through a nominating UK university or the CSC's direct-access route on the Commonwealth Scholarship Commission online portal.",
+    "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-phd-scholarships/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-01T00:00:00",
+    "checkedAt": "2026-10-02T07:00:47.422Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-phd-scholarships-for-least-developed-countries-and-vulnerable-states/",
+    "pageTitle": "Commonwealth PhD Scholarships - Commonwealth Scholarship Commission in the UK",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000010",
+    "title": "University of Birmingham Global South Fellowship Programme",
+    "organizationId": "66666666-6666-4666-8666-000000000010",
+    "category": "fellowship",
+    "description": "A fellowship for early-career researchers based in the Global South, including Uganda, to collaborate with University of Birmingham researchers.",
+    "eligibility": {
+      "educationLevels": [
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research"
+    ],
+    "preferredSkills": [
+      "academic collaboration"
+    ],
+    "location": "United Kingdom",
+    "workMode": "hybrid",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the University of Birmingham's Global South Fellowship Programme application page.",
+    "sourceUrl": "https://www.advance-africa.com/the-university-of-birmingham-global-south-fellowship-program-for-earlycareer-researchers.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-12T00:00:00",
+    "checkedAt": "2026-10-02T07:00:47.910Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 404,
+    "resolvedUrl": "https://www.advance-africa.com/the-university-of-birmingham-global-south-fellowship-program-for-earlycareer-researchers.html",
+    "pageTitle": "No such URL",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000011",
+    "title": "University of Edinburgh Mastercard Foundation Online Learning Scholars Program",
+    "organizationId": "66666666-6666-4666-8666-000000000021",
+    "category": "scholarship",
+    "description": "A fully funded online postgraduate scholarship for African students, including Ugandans, through the University of Edinburgh's Mastercard Foundation partnership.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "digital literacy",
+      "academic excellence"
+    ],
+    "preferredSkills": [
+      "online learning"
+    ],
+    "location": "Remote",
+    "workMode": "remote",
+    "deadline": "2026-11-21T23:59:00",
+    "applicationMethod": "Apply online through the University of Edinburgh Mastercard Foundation Online Learning Scholars Program portal.",
+    "sourceUrl": "https://www.advance-africa.com/Fully-Funded-University-of-Edinburgh-Mastercard-Foundation-Online-Learning-Scholars-Program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-19T00:00:00",
+    "checkedAt": "2026-10-02T07:00:47.930Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/Fully-Funded-University-of-Edinburgh-Mastercard-Foundation-Online-Learning-Scholars-Program.html",
+    "pageTitle": "Fully Funded University of Edinburgh Mastercard Foundation Online",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000013",
+    "title": "Conservation Guest Scholars Program Worldwide",
+    "organizationId": "66666666-6666-4666-8666-000000000025",
+    "category": "fellowship",
+    "description": "A residential fellowship for conservation researchers worldwide, including Ugandans, to pursue independent conservation research projects.",
+    "eligibility": {
+      "educationLevels": [
+        "masters",
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "conservation"
+    ],
+    "preferredSkills": [
+      "field research"
+    ],
+    "location": "Various",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit a research proposal through the official Conservation Guest Scholars Program application page.",
+    "sourceUrl": "https://www.advance-africa.com/conservation-guest-scholars-program-worldwide.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-19T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.187Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/conservation-guest-scholars-program-worldwide.html",
+    "pageTitle": "Conservation Guest Scholars Program Worldwide",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000012",
+    "title": "Getty Scholars Program at the Villa",
+    "organizationId": "66666666-6666-4666-8666-000000000027",
+    "category": "fellowship",
+    "description": "A residential research fellowship at the Getty Villa in Los Angeles for researchers of all nationalities, including Ugandans, working on the ancient Mediterranean world.",
+    "eligibility": {
+      "educationLevels": [
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "classics",
+      "art history"
+    ],
+    "location": "United States",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit a research proposal through the official Getty Scholars Program application page.",
+    "sourceUrl": "https://www.advance-africa.com/getty-scholars-program-at-the-villa-for-researchers-of-all-nationalities.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-19T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.460Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/getty-scholars-program-at-the-villa-for-researchers-of-all-nationalities.html",
+    "pageTitle": "Getty Scholars Program at the Villa for Researchers of all Nationalities",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000015",
+    "title": "Mo Ibrahim Foundation Leadership Fellowships",
+    "organizationId": "66666666-6666-4666-8666-000000000042",
+    "category": "fellowship",
+    "description": "A leadership fellowship placing outstanding young African professionals, including Ugandans, within major multilateral institutions to build governance leadership capacity.",
+    "eligibility": {
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "leadership",
+      "governance"
+    ],
+    "preferredSkills": [
+      "policy analysis"
+    ],
+    "location": "Various",
+    "workMode": "onsite",
+    "deadline": "2026-11-20T23:59:00",
+    "applicationMethod": "Apply through the official Mo Ibrahim Foundation Leadership Fellowships application page.",
+    "sourceUrl": "https://www.advance-africa.com/Mo-Ibrahim-Foundation-Leadership-Fellowship.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-12T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.481Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/Mo-Ibrahim-Foundation-Leadership-Fellowship.html",
+    "pageTitle": "Mo Ibrahim Foundation Leadership Fellowship - Grants for Africans",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000007",
+    "title": "University of Edinburgh Climate Leadership Scholarship 2027",
+    "organizationId": "66666666-6666-4666-8666-000000000069",
+    "category": "scholarship",
+    "description": "A fully funded master's scholarship at the University of Edinburgh for applicants aged 35 or under who have faced barriers to education and show leadership on climate issues.",
+    "eligibility": {
+      "maximumAge": 35,
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "leadership",
+      "climate advocacy"
+    ],
+    "preferredSkills": [
+      "environmental science"
+    ],
+    "location": "United Kingdom",
+    "workMode": "onsite",
+    "deadline": "2026-11-19T23:59:00",
+    "applicationMethod": "Attend the mandatory virtual information session, submit the invited-applicant declaration form, then complete the main application through the University of Edinburgh's online system.",
+    "sourceUrl": "https://www.africanexponent.com/top-10-fully-funded-international-scholarship-opportunities-for-african-students-2/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-01T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.630Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.africanexponent.com/top-10-fully-funded-international-scholarship-opportunities-for-african-students-2/",
+    "pageTitle": "Top 10 Fully Funded International Scholarship Opportunities for African Students",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000016",
+    "title": "Princeton in Africa Nexus Fellowships",
+    "organizationId": "66666666-6666-4666-8666-000000000050",
+    "category": "fellowship",
+    "description": "A one-year fellowship placing young professionals, including Ugandans, with partner organisations working across the African continent.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "project management",
+      "communication"
+    ],
+    "preferredSkills": [
+      "development"
+    ],
+    "location": "Various (Africa)",
+    "workMode": "onsite",
+    "deadline": "2026-10-18T23:59:00",
+    "applicationMethod": "Apply through the official Princeton in Africa Nexus Fellowships application page.",
+    "sourceUrl": "https://www.advance-africa.com/princeton-in-africa-nexus-fellowships.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-19T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.737Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/princeton-in-africa-nexus-fellowships.html",
+    "pageTitle": "Princeton in Africa Nexus Fellowships",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000017",
+    "title": "Membership in the School of Social Science Fellowship Program",
+    "organizationId": "66666666-6666-4666-8666-000000000058",
+    "category": "fellowship",
+    "description": "A residential fellowship at the Institute for Advanced Study's School of Social Science for researchers worldwide, including Ugandans, in the social sciences.",
+    "eligibility": {
+      "educationLevels": [
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "academic writing"
+    ],
+    "preferredSkills": [
+      "social science"
+    ],
+    "location": "United States",
+    "workMode": "onsite",
+    "deadline": "2026-10-15T23:59:00",
+    "applicationMethod": "Submit a research statement through the official School of Social Science Fellowship Program application page.",
+    "sourceUrl": "https://www.advance-africa.com/membership-in-the-school-of-social-science-fellowship-program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.754Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/membership-in-the-school-of-social-science-fellowship-program.html",
+    "pageTitle": "Membership in the School of Social Science Fellowship Program",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000018",
+    "title": "Smithsonian Institution Fellowship Program",
+    "organizationId": "66666666-6666-4666-8666-000000000059",
+    "category": "fellowship",
+    "description": "A research fellowship at the Smithsonian Institution for scholars worldwide, including Ugandans, across museum and research disciplines.",
+    "eligibility": {
+      "educationLevels": [
+        "masters",
+        "phd"
+      ]
+    },
+    "requiredSkills": [
+      "research"
+    ],
+    "preferredSkills": [
+      "museum studies"
+    ],
+    "location": "United States",
+    "workMode": "onsite",
+    "deadline": "2026-10-15T23:59:00",
+    "applicationMethod": "Submit a research proposal through the official Smithsonian Institution Fellowship Program application page.",
+    "sourceUrl": "https://www.advance-africa.com/smithsonian-institution-fellowship-program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-10T00:00:00",
+    "checkedAt": "2026-10-02T07:00:48.904Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/smithsonian-institution-fellowship-program.html",
+    "pageTitle": "Smithsonian Institution Fellowship Program",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000019",
+    "title": "World Bank Group Young Professionals Program 2027",
+    "organizationId": "66666666-6666-4666-8666-000000000073",
+    "category": "internship",
+    "description": "The World Bank Group's flagship leadership-development initiative for highly talented individuals, including Ugandans, passionate about global development.",
+    "eligibility": {
+      "educationLevels": [
+        "masters",
+        "phd"
+      ],
+      "minimumExperienceMonths": 24
+    },
+    "requiredSkills": [
+      "development economics",
+      "analytical writing"
+    ],
+    "preferredSkills": [
+      "policy analysis"
+    ],
+    "location": "Washington, DC, United States",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Submit a full application, including transcripts and proof of graduate-level qualifications, through the official World Bank Group Young Professionals Program portal.",
+    "sourceUrl": "https://www.opportunitiesforafricans.com/the-world-bank-group-wbg-young-professionals-program-ypp-2027/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-02T00:00:00",
+    "checkedAt": "2026-10-02T07:00:49.040Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.opportunitiesforafricans.com/the-world-bank-group-wbg-young-professionals-program-ypp-2027/",
+    "pageTitle": "The World Bank Group (WBG) Young Professionals Program (YPP) 2027 (Technical &amp; Managerial roles at the World Bank Group) | Opportunities For Africans",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000014",
+    "title": "Mandela Washington Fellowship for Young African Leaders 2027",
+    "organizationId": "66666666-6666-4666-8666-000000000044",
+    "category": "fellowship",
+    "description": "A flagship US Department of State YALI programme bringing about 550 young African leaders, including Ugandans, to the United States for a six-week leadership institute in summer 2027.",
+    "eligibility": {
+      "maximumAge": 35,
+      "minimumAge": 25
+    },
+    "requiredSkills": [
+      "leadership",
+      "civic engagement"
+    ],
+    "preferredSkills": [
+      "business",
+      "governance",
+      "technology"
+    ],
+    "location": "United States",
+    "workMode": "onsite",
+    "deadline": "2026-10-13T16:00:00",
+    "applicationMethod": "Apply through the official Mandela Washington Fellowship online application system after reviewing the 2027 application instructions.",
+    "sourceUrl": "https://www.mandelawashingtonfellowship.org/2027-application-instructions/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:49.482Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.mandelawashingtonfellowship.org/2027-application-instructions/",
+    "pageTitle": "Application Instructions - Mandela Washington Fellowship",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000021",
+    "title": "Economic Recovery Coordinator",
+    "organizationId": "66666666-6666-4666-8666-000000000019",
+    "category": "job",
+    "description": "Coordinates Danish Refugee Council's economic recovery programming in Uganda, supporting livelihoods and self-reliance interventions.",
+    "eligibility": {
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "programme management",
+      "livelihoods"
+    ],
+    "preferredSkills": [
+      "economic recovery"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-04T23:59:00",
+    "applicationMethod": "Apply through the Danish Refugee Council careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/drc-economic-recovery-coordinator-89203457",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:50.279Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/drc-economic-recovery-coordinator-89203457",
+    "pageTitle": "DRC Economic Recovery Coordinator",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000022",
+    "title": "National Individual Consultant: Policy Gap Assessment",
+    "organizationId": "66666666-6666-4666-8666-000000000063",
+    "category": "job",
+    "description": "Conducts a national policy gap assessment for UNDP Uganda as an individual consultant.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "policy analysis",
+      "research"
+    ],
+    "preferredSkills": [
+      "report writing"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-10-06T23:59:00",
+    "applicationMethod": "Apply through the UNDP jobs portal listing for this consultancy.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/undp-national-ic-to-conduct-a-policy-gap-assessment-89203072",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:50.381Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/undp-national-ic-to-conduct-a-policy-gap-assessment-89203072",
+    "pageTitle": "UNDP National IC to conduct a policy gap assessment",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000023",
+    "title": "Education Officer, Oruchinga and Isingiro (Southwest)",
+    "organizationId": "66666666-6666-4666-8666-000000000046",
+    "category": "job",
+    "description": "Delivers education programming for refugee and host-community learners in southwest Uganda for the Norwegian Refugee Council.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "education programming",
+      "child protection"
+    ],
+    "preferredSkills": [
+      "teacher training"
+    ],
+    "location": "Isingiro, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-02T23:59:00",
+    "applicationMethod": "Apply through the Norwegian Refugee Council careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/nrc-education-officer-oruchinga-and-isingiro-all-southwest-locations-89194850",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-16T00:00:00",
+    "checkedAt": "2026-10-02T07:00:50.849Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/nrc-education-officer-oruchinga-and-isingiro-all-southwest-locations-89194850",
+    "pageTitle": "NRC Education Officer Oruchinga and Isingiro (All SouthWest locations)",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000024",
+    "title": "Education Technical Assistant, Kampala and Southwest",
+    "organizationId": "66666666-6666-4666-8666-000000000046",
+    "category": "job",
+    "description": "Provides technical support to NRC's education programming across Kampala and southwest Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "education programming"
+    ],
+    "preferredSkills": [
+      "monitoring"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-02T23:59:00",
+    "applicationMethod": "Apply through the Norwegian Refugee Council careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/nrc-education-technical-assistant-kampala-and-southwest-89174790",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:50.909Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/nrc-education-technical-assistant-kampala-and-southwest-89174790",
+    "pageTitle": "NRC Education Technical Assistant Kampala and Southwest",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000025",
+    "title": "UN Coordination and Normative Consultant",
+    "organizationId": "66666666-6666-4666-8666-000000000068",
+    "category": "job",
+    "description": "Supports UN Women Uganda's coordination and normative work on gender equality across the UN system in-country.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "gender policy",
+      "UN coordination"
+    ],
+    "preferredSkills": [
+      "advocacy"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the UN Women jobs portal listing for this consultancy.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/un-women-un-coordination-and-normative-consultant-89168400",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.020Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/un-women-un-coordination-and-normative-consultant-89168400",
+    "pageTitle": "UN Women UN Coordination and Normative Consultant",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000020",
+    "title": "FAO Internship Programme for Africa 2026-2027",
+    "organizationId": "66666666-6666-4666-8666-000000000022",
+    "category": "internship",
+    "description": "A paid internship for students and recent graduates, including Ugandans, to gain practical experience within FAO's work on food security and sustainable agri-food systems.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors",
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "research",
+      "data analysis"
+    ],
+    "preferredSkills": [
+      "agriculture",
+      "food security"
+    ],
+    "location": "Various (Africa)",
+    "workMode": "hybrid",
+    "deadline": "2027-01-01T00:59:00",
+    "applicationMethod": "Submit an online profile and application under Vacancy Announcement 2601980 through the official FAO careers portal.",
+    "sourceUrl": "https://www.globalsouthopportunities.com/2026/09/21/internship-70/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-21T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.092Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.globalsouthopportunities.com/2026/09/21/internship-70/",
+    "pageTitle": "Apply for the FAO Internship Programme for Africa 2026–2027: Apply for Paid UN Internships - Global South Opportunities",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000026",
+    "title": "Consultant (Security), CSTI, Kampala",
+    "organizationId": "66666666-6666-4666-8666-000000000071",
+    "category": "job",
+    "description": "Provides security consultancy support to World Food Programme operations in Kampala.",
+    "eligibility": {
+      "minimumExperienceMonths": 36
+    },
+    "requiredSkills": [
+      "security risk management"
+    ],
+    "preferredSkills": [
+      "crisis response"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-07T23:59:00",
+    "applicationMethod": "Apply through the World Food Programme careers portal listing for this consultancy.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/wfp-consultant-security-csti-kampala-89149687",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.415Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/wfp-consultant-security-csti-kampala-89149687",
+    "pageTitle": "WFP Consultant (Security) CSTI, Kampala",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000027",
+    "title": "National Individual Consultant: Mapping Power for Scaling Agroecology",
+    "organizationId": "66666666-6666-4666-8666-000000000063",
+    "category": "job",
+    "description": "Maps stakeholder power dynamics to support scaling agroecology implementation for UNDP Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "agroecology",
+      "stakeholder analysis"
+    ],
+    "preferredSkills": [
+      "sustainable agriculture"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-10-07T23:59:00",
+    "applicationMethod": "Apply through the UNDP jobs portal listing for this consultancy.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/undp-national-ic-to-support-the-mapping-power-for-scaling-agroecology-implementa-89146386",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-23T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.490Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/undp-national-ic-to-support-the-mapping-power-for-scaling-agroecology-implementa-89146386",
+    "pageTitle": "UNDP National IC to support the mapping power for scaling agroecology implementation",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000028",
+    "title": "Digital Impact Manager, P-4, Kampala",
+    "organizationId": "66666666-6666-4666-8666-000000000066",
+    "category": "job",
+    "description": "Leads UNICEF Uganda's digital impact and technology-for-development programming as a P-4 fixed-term position.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ],
+      "minimumExperienceMonths": 96
+    },
+    "requiredSkills": [
+      "digital transformation",
+      "programme management"
+    ],
+    "preferredSkills": [
+      "technology for development"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-06T23:59:00",
+    "applicationMethod": "Apply through the UNICEF careers portal listing for this fixed-term position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/unicef-digital-impact-manager-p4-fixed-term-position-kampala-uganda-00051311-89116104",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.582Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/unicef-digital-impact-manager-p4-fixed-term-position-kampala-uganda-00051311-89116104",
+    "pageTitle": "UNICEF Digital Impact Manager, P-, Fixed Term Position, Kampala, Uganda, #",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000030",
+    "title": "Project Coordinator, Childcare Economy, PlayMatters",
+    "organizationId": "66666666-6666-4666-8666-000000000035",
+    "category": "job",
+    "description": "Coordinates the childcare economy component of IRC's PlayMatters education programme in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "project coordination",
+      "education programming"
+    ],
+    "preferredSkills": [
+      "childcare economy"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-17T23:59:00",
+    "applicationMethod": "Apply through the International Rescue Committee careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/irc-project-coordinator-childcare-economy-playmatters-88981907",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:51.974Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/irc-project-coordinator-childcare-economy-playmatters-88981907",
+    "pageTitle": "IRC Project Coordinator, Childcare Economy, PlayMatters",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000031",
+    "title": "Senior Business Support Associate (Fleet & Training), G7, Kampala",
+    "organizationId": "66666666-6666-4666-8666-000000000071",
+    "category": "job",
+    "description": "Supports fleet management and training operations for World Food Programme Uganda as a G7 associate.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma"
+      ]
+    },
+    "requiredSkills": [
+      "fleet management",
+      "training coordination"
+    ],
+    "preferredSkills": [
+      "logistics"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Apply through the World Food Programme careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/wfp-senior-business-support-associate-fleet-training-g7kampala-88978658",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.100Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/wfp-senior-business-support-associate-fleet-training-g7kampala-88978658",
+    "pageTitle": "WFP Senior Business Support Associate (Fleet & Training) G7,Kampala",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000032",
+    "title": "Project Director, PlayMatters",
+    "organizationId": "66666666-6666-4666-8666-000000000035",
+    "category": "job",
+    "description": "Directs the IRC's PlayMatters education programme in Uganda, a multi-country play-based learning initiative.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ],
+      "minimumExperienceMonths": 96
+    },
+    "requiredSkills": [
+      "programme leadership",
+      "education"
+    ],
+    "preferredSkills": [
+      "play-based learning"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-11-30T23:59:00",
+    "applicationMethod": "Apply through the International Rescue Committee careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/irc-project-director-playmatters-88953279",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.176Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/irc-project-director-playmatters-88953279",
+    "pageTitle": "IRC Project Director - PlayMatters",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000029",
+    "title": "Business Development and Green Finance Readiness Support Consultant",
+    "organizationId": "66666666-6666-4666-8666-000000000029",
+    "category": "job",
+    "description": "Supports business development and green finance readiness work for the Global Green Growth Institute in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "green finance",
+      "business development"
+    ],
+    "preferredSkills": [
+      "climate finance"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-10-08T23:59:00",
+    "applicationMethod": "Apply through the GGGI careers portal listing for this consultancy.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/gggi-business-development-and-green-finance-readiness-support-consultant-89109807",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.403Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/gggi-business-development-and-green-finance-readiness-support-consultant-89109807",
+    "pageTitle": "GGGI Business Development and Green Finance Readiness Support Consultant",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000033",
+    "title": "Training Assistant, G-6, Entebbe",
+    "organizationId": "66666666-6666-4666-8666-000000000053",
+    "category": "job",
+    "description": "Supports training coordination for the UN Regional Service Centre in Entebbe as a G-6 associate.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma"
+      ]
+    },
+    "requiredSkills": [
+      "training coordination",
+      "administration"
+    ],
+    "preferredSkills": [
+      "learning and development"
+    ],
+    "location": "Entebbe, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-29T23:59:00",
+    "applicationMethod": "Apply through the UN Careers portal listing for this Regional Service Centre Entebbe position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/rsce-training-assistant-88926844",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.573Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/rsce-training-assistant-88926844",
+    "pageTitle": "RSCE TRAINING ASSISTANT",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000034",
+    "title": "Protection Associate, Yumbe",
+    "organizationId": "66666666-6666-4666-8666-000000000065",
+    "category": "job",
+    "description": "Supports refugee protection casework and monitoring for UNHCR in Yumbe, Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma"
+      ]
+    },
+    "requiredSkills": [
+      "protection casework",
+      "refugee response"
+    ],
+    "preferredSkills": [
+      "case management"
+    ],
+    "location": "Yumbe, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-29T23:59:00",
+    "applicationMethod": "Apply through the UNHCR careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/unhcr-protection-associate-88922038",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.723Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/unhcr-protection-associate-88922038",
+    "pageTitle": "UNHCR Protection Associate",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000035",
+    "title": "Deputy Representative, P5, Kampala",
+    "organizationId": "66666666-6666-4666-8666-000000000064",
+    "category": "job",
+    "description": "Serves as UNFPA Uganda's deputy representative, supporting strategic leadership of the country programme as a P5 position.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ],
+      "minimumExperienceMonths": 132
+    },
+    "requiredSkills": [
+      "strategic leadership",
+      "programme management"
+    ],
+    "preferredSkills": [
+      "reproductive health policy"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Apply through the UNFPA careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/unfpa-deputy-representative-kampala-uganda-p5-88790705",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-11T00:00:00",
+    "checkedAt": "2026-10-02T07:00:52.771Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/unfpa-deputy-representative-kampala-uganda-p5-88790705",
+    "pageTitle": "UNFPA Deputy Representative, Kampala, Uganda, P5",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000036",
+    "title": "Supply Chain Coordinator",
+    "organizationId": "66666666-6666-4666-8666-000000000035",
+    "category": "job",
+    "description": "Coordinates IRC's supply chain operations across its Uganda country programme.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "supply chain management",
+      "logistics"
+    ],
+    "preferredSkills": [
+      "procurement"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-11-30T23:59:00",
+    "applicationMethod": "Apply through the International Rescue Committee careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/irc-supply-chain-coordinator-88587405",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-04T00:00:00",
+    "checkedAt": "2026-10-02T07:00:53.024Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/irc-supply-chain-coordinator-88587405",
+    "pageTitle": "IRC Supply Chain Coordinator",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000037",
+    "title": "Regional Research and Learning Coordinator, PlayMatters",
+    "organizationId": "66666666-6666-4666-8666-000000000035",
+    "category": "job",
+    "description": "Coordinates regional research and learning activities for IRC's PlayMatters programme across East Africa, including Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "research coordination",
+      "monitoring and evaluation"
+    ],
+    "preferredSkills": [
+      "education research"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-10-31T23:59:00",
+    "applicationMethod": "Apply through the International Rescue Committee careers portal listing for this position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/irc-regional-research-and-learning-coordinator-playmatters-88462845",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-04T00:00:00",
+    "checkedAt": "2026-10-02T07:00:53.141Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/irc-regional-research-and-learning-coordinator-playmatters-88462845",
+    "pageTitle": "IRC Regional Research and Learning Coordinator, PlayMatters",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000038",
+    "title": "Information Management and Communication Associate",
+    "organizationId": "66666666-6666-4666-8666-000000000067",
+    "category": "job",
+    "description": "Supports information management and communications for the UN Resident Coordinator Office in Uganda as an international UN Volunteer.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "information management",
+      "communications"
+    ],
+    "preferredSkills": [
+      "UN coordination"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-11T23:59:00",
+    "applicationMethod": "Apply through the UN Volunteers portal listing for this UNRCO Uganda position.",
+    "sourceUrl": "https://www.unjobnet.org/jobs/detail/unrco-information-management-and-communication-associate-87935251",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:53.375Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.unjobnet.org/jobs/detail/unrco-information-management-and-communication-associate-87935251",
+    "pageTitle": "UNRCO Information Management and Communication Associate",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000039",
+    "title": "Senior Program Quality and Learning Officer, POWER Partnership",
+    "organizationId": "66666666-6666-4666-8666-000000000035",
+    "category": "job",
+    "description": "Leads programme quality and learning for IRC's POWER Partnership initiative in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 48
+    },
+    "requiredSkills": [
+      "monitoring and evaluation",
+      "programme quality"
+    ],
+    "preferredSkills": [
+      "learning systems"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-11-30T23:59:00",
+    "applicationMethod": "Apply through the International Rescue Committee careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/international-rescue-committee-senior-program-quality-and-learning-officer-power-partnership-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-10T00:00:00",
+    "checkedAt": "2026-10-02T07:00:53.760Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/international-rescue-committee-senior-program-quality-and-learning-officer-power-partnership-jobs-in-uganda.html",
+    "pageTitle": "International Rescue Committee Senior Program Quality and Learning Officer, POWER Partnership Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000040",
+    "title": "Programme Development Manager",
+    "organizationId": "66666666-6666-4666-8666-000000000055",
+    "category": "job",
+    "description": "Leads programme development for Saferworld's peacebuilding work in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "programme development",
+      "peacebuilding"
+    ],
+    "preferredSkills": [
+      "donor relations"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-06T23:59:00",
+    "applicationMethod": "Apply through the Saferworld careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/saferworld-programme-development-manager-jobs-in-uganda1.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.007Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/saferworld-programme-development-manager-jobs-in-uganda1.html",
+    "pageTitle": "Saferworld Programme Development Manager Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000041",
+    "title": "Senior Portfolio Manager, Inclusive Health",
+    "organizationId": "66666666-6666-4666-8666-000000000011",
+    "category": "job",
+    "description": "Manages CBM Global's inclusive-health programme portfolio in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "portfolio management",
+      "inclusive health"
+    ],
+    "preferredSkills": [
+      "disability inclusion"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Apply through the CBM Global careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/christian-blind-mission-senior-portfolio-manager-inclusive-health-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.119Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/christian-blind-mission-senior-portfolio-manager-inclusive-health-jobs-in-uganda.html",
+    "pageTitle": "Christian Blind Mission Senior Portfolio Manager - Inclusive Health Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000044",
+    "title": "Partnership Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000030",
+    "category": "job",
+    "description": "Manages local partnerships for GOAL's Uganda programme portfolio.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "partnership management"
+    ],
+    "preferredSkills": [
+      "grants compliance"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the GOAL careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/goal-partnership-officer-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.275Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 404,
+    "resolvedUrl": "https://www.advance-africa.com/goal-partnership-officer-jobs-in-uganda.html",
+    "pageTitle": "No such URL",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000042",
+    "title": "Regional Senior Research Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000034",
+    "category": "job",
+    "description": "Leads regional research activities for IMPACT Initiatives' humanitarian assessment work covering Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "masters"
+      ]
+    },
+    "requiredSkills": [
+      "research design",
+      "data analysis"
+    ],
+    "preferredSkills": [
+      "humanitarian assessment"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the IMPACT Initiatives careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/impact-initiatives-regional-senior-research-officer-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-10T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.362Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/impact-initiatives-regional-senior-research-officer-jobs-in-uganda.html",
+    "pageTitle": "IMPACT Initiatives Regional Senior Research Officer Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000045",
+    "title": "MEAL Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000030",
+    "category": "job",
+    "description": "Supports monitoring, evaluation, accountability and learning for GOAL's Uganda programme.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "monitoring and evaluation"
+    ],
+    "preferredSkills": [
+      "data collection"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the GOAL careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/goal-meal-officer-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.383Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/goal-meal-officer-jobs-in-uganda.html",
+    "pageTitle": "GOAL MEAL Officer Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000043",
+    "title": "Customer Service Representative",
+    "organizationId": "66666666-6666-4666-8666-000000000047",
+    "category": "job",
+    "description": "Supports smallholder farmer customer service for One Acre Fund's Uganda country programme.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "customer service"
+    ],
+    "preferredSkills": [
+      "agriculture"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-12-01T23:59:00",
+    "applicationMethod": "Apply through the One Acre Fund careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/one-acre-fund-customer-service-representative-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-10T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.603Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/one-acre-fund-customer-service-representative-jobs-in-uganda.html",
+    "pageTitle": "One Acre Fund Customer Service Representative Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000046",
+    "title": "Project Coordinator",
+    "organizationId": "66666666-6666-4666-8666-000000000030",
+    "category": "job",
+    "description": "Coordinates day-to-day project delivery for GOAL's Uganda programme.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "project coordination"
+    ],
+    "preferredSkills": [
+      "stakeholder engagement"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the GOAL careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/goal-project-coordinator-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.605Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/goal-project-coordinator-jobs-in-uganda.html",
+    "pageTitle": "GOAL Project Coordinator Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000047",
+    "title": "Hospital Manager",
+    "organizationId": "66666666-6666-4666-8666-000000000041",
+    "category": "job",
+    "description": "Manages day-to-day operations of a Marie Stopes Uganda reproductive-health hospital facility.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "healthcare management"
+    ],
+    "preferredSkills": [
+      "reproductive health services"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-28T23:59:00",
+    "applicationMethod": "Apply through the Marie Stopes Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/marie-stopes-uganda-hospital-manager-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.645Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/marie-stopes-uganda-hospital-manager-jobs.html",
+    "pageTitle": "Marie Stopes Uganda Hospital Manager Jobs",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000048",
+    "title": "Enterprise Manager",
+    "organizationId": "66666666-6666-4666-8666-000000000051",
+    "category": "job",
+    "description": "Manages the WASH social-enterprise operations of the Ugandan Water Project.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "enterprise management",
+      "WASH"
+    ],
+    "preferredSkills": [
+      "social enterprise"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Apply through the Ugandan Water Project careers portal listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/red-rhino-development-ugandan-water-project-enterprise-manager-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-22T00:00:00",
+    "checkedAt": "2026-10-02T07:00:54.661Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/red-rhino-development-ugandan-water-project-enterprise-manager-jobs-in-uganda.html",
+    "pageTitle": "Red Rhino Development/ Ugandan Water Project Enterprise Manager Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000049",
+    "title": "Experience Designer",
+    "organizationId": "66666666-6666-4666-8666-000000000061",
+    "category": "job",
+    "description": "Designs customer experience for Stanbic Bank Uganda's digital and branch banking products.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "UX design",
+      "product design"
+    ],
+    "preferredSkills": [
+      "customer research"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Stanbic Bank Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:56.788Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000052",
+    "title": "Head, Commercial & Asset Finance",
+    "organizationId": "66666666-6666-4666-8666-000000000061",
+    "category": "job",
+    "description": "Leads Stanbic Bank Uganda's commercial and asset finance business line.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 96
+    },
+    "requiredSkills": [
+      "asset finance",
+      "banking leadership"
+    ],
+    "preferredSkills": [
+      "commercial lending"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Stanbic Bank Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:56.799Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000050",
+    "title": "Head, Credit Origination",
+    "organizationId": "66666666-6666-4666-8666-000000000061",
+    "category": "job",
+    "description": "Leads credit origination for Stanbic Bank Uganda's corporate and commercial banking business.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 96
+    },
+    "requiredSkills": [
+      "credit risk",
+      "banking"
+    ],
+    "preferredSkills": [
+      "corporate lending"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Stanbic Bank Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:56.834Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000051",
+    "title": "Manager, Sector, Infrastructure",
+    "organizationId": "66666666-6666-4666-8666-000000000061",
+    "category": "job",
+    "description": "Manages Stanbic Bank Uganda's infrastructure sector banking relationships and deal pipeline.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 72
+    },
+    "requiredSkills": [
+      "infrastructure finance",
+      "relationship management"
+    ],
+    "preferredSkills": [
+      "project finance"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Stanbic Bank Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-24T00:00:00",
+    "checkedAt": "2026-10-02T07:00:56.845Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000055",
+    "title": "Digital Services Specialist / Client Operations Manager",
+    "organizationId": "66666666-6666-4666-8666-000000000052",
+    "category": "job",
+    "description": "Manages digital services delivery and client operations for Resiliencia Uganda's fintech products.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "client operations",
+      "fintech"
+    ],
+    "preferredSkills": [
+      "digital services"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Apply through the Resiliencia Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/resiliencia-uganda-ltd-digital-services-specialist-client-operations-manager-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.134Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/resiliencia-uganda-ltd-digital-services-specialist-client-operations-manager-jobs.html",
+    "pageTitle": "Resiliencia Uganda Ltd Digital Services Specialist & Client Operations Manager Jobs",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000056",
+    "title": "Chemistry and Biology Teacher",
+    "organizationId": "66666666-6666-4666-8666-000000000040",
+    "category": "job",
+    "description": "Teaches chemistry and biology at a LEAD 4 Africa school in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "teaching",
+      "curriculum delivery"
+    ],
+    "preferredSkills": [
+      "science education"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the LEAD 4 Africa careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/lead-4-africa-chemistry-and-biology-teacher-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.136Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/lead-4-africa-chemistry-and-biology-teacher-jobs-in-uganda.html",
+    "pageTitle": "LEAD 4 Africa Chemistry and Biology Teacher Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000058",
+    "title": "Physics and Mathematics Teacher",
+    "organizationId": "66666666-6666-4666-8666-000000000040",
+    "category": "job",
+    "description": "Teaches physics and mathematics at a LEAD 4 Africa school in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "teaching",
+      "curriculum delivery"
+    ],
+    "preferredSkills": [
+      "STEM education"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the LEAD 4 Africa careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/lead-4-africa-physics-and-mathematics-teacher-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.413Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/lead-4-africa-physics-and-mathematics-teacher-jobs-in-uganda.html",
+    "pageTitle": "LEAD 4 Africa Physics and Mathematics Teacher Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000057",
+    "title": "ICT Teacher/Technician",
+    "organizationId": "66666666-6666-4666-8666-000000000040",
+    "category": "job",
+    "description": "Teaches ICT and supports school technology infrastructure at a LEAD 4 Africa school in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "ICT teaching",
+      "technical support"
+    ],
+    "preferredSkills": [
+      "network administration"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the LEAD 4 Africa careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/lead-4-africa-ict-teachertechnician-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.608Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/lead-4-africa-ict-teachertechnician-jobs-in-uganda.html",
+    "pageTitle": "LEAD 4 Africa ICT Teacher/Technician Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000059",
+    "title": "Social Studies Teacher, Upper Primary (PLE)",
+    "organizationId": "66666666-6666-4666-8666-000000000004",
+    "category": "job",
+    "description": "Teaches upper-primary social studies preparing pupils for the Primary Leaving Examination at an Aga Khan Education Service school in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma",
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "teaching",
+      "curriculum delivery"
+    ],
+    "preferredSkills": [
+      "primary education"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Aga Khan Education Service Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/aga-khan-education-service-social-studies-teacher-upper-primary-ple-jobs-in-uganda1.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.689Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/aga-khan-education-service-social-studies-teacher-upper-primary-ple-jobs-in-uganda1.html",
+    "pageTitle": "Aga Khan Education Service Social Studies Teacher Upper Primary (PLE) Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000054",
+    "title": "Digital Marketing Associate",
+    "organizationId": "66666666-6666-4666-8666-000000000038",
+    "category": "job",
+    "description": "Supports digital marketing campaigns and content for Laboremus Uganda's software products.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "digital marketing",
+      "content creation"
+    ],
+    "preferredSkills": [
+      "social media"
+    ],
+    "location": "Kampala, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Laboremus Uganda careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.719Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000053",
+    "title": "Ishasha Sector Manager, QEPA",
+    "organizationId": "66666666-6666-4666-8666-000000000070",
+    "category": "job",
+    "description": "Manages Wildlife Conservation Society operations in the Ishasha sector of Queen Elizabeth Protected Area.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "conservation management",
+      "field operations"
+    ],
+    "preferredSkills": [
+      "wildlife protection"
+    ],
+    "location": "Ishasha Sector, QEPA, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-28T23:59:00",
+    "applicationMethod": "Apply through the Wildlife Conservation Society careers portal listing for this position.",
+    "sourceUrl": "https://www.greatugandajobs.com/jobs/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.775Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. This source URL is shared by multiple imported listings; confirm a listing-specific link.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.greatugandajobs.com/jobs/",
+    "pageTitle": "Job - Jobs in Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000060",
+    "title": "Sales Associate",
+    "organizationId": "66666666-6666-4666-8666-000000000037",
+    "category": "job",
+    "description": "Drives sales and client relationships for Kolaborate in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "sales",
+      "client relations"
+    ],
+    "preferredSkills": [
+      "negotiation"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Kolaborate careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/kolaborate-sales-associate-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.878Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/kolaborate-sales-associate-jobs-in-uganda.html",
+    "pageTitle": "Kolaborate Sales Associate Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000061",
+    "title": "Chief Commercial Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000056",
+    "category": "job",
+    "description": "Leads commercial strategy and revenue growth for Savanna Fibre Uganda's fibre-network business.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 120
+    },
+    "requiredSkills": [
+      "commercial strategy",
+      "telecommunications"
+    ],
+    "preferredSkills": [
+      "revenue growth"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Savanna Fibre Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-commercial-officer-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.964Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-commercial-officer-jobs.html",
+    "pageTitle": "Savanna Fibre Uganda Chief Commercial Officer Jobs",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000062",
+    "title": "Chief Financial Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000056",
+    "category": "job",
+    "description": "Leads financial strategy and reporting for Savanna Fibre Uganda's fibre-network business.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 120
+    },
+    "requiredSkills": [
+      "financial management",
+      "telecommunications"
+    ],
+    "preferredSkills": [
+      "corporate finance"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Savanna Fibre Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-financial-officer-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:57.993Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-financial-officer-jobs.html",
+    "pageTitle": "Savanna Fibre Uganda Chief Financial Officer Jobs",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000063",
+    "title": "Chief Operations Officer",
+    "organizationId": "66666666-6666-4666-8666-000000000056",
+    "category": "job",
+    "description": "Leads network operations and service delivery for Savanna Fibre Uganda's fibre-network business.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 120
+    },
+    "requiredSkills": [
+      "operations management",
+      "telecommunications"
+    ],
+    "preferredSkills": [
+      "network operations"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Savanna Fibre Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-operations-officer-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:58.057Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/savanna-fibre-uganda-chief-operations-officer-jobs.html",
+    "pageTitle": "Savanna Fibre Uganda Chief Operations Officer Jobs",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000064",
+    "title": "Internal Auditor",
+    "organizationId": "66666666-6666-4666-8666-000000000056",
+    "category": "job",
+    "description": "Conducts internal audit reviews across Savanna Fibre Uganda's operations.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 60
+    },
+    "requiredSkills": [
+      "internal audit",
+      "risk management"
+    ],
+    "preferredSkills": [
+      "compliance"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Savanna Fibre Uganda careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/savanna-fibre-uganda-internal-auditor-jobs.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:58.173Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/savanna-fibre-uganda-internal-auditor-jobs.html",
+    "pageTitle": "Savanna Fibre Uganda Internal Auditor Jobs",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000065",
+    "title": "Security Guard",
+    "organizationId": "66666666-6666-4666-8666-000000000060",
+    "category": "job",
+    "description": "Provides on-site security services for Spytech International Security clients in Uganda.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "security operations"
+    ],
+    "preferredSkills": [
+      "surveillance"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the Spytech International Security careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/spytech-international-security-security-guard-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:58.231Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/spytech-international-security-security-guard-jobs-in-uganda.html",
+    "pageTitle": "Spytech International Security Security Guard Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000066",
+    "title": "Creative Sales Representative",
+    "organizationId": "66666666-6666-4666-8666-000000000039",
+    "category": "job",
+    "description": "Sells LaunchCraft Studio's creative and design services to Ugandan clients.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "sales",
+      "creative services"
+    ],
+    "preferredSkills": [
+      "client relations"
+    ],
+    "location": "Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-09-29T23:59:00",
+    "applicationMethod": "Apply through the LaunchCraft Studio careers listing for this position.",
+    "sourceUrl": "https://www.advance-africa.com/launchcraft-studio-creative-sales-representative-jobs-in-uganda.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:58.260Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/launchcraft-studio-creative-sales-representative-jobs-in-uganda.html",
+    "pageTitle": "LaunchCraft Studio Creative Sales Representative Jobs in Uganda",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000067",
+    "title": "Territory Field Sales Representative, Gulu",
+    "organizationId": "66666666-6666-4666-8666-000000000017",
+    "category": "job",
+    "description": "Drives field sales for Dalilang Foods & Beverages products across the Gulu territory.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "field sales",
+      "distribution"
+    ],
+    "preferredSkills": [
+      "FMCG"
+    ],
+    "location": "Gulu, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-29T23:59:00",
+    "applicationMethod": "Apply through the Dalilang Foods & Beverages careers listing for this position.",
+    "sourceUrl": "https://jobsinuganda.alljobspo.com/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:59.698Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": false,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site. The app's deduplication rule flags the sibling Dalilang territory listing; confirm the exact title and duty station before approval.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://jobsinuganda.alljobspo.com/",
+    "pageTitle": "9762 Jobs in Uganda , Vacancies, Offers - October 2026 | Alljobspo.com",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000068",
+    "title": "Territory Field Sales Representative, Mukono",
+    "organizationId": "66666666-6666-4666-8666-000000000017",
+    "category": "job",
+    "description": "Drives field sales for Dalilang Foods & Beverages products across the Namanve, Mukono territory.",
+    "eligibility": {
+      "educationLevels": [
+        "secondary"
+      ]
+    },
+    "requiredSkills": [
+      "field sales",
+      "distribution"
+    ],
+    "preferredSkills": [
+      "FMCG"
+    ],
+    "location": "Namanve, Mukono, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-29T23:59:00",
+    "applicationMethod": "Apply through the Dalilang Foods & Beverages careers listing for this position.",
+    "sourceUrl": "https://jobsinuganda.alljobspo.com/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:00:59.709Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": false,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site. The app's deduplication rule flags the sibling Dalilang territory listing; confirm the exact title and duty station before approval.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://jobsinuganda.alljobspo.com/",
+    "pageTitle": "9762 Jobs in Uganda , Vacancies, Offers - October 2026 | Alljobspo.com",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000069",
+    "title": "Thermal Baking Oven Operator",
+    "organizationId": "66666666-6666-4666-8666-000000000017",
+    "category": "job",
+    "description": "Operates thermal baking ovens on Dalilang Foods & Beverages' Mukono production line.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma"
+      ]
+    },
+    "requiredSkills": [
+      "food production",
+      "equipment operation"
+    ],
+    "preferredSkills": [
+      "quality control"
+    ],
+    "location": "Namanve, Mukono, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-29T23:59:00",
+    "applicationMethod": "Apply through the Dalilang Foods & Beverages careers listing for this position.",
+    "sourceUrl": "https://jobsinuganda.alljobspo.com/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:01:00.465Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://jobsinuganda.alljobspo.com/",
+    "pageTitle": "9762 Jobs in Uganda , Vacancies, Offers - October 2026 | Alljobspo.com",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000070",
+    "title": "Sensory & Taste Evaluation Specialist",
+    "organizationId": "66666666-6666-4666-8666-000000000017",
+    "category": "job",
+    "description": "Runs sensory and taste-evaluation testing for Dalilang Foods & Beverages product development.",
+    "eligibility": {
+      "educationLevels": [
+        "diploma"
+      ]
+    },
+    "requiredSkills": [
+      "quality assurance",
+      "sensory analysis"
+    ],
+    "preferredSkills": [
+      "food science"
+    ],
+    "location": "Namanve, Mukono, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-29T23:59:00",
+    "applicationMethod": "Apply through the Dalilang Foods & Beverages careers listing for this position.",
+    "sourceUrl": "https://jobsinuganda.alljobspo.com/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:01:00.629Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://jobsinuganda.alljobspo.com/",
+    "pageTitle": "9762 Jobs in Uganda , Vacancies, Offers - October 2026 | Alljobspo.com",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000071",
+    "title": "Shelf Life & Stability Testing Analyst",
+    "organizationId": "66666666-6666-4666-8666-000000000017",
+    "category": "job",
+    "description": "Runs shelf-life and stability testing for Dalilang Foods & Beverages products.",
+    "eligibility": {
+      "educationLevels": [
+        "bachelors"
+      ]
+    },
+    "requiredSkills": [
+      "quality assurance",
+      "laboratory testing"
+    ],
+    "preferredSkills": [
+      "food science"
+    ],
+    "location": "Nakasongola, Uganda",
+    "workMode": "onsite",
+    "deadline": "2026-10-29T23:59:00",
+    "applicationMethod": "Apply through the Dalilang Foods & Beverages careers listing for this position.",
+    "sourceUrl": "https://jobsinuganda.alljobspo.com/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-25T00:00:00",
+    "checkedAt": "2026-10-02T07:01:00.776Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. This source URL is shared by multiple imported listings; confirm a listing-specific link. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://jobsinuganda.alljobspo.com/",
+    "pageTitle": "9762 Jobs in Uganda , Vacancies, Offers - October 2026 | Alljobspo.com",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000072",
+    "title": "Changemakers in Uganda",
+    "organizationId": "66666666-6666-4666-8666-000000000043",
+    "category": "grant",
+    "description": "Supports Ugandan changemakers to continue impactful community work, contributing to positive and sustainable transformation within Uganda.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "community development"
+    ],
+    "location": "Uganda",
+    "workMode": "hybrid",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Apply through the official MTN Foundation Changemakers application page.",
+    "sourceUrl": "https://www.mtn.co.ug/changemakers",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:01.320Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.mtn.co.ug/changemakers/",
+    "pageTitle": "Changemakers - MTN Uganda",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000073",
+    "title": "Epidemic and Pandemic Sciences Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000057",
+    "category": "grant",
+    "description": "Supports groundbreaking initiatives, including Uganda-based ones, with potential to transform Africa's epidemic and pandemic preparedness.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "public health research"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-09-30T23:59:00",
+    "applicationMethod": "Submit a proposal through the official SHARPER Project application page.",
+    "sourceUrl": "https://sharperproject.com",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:01.484Z",
+    "status": "closed",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://sharperproject.com/",
+    "pageTitle": "SHARPER Grant 2026 — African Pandemic Preparedness Consortium",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000077",
+    "title": "CSO Call for Expressions of Project Intentions",
+    "organizationId": "66666666-6666-4666-8666-000000000002",
+    "category": "grant",
+    "description": "Funds NGOs in France and ODA-eligible countries, including Uganda, contributing to the Sustainable Development Goals and international solidarity.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "international development"
+    ],
+    "location": "France and ODA-eligible countries",
+    "workMode": "remote",
+    "deadline": "2026-10-09T23:59:00",
+    "applicationMethod": "Submit an expression of project intention through the official AFD call-for-projects page.",
+    "sourceUrl": "https://www.afd.fr/en/calls-for-projects/2026-cso-call-expressions-project-intentions",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:02.906Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.afd.fr/en/calls-for-projects/2026-cso-call-expressions-project-intentions",
+    "pageTitle": "2026 CSO Call for Expressions of Project Intentions | AFD - Agence Française de Développement",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000076",
+    "title": "Civil Conflict Resolution and Peacebuilding Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000033",
+    "category": "grant",
+    "description": "Funds NGOs, including those in Uganda, that contribute to preventing violent conflict and strengthening democratic systems in crisis-affected regions.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "peacebuilding",
+      "conflict resolution"
+    ],
+    "location": "Global (crisis-affected regions)",
+    "workMode": "remote",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit a proposal through the official ifa zivik funding programme page.",
+    "sourceUrl": "https://www.ifa.de/en/funding/zivik",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:03.725Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 401,
+    "resolvedUrl": "https://www.ifa.de/en/funding/zivik/",
+    "pageTitle": "Bot check",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000079",
+    "title": "Pandemic Prevention, Preparedness and Response Financing",
+    "organizationId": "66666666-6666-4666-8666-000000000048",
+    "category": "grant",
+    "description": "Strengthens pandemic prevention, preparedness and response systems in 15 countries, including Uganda, through a US$244 million financing window.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "public health systems"
+    ],
+    "location": "Uganda and 14 other countries",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit a funding request through the official Pandemic Fund application process for eligible national authorities.",
+    "sourceUrl": "https://www.pandemic-fund.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:03.923Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": null,
+    "reviewOutcome": "Source could not be retrieved within 12 seconds; keep unverified."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000074",
+    "title": "Thriving Farmers, Resilient Ecosystems, Empowered Communities",
+    "organizationId": "66666666-6666-4666-8666-000000000012",
+    "category": "grant",
+    "description": "Funds high-impact projects, including in Uganda, that strengthen smallholder livelihoods and align commercial viability with environmental regeneration.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "agriculture",
+      "environmental sustainability"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit a proposal through the official Common Fund for Commodities call-for-proposals page.",
+    "sourceUrl": "https://www.common-fund.org/call-for-proposals",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.003Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.common-fund.org/call-for-proposals",
+    "pageTitle": "Call for Proposals | Common Fund for Commodities",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000078",
+    "title": "Ecosystem-based Adaptation Small Grants",
+    "organizationId": "66666666-6666-4666-8666-000000000026",
+    "category": "grant",
+    "description": "Funds projects addressing systemic barriers to scaling ecosystem-based adaptation, including in Uganda, through institutional capacity and investment readiness.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "climate adaptation"
+    ],
+    "location": "Global (developing countries)",
+    "workMode": "remote",
+    "deadline": "2026-10-26T23:59:00",
+    "applicationMethod": "Submit a proposal through the official Global EbA Fund small-size grants page.",
+    "sourceUrl": "https://globalebafund.org/small-size-grants",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.475Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://globalebafund.org/small-size-grants/",
+    "pageTitle": "Small-Size Grants - Global EbA Fund",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000080",
+    "title": "Early-Stage Social Enterprises Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000020",
+    "category": "grant",
+    "description": "Funds social-impact organisations worldwide, including in Uganda, solving urgent problems with scalable and sustainable approaches.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "social entrepreneurship"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Draper Richards Kaplan Foundation rolling application process.",
+    "sourceUrl": "https://www.drkfoundation.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.561Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.drkfoundation.org/",
+    "pageTitle": "Global Venture Philanthropy for Social Entrepreneurs",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000075",
+    "title": "Health Impact Research Initiative",
+    "organizationId": "66666666-6666-4666-8666-000000000006",
+    "category": "grant",
+    "description": "Funds early-stage health research and proof-of-concept projects across Africa, including Uganda, with potential for high-impact evidence.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "health research"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-10-02T23:59:00",
+    "applicationMethod": "Submit an expression of interest through the official AMBSO Impact Research Initiative page.",
+    "sourceUrl": "https://www.ambso.org/opportunities/grants/call-for-expression-of-interest-eoi-ambso-impact-research-initiative",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.778Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.ambso.org/opportunities/grants/call-for-expression-of-interest-eoi-ambso-impact-research-initiative",
+    "pageTitle": "Call For Expression of Interest (EOI): AMBSO IMPACT RESEARCH INITIATIVE. | Grants | AMBSO",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000081",
+    "title": "Rufford Small Grants",
+    "organizationId": "66666666-6666-4666-8666-000000000054",
+    "category": "grant",
+    "description": "Funds nature-conservation projects in emerging and developing-economy countries, including Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "conservation"
+    ],
+    "location": "Developing countries",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Rufford Foundation rolling application process.",
+    "sourceUrl": "https://www.rufford.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.820Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.rufford.org/",
+    "pageTitle": "The Rufford Foundation - Providing grant funding for nature conservation\n    and pilot projects around the world\n\n            - The Rufford Foundation",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000084",
+    "title": "Global Poverty and Inequality Innovation Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000023",
+    "category": "grant",
+    "description": "Funds innovations that address poverty and inequality in low- and middle-income countries, including Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "poverty reduction"
+    ],
+    "location": "Low- and middle-income countries",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Fund for Innovation in Development rolling application process.",
+    "sourceUrl": "https://fondation-fid.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:04.877Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": null,
+    "reviewOutcome": "Source could not be retrieved within 12 seconds; keep unverified."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000083",
+    "title": "Rapid Response Grants",
+    "organizationId": "66666666-6666-4666-8666-000000000062",
+    "category": "grant",
+    "description": "Funds interventions that advance women's human rights across Africa, including Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "women's rights"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Urgent Action Fund-Africa rolling application process.",
+    "sourceUrl": "https://uafafrica.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:05.561Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://uafafrica.org/",
+    "pageTitle": "",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000082",
+    "title": "Rapid Response Fund",
+    "organizationId": "66666666-6666-4666-8666-000000000024",
+    "category": "grant",
+    "description": "Supports community-led action on HIV-related human-rights challenges, including in Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "HIV response",
+      "human rights"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Frontline AIDS rolling application process.",
+    "sourceUrl": "https://frontlineaids.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:06.486Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://frontlineaids.org/",
+    "pageTitle": "Global HIV and AIDS Charity | Frontline AIDS : Frontline AIDS",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000087",
+    "title": "Development Innovation Ventures Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000018",
+    "category": "grant",
+    "description": "Funds innovative solutions that improve lives in developing countries, including Uganda, using a staged funding model, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "development innovation"
+    ],
+    "location": "Developing countries",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official USAID Development Innovation Ventures rolling application process.",
+    "sourceUrl": "https://www.usaid.gov/div",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:06.932Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 403,
+    "resolvedUrl": "https://www.usaid.gov/div",
+    "pageTitle": "Just a moment...",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000088",
+    "title": "Seed Grants 2026",
+    "organizationId": "66666666-6666-4666-8666-000000000049",
+    "category": "grant",
+    "description": "Funds grassroots changemakers worldwide, including in Uganda, launching community-driven initiatives, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "grassroots organising"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Pollination Project rolling application process.",
+    "sourceUrl": "https://thepollinationproject.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:07.288Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://thepollinationproject.org/",
+    "pageTitle": "Micro Grants for Social Change | The Pollination Project",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000085",
+    "title": "Rapid Response Window",
+    "organizationId": "66666666-6666-4666-8666-000000000074",
+    "category": "grant",
+    "description": "Supports women's participation in peace processes and implementation of peace agreements, including in Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "women peace and security"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official UN Women's Peace and Humanitarian Fund rolling application process.",
+    "sourceUrl": "https://wphfund.org/rrw-short-term-grants",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:07.868Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://wphfund.org/rrw-short-term-grants/",
+    "pageTitle": "Short-Term Grants: Supporting CSO Initiatives to Address Urgent Gaps on Women’s Influence in Peace Processes - Women’s Peace and Humanitarian Fund",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000086",
+    "title": "Fostering Community Philanthropy Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000028",
+    "category": "grant",
+    "description": "Strengthens the efforts, durability and effectiveness of community-philanthropy organisations, including in Uganda, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "community philanthropy"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Global Fund for Community Foundations rolling application process.",
+    "sourceUrl": "https://globalfundcommunityfoundations.org/",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:08.146Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://globalfundcommunityfoundations.org/",
+    "pageTitle": "Home - GFCF : GFCF",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000090",
+    "title": "AFNet Flexible Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000003",
+    "category": "grant",
+    "description": "Funds initiatives led by African women leaders and organisations, including in Uganda, creating positive community change, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "women's leadership"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official African Women for Change Network rolling application process.",
+    "sourceUrl": "https://afwcnet.org/women-grants",
+    "verificationStatus": "flagged",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:08.455Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The supplied organization link points to an aggregator or redirect; verify the organization's official site. Flagged: the official AFNet grant page discloses a $25 processing fee.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://afwcnet.org/women-grants",
+    "pageTitle": "Empowering Women Leaders Worldwide Through Community Development Programs by providing women grants | African Women for Change Network",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000091",
+    "title": "AASM Foundation Strategic Research Grant Program",
+    "organizationId": "66666666-6666-4666-8666-000000000001",
+    "category": "grant",
+    "description": "Funds strategic research projects by African researchers, including Ugandans.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "research"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-10-19T23:59:00",
+    "applicationMethod": "Submit an application through the official AASM Foundation Strategic Research Grant Program page.",
+    "sourceUrl": "https://www.advance-africa.com/aasm-foundation-strategic-research-grant-program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:08.886Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/aasm-foundation-strategic-research-grant-program.html",
+    "pageTitle": "AASM Foundation Strategic Research Grant Program",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000092",
+    "title": "AGNES Intra-Africa Mobility Grants for Junior Researchers",
+    "organizationId": "66666666-6666-4666-8666-000000000005",
+    "category": "grant",
+    "description": "Funds intra-Africa research mobility for junior researchers, including Ugandans, to visit partner institutions across the continent.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "research mobility"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-10-16T23:59:00",
+    "applicationMethod": "Submit an application through the official AGNES Intra-Africa Mobility Grants page.",
+    "sourceUrl": "https://www.advance-africa.com/agnes-intraafrica-mobility-grants-for-junior-researchers.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.117Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 404,
+    "resolvedUrl": "https://www.advance-africa.com/agnes-intraafrica-mobility-grants-for-junior-researchers.html",
+    "pageTitle": "No such URL",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000094",
+    "title": "CDC Conference Support Program",
+    "organizationId": "66666666-6666-4666-8666-000000000007",
+    "category": "grant",
+    "description": "Provides travel and conference support for early-career researchers worldwide, including Ugandans, attending scientific conferences.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "conference travel support"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit an application through the official CDC Conference Support Program page.",
+    "sourceUrl": "https://www.advance-africa.com/call-for-applications-cdc-conference-support-program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.162Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/call-for-applications-cdc-conference-support-program.html",
+    "pageTitle": "Call for Applications: CDC Conference Support Program",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000089",
+    "title": "Women and Girls Grant",
+    "organizationId": "66666666-6666-4666-8666-000000000015",
+    "category": "grant",
+    "description": "Funds NGOs, including in Uganda, focused on improving the lives of underserved women and girls, on a rolling basis.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "gender equity"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2027-03-31T23:59:00",
+    "applicationMethod": "Submit an application through the official COMO Foundation rolling application process.",
+    "sourceUrl": "https://comofoundation.org/partnerships/becoming-a-partner",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-07T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.341Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://comofoundation.org/partnerships/becoming-a-partner/",
+    "pageTitle": "Becoming a Partner &#187; COMO Foundation",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000095",
+    "title": "Lisa Jardine Grant Scheme for Early Career Scholars",
+    "organizationId": "66666666-6666-4666-8666-000000000072",
+    "category": "grant",
+    "description": "Funds early-career scholars worldwide, including Ugandans, pursuing archival and historical research.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "archival research"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2026-10-14T23:59:00",
+    "applicationMethod": "Submit an application through the official Lisa Jardine Grant Scheme page.",
+    "sourceUrl": "https://www.advance-africa.com/lisa-jardine-grant-scheme-for-early-career-scholars.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.392Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/lisa-jardine-grant-scheme-for-early-career-scholars.html",
+    "pageTitle": "Lisa Jardine Grant Scheme for Early Career Scholars",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000096",
+    "title": "MMDP Scholarships Programme",
+    "organizationId": "66666666-6666-4666-8666-000000000042",
+    "category": "grant",
+    "description": "Funds development-focused postgraduate study for African students, including Ugandans.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "development studies"
+    ],
+    "location": "Africa-wide",
+    "workMode": "remote",
+    "deadline": "2026-10-01T23:59:00",
+    "applicationMethod": "Submit an application through the official MMDP Scholarships Programme page.",
+    "sourceUrl": "https://www.advance-africa.com/mmdp-scholarships-programme.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.432Z",
+    "status": "closing_soon",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/mmdp-scholarships-programme.html",
+    "pageTitle": "MMDP Scholarships Programme",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000093",
+    "title": "Brain Awareness Week Grants",
+    "organizationId": "66666666-6666-4666-8666-000000000032",
+    "category": "grant",
+    "description": "Funds neuroscience outreach and public-engagement events worldwide, including in Uganda, tied to Brain Awareness Week.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "science communication"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2026-10-15T23:59:00",
+    "applicationMethod": "Submit an application through the official IBRO Brain Awareness Week Grants page.",
+    "sourceUrl": "https://www.advance-africa.com/brain-awareness-week-grants.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.461Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/brain-awareness-week-grants.html",
+    "pageTitle": "Brain Awareness Week Grants",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000098",
+    "title": "Fully Funded East Africa Scholarships",
+    "organizationId": "66666666-6666-4666-8666-000000000045",
+    "category": "grant",
+    "description": "Funds postgraduate study opportunities for East African students, including Ugandans, across partner universities.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "postgraduate study"
+    ],
+    "location": "East Africa",
+    "workMode": "remote",
+    "deadline": "2026-10-10T23:59:00",
+    "applicationMethod": "Submit an application through the official Fully Funded East Africa Scholarships page.",
+    "sourceUrl": "https://www.advance-africa.com/fully-funded-east-africa-scholarships.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-10T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.667Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/fully-funded-east-africa-scholarships.html",
+    "pageTitle": "Fully Funded East Africa Scholarships",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000099",
+    "title": "Whitley Award for Wildlife and Biodiversity Conservation",
+    "organizationId": "66666666-6666-4666-8666-000000000072",
+    "category": "grant",
+    "description": "Funds grassroots wildlife and biodiversity conservation leaders worldwide, including in Uganda.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "wildlife conservation"
+    ],
+    "location": "Global (developing countries)",
+    "workMode": "remote",
+    "deadline": "2026-10-30T23:59:00",
+    "applicationMethod": "Submit a nomination through the official Whitley Award application process.",
+    "sourceUrl": "https://www.advance-africa.com/whitley-award-for-wildlife-and-biodiversity-conservation.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-08-21T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.710Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/whitley-award-for-wildlife-and-biodiversity-conservation.html",
+    "pageTitle": "Whitley Award for Wildlife and Biodiversity Conservation",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000100",
+    "title": "Hinrich Foundation Trade Research Grants",
+    "organizationId": "66666666-6666-4666-8666-000000000031",
+    "category": "grant",
+    "description": "Funds researchers and research organisations worldwide, including in Uganda, studying international trade.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "trade research"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2026-10-31T23:59:00",
+    "applicationMethod": "Submit an application through the official Hinrich Foundation Trade Research Grants page.",
+    "sourceUrl": "https://www.advance-africa.com/hinrich-foundation-trade-research-grants-for-researchers-and-research-organizations.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:09.739Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/hinrich-foundation-trade-research-grants-for-researchers-and-research-organizations.html",
+    "pageTitle": "Hinrich Foundation Trade Research Grants for Researchers and Research Organizations",
+    "titleMentioned": true,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000097",
+    "title": "Writers and Literary Translators' Residencies Program",
+    "organizationId": "66666666-6666-4666-8666-000000000031",
+    "category": "grant",
+    "description": "Funds residencies for writers and literary translators worldwide, including Ugandans.",
+    "eligibility": {},
+    "requiredSkills": [],
+    "preferredSkills": [
+      "creative writing"
+    ],
+    "location": "Global",
+    "workMode": "remote",
+    "deadline": "2026-10-15T23:59:00",
+    "applicationMethod": "Submit an application through the official Writers and Literary Translators' Residencies Program page.",
+    "sourceUrl": "https://www.advance-africa.com/writers-and-literary-translators-residencies-program.html",
+    "verificationStatus": "pending",
+    "source": "scraped",
+    "publicationDate": "2026-09-18T00:00:00",
+    "checkedAt": "2026-10-02T07:01:10.092Z",
+    "status": "open",
+    "reviewChecklist": {
+      "sourceAuthentic": false,
+      "duplicateChecked": true,
+      "deadlinePlausible": false,
+      "noSensitiveDataAsk": false,
+      "noInappropriateFees": false
+    },
+    "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review. The source is a third-party aggregator; confirm the listing on the organization's own site. The supplied organization link points to an aggregator or redirect; verify the organization's official site.",
+    "reviewerId": null,
+    "reviewedAt": null,
+    "httpStatus": 200,
+    "resolvedUrl": "https://www.advance-africa.com/writers-and-literary-translators-residencies-program.html",
+    "pageTitle": "Writers and Literary Translators’ Residencies Program",
+    "titleMentioned": false,
+    "reviewOutcome": "Reachability only; official listing identity, dates and eligibility still require review."
+  }
+]

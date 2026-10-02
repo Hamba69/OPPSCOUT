@@ -1,0 +1,642 @@
+[
+  {
+    "id": "77777777-7777-4777-8777-000000000001",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000001",
+      "title": "Chevening Scholarship 2027/2028 (Uganda)",
+      "organizationId": "66666666-6666-4666-8666-000000000013",
+      "category": "scholarship",
+      "description": "A UK government fully funded one-year master's scholarship for emerging Ugandan leaders, funded by the Foreign, Commonwealth and Development Office.",
+      "eligibility": {
+        "programmeRules": [
+          {
+            "field": "location",
+            "label": "Uganda citizenship and country-of-award requirement",
+            "allowedValues": [
+              "Uganda"
+            ]
+          },
+          {
+            "field": "language",
+            "label": "English proficiency for UK study",
+            "allowedValues": [
+              "English"
+            ]
+          }
+        ],
+        "minimumExperienceMonths": 24
+      },
+      "requiredSkills": [
+        "leadership",
+        "communication",
+        "academic writing"
+      ],
+      "preferredSkills": [
+        "public policy",
+        "networking"
+      ],
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "deadline": "2026-10-06T11:00:00",
+      "applicationMethod": "Review the Chevening eligibility criteria, secure an unconditional offer from an eligible one-year UK master's programme, and apply through the official Chevening online application system.",
+      "sourceUrl": "https://www.chevening.org/scholarship/uganda/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-08-04T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://www.chevening.org/scholarship/uganda/",
+      "deadline": "2026-10-06T11:00:00Z",
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "description": "Chevening offers postgraduate scholarships for Uganda applicants to study in the UK in 2027/28. Applications close on 6 October 2026 at 11:00 UTC. Review citizenship, residence, prior funding and employment exclusions before applying.",
+      "eligibility": {
+        "educationLevels": [
+          "bachelors",
+          "masters",
+          "phd"
+        ],
+        "additionalRequirements": [
+          "Confirm eligible citizenship and residence, and return home for at least two years after the scholarship.",
+          "Undergraduate studies must have finished at least two years before the deadline; 2,800 hours of post-graduation work experience are required.",
+          "Apply to three eligible UK courses and meet the unconditional-offer deadline. Check British citizenship, employment/relative and previous UK-government-scholarship exclusions."
+        ]
+      },
+      "applicationMethod": "Use the application portal linked from the official Uganda scholarship page. Review the full eligibility guidance and prepare the required course choices and documents.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.282Z",
+      "reviewedAt": "2026-10-02T07:03:45.282Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://www.chevening.org/scholarship/uganda/ https://www.chevening.org/resource-hub/guidance/eligibility/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. Closing time confirmed on official page. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000002",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000002",
+      "title": "Commonwealth PhD Scholarships 2027/2028",
+      "organizationId": "66666666-6666-4666-8666-000000000016",
+      "category": "scholarship",
+      "description": "Fully funded doctoral scholarships in the UK for citizens of Commonwealth developing countries, including Uganda, under the least-developed and vulnerable-states criteria.",
+      "eligibility": {
+        "programmeRules": [
+          {
+            "field": "location",
+            "label": "Commonwealth developing-country citizenship",
+            "allowedValues": [
+              "Uganda"
+            ]
+          }
+        ],
+        "educationLevels": [
+          "masters"
+        ]
+      },
+      "requiredSkills": [
+        "research",
+        "academic writing"
+      ],
+      "preferredSkills": [
+        "quantitative analysis"
+      ],
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "deadline": "2026-10-20T23:59:00",
+      "applicationMethod": "Apply through a nominating UK university or the CSC's direct-access route on the Commonwealth Scholarship Commission online portal.",
+      "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-phd-scholarships/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-08-01T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-phd-scholarships-for-least-developed-countries-and-vulnerable-states/",
+      "deadline": "2026-10-20T15:00:00Z",
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "description": "Commonwealth PhD scholarships support full-time UK study beginning in September/October 2027. Uganda is eligible. The CSC deadline is 20 October 2026, 16:00 BST; nominating agencies can impose earlier deadlines. Applying is free.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Confirm eligible citizenship/refugee status and permanent residence, financial need, availability for September 2027 and commitment to return home.",
+          "Meet the published degree standard by September 2027 (normally 2:1, or lower second plus relevant postgraduate qualification); contextual disability nomination may apply.",
+          "Check the restriction on existing PhD/MPhil registration and obtain a proposed UK supervisor statement."
+        ]
+      },
+      "applicationMethod": "Apply through CSC Central AND an approved nominator. Check the nominator deadline. Upload the required transcripts, references and eligibility documents only to the official portal.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://cscuk.fcdo.gov.uk/scholarships/commonwealth-phd-scholarships-for-least-developed-countries-and-vulnerable-states/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. Closing time confirmed on official page. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000003",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000003",
+      "title": "Commonwealth Master's Scholarships 2027/2028",
+      "organizationId": "66666666-6666-4666-8666-000000000016",
+      "category": "scholarship",
+      "description": "Fully funded one-year taught master's scholarships in the UK for Ugandan citizens who cannot otherwise afford to study in the UK.",
+      "eligibility": {
+        "programmeRules": [
+          {
+            "field": "location",
+            "label": "Commonwealth developing-country citizenship",
+            "allowedValues": [
+              "Uganda"
+            ]
+          }
+        ],
+        "educationLevels": [
+          "bachelors"
+        ]
+      },
+      "requiredSkills": [
+        "academic excellence",
+        "leadership"
+      ],
+      "preferredSkills": [
+        "development studies"
+      ],
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "deadline": "2026-10-20T23:59:00",
+      "applicationMethod": "Apply through the Commonwealth Scholarship Commission's online application portal, selecting an eligible UK master's course.",
+      "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-08-01T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/",
+      "deadline": "2026-10-20T15:00:00Z",
+      "location": "United Kingdom",
+      "workMode": "onsite",
+      "description": "Commonwealth Master's scholarships support full-time UK study beginning in September/October 2027. Uganda is eligible. The CSC deadline is 20 October 2026, 16:00 BST; nominating agencies can impose earlier deadlines. Applying is free.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Confirm eligible citizenship/refugee status and permanent residence, financial need, availability for September 2027 and commitment to return home.",
+          "Meet the published degree standard by September 2027 (normally 2:1, or lower second plus relevant postgraduate qualification); contextual disability nomination may apply.",
+          "Check exclusions for prior UK Master’s study or Commonwealth Master’s awards; a second Master’s requires justification."
+        ]
+      },
+      "applicationMethod": "Apply through CSC Central AND an approved nominator. Check the nominator deadline. Upload the required transcripts, references and eligibility documents only to the official portal.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. Closing time confirmed on official page. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000080",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000080",
+      "title": "Early-Stage Social Enterprises Grant",
+      "organizationId": "66666666-6666-4666-8666-000000000020",
+      "category": "grant",
+      "description": "Funds social-impact organisations worldwide, including in Uganda, solving urgent problems with scalable and sustainable approaches.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "social entrepreneurship"
+      ],
+      "location": "Global",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official Draper Richards Kaplan Foundation rolling application process.",
+      "sourceUrl": "https://www.drkfoundation.org/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://www.drkfoundation.org/apply/",
+      "deadline": null,
+      "location": "Eligible project locations",
+      "workMode": "onsite",
+      "description": "DRK accepts year-round funding applications from early-stage social impact organizations. This is support for an organization and its scalable solution, not a personal scholarship or salaried job.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Apply on behalf of a social impact organization with a scalable approach and evidence of results. Confirm current funding geography and organizational fit with DRK.",
+          "Observe the reapplication restrictions: normally only if encouraged, no sooner than one year after decline and at most twice."
+        ]
+      },
+      "applicationMethod": "Submit the online form linked from DRK with an executive summary, pitch deck or business plan and leadership CVs. Do not email the application.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://www.drkfoundation.org/apply/ https://www.drkfoundation.org/apply/faq/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000081",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000081",
+      "title": "Rufford Small Grants",
+      "organizationId": "66666666-6666-4666-8666-000000000054",
+      "category": "grant",
+      "description": "Funds nature-conservation projects in emerging and developing-economy countries, including Uganda, on a rolling basis.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "conservation"
+      ],
+      "location": "Developing countries",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official Rufford Foundation rolling application process.",
+      "sourceUrl": "https://www.rufford.org/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://apply.ruffordsmallgrants.org/",
+      "deadline": null,
+      "location": "Eligible conservation project countries",
+      "workMode": "onsite",
+      "description": "Rufford accepts conservation project proposals throughout the year. First-stage grants can be up to GBP 7,000. The programme supports early-career conservation work; it does not pay academic fees or fund undergraduate students.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Confirm project-country eligibility and early-career criteria. Undergraduate students are not eligible.",
+          "Project must not already have started. Arrange an organization to receive funds and three independent references. Apply in English at most once per 12 months."
+        ]
+      },
+      "applicationMethod": "Create an account on the official Rufford application portal, read the country and project criteria, and submit the proposal with references.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://apply.ruffordsmallgrants.org/ https://apply.ruffordsmallgrants.org/help/faqs https://apply.ruffordsmallgrants.org/help/criteria. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000083",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000083",
+      "title": "Rapid Response Grants",
+      "organizationId": "66666666-6666-4666-8666-000000000062",
+      "category": "grant",
+      "description": "Funds interventions that advance women's human rights across Africa, including Uganda, on a rolling basis.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "women's rights"
+      ],
+      "location": "Africa-wide",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official Urgent Action Fund-Africa rolling application process.",
+      "sourceUrl": "https://uafafrica.org/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://www.uaf-africa.org/apply-for-a-grant/",
+      "deadline": null,
+      "location": "Africa",
+      "workMode": "onsite",
+      "description": "Urgent Action Fund Africa supports urgent strategic interventions advancing women’s human rights. Its Rapid Response form covers action within three months. The official application page publishes no fixed closing date.",
+      "eligibility": {
+        "additionalRequirements": [
+          "The intervention must be strategic, unanticipated, urgent, sustainable and supported by others familiar with the situation.",
+          "Use the Rapid Response form for action within three months; confirm group and geographic eligibility with the fund."
+        ]
+      },
+      "applicationMethod": "Use the Rapid Response application form linked from the official UAF Africa page. Protection and longer-term advocacy have separate forms.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://www.uaf-africa.org/apply-for-a-grant/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000084",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000084",
+      "title": "Global Poverty and Inequality Innovation Grant",
+      "organizationId": "66666666-6666-4666-8666-000000000023",
+      "category": "grant",
+      "description": "Funds innovations that address poverty and inequality in low- and middle-income countries, including Uganda, on a rolling basis.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "poverty reduction"
+      ],
+      "location": "Low- and middle-income countries",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official Fund for Innovation in Development rolling application process.",
+      "sourceUrl": "https://fondation-fid.org/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://fundinnovation.dev/en/launch-project",
+      "deadline": null,
+      "location": "Eligible low- and middle-income countries",
+      "workMode": "onsite",
+      "description": "FID has a continuously open call for innovations addressing poverty and inequality. Funding stages support testing, evaluation and scaling. The current call excludes projects in Burkina Faso, Mali and Niger.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Organizations and collectives may apply; individual applicants and international organizations are ineligible.",
+          "Project must be in an eligible low- or middle-income country, excluding Burkina Faso, Mali and Niger. Select the funding stage appropriate to the evidence available."
+        ]
+      },
+      "applicationMethod": "Read the current call guide and submit through the FID portal linked from the official page, including its application and budget templates.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://fundinnovation.dev/en/launch-project https://fundinnovation.wiin.io/en/applications/application. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000085",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000085",
+      "title": "Rapid Response Window",
+      "organizationId": "66666666-6666-4666-8666-000000000074",
+      "category": "grant",
+      "description": "Supports women's participation in peace processes and implementation of peace agreements, including in Uganda, on a rolling basis.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "women peace and security"
+      ],
+      "location": "Global",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official UN Women's Peace and Humanitarian Fund rolling application process.",
+      "sourceUrl": "https://wphfund.org/rrw-short-term-grants",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://wphfund.org/rrw-short-term-grants/",
+      "deadline": null,
+      "location": "Eligible countries with a qualifying peace process",
+      "workMode": "onsite",
+      "description": "WPHF Rapid Response Window short-term grants support urgent initiatives by local women’s rights organizations influencing peace processes or peace agreements. Applications are accepted year-round; grants can reach USD 100,000 for up to six months.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Lead applicant must be an eligible, legally registered local women’s rights organization.",
+          "Confirm an ODA-eligible country and a qualifying track 1/2 peace process or peace-agreement implementation. A country name alone does not establish eligibility."
+        ]
+      },
+      "applicationMethod": "Download the Short-Term Grants concept-note template from the official page and submit as directed to WPHF-RRW@unwomen.org.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://wphfund.org/rrw-short-term-grants/ https://wphfund.org/frequently-asked-questions-faq/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  },
+  {
+    "id": "77777777-7777-4777-8777-000000000088",
+    "previous": {
+      "id": "77777777-7777-4777-8777-000000000088",
+      "title": "Seed Grants 2026",
+      "organizationId": "66666666-6666-4666-8666-000000000049",
+      "category": "grant",
+      "description": "Funds grassroots changemakers worldwide, including in Uganda, launching community-driven initiatives, on a rolling basis.",
+      "eligibility": {},
+      "requiredSkills": [],
+      "preferredSkills": [
+        "grassroots organising"
+      ],
+      "location": "Global",
+      "workMode": "remote",
+      "deadline": "2027-03-31T23:59:00",
+      "applicationMethod": "Submit an application through the official Pollination Project rolling application process.",
+      "sourceUrl": "https://thepollinationproject.org/",
+      "verificationStatus": "pending",
+      "source": "scraped",
+      "publicationDate": "2026-09-07T00:00:00",
+      "checkedAt": "2026-09-25T12:00:00",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": false,
+        "duplicateChecked": true,
+        "deadlinePlausible": false,
+        "noSensitiveDataAsk": false,
+        "noInappropriateFees": false
+      },
+      "reviewNotes": "Imported from the archive snapshot 2026-09-25. Official source, deadline, fee and sensitive-data checks are awaiting the app's trust-desk review.",
+      "reviewerId": null,
+      "reviewedAt": null
+    },
+    "update": {
+      "sourceUrl": "https://thepollinationproject.org/apply/",
+      "deadline": null,
+      "location": "Worldwide community projects",
+      "workMode": "onsite",
+      "description": "The Pollination Project offers rolling seed funding of up to USD 500 for volunteer-led community work. Individuals, informal groups and nonprofit organizations worldwide may apply, subject to the fund’s detailed restrictions.",
+      "eligibility": {
+        "additionalRequirements": [
+          "Annual organizational budget must be below USD 50,000 and project cost below USD 10,000; no paid staff or private profit.",
+          "No prior TPP funding or concurrent application by the group. Show some work already undertaken and capacity to receive USD funds.",
+          "Review animal-product, environmental, political, religious and other project restrictions on the official page before applying."
+        ]
+      },
+      "applicationMethod": "Read the eligibility guide and apply through the form linked on the official website. Funding is competitive and not guaranteed.",
+      "requiredSkills": [],
+      "preferredSkills": [],
+      "verificationStatus": "verified",
+      "status": "open",
+      "checkedAt": "2026-10-02T07:03:45.283Z",
+      "reviewedAt": "2026-10-02T07:03:45.283Z",
+      "reviewerId": "official-source-review:2026-10-02",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "noInappropriateFees": true,
+        "noSensitiveDataAsk": true,
+        "deadlinePlausible": true,
+        "duplicateChecked": true
+      },
+      "reviewNotes": "Reviewed official programme, eligibility and application sources on 2026-10-02: https://thepollinationproject.org/apply/ https://thepollinationproject.org/funding-eligibility/. No inappropriate application fee or off-platform sensitive-data request identified in reviewed instructions. Required documents belong only in the provider application. Duplicate screened against catalog. No fixed closing date; do not infer perpetual availability. Additional requirements are not all verifiable from a seeker profile. Grant work mode denotes project activity, not a remote job. Original archive publication timestamp is not independently confirmed."
+    }
+  }
+]

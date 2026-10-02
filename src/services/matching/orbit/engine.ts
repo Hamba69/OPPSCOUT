@@ -62,7 +62,7 @@ export class OrbitMatchEngine implements MatchEngine {
 
   private skills(profile: UserProfile, opp: Opportunity): Dim {
     const reqs = [...opp.requiredSkills.map((skill) => ({ skill, w: 2 })), ...opp.preferredSkills.map((skill) => ({ skill, w: 1 }))];
-    if (!reqs.length) return { ratio: this.o.emptyPrior, matched: [{ label: "Skills", detail: "No specific skills are required." }], missing: [] };
+    if (!reqs.length) return { ratio: this.o.emptyPrior, matched: [{ label: "Skills", detail: "No specific skill requirements are recorded." }], missing: [] };
     let earned = 0, total = 0;
     const strong: string[] = [], partial: string[] = [], lacking: string[] = [];
     for (const { skill, w } of reqs) {
@@ -78,7 +78,7 @@ export class OrbitMatchEngine implements MatchEngine {
 
   private field(profile: UserProfile, opp: Opportunity): Dim {
     const accepted = opp.eligibility.fieldsOfStudy ?? [];
-    if (!accepted.length) return { ratio: this.o.emptyPrior, matched: [{ label: "Field of study", detail: "Open to all study fields." }], missing: [] };
+    if (!accepted.length) return { ratio: this.o.emptyPrior, matched: [{ label: "Field of study", detail: "No study-field restriction is recorded; check the official requirements." }], missing: [] };
     if (!profile.fieldOfStudy) return { ratio: this.o.soft ? 0.3 : 0, matched: [], missing: [{ label: "Field of study", detail: "Add your field of study to sharpen this match." }] };
     const { score } = similarity(profile.fieldOfStudy, accepted, FIELD_INDEX, this.o.soft, this.o.canonical);
     if (score >= 0.85) return { ratio: 1, matched: [{ label: "Field of study", detail: `${profile.fieldOfStudy} aligns with the opportunity.` }], missing: [] };
@@ -89,7 +89,7 @@ export class OrbitMatchEngine implements MatchEngine {
   private experience(profile: UserProfile, opp: Opportunity): Dim {
     const required = opp.eligibility.minimumExperienceMonths ?? 0;
     const months = [...profile.workExperience, ...profile.internshipExperience].reduce((s, e) => s + Math.max(e.months, 0), 0);
-    if (required === 0) return { ratio: 1, matched: [{ label: "Experience", detail: "No minimum experience is required." }], missing: [] };
+    if (required === 0) return { ratio: 1, matched: [{ label: "Experience", detail: "No minimum experience is recorded." }], missing: [] };
     const ratio = Math.min(months / required, 1);
     return months >= required
       ? { ratio, matched: [{ label: "Experience", detail: `${months} months meets the ${required}-month baseline.` }], missing: [] }

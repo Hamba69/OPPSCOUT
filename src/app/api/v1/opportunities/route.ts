@@ -19,7 +19,9 @@ export async function GET(request: Request): Promise<Response> {
       statuses: auth.role === "user" ? ["open", "closing_soon"] : undefined,
       organizationId: auth.role === "organization" ? auth.organizationId ?? undefined : url.searchParams.get("organizationId") ?? undefined,
     };
-    const opportunities = await (await getRepository()).listOpportunities(filters);
+    const rows = await (await getRepository()).listOpportunities(filters);
+    const now = new Date();
+    const opportunities = auth.role === "user" ? rows.filter(item => !item.deadline || item.deadline > now) : rows;
     const freshest = opportunities.reduce((date, item) => item.checkedAt > date ? item.checkedAt : date, new Date(0));
     return success(opportunities, 200, freshest.getTime() ? freshest : new Date());
   });

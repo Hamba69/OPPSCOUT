@@ -17,6 +17,20 @@ beforeEach(() => { vi.clearAllMocks(); vi.stubGlobal("fetch", mocks.fetch); mock
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("selectable matching profile", () => {
+  it("saves experience and certifications while preserving organization details", async () => {
+    render(createElement(ProfileForm, { initial: { ...initial, certifications: ["CPA (U)"], workExperience: [{ title: "Analyst", organization: "Prior employer", months: 48 }] } }));
+    fireEvent.change(screen.getByLabelText("Work months 1"), { target: { value: "60" } });
+    fireEvent.click(screen.getByRole("button", { name: "Add internship experience" }));
+    fireEvent.change(screen.getByLabelText("Internship role 1"), { target: { value: "Research intern" } });
+    fireEvent.change(screen.getByLabelText("Internship months 1"), { target: { value: "6" } });
+    fireEvent.click(screen.getByRole("button", { name: /Save my profile/ }));
+    await waitFor(() => expect(mocks.fetch).toHaveBeenCalled());
+    const body = JSON.parse(mocks.fetch.mock.calls[0][1].body);
+    expect(body.workExperience).toEqual([{ title: "Analyst", organization: "Prior employer", months: 60 }]);
+    expect(body.internshipExperience).toEqual([{ title: "Research intern", months: 6 }]);
+    expect(body.certifications).toEqual(["CPA (U)"]);
+    expect(profileSchema.safeParse(body).success).toBe(true);
+  });
   it("sends exact scalar and array values, retaining selected skills after searching", async () => {
     render(createElement(ProfileForm, { initial, choices: buildProfileChoices(getDemoCatalog().opportunities) }));
     fireEvent.change(screen.getByLabelText("Education level"), { target: { value: "bachelors" } });

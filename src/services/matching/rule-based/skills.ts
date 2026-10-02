@@ -7,7 +7,7 @@ export function scoreSkills(profile: UserProfile, opportunity: Opportunity): Dim
     ...opportunity.requiredSkills.map((skill) => ({ skill, importance: 2 })),
     ...opportunity.preferredSkills.map((skill) => ({ skill, importance: 1 })),
   ];
-  if (!requirements.length) return { ratio: 1, matched: [{ label: "Skills", detail: "No specific skills are required." }], missing: [] };
+  if (!requirements.length) return { ratio: 1, matched: [{ label: "Skills", detail: "No specific skill requirements are recorded." }], missing: [] };
   const matched = requirements.filter(({ skill }) => includesNormalized(profile.skills, skill));
   const missing = requirements.filter(({ skill }) => !includesNormalized(profile.skills, skill));
   const total = requirements.reduce((sum, item) => sum + item.importance, 0);

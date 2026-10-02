@@ -25,8 +25,8 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in">
-      <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">{greeting}, {profile?.name ?? "there"}</p><h1 className="mt-1 text-3xl font-extrabold text-ink sm:text-4xl">Matches worth your time.</h1><p className="mt-2 text-navy">Eligibility checked. Sources verified. Reasons included.</p></div><span className="pill">{matches.length} {matches.length === 1 ? "match" : "matches"}</span></div>
-      {matches.length ? <FeedBrowser items={items} /> : <div className="mt-8"><EmptyState title="No clear matches yet" description="Add your study field, a few skills, and the places you would like to work. A little more about you helps us find a clearer fit." href="/profile" action="Complete your profile" /></div>}
+      <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">{greeting}, {profile?.name ?? "there"}</p><h1 className="mt-1 text-3xl font-extrabold text-ink sm:text-4xl">Matches worth your time.</h1><p className="mt-2 text-navy">Verified listings, ranked for your profile. Confirm all eligibility requirements with the provider.</p></div><span className="pill">{matches.length} {matches.length === 1 ? "match" : "matches"}</span></div>
+      {matches.length ? <FeedBrowser items={items} /> : <div className="mt-8"><EmptyState title="No clear matches yet" description="Our current verified listings may not cover your interests or eligibility yet. Check that your profile is accurate and return as new opportunities are reviewed." href="/profile" action="Review your profile" /></div>}
     </main>
   );
 }

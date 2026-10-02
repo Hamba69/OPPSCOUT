@@ -9,15 +9,15 @@ export async function ingestManualOpportunity(repository: Repository, input: Opp
   const duplicate = await findDuplicateOpportunity(repository, input);
   if (duplicate) {
     const incomingIsAuthoritative = SOURCE_AUTHORITY[input.source] >= SOURCE_AUTHORITY[duplicate.source];
+    if (!incomingIsAuthoritative && !suspicious) return duplicate;
     return repository.updateOpportunity(duplicate.id, {
       ...(incomingIsAuthoritative ? input : {}),
-      verificationStatus: suspicious ? "flagged" : duplicate.verificationStatus,
-      checkedAt: new Date(),
+      verificationStatus: suspicious || duplicate.verificationStatus === "flagged" ? "flagged" : "pending",
     });
   }
   return repository.createOpportunity({
     ...input,
-    source: "org_submitted",
+    source: input.source,
     verificationStatus: suspicious ? "flagged" : "pending",
     status: "open",
     checkedAt: new Date(),

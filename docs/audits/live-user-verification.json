@@ -1,0 +1,55 @@
+{
+  "capturedAt": "2026-10-02T07:28:17.558Z",
+  "scope": "Local production Next server, live Supabase Auth/Postgres and configured Redis; two temporary identities; 100 simultaneous HTTP match reads, not 100 distinct signed-in users or production-host load.",
+  "browserChecks": [
+    {
+      "seeker": 1,
+      "width": 390,
+      "cards": 14,
+      "overflow": false
+    },
+    {
+      "seeker": 1,
+      "width": 768,
+      "cards": 14,
+      "overflow": false
+    },
+    {
+      "seeker": 1,
+      "width": 1440,
+      "cards": 14,
+      "overflow": false
+    },
+    {
+      "seeker": 2,
+      "width": 390,
+      "cards": 9,
+      "overflow": false
+    },
+    {
+      "seeker": 2,
+      "width": 768,
+      "cards": 9,
+      "overflow": false
+    },
+    {
+      "seeker": 2,
+      "width": 1440,
+      "cards": 9,
+      "overflow": false
+    }
+  ],
+  "pageErrors": [],
+  "distinctMatchCounts": [
+    14,
+    9
+  ],
+  "savedIsolation": true,
+  "directPrivateDataDenied": true,
+  "http": {
+    "passed": 100,
+    "p95Ms": 4898,
+    "elapsedMs": 4944,
+    "failures": []
+  }
+}

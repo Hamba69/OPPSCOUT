@@ -90,6 +90,10 @@ describe("every Phase 1 /api/v1 route", () => {
     }, orgHeaders));
     expect(createdResponse.status).toBe(201);
     const created = await data<{ id: string }>(createdResponse);
+    const selfApproval = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { verificationStatus: "verified" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });
+    expect((await data<{ verificationStatus: string }>(selfApproval)).verificationStatus).toBe("pending");
+    const transfer = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { organizationId: "44444444-4444-4444-8444-444444444445" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });
+    expect(transfer.status).toBe(403);
     expect((await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { title: "Community Evidence Fellowship" }, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(200);
     expect((await opportunityRoute.DELETE(request(`/api/v1/opportunities/${created.id}`, "DELETE", undefined, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(204);
   });

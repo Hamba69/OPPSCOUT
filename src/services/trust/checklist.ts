@@ -1,7 +1,7 @@
 import type { TrustChecklist } from "@/core/entities/domain";
 
 export function checklistIsComplete(checklist: TrustChecklist): boolean {
-  return Object.values(checklist).every(Boolean);
+  return ["sourceAuthentic", "noInappropriateFees", "noSensitiveDataAsk", "deadlinePlausible", "duplicateChecked"].every(key => checklist[key as keyof TrustChecklist] === true);
 }
 
 const SUSPICIOUS_PATTERNS = [

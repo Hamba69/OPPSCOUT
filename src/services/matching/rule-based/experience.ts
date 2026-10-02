@@ -4,7 +4,7 @@ import type { DimensionScore } from "@/services/matching/rule-based/field-releva
 export function scoreExperience(profile: UserProfile, opportunity: Opportunity): DimensionScore {
   const requiredMonths = opportunity.eligibility.minimumExperienceMonths ?? 0;
   const months = [...profile.workExperience, ...profile.internshipExperience].reduce((sum, item) => sum + Math.max(item.months, 0), 0);
-  if (requiredMonths === 0) return { ratio: 1, matched: [{ label: "Experience", detail: "No minimum experience is required." }], missing: [] };
+  if (requiredMonths === 0) return { ratio: 1, matched: [{ label: "Experience", detail: "No minimum experience is recorded." }], missing: [] };
   const ratio = Math.min(months / requiredMonths, 1);
   return months >= requiredMonths
     ? { ratio, matched: [{ label: "Experience", detail: `${months} months meets the ${requiredMonths}-month baseline.` }], missing: [] }
