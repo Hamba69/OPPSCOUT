@@ -56,7 +56,7 @@ export function BottomTabs(): React.JSX.Element | null {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={`flex min-h-12 min-w-[4.5rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
-                    active ? "text-sky-500" : "text-navy"
+                    active ? "bg-amber/50 text-ink" : "text-navy"
                   }`}
                 >
                   <svg
