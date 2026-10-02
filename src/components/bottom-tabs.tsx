@@ -29,10 +29,6 @@ const seekerPaths = [
   "/opportunity",
 ];
 
-/** Same yellow as primary buttons */
-const ACTIVE_TAB =
-  "bg-[#FFD700] text-ink";
-
 export function BottomTabs(): React.JSX.Element | null {
   const pathname = usePathname();
   if (!seekerPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))) {
@@ -59,9 +55,7 @@ export function BottomTabs(): React.JSX.Element | null {
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex min-h-12 min-w-[4.5rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
-                    active ? ACTIVE_TAB : "text-navy"
-                  }`}
+                  className="flex min-h-12 min-w-[4.5rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[11px] font-semibold text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"
                 >
                   <svg
                     width="20"
