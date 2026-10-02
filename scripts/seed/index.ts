@@ -38,6 +38,7 @@ function opportunityCreateData(opportunity: Opportunity): Prisma.OpportunityUnch
     sourceUrl: opportunity.sourceUrl,
     verificationStatus: opportunity.verificationStatus as VerificationStatus,
     source: opportunity.source as OpportunitySource,
+    origin: "catalog",
     publicationDate: opportunity.publicationDate,
     checkedAt: opportunity.checkedAt,
     status: opportunity.status as OpportunityStatus,
@@ -103,17 +104,16 @@ async function main(): Promise<void> {
     });
 
     for (const organization of organizations) {
-      const { id, createdAt, updatedAt, ...fields } = organization;
+      const { id, createdAt, updatedAt, postingHistory, ...fields } = organization;
       const data = {
         ...fields,
         verificationStatus: fields.verificationStatus as VerificationStatus,
-        postingHistory: json(fields.postingHistory),
         promotionPolicy: json(fields.promotionPolicy),
       };
       await transaction.organization.upsert({
         where: { id },
         update: data,
-        create: { id, createdAt, updatedAt, ...data },
+        create: { id, createdAt, updatedAt, postingHistory: json(postingHistory), ...data },
       });
     }
 

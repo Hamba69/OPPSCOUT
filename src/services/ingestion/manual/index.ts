@@ -5,8 +5,9 @@ import { containsSuspiciousRequest } from "@/services/trust/checklist";
 import { findDuplicateOpportunity } from "@/services/ingestion/deduplication";
 
 export async function ingestManualOpportunity(repository: Repository, input: OpportunityInput): Promise<Opportunity> {
+  const origin = input.origin ?? "catalog";
   const suspicious = containsSuspiciousRequest(`${input.title} ${input.description} ${input.applicationMethod}`);
-  const duplicate = await findDuplicateOpportunity(repository, input);
+  const duplicate = await findDuplicateOpportunity(repository, { ...input, origin });
   if (duplicate) {
     const incomingIsAuthoritative = SOURCE_AUTHORITY[input.source] >= SOURCE_AUTHORITY[duplicate.source];
     if (!incomingIsAuthoritative && !suspicious) return duplicate;
@@ -17,6 +18,7 @@ export async function ingestManualOpportunity(repository: Repository, input: Opp
   }
   return repository.createOpportunity({
     ...input,
+    origin,
     source: input.source,
     verificationStatus: suspicious ? "flagged" : "pending",
     status: "open",

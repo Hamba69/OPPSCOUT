@@ -1,10 +1,12 @@
 import Link from "next/link";
+import type { OpportunityOrigin } from "@/core/entities/domain";
 
 export interface MatchCardProps {
   id: string;
   opportunityId: string;
   title: string;
   organization: string;
+  origin?: OpportunityOrigin;
   score: number;
   deadline: string | null;
   location: string;
@@ -39,6 +41,9 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
         </div>
         <span className="match-score shrink-0">{props.score}% match</span>
       </div>
+      <p className="mt-2 text-xs font-semibold text-navy">
+        {props.origin === "organization" ? "Posted through OppScout by the organization" : "Sourced for the OppScout catalog"}
+      </p>
       <p className="mt-3 text-sm text-navy">
         <span className="capitalize">
           {props.location} · {props.workMode}

@@ -144,7 +144,8 @@ export class MemoryRepository implements Repository {
       (!filters.search || includesText(`${item.title} ${item.description}`, filters.search)) &&
       (!filters.verificationStatus || item.verificationStatus === filters.verificationStatus) &&
       (!filters.statuses || filters.statuses.includes(item.status)) &&
-      (!filters.organizationId || item.organizationId === filters.organizationId)
+      (!filters.organizationId || item.organizationId === filters.organizationId) &&
+      (!filters.origin || (item.origin ?? "catalog") === filters.origin)
     ));
   }
 
@@ -157,6 +158,7 @@ export class MemoryRepository implements Repository {
     if (!organization) throw new NotFoundError("Organization");
     const opportunity: Opportunity = {
       ...copy(input),
+      origin: input.origin ?? "catalog",
       id: randomUUID(),
       organization: { id: organization.id, name: organization.name, verificationStatus: organization.verificationStatus },
       publicationDate: input.publicationDate ?? new Date(),

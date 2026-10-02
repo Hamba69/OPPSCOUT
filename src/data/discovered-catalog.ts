@@ -49,6 +49,7 @@ export function getDiscoveredOrganizations(): Organization[] {
     const alreadyVerified = organization.verificationStatus === "verified";
     return {
       ...organization,
+      postingHistory: [],
       officialLinks: afnetFix ? ["https://afwcnet.org/"] : organization.officialLinks,
       // Keep verified status from the archive when present; otherwise pending until trust-desk review.
       verificationStatus: alreadyVerified ? "verified" : "pending",
@@ -100,6 +101,7 @@ export function getDiscoveredOpportunities(): Opportunity[] {
     if (archiveVerified && !hasRedFlag) {
       return {
         ...opportunity,
+        origin: "catalog" as const,
         sourceUrl: feeConcern ? "https://afwcnet.org/women-grants" : opportunity.sourceUrl,
         verificationStatus: "verified" as const,
         // Preserve checklist / notes / reviewer from the archive.
@@ -128,6 +130,7 @@ export function getDiscoveredOpportunities(): Opportunity[] {
 
     return {
       ...opportunity,
+      origin: "catalog" as const,
       sourceUrl: feeConcern ? "https://afwcnet.org/women-grants" : opportunity.sourceUrl,
       verificationStatus: hasRedFlag ? ("flagged" as const) : ("pending" as const),
       reviewChecklist,

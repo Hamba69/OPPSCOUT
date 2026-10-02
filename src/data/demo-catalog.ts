@@ -67,14 +67,13 @@ export function getDemoCatalog(now = new Date()): { organizations: Organization[
     const organization = organizations[listing.organization];
     const id = index === 0 ? PRIMARY_SEED_OPPORTUNITY_ID : `55555555-5555-4555-8555-${String(555555555551 + index)}`;
     const published = new Date(now.getTime() - (index + 2) * 86_400_000);
-    organization.postingHistory.push({ opportunityId: id, postedAt: published.toISOString() });
     return {
       id, organizationId: organization.id, organization: { id: organization.id, name: organization.name, verificationStatus: "verified" },
       title: listing.title, category: listing.category, description: listing.description,
       eligibility: { educationLevels: ["diploma", "bachelors", "masters"], fieldsOfStudy: listing.fields, minimumExperienceMonths: listing.months ?? 0 },
       requiredSkills: listing.requiredSkills, preferredSkills: listing.preferredSkills, location: listing.location, workMode: listing.workMode,
       deadline: new Date(now.getTime() + listing.days * 86_400_000), applicationMethod: listing.application,
-      sourceUrl: `https://example.org/oppscout-demo/${id}`, verificationStatus: "verified", source: "org_submitted",
+      sourceUrl: `https://example.org/oppscout-demo/${id}`, verificationStatus: "verified", source: "org_submitted", origin: "catalog",
       publicationDate: published, checkedAt: now, status: listing.days <= 3 ? "closing_soon" : "open",
       reviewChecklist: { sourceAuthentic: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true },
       reviewNotes: "Fictional demo fixture illustrating a completed review; not a real vacancy or verification claim.",

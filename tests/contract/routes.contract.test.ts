@@ -80,6 +80,10 @@ describe("every Phase 1 /api/v1 route", () => {
   it("supports verified opportunity reads, events, and organization-owned CRUD", async () => {
     expect((await opportunitiesRoute.GET(request("/api/v1/opportunities"))).status).toBe(200);
     expect((await opportunityRoute.GET(request(`/api/v1/opportunities/${opportunityId}`), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(200);
+    const catalogEdit = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${opportunityId}`, "PATCH", { title: "Changed by organization" }, orgHeaders), { params: Promise.resolve({ id: opportunityId }) });
+    expect(catalogEdit.status).toBe(403);
+    const catalogDelete = await opportunityRoute.DELETE(request(`/api/v1/opportunities/${opportunityId}`, "DELETE", undefined, orgHeaders), { params: Promise.resolve({ id: opportunityId }) });
+    expect(catalogDelete.status).toBe(403);
     expect((await eventsRoute.POST(request(`/api/v1/opportunities/${opportunityId}/events`, "POST", { eventType: "view" }), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(201);
     const createdResponse = await opportunitiesRoute.POST(request("/api/v1/opportunities", "POST", {
       title: "Community Research Fellowship", organizationId: DEMO_ORG_ID, category: "fellowship",
@@ -89,7 +93,11 @@ describe("every Phase 1 /api/v1 route", () => {
       sourceUrl: "https://example.org/nile-innovation/fellowship", verificationStatus: "pending", source: "org_submitted", status: "open",
     }, orgHeaders));
     expect(createdResponse.status).toBe(201);
-    const created = await data<{ id: string }>(createdResponse);
+    const created = await data<{ id: string; origin: string }>(createdResponse);
+    expect(created.origin).toBe("organization");
+    const organizationListings = await data<Array<{ id: string; origin: string }>>(await opportunitiesRoute.GET(request("/api/v1/opportunities", "GET", undefined, orgHeaders)));
+    expect(organizationListings.map((item) => item.id)).toContain(created.id);
+    expect(organizationListings.every((item) => item.origin === "organization")).toBe(true);
     const selfApproval = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { verificationStatus: "verified" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });
     expect((await data<{ verificationStatus: string }>(selfApproval)).verificationStatus).toBe("pending");
     const transfer = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { organizationId: "44444444-4444-4444-8444-444444444445" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });

@@ -478,9 +478,7 @@ function copy<T>(value: T): T {
 export function getSeedOrganizations(): Organization[] {
   const existing = organizationSeeds.map((seed) => ({
     ...copy(seed),
-    postingHistory: opportunitySeeds
-      .filter((opportunity) => opportunity.organizationId === seed.id)
-      .map((opportunity) => ({ opportunityId: opportunity.id, postedAt: opportunity.publicationDate.toISOString() })),
+    postingHistory: [],
     createdAt: SEED_SNAPSHOT_AT,
     updatedAt: SEED_SNAPSHOT_AT,
   }));
@@ -495,6 +493,7 @@ export function getSeedOpportunities(): Array<Opportunity & { deadline: Date }> 
     if (!seed.deadline) throw new Error(`Seed opportunity ${seed.title} must have a closing date.`);
     return {
       ...copy(seed),
+      origin: "catalog",
       deadline: seed.deadline,
       organization: {
         id: organization.id,

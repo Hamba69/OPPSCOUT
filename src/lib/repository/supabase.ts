@@ -41,6 +41,7 @@ function organizationFromRow(row: DbRow): Organization {
 function opportunityFromRow(row: DbRow, organization?: DbRow): Opportunity {
   return {
     ...row,
+    origin: row.origin === "organization" ? "organization" : "catalog",
     deadline: asDate(row.deadline),
     publicationDate: asDate(row.publicationDate)!,
     checkedAt: asDate(row.checkedAt)!,
@@ -129,6 +130,7 @@ export class SupabaseRepository implements Repository {
     if (filters.verificationStatus) query = query.eq("verificationStatus", filters.verificationStatus);
     if (filters.statuses) query = query.in("status", filters.statuses);
     if (filters.organizationId) query = query.eq("organizationId", filters.organizationId);
+    if (filters.origin) query = query.eq("origin", filters.origin);
 
     // Read every page: the Data API otherwise silently caps a growing catalog.
     const rows: DbRow[] = [];
@@ -161,6 +163,7 @@ export class SupabaseRepository implements Repository {
     const now = new Date().toISOString();
     const insert = {
       ...input,
+      origin: input.origin ?? "catalog",
       id: randomUUID(),
       publicationDate: input.publicationDate?.toISOString() ?? now,
       checkedAt: input.checkedAt?.toISOString() ?? now,

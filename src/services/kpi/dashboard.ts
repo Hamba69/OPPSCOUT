@@ -1,4 +1,4 @@
-import type { EventLog, Opportunity, Organization, SavedOpportunity } from "@/core/entities/domain";
+import type { EventLog, Opportunity, SavedOpportunity } from "@/core/entities/domain";
 import type { Repository, StoredNotification } from "@/lib/repository/types";
 
 export interface KpiMetric {
@@ -27,9 +27,15 @@ function eventCount(events: EventLog[], type: EventLog["eventType"]): number {
   return events.filter((event) => event.eventType === type).length;
 }
 
-function organizationRepeatRate(organizations: Organization[]): number {
-  const repeat = organizations.filter((organization) => organization.postingHistory.length > 1).length;
-  return percent(repeat, organizations.length);
+function organizationRepeatRate(opportunities: Opportunity[]): { value: number; sampleSize: number } {
+  const postedByOrganization = new Map<string, number>();
+  for (const opportunity of opportunities) {
+    if (opportunity.origin !== "organization") continue;
+    postedByOrganization.set(opportunity.organizationId, (postedByOrganization.get(opportunity.organizationId) ?? 0) + 1);
+  }
+  const sampleSize = postedByOrganization.size;
+  const repeat = [...postedByOrganization.values()].filter((count) => count > 1).length;
+  return { value: percent(repeat, sampleSize), sampleSize };
 }
 
 function deadlineSuccessRate(saved: SavedOpportunity[], opportunities: Opportunity[], now: Date): number {
@@ -46,10 +52,11 @@ function notificationEngagement(events: EventLog[], notifications: StoredNotific
 
 export async function getKpiSnapshot(repository: Repository, now = new Date(), periodDays = 30): Promise<KpiSnapshot> {
   const since = new Date(now.getTime() - periodDays * 86_400_000);
-  const [profiles, opportunities, organizations, notifications, events] = await Promise.all([
-    repository.listProfiles(), repository.listOpportunities(), repository.listOrganizations(),
+  const [profiles, opportunities, notifications, events] = await Promise.all([
+    repository.listProfiles(), repository.listOpportunities(),
     repository.listAllNotifications(), repository.listEvents({ since }),
   ]);
+  const organizationRetention = organizationRepeatRate(opportunities);
   const [matchesByUser, savedByUser] = await Promise.all([
     Promise.all(profiles.map((profile) => repository.listMatches(profile.id))),
     Promise.all(profiles.map((profile) => repository.listSaved(profile.id))),
@@ -77,7 +84,7 @@ export async function getKpiSnapshot(repository: Repository, now = new Date(), p
       metric("notification_engagement", "Notification engagement rate", notificationEngagement(events, notifications), "percent", notifications.length),
       metric("ussd_active_users", "USSD active users", ussdActive, "count", activeUserIds.size),
       metric("deadline_success", "Application deadline success rate", deadlineSuccessRate(saved, opportunities, now), "percent", saved.length),
-      metric("organization_retention", "Organization repeat posting rate", organizationRepeatRate(organizations), "percent", organizations.length),
+      metric("organization_retention", "Organization repeat posting rate", organizationRetention.value, "percent", organizationRetention.sampleSize),
     ],
   };
 }

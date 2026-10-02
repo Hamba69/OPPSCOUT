@@ -19,7 +19,7 @@ export function titleSimilarity(left: string, right: string): number {
 }
 
 export async function findDuplicateOpportunity(repository: Repository, input: OpportunityInput): Promise<Opportunity | null> {
-  const candidates = await repository.listOpportunities({ organizationId: input.organizationId });
+  const candidates = await repository.listOpportunities({ organizationId: input.organizationId, origin: input.origin ?? "catalog" });
   const windowMs = INGESTION_RULES.duplicateDeadlineWindowDays * 86_400_000;
   return candidates.find((candidate) => {
     const deadlinesCompatible = candidate.deadline === null || input.deadline === null

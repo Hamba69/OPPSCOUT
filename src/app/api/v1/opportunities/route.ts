@@ -18,6 +18,7 @@ export async function GET(request: Request): Promise<Response> {
       verificationStatus: auth.role === "user" ? "verified" : (url.searchParams.get("verificationStatus") as OpportunityFilters["verificationStatus"]) ?? undefined,
       statuses: auth.role === "user" ? ["open", "closing_soon"] : undefined,
       organizationId: auth.role === "organization" ? auth.organizationId ?? undefined : url.searchParams.get("organizationId") ?? undefined,
+      origin: auth.role === "organization" ? "organization" : undefined,
     };
     const rows = await (await getRepository()).listOpportunities(filters);
     const now = new Date();

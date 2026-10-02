@@ -25,7 +25,7 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
     const repository = await getRepository();
     const current = await repository.getOpportunity(id);
     if (!current) throw new NotFoundError("Opportunity");
-    if (auth.role === "organization" && current.organizationId !== auth.organizationId) throw new ForbiddenError();
+    if (auth.role === "organization" && (current.organizationId !== auth.organizationId || current.origin !== "organization")) throw new ForbiddenError();
     const input = await parseJson(request, opportunitySchema.partial());
     if (auth.role === "organization" && input.organizationId && input.organizationId !== current.organizationId) throw new ForbiddenError();
     const updated = { ...current, ...input };
@@ -47,7 +47,7 @@ export async function DELETE(request: Request, context: Context): Promise<Respon
     const repository = await getRepository();
     const current = await repository.getOpportunity(id);
     if (!current) throw new NotFoundError("Opportunity");
-    if (auth.role === "organization" && current.organizationId !== auth.organizationId) throw new ForbiddenError();
+    if (auth.role === "organization" && (current.organizationId !== auth.organizationId || current.origin !== "organization")) throw new ForbiddenError();
     await repository.deleteOpportunity(id);
     return noContent();
   });

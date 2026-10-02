@@ -24,6 +24,6 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
     .filter((item) => !filters.type || item.category === filters.type)
     .filter((item) => !needle || [item.title, item.organization?.name ?? "", item.location, item.category, item.description, ...item.requiredSkills].join(" ").toLowerCase().includes(needle))
     .sort((a, b) => (scores.get(b.id) ?? -1) - (scores.get(a.id) ?? -1) || (a.deadline?.getTime() ?? Infinity) - (b.deadline?.getTime() ?? Infinity))
-    .map((item) => ({ id: item.id, title: item.title, organization: item.organization?.name ?? "Verified organization", category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: scores.get(item.id) ?? null }));
+    .map((item) => ({ id: item.id, title: item.title, organization: item.organization?.name ?? "Source organization", origin: item.origin ?? "catalog", category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: scores.get(item.id) ?? null }));
   return { items, categories, counts };
 }

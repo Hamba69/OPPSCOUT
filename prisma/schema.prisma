@@ -34,6 +34,11 @@ enum OpportunitySource {
   partner_feed
 }
 
+enum OpportunityOrigin {
+  catalog
+  organization
+}
+
 enum OpportunityStatus {
   open
   closing_soon
@@ -168,6 +173,7 @@ model Opportunity {
   sourceUrl           String
   verificationStatus VerificationStatus @default(pending)
   source             OpportunitySource  @default(org_submitted)
+  origin             OpportunityOrigin  @default(catalog)
   publicationDate    DateTime            @default(now())
   checkedAt          DateTime            @default(now())
   status             OpportunityStatus  @default(open)

@@ -2,6 +2,7 @@ import type {
   EventLog,
   EventType,
   Opportunity,
+  OpportunityOrigin,
   OpportunityStatus,
   Organization,
   PreferredChannel,
@@ -23,6 +24,7 @@ export interface OpportunityFilters {
   verificationStatus?: VerificationStatus;
   statuses?: OpportunityStatus[];
   organizationId?: string;
+  origin?: OpportunityOrigin;
 }
 
 export interface StoredMatchResult {

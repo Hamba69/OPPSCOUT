@@ -123,6 +123,7 @@ export class PrismaRepository implements Repository {
       verificationStatus: filters.verificationStatus as PrismaVerificationStatus | undefined,
       status: filters.statuses ? { in: filters.statuses as PrismaOpportunityStatus[] } : undefined,
       organizationId: filters.organizationId,
+      origin: filters.origin,
       OR: filters.search ? [
         { title: { contains: filters.search, mode: "insensitive" } },
         { description: { contains: filters.search, mode: "insensitive" } },
@@ -337,6 +338,7 @@ export class PrismaRepository implements Repository {
   private opportunityCreateData(input: OpportunityInput): Prisma.OpportunityUncheckedCreateInput {
     return {
       ...input,
+      origin: input.origin ?? "catalog",
       eligibility: asJson(input.eligibility),
       workMode: input.workMode as PrismaWorkMode,
       verificationStatus: input.verificationStatus as PrismaVerificationStatus,

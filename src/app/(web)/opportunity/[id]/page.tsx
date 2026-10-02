@@ -27,9 +27,14 @@ export default async function OpportunityPage({ params }: Props): Promise<React.
   const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Open until filled";
   return <main className="page-shell animate-in mx-auto max-w-3xl">
     <Link href="/feed" className="mb-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-navy hover:text-ink"><ArrowLeftIcon /> Back to matches</Link>
-    <span className="badge-verified"><CheckIcon /> {opportunity.organization?.verificationStatus === "verified" ? "Verified organization" : "Verified listing"}</span>
+    <span className="badge-verified"><CheckIcon /> Verified listing</span>
     <h1 className="mt-3 text-2xl font-extrabold text-ink sm:text-4xl">{opportunity.title}</h1>
     <p className="mt-1 font-bold text-navy">{opportunity.organization?.name}</p>
+    <p className="mt-2 text-sm text-navy">
+      {opportunity.origin === "organization"
+        ? "Submitted through OppScout by this organization."
+        : "Sourced for the OppScout catalog. The named organization did not post this listing through the app."}
+    </p>
     <section className="card mt-5 flex items-center justify-between gap-4 border-2 border-honey bg-butter">
       {match ? <div><p className="text-xs font-semibold text-navy">Your match</p><p className="text-4xl font-extrabold text-leaf">{match.score}%</p></div> : <div><p className="text-xs font-semibold text-navy">Type</p><p className="font-extrabold capitalize text-ink">{opportunity.category}</p></div>}
       <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location} · {opportunity.workMode}</p></div>

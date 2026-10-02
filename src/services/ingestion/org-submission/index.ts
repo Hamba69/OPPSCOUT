@@ -11,5 +11,5 @@ export async function submitOrganizationOpportunity(
   const organization = await repository.getOrganization(input.organizationId);
   if (!organization || !organization.dashboardUsers.includes(staffUserId)) throw new ForbiddenError();
   if (!input.sourceUrl.startsWith("https://")) throw new ValidationError("An official HTTPS source URL is required.");
-  return ingestManualOpportunity(repository, input);
+  return ingestManualOpportunity(repository, { ...input, origin: "organization", source: "org_submitted" });
 }

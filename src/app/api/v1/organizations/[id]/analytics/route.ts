@@ -12,7 +12,7 @@ export async function GET(request: Request, context: Context): Promise<Response>
     const { id } = await context.params;
     if (auth.role === "organization" && auth.organizationId !== id) throw new ForbiddenError();
     const repository = await getRepository();
-    const opportunityIds = new Set((await repository.listOpportunities({ organizationId: id })).map((item) => item.id));
+    const opportunityIds = new Set((await repository.listOpportunities({ organizationId: id, origin: "organization" })).map((item) => item.id));
     const events = (await repository.listEvents()).filter((event) => event.opportunityId && opportunityIds.has(event.opportunityId));
     const totals = { views: 0, saves: 0, clicks: 0, applyIntents: 0 };
     for (const event of events) {

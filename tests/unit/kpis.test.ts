@@ -8,5 +8,6 @@ describe("KPI dashboard", () => {
     expect(snapshot.metrics).toHaveLength(10);
     expect(new Set(snapshot.metrics.map((item) => item.key)).size).toBe(10);
     expect(snapshot.metrics.every((item) => Number.isFinite(item.value) && item.sampleSize >= 0)).toBe(true);
+    expect(snapshot.metrics.find((item) => item.key === "organization_retention")).toMatchObject({ value: 0, sampleSize: 0 });
   });
 });

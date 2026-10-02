@@ -3,6 +3,8 @@ export type NotificationFrequency = "instant" | "daily" | "weekly";
 export type WorkMode = "remote" | "onsite" | "hybrid";
 export type VerificationStatus = "unverified" | "pending" | "verified" | "flagged";
 export type OpportunitySource = "org_submitted" | "scraped" | "partner_feed";
+/** How the listing entered OppScout; separate from the source of its information. */
+export type OpportunityOrigin = "catalog" | "organization";
 export type OpportunityStatus = "open" | "closing_soon" | "closed" | "stale" | "removed";
 export type SavedStatus = "saved" | "applied" | "expired";
 export type SubscriptionTier = "free" | "growth" | "partner";
@@ -104,6 +106,7 @@ export interface Opportunity {
   sourceUrl: string;
   verificationStatus: VerificationStatus;
   source: OpportunitySource;
+  origin?: OpportunityOrigin;
   publicationDate: Date;
   checkedAt: Date;
   status: OpportunityStatus;
