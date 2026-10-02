@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: light;
-  --background: #f7f5f0;
+  --background: #fafaf6;
   --ink: #1e293b;
 }
 
@@ -19,7 +19,7 @@ body {
 }
 @media (min-width: 768px) { body { padding-bottom: 0; } }
 
-::selection { background: #f0e0a8; color: #1e293b; }
+::selection { background: #ffe566; color: #1e293b; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -30,25 +30,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
   /* Soft primary — muted gold, no chunky 3D shadow */
   .button {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-sun px-5 py-2.5
-      font-semibold text-ink shadow-sm transition
-      hover:brightness-[1.03] active:translate-y-px
-      focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl bg-amber px-4 py-2
+      text-sm font-semibold text-ink shadow-sm transition
+      hover:brightness-105 active:translate-y-px
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40
       disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .button-secondary {
-    @apply inline-flex min-h-11 items-center justify-center gap-1.5 rounded-2xl
-      border border-honey bg-white px-4 py-2.5 font-semibold text-ink
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl
+      border border-honey bg-white px-3.5 py-2 text-sm font-semibold text-ink
       transition hover:bg-butter
-      focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40;
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40;
   }
 
   /* Text-style action (View details, Clear, Official source) */
   .text-link {
-    @apply inline-flex min-h-11 items-center text-sm font-semibold text-ink
-      underline underline-offset-4 transition hover:text-navy
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf/40 focus-visible:ring-offset-2;
+    @apply inline-flex min-h-11 items-center text-sm font-semibold
+      text-[#B8860B] underline decoration-butter decoration-2 underline-offset-4
+      transition hover:text-ink hover:decoration-amber
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/40 focus-visible:ring-offset-2;
   }
 
   .field {
@@ -57,12 +58,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   }
   .label { @apply mb-1.5 block text-sm font-semibold text-ink; }
   .eyebrow { @apply text-sm font-semibold text-navy; }
-  .pill { @apply inline-flex items-center rounded-full border border-honey/70 bg-butter px-3 py-1 text-xs font-semibold text-ink; }
+  .pill { @apply inline-flex items-center rounded-full border border-honey/80 bg-butter px-3 py-1 text-xs font-semibold text-ink; }
   .chip {
     @apply inline-flex min-h-9 shrink-0 items-center rounded-full border border-ink/10 bg-white px-4 text-sm font-semibold text-navy
-      transition hover:border-honey hover:bg-butter focus:outline-none focus-visible:ring-4 focus-visible:ring-leaf/40;
+      transition hover:border-honey hover:bg-butter focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40;
   }
-  .chip[aria-pressed="true"] { @apply border-honey bg-butter text-ink; }
+  .chip[aria-pressed="true"] { @apply border-amber bg-amber text-ink; }
+  
   .badge-verified { @apply inline-flex items-center gap-1 rounded-full bg-leaf/10 px-3 py-1 text-xs font-semibold text-leaf; }
   .badge-urgent { @apply inline-flex items-center gap-1 rounded-full bg-coral/80 px-3 py-1 text-xs font-semibold text-ink; }
   .badge-urgent-soft { @apply inline-flex items-center gap-1 rounded-full bg-coral/25 px-3 py-1 text-xs font-semibold text-ink; }
@@ -72,7 +74,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .stat-badge .stat-label { @apply text-[11px] font-medium text-navy; }
   .nav-capsule { @apply flex items-center gap-1 rounded-full border border-ink/[.08] bg-white p-1.5; }
   .nav-capsule a { @apply rounded-full px-4 py-2 text-sm font-semibold text-navy transition; }
-  .nav-capsule a.active { @apply bg-butter text-ink; }
+  .nav-capsule a.active { @apply bg-amber text-ink; }
   .nav-capsule a:hover:not(.active) { @apply text-ink; }
 }
 
@@ -80,9 +82,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .animate-in { animation: page-enter 320ms ease-out both; }
 .match-lift { transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .match-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgb(30 41 59 / .1); border-color: #d4a83a; }
+  .match-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgb(30 41 59 / .1);
+    border-color: #ffd700;
+  }
 }
-.match-lift:focus-within { border-color: #d4a83a; }
+.match-lift:focus-within { border-color: #ffd700; }
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
