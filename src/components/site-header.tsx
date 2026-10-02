@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
 import { SectionNav } from "@/components/section-nav";
 
-const seekerLinks = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"], ["Search", "/search"]] as const;
-const seekerPaths = ["/feed", "/saved", "/opportunities", "/search", "/profile", "/settings", "/opportunity"];
+const seekerLinks = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"]] as const;
+const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/opportunity"];
 const bareHeaderPaths = ["/login", "/reset-password"];
 
 function AccountMenu({ seeker }: { seeker: boolean }): React.JSX.Element {

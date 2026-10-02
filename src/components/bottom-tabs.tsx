@@ -7,10 +7,9 @@ const icons: Record<string, React.JSX.Element> = {
   Matches: <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />,
   Saved: <path d="M6 3h12v18l-6-4-6 4z" />,
   Opportunities: <><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" /></>,
-  Search: <><circle cx="11" cy="11" r="7" /><path d="m16 16 5 5" /></>,
 };
-const tabs = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"], ["Search", "/search"]] as const;
-const seekerPaths = ["/feed", "/saved", "/opportunities", "/search", "/profile", "/settings", "/opportunity"];
+const tabs = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"]] as const;
+const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/opportunity"];
 
 export function BottomTabs(): React.JSX.Element | null {
   const pathname = usePathname();
