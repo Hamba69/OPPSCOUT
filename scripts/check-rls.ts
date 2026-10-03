@@ -1,4 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import { loadEnvConfig } from "@next/env";
+
+loadEnvConfig(process.cwd());
 
 const prisma = new PrismaClient();
 
@@ -21,6 +24,10 @@ async function main(): Promise<void> {
     WHERE schemaname = 'public'
     ORDER BY tablename, policyname
   `);
+
+  const required = ["Feedback", "RequestMetric", "WebVitalSample", "MatchRun", "UnmatchedTerm", "AdminAccessLog", "MetricRollup"];
+  const missing = required.filter(name => !rows.some(row => row.table_name === name));
+  if (missing.length) throw new Error(`Missing RLS tables: ${missing.join(", ")}`);
 
   const disabled = rows.filter((row) => row.row_security_enabled === false).map((row) => row.table_name);
 

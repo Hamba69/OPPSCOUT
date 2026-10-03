@@ -17,6 +17,19 @@ export interface ExperienceEntry {
   months: number;
 }
 
+export interface ProfileLink {
+  label: string;
+  url: string;
+}
+
+export interface ProfileProject {
+  title: string;
+  description: string;
+  url?: string;
+  role?: string;
+  tags: string[];
+}
+
 export interface Eligibility {
   additionalRequirements?: string[];
   educationLevels?: string[];
@@ -56,6 +69,14 @@ export interface UserProfile {
   opportunityCategories: string[];
   workModePreference: WorkMode | null;
   languages: string[];
+  githubUrl: string | null;
+  portfolioUrl: string | null;
+  otherLinks: ProfileLink[];
+  projects: ProfileProject[];
+  shareWithOrganizations: boolean;
+  shareContactDetails: boolean;
+  orgSharingConsentAt: Date | null;
+  orgSharingConsentVersion: string | null;
   profileCompletenessScore: number;
   createdAt: Date;
   updatedAt: Date;

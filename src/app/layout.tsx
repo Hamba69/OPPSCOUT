@@ -1,3 +1,4 @@
+import { WebVitals } from "@/components/web-vitals";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <SiteHeader signedIn={signedIn} />
         {children}
         <BottomTabs />
+        <WebVitals />
         <Analytics />
         <SpeedInsights />
       </body>

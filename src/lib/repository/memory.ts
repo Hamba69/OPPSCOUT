@@ -1,3 +1,6 @@
+import { MemoryAdminStore } from "@/lib/repository/admin-memory";
+import type { Dataset, DataRow } from "@/lib/admin-data";
+import { AdminDataRepository } from "@/lib/repository/admin-base";
 import { randomUUID } from "node:crypto";
 
 import type { Opportunity, Organization, SavedOpportunity, TrustChecklist, UserProfile } from "@/core/entities/domain";
@@ -47,6 +50,14 @@ const initialProfile: UserProfile = {
   opportunityCategories: ["internship", "scholarship", "job"],
   workModePreference: "hybrid",
   languages: ["English", "Luganda"],
+  githubUrl: null,
+  portfolioUrl: null,
+  otherLinks: [],
+  projects: [],
+  shareWithOrganizations: false,
+  shareContactDetails: false,
+  orgSharingConsentAt: null,
+  orgSharingConsentVersion: null,
   profileCompletenessScore: 100,
   createdAt: SEED_SNAPSHOT_AT,
   updatedAt: SEED_SNAPSHOT_AT,
@@ -60,7 +71,19 @@ function includesText(value: string, expected?: string): boolean {
   return expected ? value.toLowerCase().includes(expected.toLowerCase()) : true;
 }
 
-export class MemoryRepository implements Repository {
+export class MemoryRepository extends AdminDataRepository implements Repository {
+
+  private readonly adminStore = new MemoryAdminStore((dataset) => this.adminRows(dataset));
+  private adminRows(dataset: Dataset): DataRow[] {
+    const base = { users: this.profiles, organizations: this.organizations, opportunities: this.opportunities, matches: this.matches, saved: this.saved, notifications: this.notifications, events: this.events };
+    const table = base[dataset as keyof typeof base];
+    if (!table) return this.adminStore.rows.get(dataset) ?? [];
+    const rows = JSON.parse(JSON.stringify([...table.values()])) as DataRow[];
+    if (dataset === "matches") for (const row of rows) { row.userName = this.profiles.get(String(row.userId))?.name; row.opportunityTitle = this.opportunities.get(String(row.opportunityId))?.title; }
+    return rows;
+  }
+  protected adminRpc(name: string, args: Record<string, unknown>): Promise<unknown> { return this.adminStore.rpc(name, args); }
+
   private readonly profiles = new Map<string, UserProfile>([
     [initialProfile.id, copy(initialProfile)],
     [DEMO_SECOND_USER_ID, { ...copy(initialProfile), id: DEMO_SECOND_USER_ID, name: "Daniel O.",
@@ -113,6 +136,14 @@ export class MemoryRepository implements Repository {
       opportunityCategories: input.opportunityCategories ?? [],
       workModePreference: input.workModePreference ?? null,
       languages: input.languages ?? [],
+      githubUrl: input.githubUrl ?? null,
+      portfolioUrl: input.portfolioUrl ?? null,
+      otherLinks: input.otherLinks ?? [],
+      projects: input.projects ?? [],
+      shareWithOrganizations: input.shareWithOrganizations ?? false,
+      shareContactDetails: input.shareContactDetails ?? false,
+      orgSharingConsentAt: input.orgSharingConsentAt ?? null,
+      orgSharingConsentVersion: input.orgSharingConsentVersion ?? null,
       profileCompletenessScore: input.profileCompletenessScore ?? 0,
       createdAt: timestamp,
       updatedAt: timestamp,

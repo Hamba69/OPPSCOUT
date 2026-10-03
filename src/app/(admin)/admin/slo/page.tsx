@@ -1,6 +1,6 @@
 import { SloGauge, sloStatus } from "@/components/dashboard-charts";
 import { SLO_TARGETS } from "@/config/slo-targets";
-import { requirePageAuth } from "@/lib/auth";
+import { requireAdminPortal } from "@/lib/admin-portal";
 import { getRepository } from "@/lib/repository";
 import { getSloSnapshot } from "@/services/monitoring/metrics";
 
@@ -11,7 +11,7 @@ function valueLabel(value: number | null, unit: "percent" | "hours"): string {
 }
 
 export default async function SloPage(): Promise<React.JSX.Element> {
-  await requirePageAuth(["admin"]);
+  await requireAdminPortal();
   const snapshot = await getSloSnapshot(await getRepository());
   const live = {
     coreApi: snapshot.apiUptime.value,

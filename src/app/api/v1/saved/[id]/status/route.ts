@@ -9,7 +9,7 @@ import { recordEvent } from "@/services/kpi/events";
 type Context = { params: Promise<{ id: string }> };
 
 export async function PATCH(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const { id } = await context.params;
     const input = await parseJson(request, z.object({ status: z.enum(["saved", "applied", "expired"]) }).strict());

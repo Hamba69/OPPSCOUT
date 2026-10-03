@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
-    return [{
+    return [
+      ...["/admin/:path*", "/api/v1/admin/:path*", "/api/v1/admin-portal/:path*", "/api/v1/monitoring/:path*", "/api/v1/reports/review/:path*", "/api/v1/organizations/review/:path*"].map(source => ({ source, headers: [{ key: "Cache-Control", value: "no-store" }, { key: "X-Robots-Tag", value: "noindex, nofollow" }] })),
+      {
       source: "/(.*)",
       headers: [
         { key: "Content-Security-Policy", value: `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; ${scriptPolicy}; connect-src 'self' https://*.supabase.co; upgrade-insecure-requests` },

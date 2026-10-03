@@ -19,6 +19,9 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     workExperience: experience(profile?.workExperience), internshipExperience: experience(profile?.internshipExperience),
     opportunityCategories: profile?.opportunityCategories ?? [], careerInterests: profile?.careerInterests ?? [], preferredLocations: profile?.preferredLocations ?? [],
     workModePreference: profile?.workModePreference ?? "",
+    githubUrl: profile?.githubUrl ?? "", portfolioUrl: profile?.portfolioUrl ?? "",
+    otherLinks: profile?.otherLinks ?? [], projects: (profile?.projects ?? []).map((item) => ({ ...item, url: item.url ?? "", role: item.role ?? "" })),
+    shareWithOrganizations: profile?.shareWithOrganizations ?? false, shareContactDetails: profile?.shareContactDetails ?? false,
   };
   const score = profile?.profileCompletenessScore ?? 0;
   return <main className="page-shell animate-in">

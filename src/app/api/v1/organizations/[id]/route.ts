@@ -11,7 +11,7 @@ function assertScope(role: string, organizationId: string | null, id: string): v
 }
 
 export async function GET(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     requireRole(auth, ["organization", "admin"]);
     const { id } = await context.params;
@@ -23,7 +23,7 @@ export async function GET(request: Request, context: Context): Promise<Response>
 }
 
 export async function PATCH(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     requireRole(auth, ["organization", "admin"]);
     const { id } = await context.params;

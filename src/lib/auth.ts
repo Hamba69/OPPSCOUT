@@ -54,7 +54,7 @@ export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<Auth
 }
 
 export function homePathForRole(role: AppRole): string {
-  return role === "organization" ? "/dashboard" : role === "admin" ? "/admin/kpis" : "/feed";
+  return role === "organization" ? "/dashboard" : "/feed";
 }
 
 /** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */

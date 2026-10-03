@@ -22,7 +22,6 @@ export const config = {
     "/opportunity/:path*",
     "/opportunities/:path*",
     "/dashboard/:path*",
-    "/admin/:path*",
     "/onboarding/:path*",
   ],
 };

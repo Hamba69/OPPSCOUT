@@ -7,14 +7,14 @@ import { parseJson } from "@/lib/validation";
 import { recordEvent } from "@/services/kpi/events";
 
 export async function GET(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     return success(await (await getRepository()).listSaved(auth.userId));
   });
 }
 
 export async function POST(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const input = await parseJson(request, z.object({ opportunityId: z.string().uuid() }).strict());
     const repository = await getRepository();

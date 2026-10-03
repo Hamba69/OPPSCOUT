@@ -1,3 +1,4 @@
+import { AdminDataRepository } from "@/lib/repository/admin-base";
 import {
   EventType as PrismaEventType,
   GeneratedBy as PrismaGeneratedBy,
@@ -40,6 +41,8 @@ function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findU
     secondaryChannels: value.secondaryChannels,
     workExperience: value.workExperience as unknown as UserProfile["workExperience"],
     internshipExperience: value.internshipExperience as unknown as UserProfile["internshipExperience"],
+    otherLinks: value.otherLinks as unknown as UserProfile["otherLinks"],
+    projects: value.projects as unknown as UserProfile["projects"],
   };
 }
 
@@ -91,7 +94,18 @@ function savedFromDb(value: Awaited<ReturnType<typeof prisma.savedOpportunity.fi
   return { ...value, status: value.status };
 }
 
-export class PrismaRepository implements Repository {
+export class PrismaRepository extends AdminDataRepository implements Repository {
+
+  protected async adminRpc(name: string, args: Record<string, unknown>): Promise<unknown> {
+    let rows: Array<{ value: unknown }>;
+    if (name === "admin_data_page") rows = await prisma.$queryRaw`SELECT public.admin_data_page(${String(args.dataset)}, ${JSON.stringify(args.options)}::jsonb) value`;
+    else if (name === "admin_snapshot") rows = await prisma.$queryRaw`SELECT public.admin_snapshot(${String(args.start_at)}::timestamp, ${String(args.end_at)}::timestamp) value`;
+    else if (name === "admin_write") rows = await prisma.$queryRaw`SELECT public.admin_write(${String(args.operation)}, ${JSON.stringify(args.payload)}::jsonb) value`;
+    else if (name === "retain_telemetry") { await prisma.$executeRaw`SELECT public.retain_telemetry(${String(args.at_time)}::timestamp)`; return null; }
+    else throw new Error("Unknown admin query");
+    return rows[0]?.value;
+  }
+
   public async getProfile(userId: string): Promise<UserProfile | null> {
     const value = await prisma.userProfile.findUnique({ where: { id: userId } });
     return value ? profileFromDb(value) : null;
@@ -321,6 +335,8 @@ export class PrismaRepository implements Repository {
       workModePreference: input.workModePreference as PrismaWorkMode | null | undefined,
       workExperience: input.workExperience ? asJson(input.workExperience) : undefined,
       internshipExperience: input.internshipExperience ? asJson(input.internshipExperience) : undefined,
+      otherLinks: input.otherLinks ? asJson(input.otherLinks) : undefined,
+      projects: input.projects ? asJson(input.projects) : undefined,
     };
   }
 
@@ -332,6 +348,8 @@ export class PrismaRepository implements Repository {
       workModePreference: input.workModePreference as PrismaWorkMode | null | undefined,
       workExperience: input.workExperience ? asJson(input.workExperience) : undefined,
       internshipExperience: input.internshipExperience ? asJson(input.internshipExperience) : undefined,
+      otherLinks: input.otherLinks ? asJson(input.otherLinks) : undefined,
+      projects: input.projects ? asJson(input.projects) : undefined,
     };
   }
 
