@@ -6,7 +6,9 @@ import { getRepository } from "@/lib/repository";
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
     requireAdminPortalApi(request);
-    const params=new URL(request.url).searchParams; if(!params.has("verificationStatus"))params.set("verificationStatus","pending");
-    return success(await (await getRepository()).adminPage("opportunities",parseAdminQuery("opportunities",params)));
+    const params = new URL(request.url).searchParams;
+    if (!params.has("verificationStatus")) params.set("verificationStatus", "flagged");
+    const page = await (await getRepository()).adminPage("opportunities", parseAdminQuery("opportunities", params));
+    return success(page.rows);
   });
 }

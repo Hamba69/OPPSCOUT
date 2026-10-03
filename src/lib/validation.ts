@@ -117,6 +117,14 @@ export const organizationSchema = z.object({
   accountableContact: z.string().trim().min(2).max(180).nullable(),
 }).strict();
 
+export const profileDocumentSchema = z.object({
+  title: z.string().trim().min(3).max(120),
+  description: z.string().trim().max(300).optional(),
+  fileName: z.string().trim().min(1).max(120),
+  mimeType: z.string().trim().min(1).max(160),
+  sizeBytes: z.number().int().positive(),
+}).strict();
+
 export const reportSchema = z.object({
   opportunityId: z.string().uuid(),
   reason: z.string().trim().min(3).max(200),

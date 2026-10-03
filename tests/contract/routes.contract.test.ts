@@ -136,7 +136,7 @@ describe("every Phase 1 /api/v1 route", () => {
   });
 
   it("creates organizations and returns aggregate-only analytics", async () => {
-    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }));
+    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }, orgHeaders));
     expect(createdOrganizationResponse.status).toBe(201);
     const createdOrganization = await data<{ id: string }>(createdOrganizationResponse);
     const organizationQueue = await organizationReviewRoute.GET(request("/api/v1/organizations/review", "GET", undefined, adminHeaders));

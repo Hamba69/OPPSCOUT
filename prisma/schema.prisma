@@ -331,6 +331,84 @@ enum AdminAccessEvent {
   feedback_update
 }
 
+enum StoredDocumentOwnerType {
+  user
+  organization
+}
+
+enum StoredDocumentPurpose {
+  research_paper
+  registration_proof
+}
+
+enum StoredDocumentStatus {
+  pending
+  ready
+  rejected
+}
+
+enum SeekerAccessAction {
+  view_card
+  view_profile
+  download_document
+}
+
+enum SeekerPipelineStage {
+  new
+  shortlisted
+  invited
+  contacted
+  not_a_fit
+}
+
+model StoredDocument {
+  id                    String                   @id @default(uuid()) @db.Uuid
+  ownerType             StoredDocumentOwnerType
+  ownerId               String                   @db.Uuid
+  purpose               StoredDocumentPurpose
+  title                 String
+  description           String?
+  originalFileName      String
+  storagePath           String                   @unique
+  mimeType              String
+  sizeBytes             Int
+  sha256                String?
+  status                StoredDocumentStatus     @default(pending)
+  shareWithOrganizations Boolean                  @default(false)
+  createdAt             DateTime                 @default(now())
+  updatedAt             DateTime                 @updatedAt
+
+  @@index([ownerType, ownerId, purpose])
+}
+
+model SeekerAccessLog {
+  id             String             @id @default(uuid()) @db.Uuid
+  createdAt      DateTime           @default(now())
+  organizationId String             @db.Uuid
+  seekerId       String             @db.Uuid
+  opportunityId  String?            @db.Uuid
+  action         SeekerAccessAction
+  documentId     String?            @db.Uuid
+
+  @@index([seekerId, createdAt])
+  @@index([organizationId, createdAt])
+}
+
+model SeekerPipelineEntry {
+  id             String              @id @default(uuid()) @db.Uuid
+  organizationId String              @db.Uuid
+  opportunityId  String              @db.Uuid
+  seekerId       String              @db.Uuid
+  stage          SeekerPipelineStage @default(new)
+  note           String?
+  invitedAt      DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@unique([organizationId, opportunityId, seekerId])
+  @@index([organizationId, opportunityId, stage])
+}
+
 model Feedback {
   id String @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())

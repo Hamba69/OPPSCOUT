@@ -39,7 +39,9 @@ export async function PATCH(request: Request): Promise<Response> {
     const auth = await requireAuth(request);
     const input = await parseJson(request, profileSchema);
     const current = await getUserProfile(auth.userId);
-    const { orgSharingConsentAt: _consentAt, orgSharingConsentVersion: _consentVersion, ...requested } = input;
+    const requested = { ...input };
+    delete requested.orgSharingConsentAt;
+    delete requested.orgSharingConsentVersion;
     const merged = { ...current, ...requested };
     if ((requested.shareWithOrganizations || requested.shareContactDetails) && !isAdult(merged.dateOfBirth)) {
       throw new ValidationError("Organization sharing is available only to seekers aged 18 or older with a date of birth.");

@@ -24,6 +24,7 @@
     "check:stubs": "node scripts/check-phase-one-stubs.mjs",
     "check:rls": "tsx scripts/check-rls.ts",
     "worker:telemetry-retention": "tsx --conditions=react-server scripts/worker/telemetry-retention.ts",
+    "worker:documents-sweep": "tsx scripts/worker/documents-sweep.ts",
     "admin:hash-password": "tsx scripts/admin-hash-password.ts"
   },
   "dependencies": {
