@@ -1,6 +1,6 @@
+import { requireAdminPortalApi } from "@/lib/admin-portal";
 import { AppError } from "@/core/errors/app-error";
 import { apiHandler, success } from "@/lib/api";
-import { requireAuth, requireRole } from "@/lib/auth";
 import { getRepository, isMemoryDataMode } from "@/lib/repository";
 import { RecordingNotificationChannel } from "@/services/notifications/recording-channel";
 import { ResendEmailChannel } from "@/services/notifications/email/resend-email-channel";
@@ -10,9 +10,8 @@ import { InAppNotificationChannel } from "@/services/notifications/in-app-channe
 import { MemoryUssdInbox, RedisUssdInbox, UssdNotificationChannel } from "@/services/notifications/ussd/ussd-notification-channel";
 
 export async function POST(request: Request): Promise<Response> {
-  return apiHandler(async () => {
-    const auth = await requireAuth(request);
-    if (!isMemoryDataMode()) requireRole(auth, ["admin"]);
+  return apiHandler(request, async () => {
+    requireAdminPortalApi(request);
     const repository = await getRepository();
     const resolveEmail = async (userId: string): Promise<string | null> => (await repository.getProfile(userId))?.email ?? null;
     const resolvePhone = async (userId: string): Promise<string | null> => (await repository.getProfile(userId))?.phone ?? null;
@@ -20,8 +19,8 @@ export async function POST(request: Request): Promise<Response> {
     const channels = isMemoryDataMode()
       ? { app: channel, email: channel, sms: channel, ussd: new UssdNotificationChannel(new MemoryUssdInbox()) }
       : { app: new InAppNotificationChannel(), email: new ResendEmailChannel(resolveEmail), sms: new AfricasTalkingSmsChannel(resolvePhone), ussd: new UssdNotificationChannel(new RedisUssdInbox()) };
-    const userId = new URL(request.url).searchParams.get("userId") ?? auth.userId;
-    if (auth.role !== "admin" && userId !== auth.userId) throw new AppError("Cannot run notifications for another user.", 403, "FORBIDDEN");
+    const userId = new URL(request.url).searchParams.get("userId");
+    if (!userId) throw new AppError("Choose a user to run notifications.", 400, "USER_REQUIRED");
     return success(await runNotificationScheduler(repository, channels, userId));
   });
 }

@@ -1,3 +1,4 @@
+export const AI_ENGINE_VERSION = "1.0.0";
 import { AI_RULES } from "@/config/ai-rules";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import { AppError } from "@/core/errors/app-error";

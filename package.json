@@ -22,7 +22,10 @@
     "validate:env": "node scripts/validate-production-env.mjs",
     "verify": "npm run prisma:validate && npm run typecheck && npm run lint && npm run test && npm run build && npm run check:stubs",
     "check:stubs": "node scripts/check-phase-one-stubs.mjs",
-    "check:rls": "tsx scripts/check-rls.ts"
+    "check:rls": "tsx scripts/check-rls.ts",
+    "worker:telemetry-retention": "tsx --conditions=react-server scripts/worker/telemetry-retention.ts",
+    "worker:documents-sweep": "tsx scripts/worker/documents-sweep.ts",
+    "admin:hash-password": "tsx scripts/admin-hash-password.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

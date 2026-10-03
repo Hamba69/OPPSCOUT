@@ -1,8 +1,8 @@
 import { AppError } from "@/core/errors/app-error";
 
-export type RateLimitClient = "user" | "organization" | "admin" | "ussd";
+export type RateLimitClient = "user" | "organization" | "admin" | "ussd" | "public";
 
-const DEFAULT_LIMITS: Record<RateLimitClient, number> = { user: 120, organization: 240, admin: 360, ussd: 60 };
+const DEFAULT_LIMITS: Record<RateLimitClient, number> = { user: 120, organization: 240, admin: 360, ussd: 60, public: 30 };
 
 function configuredLimit(client: RateLimitClient): number {
   const value = Number(process.env[`RATE_LIMIT_${client.toUpperCase()}_PER_MINUTE`]);
@@ -10,7 +10,7 @@ function configuredLimit(client: RateLimitClient): number {
 }
 
 export async function enforceRateLimit(client: RateLimitClient, principal: string, now = new Date()): Promise<void> {
-  if (process.env.OPPSCOUT_DATA_MODE === "memory" || process.env.NODE_ENV === "test") return;
+  if (process.env.NODE_ENV === "test" && client !== "public") return;
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) throw new AppError("Rate limiting is not configured.", 503, "RATE_LIMIT_NOT_CONFIGURED");
@@ -19,6 +19,7 @@ export async function enforceRateLimit(client: RateLimitClient, principal: strin
   const response = await fetch(`${url.replace(/\/$/, "")}/pipeline`, {
     method: "POST",
     headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    signal: AbortSignal.timeout(3000),
     body: JSON.stringify([["INCR", key], ["EXPIRE", key, "120", "NX"]]),
   });
   if (!response.ok) throw new AppError("Rate limiting storage failed.", 502, "RATE_LIMIT_STORE_ERROR");

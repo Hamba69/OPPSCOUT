@@ -8,6 +8,13 @@ export interface GateResult {
   failed: MatchFactor[];
 }
 
+export const HARD_GATE_DESCRIPTIONS = [
+  ["Education eligibility", "Requires a recorded education level accepted by the provider."],
+  ["Mandatory certifications", "Requires every certification marked mandatory."],
+  ["Age eligibility", "Checks recorded birth date against the programme age range."],
+  ["Programme rules", "Checks each provider rule for language, graduation status, or location."],
+] as const;
+
 function ageOn(dateOfBirth: Date, at: Date): number {
   let age = at.getUTCFullYear() - dateOfBirth.getUTCFullYear();
   const beforeBirthday =

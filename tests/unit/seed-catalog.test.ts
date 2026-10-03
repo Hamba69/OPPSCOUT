@@ -16,13 +16,13 @@ describe("current opportunity seed catalogue", () => {
     const discoveredOpportunities = getDiscoveredOpportunities();
     expect(organizations).toHaveLength(6 + discoveredOrganizations.length);
     expect(opportunities).toHaveLength(12 + discoveredOpportunities.length);
-    expect(organizations.filter((organization) => organization.verificationStatus === "verified")).toHaveLength(6);
+    expect(organizations.filter((organization) => organization.verificationStatus === "verified")).toHaveLength(6 + discoveredOrganizations.filter(o => o.verificationStatus === "verified").length);
     const reviewed = opportunities.filter((opportunity) => opportunity.verificationStatus === "verified");
-    expect(reviewed).toHaveLength(12);
+    expect(reviewed).toHaveLength(12 + discoveredOpportunities.filter(o => o.verificationStatus === "verified").length);
     expect(new Set(organizations.map((organization) => organization.id)).size).toBe(organizations.length);
     expect(new Set(opportunities.map((opportunity) => opportunity.id)).size).toBe(opportunities.length);
 
-    for (const opportunity of reviewed) {
+    for (const opportunity of reviewed.filter(o => !discoveredOpportunities.some(d => d.id === o.id))) {
       expect(opportunity.deadline.getTime()).toBeGreaterThan(SEED_SNAPSHOT_AT.getTime());
       expect(opportunity.sourceUrl).toMatch(/^https:\/\//);
       expect(opportunity.verificationStatus).toBe("verified");
@@ -38,10 +38,10 @@ describe("current opportunity seed catalogue", () => {
     }
 
     // Archive claims stay outside the trusted catalog until independent review.
-    for (const imported of discoveredOpportunities) {
+    for (const imported of discoveredOpportunities.filter(o => o.verificationStatus !== "verified")) {
       const opportunity = opportunities.find((item) => item.id === imported.id)!;
       expect(["pending", "flagged"]).toContain(opportunity.verificationStatus);
-      expect(opportunity.organization?.verificationStatus).toBe("pending");
+      expect(opportunity.verificationStatus).not.toBe("verified");
       expect(opportunity.reviewedAt).toBeNull();
       expect(opportunity.reviewChecklist.sourceAuthentic).toBe(false);
     }

@@ -7,7 +7,7 @@ import { ingestManualOpportunity } from "@/services/ingestion/manual";
 import { opportunitySchema, parseJson } from "@/lib/validation";
 
 export async function GET(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const url = new URL(request.url);
     const filters: OpportunityFilters = {
@@ -29,7 +29,7 @@ export async function GET(request: Request): Promise<Response> {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     requireRole(auth, ["organization", "admin"]);
     const input = await parseJson(request, opportunitySchema) as OpportunityInput;

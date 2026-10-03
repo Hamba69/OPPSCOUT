@@ -1,3 +1,4 @@
+export const RULES_ENGINE_VERSION = "1.0.0";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { MatchEngine, MatchResult } from "@/core/interfaces/match-engine";
 import { matchingWeightsFor, MAX_WEIGHTED_SCORE } from "@/config/matching-weights";

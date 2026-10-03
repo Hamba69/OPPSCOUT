@@ -1,3 +1,4 @@
+import { observeUnmatched } from "@/services/matching/telemetry";
 import { COMMUTE_ZONES, FIELD_CONCEPTS, FIELD_RELATIONS, LOCATION_PARENT, SKILL_CONCEPTS, SKILL_RELATIONS, type Concept } from "@/services/matching/orbit/ontology";
 
 const STOP = new Set(["and", "of", "the", "in", "for", "with", "to", "a", "an", "on", "at", "or", "skill", "ability", "basic", "strong", "good", "knowledge", "experience"]);
@@ -35,7 +36,7 @@ export class ConceptIndex {
   private readonly exact = new Map<string, string>();
   private readonly aliasGrams: Array<{ concept: string; phrase: string; grams: Set<string> }> = [];
   private readonly relations = new Map<string, number>();
-  public constructor(concepts: Concept[], relations: Array<[string, string, number]>) { this.load(concepts, relations); }
+  public constructor(concepts: Concept[], relations: Array<[string, string, number]>, private readonly kind: "skill" | "field" = "skill") { this.load(concepts, relations); }
 
   /** Replace the vocabulary in place. Used by the simulation to test engines against unseen aliases. */
   public load(concepts: Concept[], relations: Array<[string, string, number]>): void {
@@ -66,8 +67,10 @@ export class ConceptIndex {
         const d = dice(grams, entry.grams);
         if (d >= 0.72 && (!best || d > best.confidence)) best = { concept: entry.concept, confidence: d * 0.9 };
       }
+      if (!best) observeUnmatched(this.kind,label);
       return best;
     }
+    observeUnmatched(this.kind,label);
     return null;
   }
 
@@ -88,11 +91,12 @@ export class ConceptIndex {
 }
 
 export const SKILL_INDEX = new ConceptIndex(SKILL_CONCEPTS, SKILL_RELATIONS);
-export const FIELD_INDEX = new ConceptIndex(FIELD_CONCEPTS, FIELD_RELATIONS);
+export const FIELD_INDEX = new ConceptIndex(FIELD_CONCEPTS, FIELD_RELATIONS, "field");
 
 // Location symmetry: same place 1, same commuting zone 0.85, same region 0.5, anything else 0.
 export function locationSimilarity(a: string, b: string): number {
   const x = canonicalPhrase(a), y = canonicalPhrase(b);
+  for (const [raw,key] of [[a,x],[b,y]]) if (key && key !== "uganda" && key !== "remote" && !LOCATION_PARENT[key] && !COMMUTE_ZONES.some(zone => zone.includes(key))) observeUnmatched("location",raw);
   if (!x || !y) return 0;
   if (x === y || y === "uganda" || x === "uganda") return 1;
   if (COMMUTE_ZONES.some((zone) => zone.includes(x) && zone.includes(y))) return 0.85;

@@ -5,7 +5,7 @@ import { parseJson, reportSchema } from "@/lib/validation";
 import { reportSuspiciousListing } from "@/services/trust/report";
 
 export async function POST(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const input = await parseJson(request, reportSchema);
     await reportSuspiciousListing(await getRepository(), auth.userId, input.opportunityId, input.reason, input.details);

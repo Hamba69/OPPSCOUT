@@ -6,7 +6,7 @@ import { getRepository } from "@/lib/repository";
 type Context = { params: Promise<{ id: string }> };
 
 export async function GET(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const { id } = await context.params;
     const match = await (await getRepository()).getMatch(auth.userId, id);

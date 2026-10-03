@@ -1,3 +1,5 @@
+import { observeUnmatched } from "@/services/matching/telemetry";
+export const ORBIT_ENGINE_VERSION = "1.0.0";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { MatchEngine, MatchFactor, MatchResult } from "@/core/interfaces/match-engine";
 import { matchingWeightsFor, type MatchingWeights } from "@/config/matching-weights";
@@ -137,6 +139,7 @@ export class OrbitMatchEngine implements MatchEngine {
       let s = 0;
       if (CATEGORY_ALIASES[key] === opp.category.toLowerCase()) s = 1;
       const expanded = [...(INTEREST_EXPANSIONS[key] ?? []), ...(SKILL_INDEX.resolve(interest, this.o.soft) ? [SKILL_INDEX.resolve(interest, this.o.soft)!.concept] : []), ...(FIELD_INDEX.resolve(interest, this.o.soft) ? [FIELD_INDEX.resolve(interest, this.o.soft)!.concept] : [])];
+      if (!expanded.length && !CATEGORY_ALIASES[key]) observeUnmatched("interest",interest);
       if (expanded.length) {
         const overlap = expanded.filter((c) => oppConcepts.has(c)).length;
         if (overlap) s = Math.max(s, this.o.soft ? Math.min(0.55 + 0.15 * overlap, 1) : 1);

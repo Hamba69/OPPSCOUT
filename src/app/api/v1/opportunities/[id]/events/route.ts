@@ -8,7 +8,7 @@ import { parseJson } from "@/lib/validation";
 type Context = { params: Promise<{ id: string }> };
 
 export async function POST(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const { id } = await context.params;
     const input = await parseJson(request, z.object({ eventType: z.enum(["view", "click", "apply_intent"]) }).strict());

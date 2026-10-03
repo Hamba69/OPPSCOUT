@@ -10,7 +10,8 @@ import { recordUssdOutcome } from "@/ussd/metrics";
 import { getUssdCredentialStore, getUssdSessionStore } from "@/ussd/stores";
 
 export async function POST(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  const startedAt = performance.now();
+  return apiHandler(request, async () => {
     const expected = process.env.AFRICASTALKING_USSD_WEBHOOK_SECRET;
     const authorization = request.headers.get("authorization");
     const basicSecret = authorization?.startsWith("Basic ") ? Buffer.from(authorization.slice(6), "base64").toString().split(":", 2)[1] : null;
@@ -22,7 +23,7 @@ export async function POST(request: Request): Promise<Response> {
     await enforceRateLimit("ussd", `${phoneNumber}:${sessionId}`);
     const repository = await getRepository(); const sms = isMemoryDataMode() ? new RecordingNotificationChannel() : new AfricasTalkingSmsChannel(async (userId) => (await repository.getProfile(userId))?.phone ?? null);
     const result = await new UssdMenuService(repository, getUssdSessionStore(), getUssdCredentialStore(), sms).handle({ sessionId, phoneNumber, text });
-    if (result.completed) recordUssdOutcome(true);
+    if (!result.continueSession) recordUssdOutcome(Boolean(result.completed), performance.now() - startedAt);
     return new Response(formatUssdScreen(result.continueSession, result.message), { headers: { "content-type": "text/plain; charset=utf-8" } });
   });
 }

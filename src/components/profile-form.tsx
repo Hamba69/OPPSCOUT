@@ -8,6 +8,8 @@ import { ProfileMultiChoice, ProfileSelect } from "@/components/profile-choice";
 import type { ProfileChoice, ProfileChoices } from "@/services/profile/choices";
 
 export interface ExperienceItem { title: string; organization: string; months: number }
+export interface ProfileLinkItem { label: string; url: string }
+export interface ProjectItem { title: string; description: string; url: string; role: string; tags: string[] }
 
 export interface ProfileFormInitial {
   name: string; email: string; phone: string; dateOfBirth: string; location: string;
@@ -16,9 +18,14 @@ export interface ProfileFormInitial {
   workExperience: ExperienceItem[]; internshipExperience: ExperienceItem[];
   opportunityCategories: string[]; careerInterests: string[]; preferredLocations: string[];
   workModePreference: "remote" | "onsite" | "hybrid" | "";
+  githubUrl?: string; portfolioUrl?: string; otherLinks?: ProfileLinkItem[]; projects?: ProjectItem[];
+  shareWithOrganizations?: boolean; shareContactDetails?: boolean;
 }
 
-type State = ProfileFormInitial;
+type State = Omit<ProfileFormInitial, "githubUrl" | "portfolioUrl" | "otherLinks" | "projects" | "shareWithOrganizations" | "shareContactDetails"> & {
+  githubUrl: string; portfolioUrl: string; otherLinks: ProfileLinkItem[]; projects: ProjectItem[];
+  shareWithOrganizations: boolean; shareContactDetails: boolean;
+};
 type Errors = Partial<Record<"name" | "email" | "phone" | "dateOfBirth", string>>;
 
 const EDUCATION_ORDER = ["no formal education", "secondary", "certificate", "diploma", "bachelors", "masters", "phd"];
@@ -31,7 +38,7 @@ const WORK_MODES = [["", "No preference"], ["onsite", "On-site"], ["hybrid", "Hy
 
 const SECTIONS = [
   ["personal", "Personal details"], ["education", "Education"], ["skills", "Skills and languages"],
-  ["experience", "Experience"], ["preferences", "Opportunity preferences"],
+  ["experience", "Experience"], ["preferences", "Opportunity preferences"], ["work", "Links and projects"], ["visibility", "Visibility"],
 ] as const;
 
 function Field({ label, required, hint, error, children }: { label: string; required?: boolean; hint?: string; error?: string; children: React.ReactNode }): React.JSX.Element {
@@ -88,7 +95,15 @@ function ExperienceList({ title, addLabel, items, onChange }: { title: string; a
 
 export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: ProfileFormInitial; choices: ProfileChoices; isNew: boolean; nextPath: string }): React.JSX.Element {
   const router = useRouter();
-  const [state, setState] = useState<State>(initial);
+  const [state, setState] = useState<State>({
+    ...initial,
+    githubUrl: initial.githubUrl ?? "",
+    portfolioUrl: initial.portfolioUrl ?? "",
+    otherLinks: initial.otherLinks ?? [],
+    projects: initial.projects ?? [],
+    shareWithOrganizations: initial.shareWithOrganizations ?? false,
+    shareContactDetails: initial.shareContactDetails ?? false,
+  });
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [dirty, setDirty] = useState(false);
@@ -110,7 +125,13 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
     skills: state.skills.length > 0 && state.languages.length > 0,
     experience: state.workExperience.length + state.internshipExperience.length > 0,
     preferences: state.opportunityCategories.length > 0 && state.preferredLocations.length > 0,
+    work: Boolean(state.githubUrl || state.portfolioUrl || state.otherLinks.length || state.projects.length),
+    visibility: state.shareWithOrganizations,
   };
+  const birthDate = state.dateOfBirth ? new Date(`${state.dateOfBirth}T00:00:00Z`) : null;
+  const now = new Date();
+  const adult = Boolean(birthDate && (now.getUTCFullYear() - birthDate.getUTCFullYear() - (
+    now.getUTCMonth() < birthDate.getUTCMonth() || (now.getUTCMonth() === birthDate.getUTCMonth() && now.getUTCDate() < birthDate.getUTCDate()) ? 1 : 0)) >= 18);
 
   function validate(): Errors {
     const next: Errors = {};
@@ -136,6 +157,10 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
       workExperience: experience(state.workExperience), internshipExperience: experience(state.internshipExperience),
       opportunityCategories: state.opportunityCategories, careerInterests: state.careerInterests, preferredLocations: state.preferredLocations,
       workModePreference: state.workModePreference || null,
+      githubUrl: state.githubUrl.trim() || null, portfolioUrl: state.portfolioUrl.trim() || null,
+      otherLinks: state.otherLinks.filter((item) => item.label.trim() && item.url.trim()),
+      projects: state.projects.filter((item) => item.title.trim()).map((item) => ({ ...item, url: item.url.trim() || undefined, role: item.role.trim() || undefined })),
+      shareWithOrganizations: adult && state.shareWithOrganizations, shareContactDetails: adult && state.shareContactDetails,
     };
     try {
       const response = await fetch("/api/v1/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -187,6 +212,28 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
         <ProfileMultiChoice name="careerInterests" label="Career interests" hint="Sectors or areas you want to work in." options={choices.careerInterests} values={state.careerInterests} onChange={(v) => set("careerInterests", v)} />
         <ProfileMultiChoice name="preferredLocations" label="Preferred locations" hint="Where you would be willing to work or study." options={choices.preferredLocations} values={state.preferredLocations} onChange={(v) => set("preferredLocations", v)} />
         <Field label="Work arrangement"><select className="field" value={state.workModePreference} onChange={(event) => set("workModePreference", event.target.value as State["workModePreference"])}>{WORK_MODES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></Field>
+      </Section>
+
+      <Section id="work" title="Links and projects" hint="Optional, but projects and links help organizations understand your work." done={done.work}>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="GitHub profile"><input className="field" value={state.githubUrl} maxLength={300} placeholder="https://github.com/username" onChange={(event) => set("githubUrl", event.target.value)} /></Field>
+          <Field label="Portfolio website"><input className="field" value={state.portfolioUrl} maxLength={300} placeholder="https://example.com" onChange={(event) => set("portfolioUrl", event.target.value)} /></Field>
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3"><h3 className="font-extrabold text-ink">Other links</h3><button type="button" className="button-secondary text-sm" disabled={state.otherLinks.length >= 3} onClick={() => set("otherLinks", [...state.otherLinks, { label: "", url: "" }])}>Add link</button></div>
+          {state.otherLinks.map((item, index) => <div key={index} className="grid gap-3 md:grid-cols-[1fr_2fr_auto]"><input className="field" aria-label={`Link ${index + 1} label`} maxLength={80} placeholder="Label" value={item.label} onChange={(event) => set("otherLinks", state.otherLinks.map((value, i) => i === index ? { ...value, label: event.target.value } : value))} /><input className="field" aria-label={`Link ${index + 1} URL`} maxLength={300} placeholder="https://..." value={item.url} onChange={(event) => set("otherLinks", state.otherLinks.map((value, i) => i === index ? { ...value, url: event.target.value } : value))} /><button type="button" className="text-sm font-semibold text-[#B3261E] underline" onClick={() => set("otherLinks", state.otherLinks.filter((_, i) => i !== index))}>Remove</button></div>)}
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3"><h3 className="font-extrabold text-ink">Projects</h3><button type="button" className="button-secondary text-sm" disabled={state.projects.length >= 6} onClick={() => set("projects", [...state.projects, { title: "", description: "", url: "", role: "", tags: [] }])}>Add project</button></div>
+          {state.projects.map((item, index) => <fieldset key={index} className="space-y-3 rounded-2xl border border-ink/10 bg-cream/60 p-4"><legend className="px-1 text-xs font-bold text-navy">Project {index + 1}</legend><div className="grid gap-3 md:grid-cols-2"><input className="field" aria-label={`Project ${index + 1} title`} maxLength={80} placeholder="Project title" value={item.title} onChange={(event) => set("projects", state.projects.map((value, i) => i === index ? { ...value, title: event.target.value } : value))} /><input className="field" aria-label={`Project ${index + 1} role`} maxLength={120} placeholder="Your role (optional)" value={item.role} onChange={(event) => set("projects", state.projects.map((value, i) => i === index ? { ...value, role: event.target.value } : value))} /></div><textarea className="field min-h-24" aria-label={`Project ${index + 1} description`} maxLength={500} placeholder="What did you build or achieve?" value={item.description} onChange={(event) => set("projects", state.projects.map((value, i) => i === index ? { ...value, description: event.target.value } : value))} /><div className="grid gap-3 md:grid-cols-2"><input className="field" aria-label={`Project ${index + 1} URL`} maxLength={300} placeholder="https://... (optional)" value={item.url} onChange={(event) => set("projects", state.projects.map((value, i) => i === index ? { ...value, url: event.target.value } : value))} /><input className="field" aria-label={`Project ${index + 1} tags`} placeholder="Tags, separated by commas" value={item.tags.join(", ")} onChange={(event) => set("projects", state.projects.map((value, i) => i === index ? { ...value, tags: event.target.value.split(",").map((tag) => tag.trim()).filter(Boolean).slice(0, 8) } : value))} /></div><button type="button" className="text-sm font-semibold text-[#B3261E] underline" onClick={() => set("projects", state.projects.filter((_, i) => i !== index))}>Remove project</button></fieldset>)}
+        </div>
+      </Section>
+
+      <Section id="visibility" title="Visibility" hint="You control what verified organizations can see." done={done.visibility}>
+        <p className="text-sm text-navy">Let verified organizations that you match with see your profile summary, links and projects. They never see your date of birth, your other matches or your activity. Your contact details and research papers are shared only if you turn them on separately. You can switch this off at any time and it takes effect immediately.</p>
+        {!adult && <p className="text-sm font-semibold text-navy">Add a date of birth showing you are 18 or older to enable organization sharing.</p>}
+        <label className="flex items-start gap-3"><input type="checkbox" className="mt-1 size-5" disabled={!adult} checked={state.shareWithOrganizations} onChange={(event) => set("shareWithOrganizations", event.target.checked)} /><span><span className="font-bold text-ink">Share my profile with matched organizations</span><span className="block text-sm text-navy">Optional and off by default.</span></span></label>
+        <label className="flex items-start gap-3"><input type="checkbox" className="mt-1 size-5" disabled={!adult} checked={state.shareContactDetails} onChange={(event) => set("shareContactDetails", event.target.checked)} /><span><span className="font-bold text-ink">Share my contact details</span><span className="block text-sm text-navy">Only shared when profile sharing is enabled.</span></span></label>
       </Section>
 
       <div className="sticky bottom-24 z-10 flex flex-wrap items-center gap-3 rounded-3xl border border-ink/10 bg-white/95 p-3 shadow-soft backdrop-blur md:bottom-4">

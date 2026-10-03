@@ -1,0 +1,20 @@
+import { FEATURE_FLAGS } from "@/config/feature-flags";
+import { AI_RULES } from "@/config/ai-rules";
+import { CATEGORY_MATCHING_WEIGHTS, DEFAULT_MATCHING_WEIGHTS } from "@/config/matching-weights";
+import { ORBIT_DEFAULTS, ORBIT_ENGINE_VERSION } from "@/services/matching/orbit/engine";
+import { RULES_ENGINE_VERSION } from "@/services/matching/rule-based/engine";
+import { AI_ENGINE_VERSION } from "@/services/matching/ai-assisted/engine";
+import { HARD_GATE_DESCRIPTIONS } from "@/services/matching/rule-based/hard-gates";
+import type { AdminSnapshot } from "@/lib/admin-data";
+
+export function AdminAlgorithm({snapshot}:{snapshot:AdminSnapshot}):React.JSX.Element {
+  const ai=process.env.OPPSCOUT_AI_DEFAULT==="true",approved=process.env.OPPSCOUT_AI_COMPARISON_APPROVED==="true";
+  const engine=ai?(approved?"ai":"blocked: AI approval required"):process.env.OPPSCOUT_MATCH_ENGINE==="rules"?"rules":"orbit";
+  const version=engine==="orbit"?ORBIT_ENGINE_VERSION:engine==="rules"?RULES_ENGINE_VERSION:engine==="ai"?AI_ENGINE_VERSION:"—";
+  const rows=Object.entries({OPPSCOUT_MATCH_ENGINE:process.env.OPPSCOUT_MATCH_ENGINE??"unset (orbit)",OPPSCOUT_AI_DEFAULT:String(ai),OPPSCOUT_AI_COMPARISON_APPROVED:String(approved),aiMatching:String(FEATURE_FLAGS.aiMatching),aiComparison:String(FEATURE_FLAGS.aiComparison)});
+  return <div className="mt-6 space-y-6"><section className="card"><h2 className="text-xl font-extrabold">Active engine: {engine} · {version}</h2><p className="mt-2 text-sm text-navy">AI default takes precedence when approved. Otherwise the selector chooses rules only when explicitly configured; Orbit is the default. Feature flags are displayed separately from selector inputs.</p><dl className="mt-4 grid gap-3 sm:grid-cols-2">{rows.map(([key,value])=><div key={key}><dt className="break-all text-xs text-navy">{key}</dt><dd className="font-bold">{value}</dd></div>)}</dl></section>
+    <section className="card"><h2 className="text-xl font-extrabold">Scoring configuration</h2><p className="mt-2 text-sm text-navy">Relevance threshold: {AI_RULES.relevanceThreshold}. Orbit anchor: {ORBIT_DEFAULTS.anchor}. Empty-requirement credit: {ORBIT_DEFAULTS.emptyPrior}. AI maximum score adjustment: {AI_RULES.maximumScoreAdjustment}.</p><div className="mt-4 overflow-auto"><table className="w-full text-left text-sm"><thead><tr><th className="p-2">Opportunity type</th>{Object.keys(DEFAULT_MATCHING_WEIGHTS).map(key=><th className="p-2" key={key}>{key}</th>)}</tr></thead><tbody>{Object.entries({default:DEFAULT_MATCHING_WEIGHTS,...CATEGORY_MATCHING_WEIGHTS}).map(([key,weights])=><tr key={key}><th className="p-2">{key}</th>{Object.values(weights).map((value,i)=><td key={i} className="p-2">{value}</td>)}</tr>)}</tbody></table></div></section>
+    <section className="card"><h2 className="text-xl font-extrabold">Hard gates</h2><dl className="mt-4 space-y-4">{HARD_GATE_DESCRIPTIONS.map(([label,description])=><div key={label}><dt className="font-bold">{label}</dt><dd className="text-sm text-navy">{description} {label!=="Programme rules"&&`Excluded: ${snapshot.series.find(p=>p.group==="gates"&&p.label===label)?.value??0}.`}</dd></div>)}</dl><p className="mt-3 text-xs text-navy">Programme exclusions are counted under each provider rule label in the gate chart. One candidate can fail more than one gate.</p></section>
+    <section className="card"><h2 className="text-xl font-extrabold">How a match is made</h2><p className="mt-3 leading-7 text-navy">Only reviewed, open, unexpired listings enter the feed. Mandatory education, certification, age, and programme rules run before scoring. Orbit resolves profile terms into related skill and field concepts, then combines field, skills, experience, location, work arrangement, and interests using the weights above. A competence anchor adjusts the normalized result, which is rounded and bounded to 0–100. The relevance threshold measures strong results; the feed keeps eligible matches below that threshold too. Missing requirements remain visible for the seeker to check.</p></section>
+  </div>;
+}

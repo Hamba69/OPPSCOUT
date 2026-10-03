@@ -1,3 +1,4 @@
+import type { AdminRepository } from "@/lib/admin-data";
 import type {
   EventLog,
   EventType,
@@ -12,6 +13,8 @@ import type {
   UserProfile,
   VerificationStatus,
   WorkMode,
+  ProfileLink,
+  ProfileProject,
 } from "@/core/entities/domain";
 import type { MatchFactor } from "@/core/interfaces/match-engine";
 import type { DeliveryStatus } from "@/core/interfaces/notification-channel";
@@ -74,6 +77,14 @@ export interface ProfileInput {
   opportunityCategories?: string[];
   workModePreference?: WorkMode | null;
   languages?: string[];
+  githubUrl?: string | null;
+  portfolioUrl?: string | null;
+  otherLinks?: ProfileLink[];
+  projects?: ProfileProject[];
+  shareWithOrganizations?: boolean;
+  shareContactDetails?: boolean;
+  orgSharingConsentAt?: Date | null;
+  orgSharingConsentVersion?: string | null;
   profileCompletenessScore?: number;
 }
 
@@ -102,7 +113,7 @@ export interface OrganizationInput {
   dashboardUsers: string[];
 }
 
-export interface Repository {
+export interface Repository extends AdminRepository {
   getProfile(userId: string): Promise<UserProfile | null>;
   listProfiles(): Promise<UserProfile[]>;
   createProfile(userId: string, input: ProfileInput): Promise<UserProfile>;

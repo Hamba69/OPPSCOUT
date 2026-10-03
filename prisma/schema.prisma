@@ -123,9 +123,19 @@ model UserProfile {
   opportunityCategories    String[]           @default([])
   workModePreference       WorkMode?
   languages                String[]           @default([])
+  githubUrl                 String?
+  portfolioUrl              String?
+  otherLinks                Json               @default("[]")
+  projects                  Json               @default("[]")
+  shareWithOrganizations    Boolean            @default(false)
+  shareContactDetails       Boolean            @default(false)
+  orgSharingConsentAt       DateTime?
+  orgSharingConsentVersion  String?
   profileCompletenessScore Int                @default(0)
   createdAt                DateTime           @default(now())
   updatedAt                DateTime           @updatedAt
+  feedback                 Feedback[]
+  matchRuns                MatchRun[]
   matches                  MatchResult[]
   notifications            Notification[]
   savedOpportunities       SavedOpportunity[]
@@ -251,4 +261,248 @@ model EventLog {
 
   @@index([eventType, timestamp])
   @@index([userId, timestamp])
+}
+
+enum FeedbackCategory {
+  idea
+  bug
+  matching_quality
+  speed
+  other
+}
+
+enum FeedbackStatus {
+  new
+  reviewed
+  planned
+  shipped
+  dismissed
+}
+
+enum DeviceClass {
+  mobile
+  tablet
+  desktop
+}
+
+enum RequestKind {
+  api
+  ussd
+}
+
+enum VitalMetric {
+  LCP
+  INP
+  CLS
+  FCP
+  TTFB
+}
+
+enum VitalRating {
+  good
+  needs_improvement @map("needs-improvement")
+  poor
+}
+
+enum MatchRunEngine {
+  orbit
+  rules
+  ai
+}
+
+enum MatchRunTrigger {
+  feed
+  profile_update
+  notification_run
+  api
+}
+
+enum UnmatchedKind {
+  skill
+  field
+  location
+  interest
+}
+
+enum AdminAccessEvent {
+  unlock_success
+  unlock_failure
+  export
+  feedback_update
+}
+
+enum StoredDocumentOwnerType {
+  user
+  organization
+}
+
+enum StoredDocumentPurpose {
+  research_paper
+  registration_proof
+}
+
+enum StoredDocumentStatus {
+  pending
+  ready
+  rejected
+}
+
+enum SeekerAccessAction {
+  view_card
+  view_profile
+  download_document
+}
+
+enum SeekerPipelineStage {
+  new
+  shortlisted
+  invited
+  contacted
+  not_a_fit
+}
+
+model StoredDocument {
+  id                    String                   @id @default(uuid()) @db.Uuid
+  ownerType             StoredDocumentOwnerType
+  ownerId               String                   @db.Uuid
+  purpose               StoredDocumentPurpose
+  title                 String
+  description           String?
+  originalFileName      String
+  storagePath           String                   @unique
+  mimeType              String
+  sizeBytes             Int
+  sha256                String?
+  status                StoredDocumentStatus     @default(pending)
+  shareWithOrganizations Boolean                  @default(false)
+  createdAt             DateTime                 @default(now())
+  updatedAt             DateTime                 @updatedAt
+
+  @@index([ownerType, ownerId, purpose])
+}
+
+model SeekerAccessLog {
+  id             String             @id @default(uuid()) @db.Uuid
+  createdAt      DateTime           @default(now())
+  organizationId String             @db.Uuid
+  seekerId       String             @db.Uuid
+  opportunityId  String?            @db.Uuid
+  action         SeekerAccessAction
+  documentId     String?            @db.Uuid
+
+  @@index([seekerId, createdAt])
+  @@index([organizationId, createdAt])
+}
+
+model SeekerPipelineEntry {
+  id             String              @id @default(uuid()) @db.Uuid
+  organizationId String              @db.Uuid
+  opportunityId  String              @db.Uuid
+  seekerId       String              @db.Uuid
+  stage          SeekerPipelineStage @default(new)
+  note           String?
+  invitedAt      DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@unique([organizationId, opportunityId, seekerId])
+  @@index([organizationId, opportunityId, stage])
+}
+
+model Feedback {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  category FeedbackCategory
+  rating Int
+  message String
+  contactEmail String?
+  userId String? @db.Uuid
+  user UserProfile? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  visitorHash String @unique
+  ipHash String
+  deviceClass DeviceClass
+  appVersion String?
+  status FeedbackStatus @default(new)
+  adminNote String?
+  updatedAt DateTime @updatedAt
+  @@index([status, createdAt])
+  @@index([category, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+model RequestMetric {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  kind RequestKind
+  route String
+  method String
+  status Int
+  ok Boolean
+  durationMs Int
+  @@index([createdAt])
+  @@index([route, createdAt])
+}
+
+model WebVitalSample {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  route String
+  metric VitalMetric
+  value Float
+  rating VitalRating
+  deviceClass DeviceClass
+  @@index([metric, createdAt])
+  @@index([route, metric])
+  @@index([createdAt])
+}
+
+model MatchRun {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  userId String? @db.Uuid
+  user UserProfile? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  engine MatchRunEngine
+  engineVersion String
+  trigger MatchRunTrigger
+  durationMs Int
+  candidatesConsidered Int
+  gateExcluded Int
+  scored Int
+  aboveThreshold Int
+  topScore Int?
+  scoreHistogram Json
+  gateExclusionReasons Json
+  topMissingFactors Json
+  @@index([createdAt])
+  @@index([engine, createdAt])
+}
+
+model UnmatchedTerm {
+  id String @id @default(uuid()) @db.Uuid
+  kind UnmatchedKind
+  term String @db.VarChar(80)
+  count Int @default(1)
+  firstSeenAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  @@unique([kind, term])
+}
+
+model AdminAccessLog {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  event AdminAccessEvent
+  ipHash String
+  userAgent String @db.VarChar(200)
+  detail Json
+  @@index([createdAt])
+}
+
+model MetricRollup {
+  id String @id @default(uuid()) @db.Uuid
+  day DateTime @db.Date
+  metric String
+  dimension String
+  value Float
+  samples Int
+  @@unique([day, metric, dimension])
 }

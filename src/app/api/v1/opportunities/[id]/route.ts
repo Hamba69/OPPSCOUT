@@ -8,7 +8,7 @@ import { containsSuspiciousRequest } from "@/services/trust/checklist";
 type Context = { params: Promise<{ id: string }> };
 
 export async function GET(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const { id } = await context.params;
     const opportunity = await (await getRepository()).getOpportunity(id);
@@ -18,7 +18,7 @@ export async function GET(request: Request, context: Context): Promise<Response>
 }
 
 export async function PATCH(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     requireRole(auth, ["organization", "admin"]);
     const { id } = await context.params;
@@ -40,7 +40,7 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
 }
 
 export async function DELETE(request: Request, context: Context): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     requireRole(auth, ["organization", "admin"]);
     const { id } = await context.params;

@@ -2,9 +2,40 @@ import { z } from "zod";
 
 import { ValidationError } from "@/core/errors/app-error";
 
+export const ORG_SHARING_CONSENT_VERSION = "2026-10-v1";
+
 const nullableText = z.string().trim().max(240).nullable().optional();
 const stringList = z.array(z.string().trim().min(1).max(120)).max(50);
 const experience = z.object({ title: z.string().trim().min(1).max(160), organization: z.string().trim().max(160).optional(), months: z.number().int().min(0).max(600) });
+const plainText = (max: number, min = 0) => z.string().trim().max(max)
+  .transform((value) => value.replace(/[\u0000-\u001f\u007f]/g, ""))
+  .refine((value) => value.trim().length >= min, `Must be at least ${min} characters.`);
+const publicHttpsUrl = z.string().trim().max(300).url().refine((value) => {
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "https:" && !parsed.username && !parsed.password && !["javascript:", "data:"].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+}, "Use a public HTTPS URL without login credentials.");
+const isGithubProfile = (value: string): boolean => {
+  const parsed = new URL(value);
+  const host = parsed.hostname.toLowerCase();
+  const username = parsed.pathname.replace(/^\/|\/$/g, "");
+  return host === "github.com" && /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(username);
+};
+const githubUrl = publicHttpsUrl.refine(isGithubProfile, "Use a valid github.com profile URL.").transform((value) => {
+  const username = new URL(value).pathname.replace(/^\/|\/$/g, "");
+  return `https://github.com/${username}`;
+});
+const profileLink = z.object({ label: plainText(80, 1), url: publicHttpsUrl }).strict();
+const project = z.object({
+  title: plainText(80, 3),
+  description: plainText(500),
+  url: publicHttpsUrl.optional(),
+  role: plainText(120).optional(),
+  tags: z.array(plainText(30, 1)).max(8),
+}).strict();
 
 export const profileSchema = z.object({
   name: z.string().trim().min(2).max(120).optional(),
@@ -29,6 +60,14 @@ export const profileSchema = z.object({
   opportunityCategories: stringList.optional(),
   workModePreference: z.enum(["remote", "onsite", "hybrid"]).nullable().optional(),
   languages: stringList.optional(),
+  githubUrl: githubUrl.nullable().optional(),
+  portfolioUrl: publicHttpsUrl.nullable().optional(),
+  otherLinks: z.array(profileLink).max(3).optional(),
+  projects: z.array(project).max(6).optional(),
+  shareWithOrganizations: z.boolean().optional(),
+  shareContactDetails: z.boolean().optional(),
+  orgSharingConsentAt: z.coerce.date().nullable().optional(),
+  orgSharingConsentVersion: z.string().max(40).nullable().optional(),
 }).strict();
 
 export const eligibilitySchema = z.object({
@@ -76,6 +115,14 @@ export const organizationSchema = z.object({
   officialEmail: z.string().email().nullable(),
   registrationProof: z.string().trim().min(3).max(500).nullable(),
   accountableContact: z.string().trim().min(2).max(180).nullable(),
+}).strict();
+
+export const profileDocumentSchema = z.object({
+  title: z.string().trim().min(3).max(120),
+  description: z.string().trim().max(300).optional(),
+  fileName: z.string().trim().min(1).max(120),
+  mimeType: z.string().trim().min(1).max(160),
+  sizeBytes: z.number().int().positive(),
 }).strict();
 
 export const reportSchema = z.object({

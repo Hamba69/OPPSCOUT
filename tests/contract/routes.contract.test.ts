@@ -1,3 +1,4 @@
+import { createPortalSession } from "@/lib/admin-portal";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import type { ProfileInput } from "@/lib/repository/types";
 import { recomputeRankedFeed } from "@/services/matching/feed";
@@ -57,7 +58,8 @@ vi.mock("@/lib/profile-store", () => ({
 const opportunityId = "55555555-5555-4555-8555-555555555551";
 const userHeaders = { "Content-Type": "application/json" };
 const orgHeaders = { ...userHeaders, "x-oppscout-demo-role": "organization" };
-const adminHeaders = { ...userHeaders, "x-oppscout-demo-role": "admin" };
+process.env.ADMIN_PORTAL_SESSION_SECRET = Buffer.alloc(32, 17).toString("base64url");
+const adminHeaders = { ...userHeaders, "x-oppscout-demo-role": "admin", cookie: `__Host-oppscout_admin=${createPortalSession()}` };
 
 function request(path: string, method = "GET", body?: unknown, headers: Record<string, string> = userHeaders): Request {
   return new Request(`http://localhost${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
@@ -129,12 +131,12 @@ describe("every Phase 1 /api/v1 route", () => {
   it("supports preferences, delivery runs, and notification history", async () => {
     expect((await preferencesRoute.GET(request("/api/v1/notifications/preferences"))).status).toBe(200);
     expect((await preferencesRoute.PATCH(request("/api/v1/notifications/preferences", "PATCH", { preferredChannel: "email", secondaryChannels: ["sms"], notificationsEnabled: true }))).status).toBe(200);
-    expect((await notificationRunRoute.POST(request("/api/v1/notifications/run", "POST"))).status).toBe(200);
+    expect((await notificationRunRoute.POST(request(`/api/v1/notifications/run?userId=${DEMO_USER_ID}`, "POST", undefined, adminHeaders))).status).toBe(200);
     expect((await notificationsRoute.GET(request("/api/v1/notifications"))).status).toBe(200);
   });
 
   it("creates organizations and returns aggregate-only analytics", async () => {
-    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }));
+    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }, orgHeaders));
     expect(createdOrganizationResponse.status).toBe(201);
     const createdOrganization = await data<{ id: string }>(createdOrganizationResponse);
     const organizationQueue = await organizationReviewRoute.GET(request("/api/v1/organizations/review", "GET", undefined, adminHeaders));

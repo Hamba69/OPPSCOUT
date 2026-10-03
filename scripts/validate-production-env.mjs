@@ -1,4 +1,8 @@
 const baseRequired = [
+  "ADMIN_PORTAL_PASSWORD_HASH",
+  "ADMIN_PORTAL_SESSION_SECRET",
+  "PRIVACY_HASH_SALT",
+  "RATE_LIMIT_PUBLIC_PER_MINUTE",
   "DATABASE_URL",
   "DIRECT_URL",
   "OPPSCOUT_APP_URL",
@@ -27,6 +31,10 @@ const baseRequired = [
   "RATE_LIMIT_ORGANIZATION_PER_MINUTE",
   "RATE_LIMIT_ADMIN_PER_MINUTE",
   "RATE_LIMIT_USSD_PER_MINUTE",
+  "PROFILE_DOCS_MAX_PER_USER",
+  "RATE_LIMIT_ORG_CANDIDATE_VIEWS_PER_DAY",
+  "RATE_LIMIT_ORG_DOWNLOADS_PER_DAY",
+  "RATE_LIMIT_ORG_INVITES_PER_DAY",
 ];
 
 const optionalGates = [
@@ -72,3 +80,8 @@ if (missing.length) {
 } else if (!process.exitCode) {
   console.log("Production environment variable names are complete. Values were not printed.");
 }
+
+if (!/^scrypt:32768:8:1:[A-Za-z0-9_-]{22}:[A-Za-z0-9_-]{86}$/.test(process.env.ADMIN_PORTAL_PASSWORD_HASH ?? "")) { console.error("ADMIN_PORTAL_PASSWORD_HASH must use the documented colon-separated scrypt format."); process.exitCode = 1; }
+const portalSecret=process.env.ADMIN_PORTAL_SESSION_SECRET??"";
+if(!/^[A-Za-z0-9_-]+$/.test(portalSecret) || Buffer.from(portalSecret,"base64url").length<32) {console.error("ADMIN_PORTAL_SESSION_SECRET must contain at least 32 random bytes encoded as base64url.");process.exitCode=1;}
+if((process.env.PRIVACY_HASH_SALT??"").length<32) {console.error("PRIVACY_HASH_SALT must be at least 32 characters.");process.exitCode=1;}

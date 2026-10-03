@@ -1,3 +1,4 @@
+import { AdminDataRepository } from "@/lib/repository/admin-base";
 ﻿import "server-only";
 
 import { randomUUID } from "node:crypto";
@@ -98,7 +99,14 @@ function checked<T>(data: T | null, error: { message: string } | null, operation
   return data;
 }
 
-export class SupabaseRepository implements Repository {
+export class SupabaseRepository extends AdminDataRepository implements Repository {
+
+  protected async adminRpc(name: string, args: Record<string, unknown>): Promise<unknown> {
+    const { data, error } = await this.client.rpc(name, args);
+    if (error) throw new Error(`${error.code}: ${error.message}`);
+    return data;
+  }
+
   private readonly client: DataClient = createServiceRoleClient();
 
   public getProfile(userId: string): Promise<UserProfile | null> {

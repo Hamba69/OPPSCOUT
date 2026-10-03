@@ -14,7 +14,7 @@ const preferencesSchema = z.object({
 }).strict();
 
 export async function GET(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const profile = await (await getRepository()).getProfile(auth.userId);
     if (!profile) throw new NotFoundError("Profile");
@@ -23,7 +23,7 @@ export async function GET(request: Request): Promise<Response> {
 }
 
 export async function PATCH(request: Request): Promise<Response> {
-  return apiHandler(async () => {
+  return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const input = await parseJson(request, preferencesSchema);
     const profile = await (await getRepository()).updateProfile(auth.userId, input);
