@@ -56,12 +56,12 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
   return <div className="mt-5">
     <a className="button w-full sm:w-auto" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}>Apply on official site <ExternalIcon /></a>
     <div className="mt-3 flex flex-wrap gap-2">
-      <button type="button" className="button-secondary" disabled={busy} onClick={save}>Save for later</button>
-      <button type="button" className="button-secondary" disabled={busy || intentRecorded} onClick={recordIntent}>{intentRecorded ? "Marked as planning to apply" : "I plan to apply"}</button>
+      <button type="button" className="button-secondary" disabled={busy} onClick={save}>{busy ? "Working…" : "Save for later"}</button>
+      <button type="button" className="button-secondary" disabled={busy || intentRecorded} onClick={recordIntent}>{intentRecorded ? "Marked as planning to apply" : busy ? "Working…" : "I plan to apply"}</button>
       <button type="button" className="min-h-12 rounded-2xl px-4 text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>Report a problem</button>
     </div>
     {reporting && <form onSubmit={report} className="card mt-4 space-y-3"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
-      <div className="flex gap-2"><button className="button" disabled={busy || !reason.trim()}>Submit report</button><button type="button" className="button-secondary" onClick={() => setReporting(false)}>Cancel</button></div></form>}
+      <div className="flex gap-2"><button className="button" disabled={busy || !reason.trim()}>{busy ? "Sending…" : "Submit report"}</button><button type="button" className="button-secondary" onClick={() => setReporting(false)} disabled={busy}>Cancel</button></div></form>}
     {message && <p className="mt-3 rounded-2xl border border-honey bg-butter p-3 text-sm font-semibold text-ink" role="status" aria-live="polite">{message}</p>}
   </div>;
 }

@@ -81,27 +81,16 @@ export default async function OpportunitiesPage({
         ))}
       </nav>
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-semibold text-navy" aria-live="polite">
-          {items.length} {items.length === 1 ? "opportunity" : "opportunities"}
-          {query ? <> matching “{query}”</> : null}
-          {type ? <> in {choiceLabel(type)}</> : null}
-        </p>
-        {(query || type) && (
+      {(query || type) && (
+        <div className="mt-5 flex justify-end">
           <Link
             href="/opportunities"
             className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4"
           >
             Clear filters
           </Link>
-        )}
-      </div>
-      {items.some((item) => item.verificationStatus === "pending") && (
-        <p className="mt-3 rounded-2xl border border-honey bg-butter p-4 text-sm text-navy">
-          {items.filter((item) => item.verificationStatus === "verified").length} verified · {items.filter((item) => item.verificationStatus === "pending").length} awaiting review. Listings awaiting review have no match score or application link until their source and details are checked.
-        </p>
+        </div>
       )}
-
       {items.length ? (
         <div className="mt-3 grid gap-5 md:grid-cols-2">
           {items.map((item) => (

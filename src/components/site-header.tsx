@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 import { Logo } from "@/components/logo";
 import { SectionNav } from "@/components/section-nav";
@@ -11,15 +12,26 @@ const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings
 const bareHeaderPaths = ["/login", "/reset-password"];
 
 function AccountMenu({ seeker }: { seeker: boolean }): React.JSX.Element {
-  return <details className="relative">
+  const menuRef = useRef<HTMLDetailsElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    menuRef.current?.removeAttribute("open");
+  }, [pathname]);
+
+  function closeMenu(): void {
+    menuRef.current?.removeAttribute("open");
+  }
+
+  return <details ref={menuRef} className="relative">
     <summary aria-label={seeker ? "Profile and settings" : "Account"} className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border-2 border-honey bg-butter text-ink [&::-webkit-details-marker]:hidden">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
     </summary>
     <div className="absolute right-0 top-12 z-50 w-48 rounded-2xl border border-ink/10 bg-white p-2 shadow-soft">
       {seeker ? <>
-        <Link href="/profile" className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">My profile</Link>
-        <Link href="/settings" className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">Settings</Link>
-      </> : <form action="/auth/logout" method="post"><button className="flex min-h-11 w-full items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">Sign out</button></form>}
+        <Link href="/profile" onClick={closeMenu} className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">My profile</Link>
+        <Link href="/settings" onClick={closeMenu} className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">Settings</Link>
+      </> : <form action="/auth/logout" method="post"><button onClick={closeMenu} className="flex min-h-11 w-full items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter">Sign out</button></form>}
     </div>
   </details>;
 }

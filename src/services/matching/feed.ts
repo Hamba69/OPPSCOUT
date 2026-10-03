@@ -46,15 +46,17 @@ export async function buildRankedFeed(
   const persistedMatches = options.persist === false
     ? new Map((await repository.listMatches(userId)).map((match) => [match.opportunityId, match]))
     : undefined;
-  const matches: RankedMatch[] = [];
-
-  for (const opportunity of opportunities) {
-    if (opportunity.deadline && opportunity.deadline <= now) continue;
-    const gates = evaluateHardGates(profile, opportunity);
-    if (!gates.eligible) continue;
+  const eligible = opportunities
+    .filter((opportunity) => !opportunity.deadline || opportunity.deadline > now)
+    .map((opportunity) => ({ opportunity, gates: evaluateHardGates(profile, opportunity) }))
+    .filter((item) => item.gates.eligible);
+  const scored = await Promise.all(eligible.map(async ({ opportunity, gates }) => {
     const result = await engine.score(profile, opportunity);
     result.missingFactors.unshift(...(opportunity.eligibility.additionalRequirements ?? []).map(detail => ({ label: "Confirm eligibility with provider", detail })));
     result.matchedFactors.unshift(...gates.passed);
+    return { opportunity, result };
+  }));
+  const matches = await Promise.all(scored.map(async ({ opportunity, result }) => {
     const stored = options.persist === false
       ? {
           id: persistedMatches?.get(opportunity.id)?.id ?? randomUUID(),
@@ -64,8 +66,8 @@ export async function buildRankedFeed(
           createdAt: persistedMatches?.get(opportunity.id)?.createdAt ?? now,
         }
       : await repository.upsertMatch({ userId, opportunityId: opportunity.id, ...result });
-    matches.push({ ...stored, opportunity, urgencyRank: deadlineUrgency(opportunity, now) });
-  }
+    return { ...stored, opportunity, urgencyRank: deadlineUrgency(opportunity, now) };
+  }));
 
   return matches.sort((a, b) => {
     const score = b.score - a.score || b.urgencyRank - a.urgencyRank;
