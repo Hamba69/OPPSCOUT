@@ -93,7 +93,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.06] pt-6">
           <span>Built for you.</span>
           <Link href="/feedback" className="inline-flex min-h-11 items-center font-semibold underline">Feedback</Link>
-          <Link href="/onboarding/organization" className="inline-flex min-h-11 items-center font-semibold text-ink underline">Post opportunities as an organization</Link>
+          <Link href="/organizations" className="inline-flex min-h-11 items-center font-semibold text-ink underline">Post opportunities as an organization</Link>
         </div>
       </footer>
     </main>

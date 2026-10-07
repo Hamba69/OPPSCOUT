@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
 
-export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element {
+export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: string; initialMode?: "signin" | "signup" }): React.JSX.Element {
   const router = useRouter();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [confirmationPending, setConfirmationPending] = useState(false);
@@ -72,3 +72,4 @@ export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element 
 
   return <section className="card mx-auto mt-8 max-w-lg"><div className="flex rounded-2xl bg-butter p-1" role="group" aria-label="Sign in or create account"><button type="button" disabled={busy} aria-pressed={mode === "signin"} className={`min-h-11 flex-1 rounded-xl px-4 py-2 font-bold ${mode === "signin" ? "bg-amber text-ink" : "text-navy"}`} onClick={() => { setMode("signin"); setConfirmationPending(false); setMessage(""); }}>Sign in</button><button type="button" disabled={busy} aria-pressed={mode === "signup"} className={`min-h-11 flex-1 rounded-xl px-4 py-2 font-bold ${mode === "signup" ? "bg-amber text-ink" : "text-navy"}`} onClick={() => { setMode("signup"); setMessage(""); }}>Create account</button></div><form className="mt-6 space-y-4" onSubmit={submit}><label><span className="label">Email</span><input ref={emailInput} className="field" type="email" name="email" autoComplete="email" required /></label><label><span className="label">Password</span><input className="field" type="password" name="password" minLength={8} autoComplete={mode === "signin" ? "current-password" : "new-password"} required /></label><button className="button w-full" disabled={busy}>{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</button>{mode === "signin" && <button type="button" className="text-sm font-semibold text-navy underline underline-offset-4" disabled={busy} onClick={recoverPassword}>Forgot your password?</button>}{confirmationPending && <button type="button" className="text-sm font-bold underline underline-offset-4" disabled={busy} onClick={resendConfirmation}>Resend confirmation email</button>}{message && <p className="rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</form></section>;
 }
+
