@@ -23,7 +23,7 @@ export function verifyPortalSession(value: string | undefined,now=Date.now()): b
 export function portalCookieName(): string {return process.env.NODE_ENV==="development"?"oppscout_admin":"__Host-oppscout_admin";}
 export function portalCookieOptions() {return {httpOnly:true,secure:process.env.NODE_ENV!=="development",sameSite:"strict" as const,path:"/",maxAge:7200};}
 export function cookieValue(request: Request,name: string): string | undefined {return request.headers.get("cookie")?.split(";").map(c=>c.trim()).find(c=>c.startsWith(`${name}=`))?.slice(name.length+1);}
-export async function requireAdminPortal(): Promise<void> {if(!verifyPortalSession((await cookies()).get(portalCookieName())?.value)) redirect("/settings?unlock=1");}
+export async function requireAdminPortal(): Promise<void> {if(!verifyPortalSession((await cookies()).get(portalCookieName())?.value)) redirect("/?unlock=1");}
 export function requireAdminPortalApi(request: Request): void {if(!verifyPortalSession(cookieValue(request,portalCookieName()))) throw new AppError("Admin access required.",401,"ADMIN_REQUIRED");}
 export function requireSameOrigin(request: Request): void {const expected=process.env.OPPSCOUT_APP_URL;let origin:string;try{origin=new URL(expected??"").origin;}catch{throw new AppError("Application origin is not configured.",503,"ORIGIN_NOT_CONFIGURED");}if(request.headers.get("origin")!==origin) throw new AppError("Request origin is not allowed.",403,"ORIGIN_REQUIRED");}
 export const ADMIN_HEADERS={"Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"};

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { apiHandler } from "@/lib/api";
-import { getOptionalAuth } from "@/lib/auth";
 import { AppError } from "@/core/errors/app-error";
 import { ADMIN_HEADERS, createPortalSession, portalCookieName, portalCookieOptions, requireSameOrigin, verifyPortalPassword } from "@/lib/admin-portal";
 import { requestIpHash } from "@/lib/privacy-hash";
@@ -11,7 +10,6 @@ import { getRepository } from "@/lib/repository";
 export async function POST(request: Request): Promise<Response> {
   const response=await apiHandler(request,async()=>{
     requireSameOrigin(request);
-    if(!await getOptionalAuth()) throw new AppError("Sign in to open Settings.",401,"UNAUTHENTICATED");
     const ipHash=requestIpHash(request),repository=await getRepository();const started=Date.now();let unlocked=false;
     try {
       const release=await reserveUnlock(ipHash);
