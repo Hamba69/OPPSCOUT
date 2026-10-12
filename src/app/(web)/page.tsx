@@ -9,7 +9,7 @@ import { AlertIcon, CheckIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
-const categories = ["Jobs", "Scholarships", "Grants", "Internships"] as const;
+const categories = ["Jobs", "Scholarships", "Grants", "Internships","Trainings", "Fellowships","Consultancies"] as const;
 
 const promises = [
   ["Every listing checked", "We confirm the official source, the deadline and duplicates before a listing reaches you."],
