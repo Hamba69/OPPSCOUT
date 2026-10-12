@@ -3718,6 +3718,7 @@ export function getDiscoveredOrganizations(): Organization[] {
 export function getDiscoveredOpportunities(): Opportunity[] {
   const organizations = new Map(getDiscoveredOrganizations().map((organization) => [organization.id, organization]));
   return opportunitySeeds.map((seed) => {
+    if (!seed.organizationId) throw new Error(`Discovered-catalog opportunity ${seed.title} has no organization.`);
     const organization = organizations.get(seed.organizationId);
     if (!organization) throw new Error(`Discovered-catalog organization ${seed.organizationId} is missing.`);
     return {

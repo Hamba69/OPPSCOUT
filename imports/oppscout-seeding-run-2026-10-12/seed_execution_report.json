@@ -1,0 +1,1019 @@
+{
+  "runAtUtc": "2026-10-12T09:55:10.713680+00:00",
+  "sourceRows": 160,
+  "created": 0,
+  "createdKeys": [],
+  "expiredSkipped": [],
+  "excludedBySourceReview": [
+    "agro-processing-plant-composting-manager-2026-10",
+    "mayfair-asset-managers-graduate-trainee-2026-10",
+    "goodman-fleet-assistant-2026-09",
+    "goodman-marketing-coordinator-2026-09",
+    "restless-development-mel-coordinator-2026-09",
+    "international-lifeline-fund-program-director-2026-09",
+    "csbag-economics-graduate-trainee-2026-09",
+    "swivel-marketing-project-manager-2026-09",
+    "pearl-bank-applications-support-officer-2026-09",
+    "pearl-bank-solution-qa-devops-manager-2026-09",
+    "warrior-squad-foundation-meal-officer-2026-09",
+    "kampala-club-intern-stock-management-2026-09",
+    "ecowater-uganda-creative-assistant-graduate-trainee-2026-09",
+    "yalelo-graduate-trainee-stores-2026-09",
+    "octagon-africa-graduate-trainee-pension-administration-2026-09",
+    "future-options-operations-graduate-trainee-2026-09",
+    "future-options-building-systems-graduate-trainee-2026-09",
+    "agro-processing-plant-operations-manager-night-shift-2026-09",
+    "irc-deputy-project-coordinator-policy-advocacy-playmatters-2026-09",
+    "nrc-ict-technical-assistant-isingiro",
+    "mext-research-students-2026-uganda",
+    "brunei-darussalam-scholarship-2026-27-uganda",
+    "undp-uganda-g4du-low-value-grants-2026",
+    "eu-cso-in-country-call-uganda-2026",
+    "kpmg-east-africa-graduate-recruitment-2026",
+    "disarmament-nonproliferation-security-grant-2026",
+    "george-atkins-communications-award-2027",
+    "nethope-humanitarian-ai-research-fellowship-2026-27",
+    "jasiri-growth-accelerator-2026",
+    "gerald-feldman-travel-grants-2026",
+    "design-digital-marketing-school-cohort-3-lagos",
+    "davis-shirtliff-accounts-internship-kenya"
+  ],
+  "deferredUpdateRows": [
+    "princeton-in-africa-fellowship-2027-28"
+  ],
+  "duplicateSkipped": [
+    {
+      "key": "jentroy-software-dev-intern-2026-10",
+      "title": "Software Development Intern (Graduate Program)",
+      "matchedTitle": "Software Development Intern (Graduate Program)",
+      "matchedId": "5db2c907-cbc5-4ba1-acbd-aef43dae1309",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/software-development-intern-graduate-program-jobs-jentroy-uganda.html"
+    },
+    {
+      "key": "natgas-graduate-trainee-software-engineer-2026-10",
+      "title": "Graduate Trainee, Software Engineer (2 positions)",
+      "matchedTitle": "Graduate Trainee, Software Engineer (2 positions)",
+      "matchedId": "67376639-dae9-4914-9f02-7def3df614a6",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/graduate-trainee-software-engineer-2-fresh-graduate-positions-jobs-natgas-uganda.html"
+    },
+    {
+      "key": "eacop-gis-graduate-trainee-2026-10",
+      "title": "GIS Graduate Trainee",
+      "matchedTitle": "GIS Graduate Trainee",
+      "matchedId": "993e7e5b-50c9-4d84-84bf-553cdb7a67cf",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/gis-graduate-trainee-no-experience-jobs-jobs-east-african-crude-oil-pipeline.html"
+    },
+    {
+      "key": "eacop-hr-graduate-trainee-2026-10",
+      "title": "Human Resource Graduate Trainee",
+      "matchedTitle": "Human Resource Graduate Trainee",
+      "matchedId": "e3d6f7af-8eb2-4f65-98b9-dd5d6ee2d7f8",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/human-resource-graduate-trainee-no-experience-jobs-jobs-east-african-crude-oil-pipeline.html"
+    },
+    {
+      "key": "mayfair-insurance-ict-graduate-trainee-2026-10",
+      "title": "Graduate Trainee, ICT",
+      "matchedTitle": "Graduate Trainee, ICT",
+      "matchedId": "e35e629b-fa99-4efb-9581-979206c0b466",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/graduate-trainee-ict-jobs-mayfair-insurance.html"
+    },
+    {
+      "key": "uetcl-esi-graduate-skills-programme-2026-10",
+      "title": "UETCL ESI Graduate Skills Development Programme",
+      "matchedTitle": "UETCL ESI Graduate Skills Development Programme",
+      "matchedId": "813adb76-65cd-41a9-a4a0-02b06f5b372c",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/uetcl-esi-graduate-skills-development-programme-no-experience-jobs-jobs-uganda-electricity-transmission-company-limited-uetcl.html"
+    },
+    {
+      "key": "uetcl-communication-engineer-2026-10",
+      "title": "Communication Engineer (Transmission and Access System)",
+      "matchedTitle": "Communication Engineer (Transmission and Access System)",
+      "matchedId": "8b45c0e1-a4db-41b1-8092-1b067e516042",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/communication-engineer-transmission-access-system-jobs-uganda-electricity-transmission-company-limited-uetcl.html"
+    },
+    {
+      "key": "drc-meal-trainee-uganda-2026-10",
+      "title": "MEAL Trainee",
+      "matchedTitle": "MEAL Trainee",
+      "matchedId": "4ebcc3a9-fbca-4027-8e87-78d3fe4e1385",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/meal-trainee-no-experience-jobs-jobs-danish-refugee-council.html"
+    },
+    {
+      "key": "naseco-seed-quality-controller-2026-10",
+      "title": "Seed Quality Controller (2 positions)",
+      "matchedTitle": "Seed Quality Controller (2 positions)",
+      "matchedId": "6917bdc6-4353-4d0f-902a-f24120b26a5b",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/seed-quality-controller-2-positions-jobs-naseco-seeds.html"
+    },
+    {
+      "key": "naseco-seed-production-lead-2026-10",
+      "title": "Production Systems, Early Generation Seed and Variety Advancement Lead",
+      "matchedTitle": "Production Systems, Early Generation Seed and Variety Advancement Lead",
+      "matchedId": "191a1bdd-5930-4b73-9f8e-5c66fc6f6ed8",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/production-systems-early-generation-seed-and-variety-advancement-lead-jobs-naseco-seeds.html"
+    },
+    {
+      "key": "naseco-quality-assurance-supervisor-2026-10",
+      "title": "Quality Assurance Supervisor",
+      "matchedTitle": "Quality Assurance Supervisor",
+      "matchedId": "e12bbb57-ef1d-45ed-aef1-0ea127c89dda",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/quality-assurance-supervisor-jobs-naseco-seeds-2.html"
+    },
+    {
+      "key": "giz-uganda-advisor-crrf-maternity-cover-2026-10",
+      "title": "Advisor, Comprehensive Refugee Response Framework (maternity cover)",
+      "matchedTitle": "Advisor, Comprehensive Refugee Response Framework (maternity cover)",
+      "matchedId": "044c69de-a179-400a-85ae-6baf6404895e",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/advisor-maternity-cover-comprehensive-refugee-response-framework-crrf-jobs-giz-uganda.html"
+    },
+    {
+      "key": "unwomen-uganda-sasa-together-evaluation-2026-10",
+      "title": "National Consultant to Evaluate the SASA Together Strategy",
+      "matchedTitle": "National Consultant to Evaluate the SASA Together Strategy",
+      "matchedId": "4f4f1ddd-051b-4a21-9ce3-2466823dac7a",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/national-consultant-to-evaluate-the-sasa-together-strategy-jobs-unwomen-uganda.html"
+    },
+    {
+      "key": "unicef-uganda-chwp-oversight-consultant-2026-10",
+      "title": "National Consultant, Oversight, Coordination, Monitoring and Quality Assurance of the Community Health Workforce Programme",
+      "matchedTitle": "National Consultant, Oversight, Coordination, Monitoring and Quality Assurance of the Community Health Workforce Programme",
+      "matchedId": "256625c2-1343-438c-83a6-ef5e0c09f5bd",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/national-consultant-for-oversight-coordination-monitoring-and-quality-assurance-of-the-community-health-workforce-programme-chwp-jobs-united-nations-childrens-fund.html"
+    },
+    {
+      "key": "true-north-planning-engineer-offsites-epc-2026-10",
+      "title": "Planning Engineer (Offsites and EPC)",
+      "matchedTitle": "Planning Engineer (Offsites and EPC)",
+      "matchedId": "839833d4-f9f9-458a-af7c-f7f447983e1b",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/planning-engineer-offsites-epc-jobs-true-north-consult.html"
+    },
+    {
+      "key": "simplepay-internal-debt-collectors-2026-10",
+      "title": "Internal Debt Collector (50 positions)",
+      "matchedTitle": "Internal Debt Collector (50 positions)",
+      "matchedId": "7c114785-4463-4674-afce-949cabb76c26",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/50-internal-debt-collector-jobs-simplepay-capital.html"
+    },
+    {
+      "key": "tugende-customer-relations-admin-officer-2026-10",
+      "title": "Customer Relations and Administration Officer",
+      "matchedTitle": "Customer Relations and Administration Officer",
+      "matchedId": "604f4c81-b6ae-40c0-9d13-e997ccb5f975",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/customer-relations-and-administration-officer-jobs-tugende.html"
+    },
+    {
+      "key": "tugende-branch-executive-2026-10",
+      "title": "Branch Executive",
+      "matchedTitle": "Branch Executive",
+      "matchedId": "2562ec4c-4e9a-450f-ab4c-c3e6d083d479",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/branch-executive-jobs-tugende-6.html"
+    },
+    {
+      "key": "unifi-call-centre-agent-2026-10",
+      "title": "Call Centre Agent (several positions)",
+      "matchedTitle": "Call Centre Agent (several positions)",
+      "matchedId": "866964d1-4920-40f0-8a9b-2dbc1caee9dd",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/call-centre-agent-several-no-experience-jobs-jobs-unifi-uganda.html"
+    },
+    {
+      "key": "unifi-client-growth-sales-rep-lira-2026-10",
+      "title": "Client Growth Sales Representative, Lira",
+      "matchedTitle": "Client Growth Sales Representative, Lira",
+      "matchedId": "62de330c-75c5-4fe1-a0ba-05d28b33f5d1",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/client-growth-sales-representative-lira-jobs-unifi-uganda.html"
+    },
+    {
+      "key": "unifi-client-growth-sales-rep-iganga-2026-10",
+      "title": "Client Growth Sales Representative, Iganga",
+      "matchedTitle": "Client Growth Sales Representative, Lira",
+      "matchedId": "62de330c-75c5-4fe1-a0ba-05d28b33f5d1",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/client-growth-sales-representative-lira-jobs-unifi-uganda.html"
+    },
+    {
+      "key": "unifi-special-projects-lead-2026-10",
+      "title": "Special Projects Lead",
+      "matchedTitle": "Special Projects Lead",
+      "matchedId": "19d368b9-8353-413f-8a4c-1186ffaa3c92",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/special-projects-lead-jobs-unifi-uganda.html"
+    },
+    {
+      "key": "asilia-africa-hr-coordinator-2026-10",
+      "title": "Human Resources Coordinator",
+      "matchedTitle": "Human Resources Coordinator",
+      "matchedId": "2d1aa280-0de5-4976-ae5d-9c1d98b07e1e",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/human-resources-coordinator-jobs-asilia-africa.html"
+    },
+    {
+      "key": "esom-front-desk-administrator-2026-10",
+      "title": "Front Desk Administrator (2 positions)",
+      "matchedTitle": "Front Desk Administrator (2 positions)",
+      "matchedId": "bf310071-02fb-4004-9fe9-8bfa5a8fd123",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/front-desk-administrator-2-positions-jobs-esom-school-of-music.html"
+    },
+    {
+      "key": "bwinja-agro-sales-manager-2026-10",
+      "title": "Sales Manager",
+      "matchedTitle": "Sales Manager",
+      "matchedId": "94c19e5b-50a8-4df5-ae78-598f1918e9ed",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/sales-manager-jobs-bwinja-agro-farm.html"
+    },
+    {
+      "key": "akes-english-teacher-primary-cambridge-2026-10",
+      "title": "English Language Teacher, Primary Cambridge Curriculum",
+      "matchedTitle": "English Language Teacher, Primary Cambridge Curriculum",
+      "matchedId": "ab26bb9d-42c4-4287-a399-2dccf70f06f1",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/english-language-teacher-primary-cambridge-curriculum-jobs-aga-khan-education-services-akes.html"
+    },
+    {
+      "key": "digital-woman-uganda-accounts-assistant-2026-10",
+      "title": "Accounts Assistant",
+      "matchedTitle": "Accounts Assistant",
+      "matchedId": "688c6642-afcb-480d-9885-91c3826f4843",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/accounts-assistant-jobs-digital-woman-uganda.html"
+    },
+    {
+      "key": "case-medical-administration-clerk-2026-10",
+      "title": "Administration Clerk",
+      "matchedTitle": "Administration Clerk",
+      "matchedId": "671b8ca2-2b21-4809-b3dc-2976a736f93e",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/administration-clerk-jobs-case-medical-services.html"
+    },
+    {
+      "key": "restless-development-advocacy-officer-2026-09",
+      "title": "Advocacy Officer",
+      "matchedTitle": "Advocacy Officer",
+      "matchedId": "8d890f1d-6abf-48e4-9d45-27fec5cc8a21",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/advocacy-officer-jobs-restless-development.html"
+    },
+    {
+      "key": "tum-sustainability-coordinator-2026-09",
+      "title": "Sustainability Coordinator",
+      "matchedTitle": "Sustainability Coordinator",
+      "matchedId": "3cfdbf95-0f99-49fd-9e22-7dc58ee7ca66",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/sustainability-coordinator-jobs-texans-and-ugandans-on-mission-tum.html"
+    },
+    {
+      "key": "ugafode-ict-security-officer-2026-09",
+      "title": "ICT Security Officer",
+      "matchedTitle": "ICT Security Officer",
+      "matchedId": "8ba9b10d-1de6-46d3-8840-1842e9691135",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/ict-security-officer-jobs-ugafode-microfinance-2.html"
+    },
+    {
+      "key": "hha-east-africa-director-2026-09",
+      "title": "East Africa Director",
+      "matchedTitle": "East Africa Director",
+      "matchedId": "50a2f771-a652-4628-bdfb-e910d1a8baf6",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/east-africa-director-jobs-hope-health-action.html"
+    },
+    {
+      "key": "prime-concepts-sales-executive-assistant-2026-09",
+      "title": "Sales Executive Assistant",
+      "matchedTitle": "Sales Executive Assistant",
+      "matchedId": "cfa93272-81b8-40dc-a23a-3d9758051658",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/sales-executive-assistant-jobs-prime-concepts-packaging.html"
+    },
+    {
+      "key": "pinnacle-partners-professional-driver-2026-09",
+      "title": "Professional Driver",
+      "matchedTitle": "Professional Driver",
+      "matchedId": "70dba211-07aa-4174-8fbe-d4d54df4f6a3",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/professional-driver-jobs-pinnacle-partners.html"
+    },
+    {
+      "key": "nft-consult-deputy-service-head-2026-09",
+      "title": "Deputy Service Head",
+      "matchedTitle": "Deputy Service Head",
+      "matchedId": "d74f03bb-7efb-420f-9162-4e3d056eebb9",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/deputy-service-head-jobs-nft-consult.html"
+    },
+    {
+      "key": "nft-consult-deputy-assistant-sales-head-2026-09",
+      "title": "Deputy or Assistant Sales Head",
+      "matchedTitle": "Deputy or Assistant Sales Head",
+      "matchedId": "574bd09e-2c45-4935-887a-e316f7538a04",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/deputy-assistant-sales-head-jobs-nft-consult.html"
+    },
+    {
+      "key": "stanbic-manager-business-development-west-2026-09",
+      "title": "Manager, Business Development, West and Far West",
+      "matchedTitle": "Manager, Business Development, West and Far West",
+      "matchedId": "c87b2218-eaf9-4657-ab4a-c3d1681753f3",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/manager-business-development-west-far-west-jobs-stanbic-bank.html"
+    },
+    {
+      "key": "cic-insurance-agent-2026-09",
+      "title": "Insurance Agent (several positions)",
+      "matchedTitle": "Insurance Agent (several positions)",
+      "matchedId": "22b1d863-1991-4071-a9ad-90e7b441c318",
+      "sourceUrl": "https://theugandanjobline.com/2026/09/agent-several-no-experience-jobs-jobs-cic-insurance-uganda.html"
+    },
+    {
+      "key": "xclusive-uganda-management-hr-consultancy-rfp-2026-10",
+      "title": "Request for Proposals: Management and Human Resource Consultancy",
+      "matchedTitle": "Request for Proposals: Management and Human Resource Consultancy",
+      "matchedId": "cb38c2d6-5b09-49f7-bd3d-4b90fa778c1d",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/request-for-proposals-rfp-management-human-resource-consultancy-xclusive-uganda.html"
+    },
+    {
+      "key": "xclusive-uganda-compound-designer-gardener-2026-10",
+      "title": "Compound Designer or Gardener",
+      "matchedTitle": "Compound Designer or Gardener",
+      "matchedId": "cf5ce2f4-f834-4610-9a2a-d5d08d7340ed",
+      "sourceUrl": "https://theugandanjobline.com/2026/10/compound-designer-gardener-jobs-xclusive-uganda.html"
+    },
+    {
+      "key": "path-supply-chain-specialist-cold-chain-uganda",
+      "title": "Supply Chain Specialist, Evolving Cold Chain Equipment Project",
+      "matchedTitle": "Supply Chain Specialist, Evolving Cold Chain Equipment Project",
+      "matchedId": "3a76561c-453f-4b92-bc86-47abcace1d6a",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/path-supply-chain-specialist-evolving-cold-chain-equipment-project-89199677"
+    },
+    {
+      "key": "chai-senior-associate-srmnh-uganda",
+      "title": "Senior Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedTitle": "Senior Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedId": "2d71a900-262c-4cf5-b2bd-b74075572274",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/chai-senior-associate-sexual-reproductive-maternal-and-newborn-health-88814714"
+    },
+    {
+      "key": "chai-program-manager-srmnh-uganda",
+      "title": "Program Manager, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedTitle": "Program Manager, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedId": "660ddd79-ae5b-4a43-a598-4970e9f25dc6",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/chai-program-manager-sexual-reproductive-maternal-and-newborn-health-88814713"
+    },
+    {
+      "key": "chai-associate-srmnh-uganda",
+      "title": "Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedTitle": "Senior Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "matchedId": "2d71a900-262c-4cf5-b2bd-b74075572274",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/chai-senior-associate-sexual-reproductive-maternal-and-newborn-health-88814714"
+    },
+    {
+      "key": "acf-uganda-fsl-extension-worker",
+      "title": "Food Security and Livelihoods (FSL) Extension Worker",
+      "matchedTitle": "Food Security and Livelihoods (FSL) Extension Worker",
+      "matchedId": "0b5ea52a-66a8-4b42-a3a0-aef767a61ecb",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-programs-food-security-livelihoods-fsl-extension-worker-ug-88807673"
+    },
+    {
+      "key": "acf-uganda-project-manager-team-leader",
+      "title": "Project Manager or Team Leader",
+      "matchedTitle": "Project Manager or Team Leader",
+      "matchedId": "c10cb618-e70d-41f3-aeac-48fe8e128727",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-project-managerteam-leader-88807665"
+    },
+    {
+      "key": "acf-uganda-entomologist",
+      "title": "Entomologist",
+      "matchedTitle": "Entomologist",
+      "matchedId": "6c5bab85-203e-4970-abce-8dbab35b4422",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-entomologist-88807664"
+    },
+    {
+      "key": "acf-uganda-sustainable-land-management-officer",
+      "title": "Sustainable Land Management Officer",
+      "matchedTitle": "Sustainable Land Management Officer",
+      "matchedId": "8309c063-afa6-459e-9274-e94d467275ca",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-sustainable-land-management-officer-88807663"
+    },
+    {
+      "key": "acf-uganda-agribusiness-market-systems-officer",
+      "title": "Agribusiness and Market Systems Officer",
+      "matchedTitle": "Agribusiness and Market Systems Officer",
+      "matchedId": "33fb05c4-31d5-40f0-81fb-2019be3a94ff",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-agribusinessmarket-systems-officer-88807662"
+    },
+    {
+      "key": "acf-uganda-livestock-officer",
+      "title": "Livestock Officer",
+      "matchedTitle": "Livestock Officer",
+      "matchedId": "f14b1979-bd01-4ed3-948e-62db3227a7c9",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-livestock-officer-88807661"
+    },
+    {
+      "key": "acf-uganda-accountant",
+      "title": "Accountant",
+      "matchedTitle": "Accountant",
+      "matchedId": "238e7c63-bd10-4d01-9ea1-cc86628892f4",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-accountant-88807659"
+    },
+    {
+      "key": "acf-uganda-merl-digital-data-quality-officer",
+      "title": "MERL and Digital Data Quality Officer",
+      "matchedTitle": "MERL and Digital Data Quality Officer",
+      "matchedId": "37c581ee-b170-4d2e-9f27-c439958db048",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-merl-digital-data-quality-officer-88807658"
+    },
+    {
+      "key": "acf-uganda-agriculture-officer",
+      "title": "Agriculture Officer",
+      "matchedTitle": "Agriculture Officer",
+      "matchedId": "cf056fb1-ccf8-451f-8b48-565b4bb9a7eb",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-agriculture-officer-88807656"
+    },
+    {
+      "key": "acf-uganda-nutrition-expert-officer",
+      "title": "Nutrition Expert or Officer",
+      "matchedTitle": "Nutrition Expert or Officer",
+      "matchedId": "ac86d065-8e80-4502-9de0-775ff111c4de",
+      "sourceUrl": "https://www.unjobnet.org/jobs/detail/action-contre-la-faim-uga-nutrition-expertofficer-88807660"
+    },
+    {
+      "key": "totalenergies-ep-uganda-graduate-trainees",
+      "title": "TotalEnergies EP Uganda Graduate Trainee Programme (multiple tracks)",
+      "matchedTitle": "TotalEnergies EP Uganda Graduate Trainee Programme (multiple tracks)",
+      "matchedId": "60a69c64-c49d-4481-890e-1bebf3b519fb",
+      "sourceUrl": "https://www.progigfinder.com/graduate-trainee-jobs-uganda"
+    },
+    {
+      "key": "totalenergies-marketing-uganda-young-graduate-2026",
+      "title": "TotalEnergies Marketing Uganda Young Graduate Program 2026",
+      "matchedTitle": "TotalEnergies Marketing Uganda Young Graduate Program 2026",
+      "matchedId": "529d1dec-717e-4174-adcb-ac7de367c606",
+      "sourceUrl": "https://www.fuzu.com/uganda/job/nansana?page=13"
+    },
+    {
+      "key": "seatini-uganda-graduate-trainee-5th-cohort",
+      "title": "SEATINI Uganda Graduate Trainee Programme (5th cohort)",
+      "matchedTitle": "SEATINI Uganda Graduate Trainee Programme (5th cohort)",
+      "matchedId": "f2c80e0e-d1d3-48a5-8556-02650980f1ff",
+      "sourceUrl": "https://www.fuzu.com/uganda/job/business-strategic-management/mukono?page=2"
+    },
+    {
+      "key": "muljibhai-madhvani-foundation-university-scholarship",
+      "title": "Muljibhai Madhvani Foundation University Scholarship",
+      "matchedTitle": "Muljibhai Madhvani Foundation University Scholarship",
+      "matchedId": "975f73c5-5b6f-438b-86c4-91e4c8ad39e5",
+      "sourceUrl": "https://scholarshipsforafricans.com/scholarships/muljibhai-madhvani-foundation-university-scholarship"
+    },
+    {
+      "key": "van-doorn-foundation-east-africa-grants",
+      "title": "Van Doorn Foundation grants for East African organisations",
+      "matchedTitle": "Van Doorn Foundation grants for East African organisations",
+      "matchedId": "5542c371-1cc9-49ed-89ed-ace33b341919",
+      "sourceUrl": "https://grantstation.com/find-grants/uganda"
+    },
+    {
+      "key": "agnes-bayer-science-foundation-research-grant-2026",
+      "title": "AGNES-BAYER Science Foundation Research Grant 2026",
+      "matchedTitle": "AGNES-BAYER Science Foundation Research Grant 2026",
+      "matchedId": "baf5359f-8c6b-4d3e-9e55-e4790848c5cc",
+      "sourceUrl": "https://www2.fundsforngos.org/tag/uganda/"
+    },
+    {
+      "key": "gates-cambridge-scholarship-2027-28",
+      "title": "Gates Cambridge Scholarship 2027/28",
+      "matchedTitle": "Gates Cambridge Scholarship 2027/28",
+      "matchedId": "0d2f6ed9-7edb-4e92-a217-2aa408c04bf4",
+      "sourceUrl": "https://www.opportunitiesforafricans.com/?p=102638"
+    },
+    {
+      "key": "daad-in-country-in-region-masters-2027",
+      "title": "DAAD In-Country/In-Region Master's Scholarship Programme 2027 intake",
+      "matchedTitle": "DAAD In-Country/In-Region Master's Scholarship Programme 2027 intake",
+      "matchedId": "c0c57e8d-af81-4b60-8247-db91f10c9440",
+      "sourceUrl": "https://www.scholarshipset.com/scholarships/daad-in-country-in-region-programme-scholarship-in-sub-saharan-africa-2027"
+    },
+    {
+      "key": "giz-rwanda-young-economist-program-2026-10",
+      "title": "Young Economist Program",
+      "matchedTitle": "Young Economist Program",
+      "matchedId": "013a521e-dcf3-4dc8-87b0-5a093f3b3a6a",
+      "sourceUrl": "https://www.jobinrwanda.com/"
+    },
+    {
+      "key": "hc-solutions-ai-workflow-automation-programme-2026-10",
+      "title": "AI Workflow Automation Programme",
+      "matchedTitle": "AI Workflow Automation Programme",
+      "matchedId": "3eab35d6-8732-48a3-89fd-328ac7ec70f0",
+      "sourceUrl": "https://www.jobinrwanda.com/"
+    },
+    {
+      "key": "rwanda-sous-chef-and-butler-2026-10",
+      "title": "Sous Chef and Butler",
+      "matchedTitle": "Sous Chef and Butler",
+      "matchedId": "c473e36d-c6c6-44b2-ab7d-f41ef4ca83b7",
+      "sourceUrl": "https://www.jobinrwanda.com/"
+    },
+    {
+      "key": "ughe-formulation-research-assistant-2026-10",
+      "title": "Formulation Research Assistant",
+      "matchedTitle": "Formulation Research Assistant",
+      "matchedId": "471138b2-1fe0-41a6-b36f-34380d5163bc",
+      "sourceUrl": "https://www.jobinrwanda.com/"
+    },
+    {
+      "key": "result-consult-quantitative-data-training-2026-10",
+      "title": "Hands-on Training in Quantitative Data Collection, Management and Analysis",
+      "matchedTitle": "Hands-on Training in Quantitative Data Collection, Management and Analysis",
+      "matchedId": "27afb9e8-c1a5-42df-88b2-e79104a51ba1",
+      "sourceUrl": "https://www.jobinrwanda.com/"
+    },
+    {
+      "key": "wfp-tanzania-engineer-dodoma-2026-10",
+      "title": "Engineer, Dodoma",
+      "matchedTitle": "Engineer, Dodoma",
+      "matchedId": "6edd2cdb-8b87-47d4-8487-0c9b1ef27d54",
+      "sourceUrl": "https://jobsintanzania.alljobspo.com/"
+    },
+    {
+      "key": "makueni-university-college-tutorial-fellows-2026-10",
+      "title": "Entry Level Tutorial Fellows",
+      "matchedTitle": "Entry Level Tutorial Fellows",
+      "matchedId": "6aba72cb-9eef-4641-a91f-1b565a01ce2a",
+      "sourceUrl": "https://campusbiz.co.ke/careers/jobs-in-kenya/"
+    },
+    {
+      "key": "busia-siaya-us-state-department-funded-roles-2026-10",
+      "title": "US Department of State funded roles, Busia or Siaya County (Ref SFA/001/2026)",
+      "matchedTitle": "Entry Level Tutorial Fellows",
+      "matchedId": "6aba72cb-9eef-4641-a91f-1b565a01ce2a",
+      "sourceUrl": "https://campusbiz.co.ke/careers/jobs-in-kenya/"
+    },
+    {
+      "key": "perseus-mining-drill-blast-engineer-tanzania",
+      "title": "Drill and Blast Engineer",
+      "matchedTitle": "Drill and Blast Engineer",
+      "matchedId": "bfaa9618-f053-45d1-ac40-1c8e10a03047",
+      "sourceUrl": "https://jobsintanzania.alljobspo.com/"
+    },
+    {
+      "key": "global-communities-deputy-team-leader-gbv-tanzania",
+      "title": "Deputy Team Leader, GBV Prevention Program",
+      "matchedTitle": "Deputy Team Leader, GBV Prevention Program",
+      "matchedId": "7859ba3f-019a-4a8a-88db-0f7439bb12a0",
+      "sourceUrl": "https://jobsintanzania.alljobspo.com/"
+    },
+    {
+      "key": "sightsavers-sign-language-interpreters-eoi-tanzania",
+      "title": "Sign Language Interpreters, preferred supplier list (Expression of Interest)",
+      "matchedTitle": "Sign Language Interpreters, preferred supplier list (Expression of Interest)",
+      "matchedId": "4a408d82-26c8-4225-bb62-a732b62ddfbe",
+      "sourceUrl": "https://jobsintanzania.alljobspo.com/"
+    },
+    {
+      "key": "womankind-creative-grant-2027",
+      "title": "WomanKind Creative Grant 2027",
+      "matchedTitle": "WomanKind Creative Grant 2027",
+      "matchedId": "0d2b2015-b59a-4075-a155-f4934194d0a7",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/10/womankind-creative-grant-2027/"
+    },
+    {
+      "key": "safe-in-our-world-mental-health-ambassador-2027",
+      "title": "Safe In Our World Mental Health Ambassador 2027",
+      "matchedTitle": "Safe In Our World Mental Health Ambassador 2027",
+      "matchedId": "29bac80d-9cd1-48de-9559-02c8f15e49a0",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/10/safe-in-our-world-mental-health-ambassador-2027/"
+    },
+    {
+      "key": "yves-rocher-terre-de-femmes-international-award-2027",
+      "title": "Yves Rocher Foundation Terre de Femmes International Award 2027",
+      "matchedTitle": "Yves Rocher Foundation Terre de Femmes International Award 2027",
+      "matchedId": "f062a20e-f999-4f6a-9514-bf9d9601a60e",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/10/terre-de-femmes-international-award-2027/"
+    },
+    {
+      "key": "mena-regenerative-agriculture-venture-programme-2026-27",
+      "title": "MENA Regenerative Agriculture Venture Programme 2026/2027",
+      "matchedTitle": "MENA Regenerative Agriculture Venture Programme 2026/2027",
+      "matchedId": "03fd79d7-4e9f-47ba-aaa7-7f08b794ff26",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/09/mena-regenerative-agriculture-venture-programme-2026-2027/"
+    },
+    {
+      "key": "harvard-lead-fellowship-women-global-health-2027-28",
+      "title": "Harvard LEAD Fellowship for Promoting Women in Global Health 2027/2028",
+      "matchedTitle": "Harvard LEAD Fellowship for Promoting Women in Global Health 2027/2028",
+      "matchedId": "4f0005de-c656-4f87-b5be-bbd7e5793b6f",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/09/harvard-lead-fellowship-for-promoting-women-in-global-health-2027-2028/"
+    },
+    {
+      "key": "agra-smedan-youth-agri-innovation-contest-2026",
+      "title": "AGRA-SMEDAN Youth Agri-Innovation Contest 2026",
+      "matchedTitle": "AGRA-SMEDAN Youth Agri-Innovation Contest 2026",
+      "matchedId": "5d1ffb9e-fafd-424e-9f67-310ab51d2b0b",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/09/agra-smedan-youth-agriinnovation-contest-2026/"
+    },
+    {
+      "key": "un-voluntary-fund-for-indigenous-peoples-2027",
+      "title": "UN Voluntary Fund for Indigenous Peoples 2027",
+      "matchedTitle": "UN Voluntary Fund for Indigenous Peoples 2027",
+      "matchedId": "ae4b14fd-6645-4609-bac3-4447387871f6",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/09/un-voluntary-fund-for-indigenous-peoples-2027/"
+    },
+    {
+      "key": "world-bank-government-analytics-fellowship-2027",
+      "title": "World Bank Group Government Analytics Fellowship 2027",
+      "matchedTitle": "World Bank Group Government Analytics Fellowship 2027",
+      "matchedId": "eb43a980-d55e-44b6-98a4-9a32e67441e2",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/09/world-bank-group-government-analytics-fellowship-2027/"
+    },
+    {
+      "key": "wise-edtech-accelerator-2026-27",
+      "title": "WISE EdTech Accelerator 2026/2027",
+      "matchedTitle": "WISE EdTech Accelerator 2026/2027",
+      "matchedId": "2d248cbd-f43a-474f-89ef-434a7f515eaf",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/wise-edtech-accelerator-2026-2027/"
+    },
+    {
+      "key": "afsee-programme-2027-28",
+      "title": "Atlantic Fellows for Social and Economic Equity (AFSEE) Programme 2027/2028",
+      "matchedTitle": "Atlantic Fellows for Social and Economic Equity (AFSEE) Programme 2027/2028",
+      "matchedId": "a0ba640c-5ef9-4618-bfed-ef47b0e5a3a2",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/afsee-programme-2027-2028/"
+    },
+    {
+      "key": "amazon-research-awards-fall-2026",
+      "title": "Amazon Research Awards, Fall 2026",
+      "matchedTitle": "Amazon Research Awards, Fall 2026",
+      "matchedId": "b59dab27-6b70-4ae8-801e-a9c30fa8e27c",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/amazon-research-awards-fall-2026/"
+    },
+    {
+      "key": "global-schools-prize-2027",
+      "title": "Global Schools Prize 2027",
+      "matchedTitle": "Global Schools Prize 2027",
+      "matchedId": "66eda54f-5a8c-4e72-98ba-219a449abfe2",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/global-schools-prize-2027/"
+    },
+    {
+      "key": "global-teacher-prize-2027",
+      "title": "Global Teacher Prize 2027",
+      "matchedTitle": "Global Teacher Prize 2027",
+      "matchedId": "0f9044ae-32c4-4cf2-960b-ca32c3ef02dc",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/global-teacher-prize-2027/"
+    },
+    {
+      "key": "yali-rwanda-chapter-legacy-leaders-training-2026",
+      "title": "YALI Rwanda Chapter Legacy Leaders Training Programme 2026",
+      "matchedTitle": "YALI Rwanda Chapter Legacy Leaders Training Programme 2026",
+      "matchedId": "33408cef-0586-43b0-a204-b864a4320ad6",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/yali-rwanda-chapter-legacy-leaders-training-programme-2026/"
+    },
+    {
+      "key": "heinz-heinen-fellowship-2027-28",
+      "title": "Heinz Heinen Fellowship Program 2027/2028",
+      "matchedTitle": "Heinz Heinen Fellowship Program 2027/2028",
+      "matchedId": "49169456-7ede-4dca-b8b9-d029c1743789",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/heinz-heinen-fellowship-program-2027-2028/"
+    },
+    {
+      "key": "au-theme-of-the-year-2027-logo-competition",
+      "title": "African Union Theme of the Year 2027 Logo Competition",
+      "matchedTitle": "African Union Theme of the Year 2027 Logo Competition",
+      "matchedId": "aebe2d4b-c6c9-4397-8c07-61cd2903decb",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/08/au-theme-of-the-year-2027-logo-competition/"
+    },
+    {
+      "key": "stanford-cisac-fellowship-2027-28",
+      "title": "Stanford CISAC Fellowship 2027/2028",
+      "matchedTitle": "Stanford CISAC Fellowship 2027/2028",
+      "matchedId": "357eea8a-3c79-40b8-b27c-a9810dc83afd",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/07/stanford-cisac-fellowship-2027-2028/"
+    },
+    {
+      "key": "hsc-youth-ambassador-program-2027",
+      "title": "Hamburg Sustainability Conference Youth Ambassador Program 2027",
+      "matchedTitle": "Hamburg Sustainability Conference Youth Ambassador Program 2027",
+      "matchedId": "568ac85f-ab8d-4ed9-832c-6e28c5756bc5",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/07/hamburg-sustainability-conference-hsc-youth-ambassador-program-2027/"
+    },
+    {
+      "key": "ughe-msc-health-professions-education-2027",
+      "title": "University of Global Health Equity MSc in Health Professions Education 2027",
+      "matchedTitle": "University of Global Health Equity MSc in Health Professions Education 2027",
+      "matchedId": "0e31fd68-14d8-48c8-9940-a475c6a76f16",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/07/university-of-global-health-equity-master-of-science-in-health-professions-education-program-2027/"
+    },
+    {
+      "key": "safetech-africa-hacklab-2026",
+      "title": "SafeTech Africa HackLab 2026",
+      "matchedTitle": "SafeTech Africa HackLab 2026",
+      "matchedId": "b2a5b03a-6429-4676-9233-7cd5114b863a",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/07/safetech-africa-hacklab-2026/"
+    },
+    {
+      "key": "ecowyert-program-2027",
+      "title": "Enhancing Capacities of Women and Youth-led Enterprises for Regional Trade (ECoWYERT) Program 2027",
+      "matchedTitle": "Enhancing Capacities of Women and Youth-led Enterprises for Regional Trade (ECoWYERT) Program 2027",
+      "matchedId": "c63fcffc-a505-40ea-8d7b-875d1de81857",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/07/ecowyert-program-2027/"
+    },
+    {
+      "key": "ernest-may-fellowship-history-policy-2027-28",
+      "title": "Ernest May Fellowship in History and Policy 2027/2028",
+      "matchedTitle": "Ernest May Fellowship in History and Policy 2027/2028",
+      "matchedId": "34de787c-498d-4a81-aaa0-e97722eca649",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/06/ernest-may-fellowship-in-history-and-policy-2027-2028/"
+    },
+    {
+      "key": "abcd-future-environmental-leaders-scholarships-2027",
+      "title": "ABCD Future Environmental Leaders Scholarships 2027",
+      "matchedTitle": "ABCD Future Environmental Leaders Scholarships 2027",
+      "matchedId": "c7875f26-d5f1-42f3-9a2e-a3b7f3f2827e",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/06/abcd-future-environmental-leaders-scholarships-2027/"
+    },
+    {
+      "key": "tomorrows-leaders-program-2027-28",
+      "title": "Tomorrow's Leaders Program 2027/2028",
+      "matchedTitle": "Tomorrow's Leaders Program 2027/2028",
+      "matchedId": "fe4deb4c-8c23-44c2-8966-da758e8cd510",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/06/tomorrow-leaders-program-2027-2028/"
+    },
+    {
+      "key": "aixbio-fellowship-2027-cambridge",
+      "title": "AIxBio Fellowship 2027 at Cambridge",
+      "matchedTitle": "AIxBio Fellowship 2027 at Cambridge",
+      "matchedId": "a1dea0ba-b80e-4961-ad8d-97cdbe4bd149",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/05/aixbio-fellowship-2027/"
+    },
+    {
+      "key": "yale-greenberg-world-fellows-2027",
+      "title": "Yale Maurice R. Greenberg World Fellows Programme 2027",
+      "matchedTitle": "Yale Maurice R. Greenberg World Fellows Programme 2027",
+      "matchedId": "b30d502e-7fa7-4d8a-8f69-2b0c73d2f1a7",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/05/yale-maurice-r-greenberg-world-fellows-programme-2027/"
+    },
+    {
+      "key": "hp-ucl-ioe-fellowship-ai-in-education-2027",
+      "title": "HP-UCL IOE Fellowship in AI in Education 2027",
+      "matchedTitle": "HP-UCL IOE Fellowship in AI in Education 2027",
+      "matchedId": "dca28047-53ab-46c5-a0c0-f579afb81e5e",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/05/hp-ucl-ioe-fellowship-in-ai-in-education-2027/"
+    },
+    {
+      "key": "loeb-fellowship-2027-28",
+      "title": "Loeb Fellowship 2027/2028 at Harvard Graduate School of Design",
+      "matchedTitle": "Loeb Fellowship 2027/2028 at Harvard Graduate School of Design",
+      "matchedId": "66b016e7-78fb-4246-8183-a61bc5aa5665",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/03/loeb-fellowship-2027-2028/"
+    },
+    {
+      "key": "google-engineering-technical-internships-2027",
+      "title": "Google Engineering and Technical Internships 2027",
+      "matchedTitle": "Google Engineering and Technical Internships 2027",
+      "matchedId": "3d305257-6cca-430e-bb5b-8b94df09960a",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/03/google-engineering-technical-internships-2027/"
+    },
+    {
+      "key": "itu-gender-champions-programme-2027",
+      "title": "ITU Gender Champions Programme 2027",
+      "matchedTitle": "ITU Gender Champions Programme 2027",
+      "matchedId": "ef529c22-8314-4d51-81e1-08a52a08c3e4",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/itu-gender-champions-programme-2027/"
+    },
+    {
+      "key": "un-global-compact-business-human-rights-accelerator-2026-27",
+      "title": "UN Global Compact Business and Human Rights Accelerator 2026/2027",
+      "matchedTitle": "UN Global Compact Business and Human Rights Accelerator 2026/2027",
+      "matchedId": "31801f63-3e42-496a-b855-fa497beed0cd",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/un-global-compact-business-human-rights-accelerator-2026-2027/"
+    },
+    {
+      "key": "unearthodox-exploration-co-lab-2027",
+      "title": "Unearthodox Exploration Co-Lab 2027",
+      "matchedTitle": "Unearthodox Exploration Co-Lab 2027",
+      "matchedId": "5f532042-1502-48ca-a27d-b81a457011db",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/unearthodoxs-exploration-co-lab-2027-edges-of-possibility-for-innovators/"
+    },
+    {
+      "key": "imf-fund-internship-program-2027",
+      "title": "IMF Fund Internship Program 2027",
+      "matchedTitle": "IMF Fund Internship Program 2027",
+      "matchedId": "a679c659-100c-411c-bd1d-2525cd702be6",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/imf-fund-internship-program-2027/"
+    },
+    {
+      "key": "uongozi-institute-emerging-leaders-programme-2026-27",
+      "title": "UONGOZI Institute Emerging Leaders Programme 2026/2027",
+      "matchedTitle": "UONGOZI Institute Emerging Leaders Programme 2026/2027",
+      "matchedId": "b92bb718-90e3-4be1-a4ea-ecb75cf6edc3",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/uongozi-institute-emerging-leaders-programme-2026-2027/"
+    },
+    {
+      "key": "nvidia-graduate-fellowship-2027-28",
+      "title": "NVIDIA Graduate Fellowship 2027/2028",
+      "matchedTitle": "NVIDIA Graduate Fellowship 2027/2028",
+      "matchedId": "5ad2d19c-8db6-4956-b92f-08a3dfe9d6b6",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/nvidia-graduate-fellowship-2027-2028/"
+    },
+    {
+      "key": "dalai-lama-fellows-program-2027",
+      "title": "Dalai Lama Fellows Program 2027",
+      "matchedTitle": "Dalai Lama Fellows Program 2027",
+      "matchedId": "c995327c-f9fb-457a-a692-8ccbf28ab81b",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/02/dalai-lama-fellows-program-2027/"
+    },
+    {
+      "key": "quwa-research-grants-2027",
+      "title": "QUWA Research Grants 2027 for Women Researchers",
+      "matchedTitle": "QUWA Research Grants 2027 for Women Researchers",
+      "matchedId": "8c41ee38-a9a3-4913-9cb3-a776abe98fe0",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/01/quwa-research-grants-2027/"
+    },
+    {
+      "key": "ahrc-doctoral-landscape-award-sheffield-2027-28",
+      "title": "AHRC Doctoral Landscape Award at the University of Sheffield 2027/2028",
+      "matchedTitle": "AHRC Doctoral Landscape Award at the University of Sheffield 2027/2028",
+      "matchedId": "5315467b-1416-45c9-83b4-884c727fc98d",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/01/ahrc-doctoral-landscape-award-2027-2028/"
+    },
+    {
+      "key": "mastercard-foundation-scholars-university-of-rwanda-2026-27",
+      "title": "Mastercard Foundation Scholars Program at the University of Rwanda 2026/2027",
+      "matchedTitle": "Mastercard Foundation Scholars Program at the University of Rwanda 2026/2027",
+      "matchedId": "408a68b4-d076-4ae2-842b-d094edc649a8",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/01/mastercard-foundation-scholars-program-at-the-university-of-rwanda-2026-2027/"
+    },
+    {
+      "key": "liftoff-founders-week-2026",
+      "title": "Liftoff Founders Week 2026",
+      "matchedTitle": "Liftoff Founders Week 2026",
+      "matchedId": "81f5f4c3-6b1f-4d59-9fa8-be6bb834c367",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/01/liftoff-founders-week-2026/"
+    },
+    {
+      "key": "chrhs-visiting-scholar-program-spring-2027",
+      "title": "Center for Human Rights and Humanitarian Studies Visiting Scholar Program, Spring 2027",
+      "matchedTitle": "Center for Human Rights and Humanitarian Studies Visiting Scholar Program, Spring 2027",
+      "matchedId": "5a8d2c67-271a-442a-b63a-0f4aa348b997",
+      "sourceUrl": "https://opportunitydesk.org/2026/10/01/chrhs-visiting-scholar-program-spring-2027/"
+    },
+    {
+      "key": "hong-kong-phd-fellowship-scheme-2027-28",
+      "title": "Hong Kong PhD Fellowship Scheme (HKPFS) 2027/2028",
+      "matchedTitle": "Hong Kong PhD Fellowship Scheme (HKPFS) 2027/2028",
+      "matchedId": "cfaa36af-1368-4b27-bc8d-cae5f0bda571",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/29/hong-kong-phd-fellowship-scheme-2027-2028/"
+    },
+    {
+      "key": "aegix-emerging-scholars-program-2026",
+      "title": "AEGIX Emerging Scholars Program 2026",
+      "matchedTitle": "AEGIX Emerging Scholars Program 2026",
+      "matchedId": "da71fbde-fb39-4ad9-b59d-0f5e4098b763",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/29/aegix-emerging-scholars-program-2026/"
+    },
+    {
+      "key": "ashoka-carnegie-challenge-civic-leadership-2027",
+      "title": "Ashoka Carnegie Challenge for Civic Leadership 2027",
+      "matchedTitle": "Ashoka Carnegie Challenge for Civic Leadership 2027",
+      "matchedId": "05f20a31-fcd8-45e1-93d5-d007db1cbb9c",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/ashoka-carnegie-challenge-for-civic-leadership-2027-2/"
+    },
+    {
+      "key": "melton-foundation-global-solvers-accelerator-2027",
+      "title": "Melton Foundation Global Solvers Accelerator 2027",
+      "matchedTitle": "Melton Foundation Global Solvers Accelerator 2027",
+      "matchedId": "0ecde5ec-d563-4ee5-a40a-a84b7cd80506",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/melton-foundation-global-solvers-accelerator-2027/"
+    },
+    {
+      "key": "twas-sissa-lincei-research-cooperation-visits-2026",
+      "title": "TWAS-SISSA-Lincei Research Cooperation Visits Programme 2026",
+      "matchedTitle": "TWAS-SISSA-Lincei Research Cooperation Visits Programme 2026",
+      "matchedId": "75922fb3-8942-45af-bcb3-d0a9e8525128",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/twas-sissa-lincei-research-cooperation-visits-programme-2026/"
+    },
+    {
+      "key": "foodtech-500-competition-2026",
+      "title": "FoodTech 500 Competition 2026",
+      "matchedTitle": "FoodTech 500 Competition 2026",
+      "matchedId": "865bdb0e-9757-4e86-9ff0-d49ce691ebdb",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/foodtech-500-competition-2026/"
+    },
+    {
+      "key": "for-ghp-fellowship-outbreak-readiness-2026",
+      "title": "Fellowship in Outbreak Readiness for Global Health Protection (FOR-GHP) 2026",
+      "matchedTitle": "Fellowship in Outbreak Readiness for Global Health Protection (FOR-GHP) 2026",
+      "matchedId": "22e4f71d-626c-428c-bf1d-a0bbe314616b",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/fellowship-in-outbreak-readiness-for-global-health-protection-2026/"
+    },
+    {
+      "key": "national-ai-innovation-challenge-2027",
+      "title": "National AI Innovation Challenge 2027",
+      "matchedTitle": "National AI Innovation Challenge 2027",
+      "matchedId": "0c8df833-0c13-477e-abe4-dd06c2ab9784",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/national-ai-innovation-challenge-2027/"
+    },
+    {
+      "key": "twas-visiting-expert-programme-2026-27",
+      "title": "TWAS Visiting Expert Programme 2026/2027",
+      "matchedTitle": "TWAS Visiting Expert Programme 2026/2027",
+      "matchedId": "93629a28-908e-41c6-8d55-f75b5a5b0d31",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/28/twas-visiting-expert-programme-2026-2027/"
+    },
+    {
+      "key": "ihs-ai-workforce-faculty-research-grant-2027",
+      "title": "IHS AI Workforce Faculty Research Grant Program 2027",
+      "matchedTitle": "IHS AI Workforce Faculty Research Grant Program 2027",
+      "matchedId": "09cd93d1-6004-47e3-b763-04896ff9d1c9",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/26/ihs-ai-workforce-faculty-research-grant-2027/"
+    },
+    {
+      "key": "commonwealth-foundation-grant-2026-27",
+      "title": "Commonwealth Foundation Grant 2026/2027",
+      "matchedTitle": "Commonwealth Foundation Grant 2026/2027",
+      "matchedId": "d558b6f1-2e1b-4aa8-95e7-ce53ac6d16df",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/26/commonwealth-foundation-grant-2026-2027/"
+    },
+    {
+      "key": "bevisioneers-mercedes-benz-fellowship-2027-28",
+      "title": "beVisioneers: The Mercedes-Benz Fellowship 2027/2028",
+      "matchedTitle": "beVisioneers: The Mercedes-Benz Fellowship 2027/2028",
+      "matchedId": "c3719390-5eb1-4986-abcf-a78e15447ec2",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/26/bevisioneers-the-mercedes-benz-fellowship-2027-2028/"
+    },
+    {
+      "key": "rare-disease-reporting-fellowship-and-grants-2026",
+      "title": "Rare Disease Reporting Fellowship and Grants 2026",
+      "matchedTitle": "Rare Disease Reporting Fellowship and Grants 2026",
+      "matchedId": "b84385fc-60b6-4060-adfd-a1cdd5e5e7fc",
+      "sourceUrl": "https://opportunitydesk.org/2026/09/26/rare-disease-reporting-fellowship-and-grants-2026/"
+    },
+    {
+      "key": "official:IDM-Africa Fellow (3 positions)",
+      "title": "IDM-Africa Fellow (3 positions)",
+      "matchedTitle": "IDM-Africa Fellow (3 positions)",
+      "matchedId": "1956673e-b0ae-4836-9343-d01d96418609",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2315"
+    },
+    {
+      "key": "official:Epidemiologist (2 positions)",
+      "title": "Epidemiologist (2 positions)",
+      "matchedTitle": "Epidemiologist (2 positions)",
+      "matchedId": "74f769df-c5a2-4d55-9040-e4bbcef9386a",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2314"
+    },
+    {
+      "key": "official:Technical Officer - Laboratory (2 positions)",
+      "title": "Technical Officer - Laboratory (2 positions)",
+      "matchedTitle": "Technical Officer - Laboratory (2 positions)",
+      "matchedId": "de6c6fcc-adab-4b59-aee2-1f39dbbfaf1d",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2313"
+    },
+    {
+      "key": "official:Technical Officer - Infection Prevention and Control (2 positions)",
+      "title": "Technical Officer - Infection Prevention and Control (2 positions)",
+      "matchedTitle": "Technical Officer - Infection Prevention and Control (2 positions)",
+      "matchedId": "e5b3b43e-e344-4905-a8d5-3a3b507d77db",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2312"
+    },
+    {
+      "key": "official:Senior Technical Officer - Case Management (3 positions)",
+      "title": "Senior Technical Officer - Case Management (3 positions)",
+      "matchedTitle": "Senior Technical Officer - Case Management (3 positions)",
+      "matchedId": "bbf5bb96-a730-43c4-8dc2-8cb27a77c526",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2311"
+    },
+    {
+      "key": "official:M&E Specialist",
+      "title": "M&E Specialist",
+      "matchedTitle": "M&E Specialist",
+      "matchedId": "6cbd749f-6aef-4d29-9bda-8d792dc63e11",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2310"
+    },
+    {
+      "key": "official:Lab Runner/Messenger",
+      "title": "Lab Runner/Messenger",
+      "matchedTitle": "Lab Runner/Messenger",
+      "matchedId": "44b57820-fd87-4b7e-b85d-e7b254674b1e",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2309"
+    },
+    {
+      "key": "official:Research Fellow - ACCEPT-Africa",
+      "title": "Research Fellow - ACCEPT-Africa",
+      "matchedTitle": "Research Fellow - ACCEPT-Africa",
+      "matchedId": "b4c6923d-5820-41b7-876b-0f6d3d5b1f6c",
+      "sourceUrl": "https://idi.mak.ac.ug/opportunities/home/selected_job/2307"
+    },
+    {
+      "key": "official:Two Drivers",
+      "title": "Two Drivers",
+      "matchedTitle": "Two Drivers",
+      "matchedId": "f1750825-8144-42ec-b011-8e00f585ee28",
+      "sourceUrl": "https://uganda.wcs.org/Opportunities.aspx"
+    }
+  ],
+  "officialSourceCandidates": 9,
+  "allCreatedUnlinked": true,
+  "allCreatedPending": true,
+  "princetonUpdate": {
+    "updated": true,
+    "alreadyUpdated": true,
+    "id": "77777777-7777-4777-8777-000000000016",
+    "verificationStatus": "verified",
+    "organizationId": null,
+    "oldPostingHistoryCleaned": true
+  },
+  "repairedPendingChecklists": 124,
+  "organizationRowsCreated": 0,
+  "catalogTotalsAfterRun": {
+    "opportunities": 248,
+    "unlinkedOpportunities": 134,
+    "unlinkedPending": 133,
+    "unlinkedVerified": 1,
+    "intakeRowsSeededPending": 124,
+    "additionalOfficialSourceRowsPending": 9
+  }
+}

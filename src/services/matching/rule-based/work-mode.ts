@@ -2,6 +2,9 @@ import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { DimensionScore } from "@/services/matching/rule-based/field-relevance";
 
 export function scoreWorkMode(profile: UserProfile, opportunity: Opportunity): DimensionScore {
+  if (opportunity.workMode === "unknown") {
+    return { ratio: 0.5, matched: [], missing: [{ label: "Work mode", detail: "The source does not state a work mode." }] };
+  }
   if (!profile.workModePreference) {
     return {
       ratio: 0.5,

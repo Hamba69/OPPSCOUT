@@ -1,0 +1,76 @@
+{
+  "generated_at_utc": "2026-10-10T12:00:00Z",
+  "built_on": "2026-10-12",
+  "as_of_date": "2026-10-12",
+  "rows_total": 160,
+  "rows_active": 128,
+  "rows_excluded": 32,
+  "unique_record_keys": 160,
+  "columns": 43,
+  "json_cells_parsed_ok": 504,
+  "problems": [],
+  "actions": {
+    "create": 127,
+    "exclude": 32,
+    "update_existing": 1
+  },
+  "lead_status": {
+    "open_with_deadline": 104,
+    "expired_or_excluded": 32,
+    "lead_no_deadline": 23,
+    "lead_split_needed": 1
+  },
+  "region_tier_active": {
+    "uganda": 58,
+    "east_africa": 17,
+    "africa": 16,
+    "global": 37
+  },
+  "category_active": {
+    "internship": 3,
+    "job": 58,
+    "training": 15,
+    "consultancy": 5,
+    "scholarship": 8,
+    "grant": 18,
+    "fellowship": 21
+  },
+  "closing_within_3_days": 18,
+  "closing_within_7_days": 29,
+  "closing_within_30_days": 75,
+  "import_ready_true": 0,
+  "verified_rows": 0,
+  "duplicate_flag_rows": 3,
+  "dedup_flags": [
+    [
+      "unifi-client-growth-sales-rep-lira-2026-10",
+      "Client Growth Sales Representative, Lira",
+      "within_run",
+      "Client Growth Sales Representative, Iganga [unifi-client-growth-sales-rep-iganga-2026-10]",
+      0.882,
+      ""
+    ],
+    [
+      "chai-senior-associate-srmnh-uganda",
+      "Senior Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "within_run",
+      "Associate, Sexual, Reproductive, Maternal and Newborn Health [chai-associate-srmnh-uganda]",
+      0.961,
+      ""
+    ],
+    [
+      "chai-program-manager-srmnh-uganda",
+      "Program Manager, Sexual, Reproductive, Maternal and Newborn Health",
+      "within_run",
+      "Associate, Sexual, Reproductive, Maternal and Newborn Health [chai-associate-srmnh-uganda]",
+      0.86,
+      ""
+    ]
+  ],
+  "sha256": {
+    "oppscout_seed_opportunities.csv": "743335fc7b83ba3f3071e2ff9bf607010e9af4a7a96250fe82fa91d1486e192c",
+    "oppscout_seed_opportunities.xlsx": "4b9ab825c17dafac20db6e5c24553119e3e054df94f746caefaa426b3e28a5f1",
+    "README.md": "a7ab49cc862f94416cef36f8237aac577843cbfacc641902dd4451fdccc5f85a"
+  },
+  "note": "xlsx checksum taken after LibreOffice recalculation (0 formula errors)"
+}

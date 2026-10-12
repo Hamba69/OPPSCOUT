@@ -8,6 +8,7 @@ export async function submitOrganizationOpportunity(
   staffUserId: string,
   input: OpportunityInput,
 ): Promise<Opportunity> {
+  if (!input.organizationId) throw new ForbiddenError();
   const organization = await repository.getOrganization(input.organizationId);
   if (!organization || !organization.dashboardUsers.includes(staffUserId)) throw new ForbiddenError();
   if (organization.verificationStatus !== "verified") throw new ForbiddenError();

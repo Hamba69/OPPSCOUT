@@ -36,6 +36,7 @@ function asJson(value: unknown): Prisma.InputJsonValue {
 function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findUniqueOrThrow>>): UserProfile {
   return {
     ...value,
+    workModePreference: value.workModePreference === "unknown" ? null : value.workModePreference,
     preferredChannel: value.preferredChannel,
     notificationFrequency: value.notificationFrequency,
     secondaryChannels: value.secondaryChannels,
@@ -64,11 +65,12 @@ function opportunityFromDb(value: PrismaOpportunityRecord): Opportunity {
     status: value.status,
     eligibility: value.eligibility as unknown as Opportunity["eligibility"],
     reviewChecklist: value.reviewChecklist as unknown as Opportunity["reviewChecklist"],
-    organization: {
+    organizationName: value.organizationName,
+    organization: value.organization ? {
       id: value.organization.id,
       name: value.organization.name,
       verificationStatus: value.organization.verificationStatus,
-    },
+    } : undefined,
   };
 }
 
@@ -155,8 +157,10 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
   public async createOpportunity(input: OpportunityInput): Promise<Opportunity> {
     const value = await prisma.$transaction(async (transaction) => {
       const created = await transaction.opportunity.create({ data: this.opportunityCreateData(input), include: { organization: true } });
-      const history = created.organization.postingHistory as unknown as Organization["postingHistory"];
-      await transaction.organization.update({ where: { id: input.organizationId }, data: { postingHistory: asJson([...history, { opportunityId: created.id, postedAt: created.publicationDate.toISOString() }]) } });
+      if (created.organizationId && input.origin !== "catalog") {
+        const history = created.organization!.postingHistory as unknown as Organization["postingHistory"];
+        await transaction.organization.update({ where: { id: created.organizationId }, data: { postingHistory: asJson([...history, { opportunityId: created.id, postedAt: created.publicationDate.toISOString() }]) } });
+      }
       return created;
     });
     return opportunityFromDb(value);

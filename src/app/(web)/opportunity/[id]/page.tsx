@@ -28,11 +28,12 @@ export default async function OpportunityPage({ params }: Props): Promise<React.
   const sourceHref = opportunity.sourceUrl;
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
   const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Open until filled";
+  const workMode = opportunity.workMode === "unknown" ? "Work mode not stated" : opportunity.workMode;
   return <main className="page-shell animate-in mx-auto max-w-3xl">
     <Link href="/opportunities" className="mb-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-navy hover:text-ink"><ArrowLeftIcon /> Back to opportunities</Link>
     {verified ? <span className="badge-verified"><CheckIcon /> Verified listing</span> : <span className="pill">Awaiting review</span>}
     <h1 className="mt-3 text-2xl font-extrabold text-ink sm:text-4xl">{opportunity.title}</h1>
-    <p className="mt-1 font-bold text-navy">{opportunity.organization?.name}</p>
+    <p className="mt-1 font-bold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
     <p className="mt-2 text-sm text-navy">
       {opportunity.origin === "organization"
         ? "Submitted through OppScout by this organization."
@@ -40,7 +41,7 @@ export default async function OpportunityPage({ params }: Props): Promise<React.
     </p>
     <section className="card mt-5 flex items-center justify-between gap-4 border-2 border-honey bg-butter">
       {match ? <div><p className="text-xs font-semibold text-navy">Your match</p><p className="text-4xl font-extrabold text-leaf">{match.score}%</p></div> : <div><p className="text-xs font-semibold text-navy">Type</p><p className="font-extrabold capitalize text-ink">{opportunity.category}</p></div>}
-      <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location} · {opportunity.workMode}</p></div>
+      <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location} · {workMode}</p></div>
     </section>
     {!verified ? <p className="mt-3 rounded-2xl border border-honey bg-butter p-4 text-sm text-navy">This catalog listing is awaiting review. OppScout has not confirmed its source, application instructions, deadline, or duplicate status. Application links and matching are available after review.</p> : !match ? <p className="mt-3 rounded-2xl bg-ink/[.04] p-4 text-sm text-navy">This opportunity is not in your matches, so you may not meet every requirement. Check the details below and the official source before applying.</p> : null}
     {verified && <OpportunityActions opportunityId={id} sourceUrl={sourceHref} />}

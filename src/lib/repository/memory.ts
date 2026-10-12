@@ -185,13 +185,13 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   }
 
   public async createOpportunity(input: OpportunityInput): Promise<Opportunity> {
-    const organization = this.organizations.get(input.organizationId);
-    if (!organization) throw new NotFoundError("Organization");
+    const organization = input.organizationId ? this.organizations.get(input.organizationId) : undefined;
+    if (input.organizationId && !organization) throw new NotFoundError("Organization");
     const opportunity: Opportunity = {
       ...copy(input),
       origin: input.origin ?? "catalog",
       id: randomUUID(),
-      organization: { id: organization.id, name: organization.name, verificationStatus: organization.verificationStatus },
+      organization: organization ? { id: organization.id, name: organization.name, verificationStatus: organization.verificationStatus } : undefined,
       publicationDate: input.publicationDate ?? new Date(),
       checkedAt: input.checkedAt ?? new Date(),
       reviewChecklist: {},
@@ -200,9 +200,11 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       reviewedAt: null,
     };
     this.opportunities.set(opportunity.id, opportunity);
-    organization.postingHistory = [...organization.postingHistory, { opportunityId: opportunity.id, postedAt: opportunity.publicationDate.toISOString() }];
-    organization.updatedAt = new Date();
-    this.organizations.set(organization.id, organization);
+    if (organization && input.origin !== "catalog") {
+      organization.postingHistory = [...organization.postingHistory, { opportunityId: opportunity.id, postedAt: opportunity.publicationDate.toISOString() }];
+      organization.updatedAt = new Date();
+      this.organizations.set(organization.id, organization);
+    }
     return copy(opportunity);
   }
 

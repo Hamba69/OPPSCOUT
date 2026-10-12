@@ -11,6 +11,7 @@ export interface OpportunityListItem {
 export function OpportunityListCard({ item, now }: { item: OpportunityListItem; now: Date }): React.JSX.Element {
   const days = item.deadline ? Math.ceil((item.deadline.getTime() - now.getTime()) / 86_400_000) : null;
   const urgent = days !== null && days > 0 && days <= 3;
+  const workMode = item.workMode === "unknown" ? "Work mode not stated" : item.workMode;
   const deadline = item.deadline ? `Closes ${item.deadline.toLocaleDateString("en-UG", { day: "numeric", month: "short", year: "numeric" })}` : "Open until filled";
   return <article className="card flex h-full flex-col">
     <div className="flex items-start justify-between gap-3">
@@ -21,7 +22,7 @@ export function OpportunityListCard({ item, now }: { item: OpportunityListItem; 
     <p className="mt-0.5 text-sm font-medium text-navy">{item.organization}</p>
     <p className="mt-2 text-xs font-semibold text-navy">{item.origin === "organization" ? "Posted through OppScout by the organization" : "Sourced for the OppScout catalog"}</p>
     {item.verificationStatus === "pending" && <p className="mt-2 text-xs font-semibold text-[#805000]">Awaiting review · Source and details have not been verified</p>}
-    <p className="mt-3 text-sm text-navy"><span className="capitalize">{item.location} · {item.workMode}</span> · {urgent ? <strong className="text-[#B3261E]">Closes in {days} {days === 1 ? "day" : "days"}</strong> : deadline}</p>
+    <p className="mt-3 text-sm text-navy"><span className="capitalize">{item.location} · {workMode}</span> · {urgent ? <strong className="text-[#B3261E]">Closes in {days} {days === 1 ? "day" : "days"}</strong> : deadline}</p>
     <div className="mt-auto pt-4">
   <Link href={`/opportunity/${item.id}`} className="text-link">
     View details

@@ -1,0 +1,231 @@
+{
+  "generated_at_utc": "2026-10-12T09:15:53Z",
+  "as_of_date": "2026-10-12",
+  "rows_total": 160,
+  "columns_source_interchange": 43,
+  "columns_reviewed_csv": 50,
+  "unique_record_keys": 160,
+  "json_cells_parsed_ok": 504,
+  "problems": [],
+  "actions": {
+    "create": 127,
+    "exclude": 32,
+    "update_existing": 1
+  },
+  "verification_status": {
+    "pending": 128,
+    "flagged": 32
+  },
+  "agent_verdict": {
+    "unresolved": 128,
+    "expired": 32
+  },
+  "import_ready_true": 0,
+  "verified_rows": 0,
+  "deadline_expired_as_of_delivery": 32,
+  "deadline_date_only_within_72h": 17,
+  "explicit_deadlines_within_72h": [],
+  "date_only_deadlines_within_7_days": [
+    {
+      "record_key": "eacop-gis-graduate-trainee-2026-10",
+      "title": "GIS Graduate Trainee",
+      "deadline_date": "2026-10-18"
+    },
+    {
+      "record_key": "eacop-hr-graduate-trainee-2026-10",
+      "title": "Human Resource Graduate Trainee",
+      "deadline_date": "2026-10-18"
+    },
+    {
+      "record_key": "mayfair-insurance-ict-graduate-trainee-2026-10",
+      "title": "Graduate Trainee, ICT",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "uetcl-esi-graduate-skills-programme-2026-10",
+      "title": "UETCL ESI Graduate Skills Development Programme",
+      "deadline_date": "2026-10-13"
+    },
+    {
+      "record_key": "drc-meal-trainee-uganda-2026-10",
+      "title": "MEAL Trainee",
+      "deadline_date": "2026-10-14"
+    },
+    {
+      "record_key": "unwomen-uganda-sasa-together-evaluation-2026-10",
+      "title": "National Consultant to Evaluate the SASA Together Strategy",
+      "deadline_date": "2026-10-15"
+    },
+    {
+      "record_key": "unicef-uganda-chwp-oversight-consultant-2026-10",
+      "title": "National Consultant, Oversight, Coordination, Monitoring and Quality Assurance of the Community Health Workforce Programme",
+      "deadline_date": "2026-10-15"
+    },
+    {
+      "record_key": "true-north-planning-engineer-offsites-epc-2026-10",
+      "title": "Planning Engineer (Offsites and EPC)",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "case-medical-administration-clerk-2026-10",
+      "title": "Administration Clerk",
+      "deadline_date": "2026-10-14"
+    },
+    {
+      "record_key": "restless-development-advocacy-officer-2026-09",
+      "title": "Advocacy Officer",
+      "deadline_date": "2026-10-13"
+    },
+    {
+      "record_key": "tum-sustainability-coordinator-2026-09",
+      "title": "Sustainability Coordinator",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "ugafode-ict-security-officer-2026-09",
+      "title": "ICT Security Officer",
+      "deadline_date": "2026-10-13"
+    },
+    {
+      "record_key": "hha-east-africa-director-2026-09",
+      "title": "East Africa Director",
+      "deadline_date": "2026-10-16"
+    },
+    {
+      "record_key": "xclusive-uganda-management-hr-consultancy-rfp-2026-10",
+      "title": "Request for Proposals: Management and Human Resource Consultancy",
+      "deadline_date": "2026-10-16"
+    },
+    {
+      "record_key": "xclusive-uganda-compound-designer-gardener-2026-10",
+      "title": "Compound Designer or Gardener",
+      "deadline_date": "2026-10-16"
+    },
+    {
+      "record_key": "ughe-formulation-research-assistant-2026-10",
+      "title": "Formulation Research Assistant",
+      "deadline_date": "2026-10-15"
+    },
+    {
+      "record_key": "result-consult-quantitative-data-training-2026-10",
+      "title": "Hands-on Training in Quantitative Data Collection, Management and Analysis",
+      "deadline_date": "2026-10-15"
+    },
+    {
+      "record_key": "makueni-university-college-tutorial-fellows-2026-10",
+      "title": "Entry Level Tutorial Fellows",
+      "deadline_date": "2026-10-16"
+    },
+    {
+      "record_key": "busia-siaya-us-state-department-funded-roles-2026-10",
+      "title": "US Department of State funded roles, Busia or Siaya County (Ref SFA/001/2026)",
+      "deadline_date": "2026-10-19"
+    },
+    {
+      "record_key": "agra-smedan-youth-agri-innovation-contest-2026",
+      "title": "AGRA-SMEDAN Youth Agri-Innovation Contest 2026",
+      "deadline_date": "2026-10-16"
+    },
+    {
+      "record_key": "global-teacher-prize-2027",
+      "title": "Global Teacher Prize 2027",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "hsc-youth-ambassador-program-2027",
+      "title": "Hamburg Sustainability Conference Youth Ambassador Program 2027",
+      "deadline_date": "2026-10-19"
+    },
+    {
+      "record_key": "safetech-africa-hacklab-2026",
+      "title": "SafeTech Africa HackLab 2026",
+      "deadline_date": "2026-10-18"
+    },
+    {
+      "record_key": "aixbio-fellowship-2027-cambridge",
+      "title": "AIxBio Fellowship 2027 at Cambridge",
+      "deadline_date": "2026-10-19"
+    },
+    {
+      "record_key": "quwa-research-grants-2027",
+      "title": "QUWA Research Grants 2027 for Women Researchers",
+      "deadline_date": "2026-10-15"
+    },
+    {
+      "record_key": "mastercard-foundation-scholars-university-of-rwanda-2026-27",
+      "title": "Mastercard Foundation Scholars Program at the University of Rwanda 2026/2027",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "liftoff-founders-week-2026",
+      "title": "Liftoff Founders Week 2026",
+      "deadline_date": "2026-10-12"
+    },
+    {
+      "record_key": "national-ai-innovation-challenge-2027",
+      "title": "National AI Innovation Challenge 2027",
+      "deadline_date": "2026-10-12"
+    }
+  ],
+  "source_family_counts": {
+    "theugandanjobline.com": 58,
+    "unjobnet.org": 16,
+    "progigfinder.com": 1,
+    "fuzu.com": 2,
+    "scholarshipsforafricans.com": 2,
+    "grantstation.com": 1,
+    "fundsforngos.org": 2,
+    "opportunitiesforafricans.com": 1,
+    "scholarshipset.com": 1,
+    "jobinrwanda.com": 5,
+    "alljobspo.com": 4,
+    "campusbiz.co.ke": 3,
+    "opportunitydesk.org": 59,
+    "pulse.ug": 1,
+    "education.go.ug": 1,
+    "undp.org": 1,
+    "developmentaid.org": 1,
+    "kpmg.com": 1
+  },
+  "new_source_families": [],
+  "dedup_flags": [
+    [
+      "unifi-client-growth-sales-rep-lira-2026-10",
+      "Client Growth Sales Representative, Lira",
+      "within_run",
+      "Client Growth Sales Representative, Iganga [unifi-client-growth-sales-rep-iganga-2026-10]",
+      0.882,
+      ""
+    ],
+    [
+      "chai-senior-associate-srmnh-uganda",
+      "Senior Associate, Sexual, Reproductive, Maternal and Newborn Health",
+      "within_run",
+      "Associate, Sexual, Reproductive, Maternal and Newborn Health [chai-associate-srmnh-uganda]",
+      0.961,
+      ""
+    ],
+    [
+      "chai-program-manager-srmnh-uganda",
+      "Program Manager, Sexual, Reproductive, Maternal and Newborn Health",
+      "within_run",
+      "Associate, Sexual, Reproductive, Maternal and Newborn Health [chai-associate-srmnh-uganda]",
+      0.86,
+      ""
+    ]
+  ],
+  "sha256": {
+    "oppscout_seed_opportunities.csv": "743335fc7b83ba3f3071e2ff9bf607010e9af4a7a96250fe82fa91d1486e192c",
+    "oppscout_seed_opportunities.xlsx": "4b9ab825c17dafac20db6e5c24553119e3e054df94f746caefaa426b3e28a5f1",
+    "README.md": "a7ab49cc862f94416cef36f8237aac577843cbfacc641902dd4451fdccc5f85a",
+    "oppscout_seed_opportunities_reviewed.csv": "bb57e07f1f6e17646181f78d91d7dd9bfcc4063dbdad2e60078408245e1e8537",
+    "oppscout_seed_opportunities_reviewed.xlsx": "277d63e15cf9bf886253ef70d81753f941e7d5ce3c133515552b562967c09a73"
+  },
+  "limitations": [
+    "No provider-owned pages were rechecked; no row is promoted to verified.",
+    "No database or live app writes were made, per the source README.",
+    "All source rows have import_ready=false. Opportunity.organizationId is required by the current app schema, so these unlinked candidates remain in staging.",
+    "Value, effort, and risk scores are blank because no scoring evidence or rubric was completed.",
+    "Date-only deadlines are reported as calendar dates; no time or timezone was inferred."
+  ]
+}

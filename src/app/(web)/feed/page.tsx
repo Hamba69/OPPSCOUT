@@ -23,7 +23,7 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   const items: FeedItem[] = matches.map((match) => {
     const opportunity = match.opportunity!;
     const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - now.getTime()) / 86_400_000) : null;
-    return { daysLeft, id: match.id, opportunityId: opportunity.id, category: opportunity.category, title: opportunity.title, organization: opportunity.organization?.name ?? "Source organization", origin: opportunity.origin ?? "catalog", score: match.score, deadline: opportunity.deadline?.toISOString() ?? null, location: opportunity.location, workMode: opportunity.workMode, matched: match.matchedFactors, missing: match.missingFactors, sourceUrl: opportunity.sourceUrl, checkedAt: opportunity.checkedAt.toISOString(), publicationDate: opportunity.publicationDate.toISOString() };
+    return { daysLeft, id: match.id, opportunityId: opportunity.id, category: opportunity.category, title: opportunity.title, organization: opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization", origin: opportunity.origin ?? "catalog", score: match.score, deadline: opportunity.deadline?.toISOString() ?? null, location: opportunity.location, workMode: opportunity.workMode === "unknown" ? "Work mode not stated" : opportunity.workMode, matched: match.matchedFactors, missing: match.missingFactors, sourceUrl: opportunity.sourceUrl, checkedAt: opportunity.checkedAt.toISOString(), publicationDate: opportunity.publicationDate.toISOString() };
   });
   return (
     <main className="page-shell animate-in">

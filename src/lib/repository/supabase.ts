@@ -56,6 +56,7 @@ function opportunityFromRow(row: DbRow, organization?: DbRow): Opportunity {
           verificationStatus: organization.verificationStatus,
         }
       : undefined,
+    organizationName: row.organizationName as string | null | undefined,
   } as Opportunity;
 }
 
@@ -180,6 +181,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     const created = checked(data, error, "Could not create opportunity");
 
     try {
+      if (!input.organizationId || input.origin === "catalog") return (await this.opportunitiesWithOrganizations([created]))[0];
       const { data: organizationRow, error: organizationError } = await this.client
         .from("Organization")
         .select("postingHistory")
@@ -437,8 +439,8 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   private async opportunitiesWithOrganizations(rows: DbRow[]): Promise<Opportunity[]> {
-    const organizations = await this.organizationsByIds(rows.map((row) => String(row.organizationId)));
-    return rows.map((row) => opportunityFromRow(row, organizations.get(String(row.organizationId))));
+    const organizations = await this.organizationsByIds(rows.flatMap((row) => row.organizationId ? [String(row.organizationId)] : []));
+    return rows.map((row) => opportunityFromRow(row, row.organizationId ? organizations.get(String(row.organizationId)) : undefined));
   }
 
   private async opportunitiesWithOrganizationsForIds(ids: string[]): Promise<Map<string, Opportunity>> {

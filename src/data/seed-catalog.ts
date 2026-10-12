@@ -488,6 +488,7 @@ export function getSeedOrganizations(): Organization[] {
 export function getSeedOpportunities(): Array<Opportunity & { deadline: Date }> {
   const organizations = new Map(getSeedOrganizations().map((organization) => [organization.id, organization]));
   const attachOrganization = (seed: SeedOpportunity | Opportunity): Opportunity & { deadline: Date } => {
+    if (!seed.organizationId) throw new Error(`Seed opportunity ${seed.title} has no organization.`);
     const organization = organizations.get(seed.organizationId);
     if (!organization) throw new Error(`Seed organization ${seed.organizationId} is missing.`);
     if (!seed.deadline) throw new Error(`Seed opportunity ${seed.title} must have a closing date.`);

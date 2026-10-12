@@ -113,7 +113,8 @@ export interface TrustChecklist {
 export interface Opportunity {
   id: string;
   title: string;
-  organizationId: string;
+  organizationId: string | null;
+  organizationName?: string | null;
   organization?: Pick<Organization, "id" | "name" | "verificationStatus">;
   category: string;
   description: string;
@@ -121,7 +122,7 @@ export interface Opportunity {
   requiredSkills: string[];
   preferredSkills: string[];
   location: string;
-  workMode: WorkMode;
+  workMode: WorkMode | "unknown";
   deadline: Date | null;
   applicationMethod: string;
   sourceUrl: string;

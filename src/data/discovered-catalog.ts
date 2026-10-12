@@ -73,7 +73,7 @@ export function getDiscoveredOpportunities(): Opportunity[] {
   }
 
   return opportunities.map((opportunity) => {
-    const organization = organizations.get(opportunity.organizationId);
+    const organization = opportunity.organizationId ? organizations.get(opportunity.organizationId) : undefined;
     let sourceHost = "";
     try {
       sourceHost = new URL(opportunity.sourceUrl).hostname.toLowerCase().replace(/^www\./, "");

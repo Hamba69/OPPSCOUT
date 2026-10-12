@@ -29,6 +29,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
   ];
   const highlights = ranked.slice(0, 3);
   const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
+  const workMode = props.workMode === "unknown" ? "Work mode not stated" : props.workMode;
   const deadlineLabel = props.deadline
     ? `Closes ${new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" })}`
     : "Open until filled";
@@ -46,7 +47,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
       </p>
       <p className="mt-3 text-sm text-navy">
         <span className="capitalize">
-          {props.location} · {props.workMode}
+          {props.location} · {workMode}
         </span>{" "}
         ·{" "}
         {urgent ? (
