@@ -14,8 +14,9 @@ export default async function OpportunitiesPage({
 }: {
   searchParams: Promise<{ type?: string; q?: string }>;
 }): Promise<React.JSX.Element> {
-  const { userId } = await requirePageAuth(["user"]);
-  const { type = "", q = "" } = await searchParams;
+  const [auth, params] = await Promise.all([requirePageAuth(["user"]), searchParams]);
+  const { userId } = auth;
+  const { type = "", q = "" } = params;
   const now = new Date();
   const query = q.trim();
 

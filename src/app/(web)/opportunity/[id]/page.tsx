@@ -17,8 +17,8 @@ export function generateMetadata(): Metadata {
 
 export default async function OpportunityPage({ params }: Props): Promise<React.JSX.Element> {
   const { id } = await params;
-  const repository = await getRepository();
-  const { userId } = await requirePageAuth(["user"]);
+  const [repository, auth] = await Promise.all([getRepository(), requirePageAuth(["user"])]);
+  const { userId } = auth;
   const opportunity = await repository.getOpportunity(id);
   if (!opportunity || !["open", "closing_soon"].includes(opportunity.status) ||
     (opportunity.deadline && opportunity.deadline <= new Date()) ||

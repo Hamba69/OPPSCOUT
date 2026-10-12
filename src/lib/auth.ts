@@ -55,10 +55,10 @@ export function requireRole(auth: AuthContext, roles: AppRole[]): void {
 }
 
 export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<AuthContext> {
-  const result = await getPageUser();
+  const result = await getPageContext();
   if (!result.configured) throw new AppError("Authentication is not configured.", 503, "AUTH_NOT_CONFIGURED");
-  if (!result.user) throw new AppError("Authentication is required.", 401, "UNAUTHENTICATED");
-  const context = await contextFromUser(result.user);
+  if (!result.context) throw new AppError("Authentication is required.", 401, "UNAUTHENTICATED");
+  const context = result.context;
   requireRole(context, roles);
   return context;
 }
@@ -69,7 +69,7 @@ export function homePathForRole(role: AppRole): string {
 
 /** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */
 export async function getOptionalAuth(): Promise<AuthContext | null> {
-  try { const { user } = await getPageUser(); return user ? await contextFromUser(user) : null; }
+  try { return (await getPageContext()).context; }
   catch { return null; }
 }
 

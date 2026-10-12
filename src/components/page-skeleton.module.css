@@ -1,170 +1,85 @@
-.loadingCard {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  min-height: 27rem;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid rgb(26 39 58 / 8%);
-  border-radius: 2rem;
-  background:
-    radial-gradient(ellipse at 50% 15%, rgb(255 211 0 / 12%), transparent 38%),
-    linear-gradient(145deg, #fffefa 0%, #fff 54%, #f4f8f3 100%);
-  box-shadow: 0 22px 70px rgb(31 44 58 / 7%);
-}
-
-.pattern {
-  position: absolute;
-  z-index: -1;
+.page {
+  position: fixed;
+  z-index: 1000;
   inset: 0;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(circle, rgb(31 44 58 / 9%) 1px, transparent 1.5px),
-    radial-gradient(circle, rgb(255 211 0 / 18%) 2px, transparent 2.5px);
-  background-position: 0 0, 15px 15px;
-  background-size: 30px 30px, 60px 60px;
-  mask-image: linear-gradient(to bottom, #000 0%, transparent 68%);
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgb(255 211 0 / 13%), transparent 35%),
+    radial-gradient(ellipse at 50% 90%, rgb(43 104 87 / 5%), transparent 48%),
+    #fffefa;
 }
 
-.content {
-  width: min(100% - 2rem, 35rem);
-  padding: 2.25rem 1rem 2.75rem;
-  text-align: center;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: #17253b;
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: -0.045em;
-}
-
-.flight {
+.stage {
   position: relative;
   display: grid;
-  width: 11.25rem;
-  height: 7.4rem;
-  margin: 0 auto 0.4rem;
+  width: 100%;
+  height: 100%;
   place-items: center;
 }
 
-.orbit,
 .butterfly {
-  position: absolute;
-  overflow: visible;
+  position: relative;
+  display: grid;
+  width: clamp(15rem, 38vw, 22rem);
+  aspect-ratio: 1.38;
+  place-items: center;
+  animation: butterfly-float 3.2s ease-in-out infinite;
 }
 
-.orbit {
+.wings {
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.orbit ellipse {
-  stroke: rgb(34 74 63 / 18%);
-  stroke-dasharray: 3 6;
-  stroke-width: 1.5;
-}
-
-.butterfly {
-  width: 5.6rem;
-  height: 4.6rem;
-  animation: butterfly-flight 3.4s ease-in-out infinite;
+  overflow: visible;
+  filter: drop-shadow(0 12px 18px rgb(23 37 59 / 12%));
 }
 
 .leftWing,
 .rightWing {
   transform-box: view-box;
-  animation: butterfly-flutter 420ms ease-in-out infinite alternate;
+  animation: wings-flutter 520ms ease-in-out infinite alternate;
 }
 
 .leftWing {
-  transform-origin: 48px 40px;
+  transform-origin: 108px 84px;
 }
 
 .rightWing {
-  transform-origin: 48px 40px;
-  animation-delay: -210ms;
+  transform-origin: 112px 84px;
+  animation-delay: -260ms;
 }
 
-.leftWing > path:first-child {
+.upperWing {
   fill: #ffd300;
 }
 
-.rightWing > path:first-child {
+.lowerWing {
   fill: #2b6857;
 }
 
-.vein {
-  fill: none;
-  stroke: rgb(23 37 59 / 35%);
-  stroke-linecap: round;
-  stroke-width: 1.2;
+.logoMark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 6rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgb(23 37 59 / 7%);
+  border-radius: 50%;
+  background: #fffefa;
+  box-shadow: 0 7px 25px rgb(23 37 59 / 12%);
 }
 
-.body,
-.antenna {
-  stroke: #17253b;
-  stroke-linecap: round;
-  stroke-width: 2.2;
+.logoMark img {
+  filter: drop-shadow(0 3px 6px rgb(255 211 0 / 25%));
 }
 
-.body {
-  fill: #17253b;
-}
-
-.antenna {
-  fill: none;
-}
-
-.eyebrow {
-  margin: 0.15rem 0 0.55rem;
-  color: #2b6857;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.title {
-  margin: 0;
-  color: #17253b;
-  font-size: clamp(1.45rem, 4vw, 2rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.15;
-}
-
-.detail {
-  max-width: 28rem;
-  margin: 0.65rem auto 0;
-  color: #4a5870;
-  font-size: 0.93rem;
-  line-height: 1.65;
-}
-
-.progressTrack {
-  width: min(100%, 18rem);
-  height: 0.38rem;
-  overflow: hidden;
-  margin: 1.45rem auto 0;
-  border-radius: 999px;
-  background: rgb(43 104 87 / 12%);
-}
-
-.progressTrack span {
-  display: block;
-  width: 34%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #ffd300, #e7ad20 55%, #2b6857);
-  animation: scout-progress 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.status {
+.screenReaderStatus {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -174,42 +89,25 @@
   clip-path: inset(50%);
 }
 
-@keyframes butterfly-flutter {
+@keyframes wings-flutter {
   from { scale: 1 1; }
-  to { scale: 0.42 0.96; }
+  to { scale: 0.38 0.96; }
 }
 
-@keyframes butterfly-flight {
-  0%, 100% { transform: translate(0, 3px) rotate(-5deg); }
-  50% { transform: translate(0, -5px) rotate(5deg); }
-}
-
-@keyframes scout-progress {
-  0% { transform: translateX(-115%); }
-  65%, 100% { transform: translateX(315%); }
-}
-
-@media (max-width: 640px) {
-  .loadingCard {
-    min-height: 24rem;
-    border-radius: 1.5rem;
-  }
-
-  .content {
-    padding-inline: 0.3rem;
-  }
+@keyframes butterfly-float {
+  0%, 100% { transform: translateY(4px) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(2deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .butterfly,
   .leftWing,
-  .rightWing,
-  .progressTrack span {
+  .rightWing {
     animation: none;
   }
 
   .leftWing,
   .rightWing {
-    scale: 0.75 1;
+    scale: 0.76 1;
   }
 }

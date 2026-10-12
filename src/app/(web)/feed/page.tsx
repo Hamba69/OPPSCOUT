@@ -14,10 +14,9 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   if (auth.role === "organization") redirect("/dashboard");
   if (auth.role === "admin") redirect("/admin/kpis");
   const { userId } = auth;
-  const profile = await getUserProfile(userId);
+  const [profile, repository] = await Promise.all([getUserProfile(userId), getRepository()]);
   if (!profile) redirect("/profile");
 
-  const repository = await getRepository();
   const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, profile });
   const now = new Date();
   const items: FeedItem[] = matches.map((match) => {
