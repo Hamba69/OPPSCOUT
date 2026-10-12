@@ -21,6 +21,14 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 
 describe("password recovery", () => {
+  it("starts in signup mode when requested", () => {
+    render(createElement(AuthForm, { nextPath: "/feed", initialMode: "signup" }));
+    const toggleGroup = screen.getByRole("group", { name: "Sign in or create account" });
+    const toggleButtons = toggleGroup.querySelectorAll("button");
+    expect(toggleButtons[0]).toHaveAttribute("aria-pressed", "false");
+    expect(toggleButtons[1]).toHaveAttribute("aria-pressed", "true");
+  });
+
   it("requests recovery using only a valid email, without a password", async () => {
     render(createElement(AuthForm, { nextPath: "/feed" }));
     fireEvent.click(screen.getByText("Forgot your password?"));

@@ -4,11 +4,12 @@ import { redirect } from "next/navigation";
 
 import { getOptionalAuth, homePathForRole } from "@/lib/auth";
 
+import { AdminPortalTrigger } from "@/components/admin-portal-trigger";
 import { AlertIcon, CheckIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
-const categories = ["Jobs", "Scholarships", "Grants", "Internships"] as const;
+const categories = ["Jobs", "Scholarships", "Grants", "Internships","Trainings", "Fellowships","Consultancies"] as const;
 
 const promises = [
   ["Every listing checked", "We confirm the official source, the deadline and duplicates before a listing reaches you."],
@@ -27,9 +28,10 @@ function Stage({ title, text, flip, children }: { title: string; text: string; f
   </li>;
 }
 
-export default async function HomePage(): Promise<React.JSX.Element> {
+export default async function HomePage({ searchParams }: { searchParams: Promise<{ unlock?: string }> }): Promise<React.JSX.Element> {
+  const unlock = (await searchParams).unlock === "1";
   const auth = await getOptionalAuth();
-  if (auth) redirect(homePathForRole(auth.role));
+  if (auth && !unlock) redirect(homePathForRole(auth.role));
   return (
     <main className="animate-in">
       <div className="bg-gradient-to-b from-cream to-butter">
@@ -91,9 +93,8 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       </div>
       <footer className="page-shell text-sm text-navy">
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.06] pt-6">
-          <span>Built for you.</span>
-          <Link href="/feedback" className="inline-flex min-h-11 items-center font-semibold underline">Feedback</Link>
-          <Link href="/onboarding/organization" className="inline-flex min-h-11 items-center font-semibold text-ink underline">Post opportunities as an organization</Link>
+          <AdminPortalTrigger initiallyOpen={unlock} />
+          <Link href="/organizations" className="inline-flex min-h-11 items-center font-semibold text-ink underline">Post an opportunity</Link>
         </div>
       </footer>
     </main>

@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { BottomTabs } from "@/components/bottom-tabs";
 import { SiteHeader } from "@/components/site-header";
-import { createClient } from "@/lib/supabase/server";
+import { hasPageSession } from "@/lib/auth";
 
 import "./globals.css";
 
@@ -21,17 +21,8 @@ export const metadata: Metadata = {
   description: "Meet your opportunities. Verified jobs, scholarships, grants and internships matched to you.",
 };
 
-async function isSignedIn(): Promise<boolean> {
-  try {
-    const { data } = await (await createClient()).auth.getUser();
-    return Boolean(data.user);
-  } catch {
-    return false;
-  }
-}
-
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>): Promise<React.JSX.Element> {
-  const signedIn = await isSignedIn();
+  const signedIn = await hasPageSession();
   return (
     <html lang="en" className={sans.variable}>
       <body>

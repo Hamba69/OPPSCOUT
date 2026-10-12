@@ -132,7 +132,9 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
   }
 
   public async listOpportunities(filters: OpportunityFilters = {}): Promise<Opportunity[]> {
+    if (filters.opportunityIds?.length === 0) return [];
     const where: Prisma.OpportunityWhereInput = {
+      id: filters.opportunityIds ? { in: filters.opportunityIds } : undefined,
       category: filters.category,
       location: filters.location ? { contains: filters.location, mode: "insensitive" } : undefined,
       workMode: filters.workMode as PrismaWorkMode | undefined,

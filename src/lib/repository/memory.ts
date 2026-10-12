@@ -168,7 +168,9 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   }
 
   public async listOpportunities(filters: OpportunityFilters = {}): Promise<Opportunity[]> {
+    if (filters.opportunityIds?.length === 0) return [];
     return copy([...this.opportunities.values()].filter((item) =>
+      (!filters.opportunityIds || filters.opportunityIds.includes(item.id)) &&
       (!filters.category || item.category === filters.category) &&
       includesText(item.location, filters.location) &&
       (!filters.workMode || item.workMode === filters.workMode) &&

@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
 
-export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element {
+export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: string; initialMode?: "signin" | "signup" }): React.JSX.Element {
   const router = useRouter();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [confirmationPending, setConfirmationPending] = useState(false);
@@ -28,7 +28,6 @@ export function AuthForm({ nextPath }: { nextPath: string }): React.JSX.Element 
       setBusy(false);
     }
   }
-
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault(); setBusy(true); setMessage("");
     const data = new FormData(event.currentTarget);

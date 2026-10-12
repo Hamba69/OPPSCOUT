@@ -18,7 +18,7 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   if (!profile) redirect("/profile");
 
   const repository = await getRepository();
-  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false });
+  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, profile });
   const now = new Date();
   const items: FeedItem[] = matches.map((match) => {
     const opportunity = match.opportunity!;

@@ -27,6 +27,7 @@ export interface OpportunityFilters {
   verificationStatus?: VerificationStatus;
   statuses?: OpportunityStatus[];
   organizationId?: string;
+  opportunityIds?: string[];
   origin?: OpportunityOrigin;
 }
 

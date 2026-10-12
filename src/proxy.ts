@@ -6,7 +6,9 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
   const session = await refreshSession(request);
   if (!session.configured) return NextResponse.redirect(new URL("/login?error=configuration", request.url));
   if (!session.user) {
-    const login = new URL("/login", request.url);
+    const path = request.nextUrl.pathname;
+    const organizationArea = path === "/dashboard" || path.startsWith("/dashboard/") || path.startsWith("/onboarding/organization");
+    const login = new URL(organizationArea ? "/organizations/login" : "/login", request.url);
     login.searchParams.set("next", `${request.nextUrl.pathname}${request.nextUrl.search}`);
     return NextResponse.redirect(login);
   }

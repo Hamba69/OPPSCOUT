@@ -1,19 +1,57 @@
-export function PageSkeleton({ section }: { section: "matches" | "provider" | "admin" }): React.JSX.Element {
-  const metricCards = section !== "matches";
-  return <main className="page-shell" aria-busy="true" aria-label={`Loading ${section} view`}>
-    <p className="sr-only" role="status">Getting your {section} view ready…</p>
-    <div aria-hidden="true" className="motion-safe:animate-pulse">
-      <div className="h-3 w-28 rounded-full bg-leaf/15" />
-      <div className="mt-4 h-10 w-4/5 max-w-lg rounded-2xl bg-ink/10" />
-      <div className="mt-4 h-4 w-3/5 max-w-md rounded-full bg-ink/5" />
-      {section === "provider" && <div className="mt-6 flex flex-wrap gap-3">{[0, 1, 2].map((item) => <div key={item} className="h-11 w-28 rounded-full border-2 border-ink/10 bg-white" />)}</div>}
-      <div className={`mt-8 grid gap-5 md:grid-cols-2 ${section === "provider" ? "lg:grid-cols-3" : ""}`}>
-        {Array.from({ length: metricCards ? 6 : 4 }, (_, index) => <div key={index} className="card">
-          <div className="flex items-start justify-between gap-4"><div className="h-5 w-3/5 rounded-full bg-ink/10" /><div className={`${metricCards ? "h-9 w-14 rounded-xl" : "size-16 rounded-full"} shrink-0 bg-butter`} /></div>
-          <div className="mt-5 h-3 w-2/5 rounded-full bg-ink/5" />
-          {metricCards ? <div className="mt-6 flex h-14 items-end gap-3">{[30, 40, 35, 48, 52, 56, 60].map((height, i) => <div key={i} style={{ height: `${height}%` }} className="flex-1 rounded-t-md bg-leaf/10" />)}</div> : <><div className="mt-6 h-20 rounded-2xl bg-butter/70" /><div className="mt-3 h-20 rounded-2xl bg-ink/5" /><div className="mt-6 h-11 rounded-full bg-honey/40" /></>}
-        </div>)}
-      </div>
-    </div>
-  </main>;
+import { Logo } from "@/components/logo";
+import styles from "@/components/page-skeleton.module.css";
+
+const loadingCopy = {
+  matches: {
+    title: "Finding opportunities that fit you",
+    detail: "Checking verified roles against your profile and application deadlines.",
+  },
+  provider: {
+    title: "Preparing your organization workspace",
+    detail: "Loading your listings, review status, and next steps.",
+  },
+  admin: {
+    title: "Preparing your review queue",
+    detail: "Gathering listings and trust checks that need attention.",
+  },
+} as const;
+
+export function PageSkeleton({ section }: { section: keyof typeof loadingCopy }): React.JSX.Element {
+  const copy = loadingCopy[section];
+
+  return (
+    <main className="page-shell" aria-busy="true">
+      <section className={styles.loadingCard} aria-labelledby="loading-title">
+        <div className={styles.pattern} aria-hidden="true" />
+        <div className={styles.content}>
+          <div className={styles.brand}>
+            <Logo size={35} />
+            <span>oppscout</span>
+          </div>
+          <div className={styles.flight} aria-hidden="true">
+            <svg className={styles.orbit} viewBox="0 0 180 118" fill="none">
+              <ellipse cx="90" cy="59" rx="68" ry="37" />
+            </svg>
+            <svg className={styles.butterfly} viewBox="0 0 96 78" fill="none">
+              <g className={styles.leftWing}>
+                <path d="M47 39C37 13 13 8 10 23C7 37 26 44 46 43C32 43 24 53 30 62C36 70 45 57 48 45Z" />
+                <path className={styles.vein} d="M43 38C31 29 21 23 12 21M44 44C37 50 34 57 32 62" />
+              </g>
+              <g className={styles.rightWing}>
+                <path d="M49 39C59 13 83 8 86 23C89 37 70 44 50 43C64 43 72 53 66 62C60 70 51 57 48 45Z" />
+                <path className={styles.vein} d="M53 38C65 29 75 23 84 21M52 44C59 50 62 57 64 62" />
+              </g>
+              <path className={styles.body} d="M48 34C44 39 44 48 48 56C52 48 52 39 48 34Z" />
+              <path className={styles.antenna} d="M47 35C42 27 39 26 36 26M49 35C54 27 57 26 60 26" />
+            </svg>
+          </div>
+          <p className={styles.eyebrow}>A little patience. A better next step.</p>
+          <h1 id="loading-title" className={styles.title}>{copy.title}</h1>
+          <p className={styles.detail}>{copy.detail}</p>
+          <div className={styles.progressTrack} aria-hidden="true"><span /></div>
+          <p className={styles.status} role="status">{copy.title}. {copy.detail}</p>
+        </div>
+      </section>
+    </main>
+  );
 }

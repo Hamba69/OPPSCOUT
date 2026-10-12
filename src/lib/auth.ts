@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { AppError, ForbiddenError } from "@/core/errors/app-error";
 import { findOrganizationIdForDashboardUser } from "@/lib/profile-store";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -12,6 +13,17 @@ export interface AuthContext {
   role: AppRole;
   organizationId: string | null;
 }
+
+const getPageUser = cache(async () => {
+  let authClient;
+  try {
+    authClient = await createClient();
+  } catch {
+    return { user: null, configured: false } as const;
+  }
+  const { data, error } = await authClient.auth.getUser();
+  return { user: error ? null : data.user, configured: true } as const;
+});
 
 async function contextFromUser(user: { id: string; app_metadata: Record<string, unknown> }): Promise<AuthContext> {
   const roleValue = user.app_metadata.role;
@@ -43,12 +55,10 @@ export function requireRole(auth: AuthContext, roles: AppRole[]): void {
 }
 
 export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<AuthContext> {
-  let client;
-  try { client = await createClient(); }
-  catch { throw new AppError("Authentication is not configured.", 503, "AUTH_NOT_CONFIGURED"); }
-  const { data, error } = await client.auth.getUser();
-  if (error || !data.user) throw new AppError("Authentication is required.", 401, "UNAUTHENTICATED");
-  const context = await contextFromUser(data.user);
+  const result = await getPageUser();
+  if (!result.configured) throw new AppError("Authentication is not configured.", 503, "AUTH_NOT_CONFIGURED");
+  if (!result.user) throw new AppError("Authentication is required.", 401, "UNAUTHENTICATED");
+  const context = await contextFromUser(result.user);
   requireRole(context, roles);
   return context;
 }
@@ -59,12 +69,16 @@ export function homePathForRole(role: AppRole): string {
 
 /** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */
 export async function getOptionalAuth(): Promise<AuthContext | null> {
-  try {
-    const client = await createClient();
-    const { data, error } = await client.auth.getUser();
-    if (error || !data.user) return null;
-    return await contextFromUser(data.user);
-  } catch {
-    return null;
-  }
+  try { const { user } = await getPageUser(); return user ? await contextFromUser(user) : null; }
+  catch { return null; }
+}
+
+const getPageContext = cache(async () => {
+  const result = await getPageUser();
+  if (!result.configured || !result.user) return { context: null, configured: result.configured } as const;
+  return { context: await contextFromUser(result.user), configured: true } as const;
+});
+
+export async function hasPageSession(): Promise<boolean> {
+  return Boolean((await getPageUser()).user);
 }

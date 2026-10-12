@@ -7,13 +7,16 @@ import { buildRankedFeed } from "@/services/matching/feed";
 
 export interface BrowseResult { items: OpportunityListItem[]; categories: string[]; counts: Record<string, number> }
 
-/** Open verified listings and clearly labeled catalog entries awaiting review. */
+/** Open verified listings. Unverified catalog entries remain in the admin review queue. */
 export async function browseOpportunities(userId: string, filters: { type?: string; query?: string }, now = new Date()): Promise<BrowseResult> {
   const repository = await getRepository();
-  const all = await repository.listOpportunities({ statuses: ["open", "closing_soon"] });
+  const [all, profile] = await Promise.all([
+    repository.listOpportunities({ statuses: ["open", "closing_soon"] }),
+    repository.getProfile(userId),
+  ]);
   const open = all.filter((item) =>
     (!item.deadline || item.deadline > now) &&
-    (item.verificationStatus === "verified" || (item.verificationStatus === "pending" && item.origin === "catalog")),
+    item.verificationStatus === "verified",
   );
   const categories = allOpportunityTypes(open.map((item) => item.category));
   const counts: Record<string, number> = {};
@@ -24,13 +27,18 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
     .filter((item) => !needle || [item.title, item.organization?.name ?? "", item.location, item.category, item.description, ...item.requiredSkills].join(" ").toLowerCase().includes(needle))
   const verifiedIds = new Set(visible.filter((item) => item.verificationStatus === "verified").map((item) => item.id));
   const matches = verifiedIds.size
-    ? await buildRankedFeed(repository, userId, now, undefined, { persist: false, opportunityIds: verifiedIds })
+    ? await buildRankedFeed(repository, userId, now, undefined, {
+        persist: false,
+        opportunityIds: verifiedIds,
+        profile,
+        opportunities: visible,
+      })
     : [];
   const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
   const items = visible
     .sort((a, b) => Number(b.verificationStatus === "verified") - Number(a.verificationStatus === "verified") ||
       (scores.get(b.id) ?? -1) - (scores.get(a.id) ?? -1) ||
       (a.deadline?.getTime() ?? Infinity) - (b.deadline?.getTime() ?? Infinity))
-    .map((item) => ({ id: item.id, title: item.title, organization: item.organization?.name ?? "Source organization", origin: item.origin ?? "catalog", verificationStatus: item.verificationStatus, category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: item.verificationStatus === "verified" ? scores.get(item.id) ?? null : null }));
+    .map((item) => ({ id: item.id, title: item.title, organization: item.organization?.name ?? item.organizationName ?? "Source organization", origin: item.origin ?? "catalog", verificationStatus: item.verificationStatus, category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: item.verificationStatus === "verified" ? scores.get(item.id) ?? null : null }));
   return { items, categories, counts };
 }

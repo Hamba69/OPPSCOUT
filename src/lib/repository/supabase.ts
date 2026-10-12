@@ -132,6 +132,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
 
   public async listOpportunities(filters: OpportunityFilters = {}): Promise<Opportunity[]> {
     if (filters.statuses?.length === 0) return [];
+    if (filters.opportunityIds?.length === 0) return [];
 
     let query = this.client.from("Opportunity").select("*");
     if (filters.category) query = query.eq("category", filters.category);
@@ -139,6 +140,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     if (filters.verificationStatus) query = query.eq("verificationStatus", filters.verificationStatus);
     if (filters.statuses) query = query.in("status", filters.statuses);
     if (filters.organizationId) query = query.eq("organizationId", filters.organizationId);
+    if (filters.opportunityIds) query = query.in("id", filters.opportunityIds);
     if (filters.origin) query = query.eq("origin", filters.origin);
 
     // Read every page: the Data API otherwise silently caps a growing catalog.

@@ -7,7 +7,7 @@ import { RULES_ENGINE_VERSION } from "@/services/matching/rule-based/engine";
 import type { MatchRunInput, UnmatchedInput } from "@/lib/admin-data";
 import { randomUUID } from "node:crypto";
 
-import type { Opportunity } from "@/core/entities/domain";
+import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { MatchEngine } from "@/core/interfaces/match-engine";
 import type { Repository, StoredMatchResult } from "@/lib/repository/types";
 import { evaluateHardGates } from "@/services/matching/rule-based/hard-gates";
@@ -32,6 +32,8 @@ export interface RankedFeedOptions {
   telemetry?: boolean;
   trigger?: MatchRunInput["trigger"];
   opportunityIds?: ReadonlySet<string>;
+  profile?: UserProfile | null;
+  opportunities?: Opportunity[];
 }
 
 export function recomputeRankedFeed(
@@ -51,15 +53,18 @@ async function buildObservedFeed(
   options: RankedFeedOptions = {},
 ): Promise<RankedMatch[]> {
   const startedAt = performance.now();
-  const profile = await repository.getProfile(userId);
+  const [profile, listedOpportunities, matchRows] = await Promise.all([
+    options.profile !== undefined ? Promise.resolve(options.profile) : repository.getProfile(userId),
+    options.opportunities ? Promise.resolve(options.opportunities) : repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] }),
+    options.persist === false ? repository.listMatches(userId) : Promise.resolve(undefined),
+  ]);
   if (!profile) return [];
-  const listedOpportunities = await repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] });
-  const opportunities = options.opportunityIds
-    ? listedOpportunities.filter((opportunity) => options.opportunityIds!.has(opportunity.id))
-    : listedOpportunities;
   const persistedMatches = options.persist === false
-    ? new Map((await repository.listMatches(userId)).map((match) => [match.opportunityId, match]))
+    ? new Map((matchRows ?? []).map((match) => [match.opportunityId, match]))
     : undefined;
+  const opportunities = listedOpportunities
+    .filter((opportunity) => opportunity.verificationStatus === "verified" && ["open", "closing_soon"].includes(opportunity.status))
+    .filter((opportunity) => !options.opportunityIds || options.opportunityIds.has(opportunity.id));
   const evaluated = opportunities
     .filter((opportunity) => !opportunity.deadline || opportunity.deadline > now)
     .map((opportunity) => ({ opportunity, gates: evaluateHardGates(profile, opportunity) }));
