@@ -20,12 +20,12 @@ describe("opportunity browsing", () => {
 
     const result = await browseOpportunities(DEMO_USER_ID, {}, new Date());
     const ids = result.items.map((item) => item.id);
-    expect(ids).not.toContain(pendingCatalog.id);
+    expect(ids).toContain(pendingCatalog.id);
+    expect(result.items.find((item) => item.id === pendingCatalog.id)).toMatchObject({ verificationStatus: "pending", matchScore: null });
     expect(ids).not.toContain(pendingOrganization.id);
     expect(ids).not.toContain(flagged.id);
     expect(ids).not.toContain(closed.id);
     expect(ids).not.toContain(expired.id);
-    expect(result.items.find((item) => item.id === pendingCatalog.id)).toBeUndefined();
     expect(result.items[0].verificationStatus).toBe("verified");
   });
 });

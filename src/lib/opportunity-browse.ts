@@ -7,7 +7,7 @@ import { buildRankedFeed } from "@/services/matching/feed";
 
 export interface BrowseResult { items: OpportunityListItem[]; categories: string[]; counts: Record<string, number> }
 
-/** Open verified listings. Unverified catalog entries remain in the admin review queue. */
+/** Open verified listings and catalog entries awaiting review, without exposing unreviewed submissions. */
 export async function browseOpportunities(userId: string, filters: { type?: string; query?: string }, now = new Date()): Promise<BrowseResult> {
   const repository = await getRepository();
   const [all, profile] = await Promise.all([
@@ -16,7 +16,8 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
   ]);
   const open = all.filter((item) =>
     (!item.deadline || item.deadline > now) &&
-    item.verificationStatus === "verified",
+    (item.verificationStatus === "verified" ||
+      (item.verificationStatus === "pending" && item.origin === "catalog")),
   );
   const categories = allOpportunityTypes(open.map((item) => item.category));
   const counts: Record<string, number> = {};
@@ -25,13 +26,14 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
   const visible = open
     .filter((item) => !filters.type || item.category === filters.type)
     .filter((item) => !needle || [item.title, item.organization?.name ?? "", item.location, item.category, item.description, ...item.requiredSkills].join(" ").toLowerCase().includes(needle))
-  const verifiedIds = new Set(visible.filter((item) => item.verificationStatus === "verified").map((item) => item.id));
+  const verified = visible.filter((item) => item.verificationStatus === "verified");
+  const verifiedIds = new Set(verified.map((item) => item.id));
   const matches = verifiedIds.size
     ? await buildRankedFeed(repository, userId, now, undefined, {
         persist: false,
         opportunityIds: verifiedIds,
         profile,
-        opportunities: visible,
+        opportunities: verified,
       })
     : [];
   const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
