@@ -38,7 +38,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <section className="page-shell mx-auto max-w-2xl py-12 text-center lg:py-20">
           <Image src="/logo.png" alt="" width={96} height={96} priority className="mx-auto" aria-hidden="true" />
           <p className="mt-2 text-xs font-medium tracking-[0.14em] text-ink">MEET YOUR OPPORTUNITIES</p>
-          <h1 className="mt-6 text-3xl font-extrabold leading-tight text-ink sm:text-5xl">The right opportunity is already out there.</h1>
+          <h1 className="hero-title mt-6 text-3xl font-extrabold leading-tight text-ink sm:text-5xl">The right opportunity is already out there.</h1>
           <p className="mx-auto mt-4 max-w-lg text-base leading-7 text-navy">OppScout finds jobs, scholarships, grants and internships that fit you, and tells you before they close.</p>
           <ul className="mt-5 flex flex-wrap justify-center gap-2" aria-label="What you can find">
             {categories.map((name) => <li key={name} className="rounded-full border-2 border-honey bg-white px-3 py-1.5 text-xs font-semibold text-ink">{name}</li>)}

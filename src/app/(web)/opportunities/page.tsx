@@ -39,10 +39,12 @@ export default async function OpportunitiesPage({
 
   return (
     <main className="page-shell animate-in">
-      <h1 className="text-2xl font-semibold text-ink sm:text-3xl"> The Opportunities</h1>
-      <p className="mt-1 text-sm text-navy">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">The Opportunities</h1>
+        <p className="mt-1 text-sm text-navy">
         Open catalog listings, with verified matches prioritised
-      </p>
+        </p>
+      </div>
 
       <form action="/opportunities" method="get" role="search" className="mt-5">
         {type && <input type="hidden" name="type" value={type} />}

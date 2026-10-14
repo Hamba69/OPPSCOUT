@@ -94,6 +94,33 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
+h1 {
+  margin-inline: auto;
+  color: #1e293b;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  line-height: 2rem !important;
+  text-align: center;
+}
+
+h1.hero-title {
+  font-size: 1.875rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+
+  h1.hero-title {
+    font-size: 3rem !important;
+    line-height: 1.1 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

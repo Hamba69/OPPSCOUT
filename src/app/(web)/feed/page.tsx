@@ -26,10 +26,12 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in">
-      <h1 className="text-2xl font-semibold text-ink sm:text-3xl"> Available Matches</h1>
-      <p className="mt-1 text-sm text-navy">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Available Matches</h1>
+        <p className="mt-1 text-sm text-navy">
         We&apos;ve found you {matches.length} {matches.length === 1 ? "match" : "matches"}
-      </p>
+        </p>
+      </div>
       {matches.length ? <FeedBrowser items={items} /> : <div className="mt-6">{isProfileCompleteForMatching(profile)
         ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
         : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}</div>}
