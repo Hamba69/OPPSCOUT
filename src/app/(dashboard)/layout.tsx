@@ -11,5 +11,5 @@ export default async function ProviderLayout({ children }: { children: React.Rea
   if (!auth) redirect("/organizations/login");
   if (auth.role === "user") redirect((await getUserProfile(auth.userId)) ? "/feed" : "/onboarding/organization");
 
-  return <><div className="page-shell pb-0 pt-4"><SectionNav label="Publisher tools" links={[["Overview", "/dashboard"], ["Opportunities", "/dashboard/opportunities"], ["Matched people", "/dashboard/candidates"], ["Publisher profile", "/dashboard/organization"]]} /></div>{children}</>;
+  return <><div className="mx-auto w-full max-w-md px-4 pt-1"><SectionNav label="Publisher tools" links={[["Overview", "/dashboard"], ["Opportunities", "/dashboard/opportunities"], ["Matches", "/dashboard/candidates"], ["Publisher profile", "/dashboard/organization"]]} /></div>{children}</>;
 }
