@@ -1,0 +1,7 @@
+Real product-path execution with evaluateHardGates
+profile location: Gulu; supplied residence context: Uganda
+allowed rule values: Uganda, Kampala
+hard gate eligible: false
+failed rule labels: Residence rule
+the production UserProfile type has no countryOfResidence field; the extra fixture value is ignored by the current gate
+Expected plan behavior: eligible=true; observed result reproduces the active F8 defect.

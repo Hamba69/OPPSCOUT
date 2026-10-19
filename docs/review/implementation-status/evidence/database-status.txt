@@ -1,0 +1,2 @@
+Live database counts: UNVERIFIABLE (AUDIT_DB_URL is unset; no database connection was attempted).
+Database query checks are not offline checks and do not affect this script's exit status.

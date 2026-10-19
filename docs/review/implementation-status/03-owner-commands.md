@@ -1,48 +1,38 @@
-# Owner commands for live evidence
+# Owner commands for additional live evidence
 
-These commands are intentionally read-only and should be run by the owner. Report only pass/fail and counts back to the audit, never credentials.
+All commands below are read-only. Supply a database role restricted to SELECT/catalog inspection through `AUDIT_DB_URL`; never paste or report the URL itself. The offline audit does not need a database, and `npx tsx scripts/review/status/verify-status-all.ts` must not be given a database variable.
 
-## Baseline repo
+## Repository checks
 
-```bash
+```sh
 git rev-parse HEAD
 git status --short --branch
-git log --oneline b3bcf65d5543e779618ee49cc52a814743e59504..HEAD
-```
-
-## Prisma and schema validation
-
-```bash
+git branch -a
 npm run prisma:validate
 npm run typecheck
+npm run lint
+npm run test -- --reporter=dot
+npx tsx scripts/review/status/verify-status-all.ts
 ```
 
-## RLS inventory
+The final command runs offline unless `AUDIT_DB_URL` is explicitly provided. Do not run `scripts/check-rls.ts` as an offline check: that pre-existing script constructs a Prisma client from `DATABASE_URL`.
 
-```bash
-npm run check:rls
-psql "$DATABASE_URL" -Atqc "SELECT tablename, rowsecurity FROM pg_tables WHERE schemaname='public' ORDER BY tablename;"
-psql "$DATABASE_URL" -Atqc "SELECT table_name FROM information_schema.tables WHERE table_schema='public' ORDER BY table_name;"
+## Read-only database counts
+
+These queries use current Prisma model and column names from `prisma/schema.prisma`. They do not reference planned columns such as provenance or countryCodes because those columns do not exist yet. Table and field names were checked against that schema; PostgreSQL execution is UNVERIFIABLE offline.
+
+```sh
+psql "$AUDIT_DB_URL" --set=ON_ERROR_STOP=1 --tuples-only --no-align -c "SELECT COUNT(*) FROM \"Opportunity\" WHERE \"verificationStatus\" = 'verified' AND \"status\" IN ('open','closing_soon') AND (\"deadline\" IS NULL OR \"deadline\" > NOW());"
+
+psql "$AUDIT_DB_URL" --set=ON_ERROR_STOP=1 --tuples-only --no-align -c "SELECT COUNT(DISTINCT \"organizationId\") FROM \"Opportunity\" WHERE \"verificationStatus\" = 'verified' AND \"status\" IN ('open','closing_soon') AND (\"deadline\" IS NULL OR \"deadline\" > NOW());"
+
+psql "$AUDIT_DB_URL" --set=ON_ERROR_STOP=1 --tuples-only --no-align -c "SELECT c.relname, c.relrowsecurity FROM pg_class AS c JOIN pg_namespace AS n ON n.oid = c.relnamespace WHERE n.nspname = 'public' AND c.relkind = 'r' ORDER BY c.relname;"
+
+psql "$AUDIT_DB_URL" --set=ON_ERROR_STOP=1 --tuples-only --no-align -c "SELECT tablename, policyname FROM pg_policies WHERE schemaname = 'public' ORDER BY tablename, policyname;"
 ```
 
-## Launch gate checks
+The two opportunity counts and catalog queries above are valid against current field/table names, but their live execution remains UNVERIFIABLE offline. **UNVERIFIABLE:** the count of opportunities performed in Uganda, source/organization concentration, audience eligibility, report response times, dead-link rate and freshness error. The current schema does not contain enough fields to calculate all those plan metrics. A live database alone cannot supply missing schema fields or deployment-level review evidence.
 
-```bash
-psql "$DATABASE_URL" -Atqc "SELECT COUNT(*) FROM \"Opportunity\" WHERE \"verificationStatus\" = 'verified' AND status IN ('open','closing_soon');"
-psql "$DATABASE_URL" -Atqc "SELECT COUNT(*) FROM \"Opportunity\" WHERE \"verificationStatus\" = 'verified' AND status IN ('open','closing_soon') AND (deadline IS NULL OR deadline > NOW());"
-psql "$DATABASE_URL" -Atqc "SELECT COUNT(DISTINCT \"organizationId\") FROM \"Opportunity\" WHERE \"verificationStatus\" = 'verified';"
-```
+## Optional plan verification
 
-## Deployment and env evidence
-
-```bash
-ls .github/workflows
-grep -R "audienceGate\|automatedScraping\|trustReview\|organizationSubmission" src/config .env* .env.example 2>/dev/null || true
-```
-
-## Expected output
-
-- Pass/fail listing for all new tables and RLS entries
-- Exact count of live verified opportunities
-- Distinct organization count for the launch gate
-- Flag state for audience gate and scraper controls
+Do not use an unverified help switch for the catalog audit utility. No live query is implied by the offline verifier.

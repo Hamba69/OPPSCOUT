@@ -1,0 +1,44 @@
+
+> oppscout@0.1.0 test
+> vitest run --reporter=dot
+
+
+ RUN  v3.2.7 E:/OPPSCOUT
+
+······x·············x·································································
+
+ Test Files  2 failed | 24 passed (26)
+      Tests  2 failed | 84 passed (86)
+   Start at  09:57:26
+   Duration  9.09s (transform 5.33s, setup 426ms, collect 16.18s, tests 7.82s, environment 3.27s, prepare 6.98s)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/auth-proxy.test.ts > auth proxy > redirects signed-out protected route /dashboard/:path*
+AssertionError: expected '/organizations/login' to be '/login' // Object.is equality
+
+Expected: "/login"
+Received: "/organizations/login"
+
+ ❯ tests/unit/auth-proxy.test.ts:15:31
+     13|     const response = await proxy(new NextRequest(`http://localhost:300…
+     14|     const location = new URL(response.headers.get("location")!);
+     15|     expect(location.pathname).toBe("/login");
+       |                               ^
+     16|     expect(location.searchParams.get("next")).toBe(path);
+     17|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/auth-recovery.test.ts > password recovery > starts in signup mode when requested
+Error: Invalid Chai property: toHaveAttribute
+ ❯ tests/unit/auth-recovery.test.ts:28:28
+     26|     const toggleGroup = screen.getByRole("group", { name: "Sign in or …
+     27|     const toggleButtons = toggleGroup.querySelectorAll("button");
+     28|     expect(toggleButtons[0]).toHaveAttribute("aria-pressed", "false");
+       |                            ^
+     29|     expect(toggleButtons[1]).toHaveAttribute("aria-pressed", "true");
+     30|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯

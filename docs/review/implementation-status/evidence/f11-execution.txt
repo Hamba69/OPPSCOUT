@@ -1,0 +1,5 @@
+Real product-path execution with MemoryRepository and ingestManualOpportunity
+created verified listing: verified
+after identical re-ingestion: pending
+after changed-link re-ingestion: pending
+Expected plan behavior: both statuses remain verified; observed result reproduces the active defect.

@@ -1,40 +1,37 @@
 # Gap analysis
 
-## Summary
+## Decision
 
-The repo is not in a launch-ready state for the plan. The main blockers are:
+The implementation remains substantially behind the plan. The register reports 16 level-0, 4 level-1, 0 level-2, 0 level-3 and 0 level-4 items; weighted engineering completeness is 5.0% using weights 0%, 25%, 50%, 75% and 100%. The script computes the headline from the written CSV register.
 
-1. Missing source-of-truth schema for Source, Lead, ListingReport, and IngestionRun
-2. No audience gate connected to the actual app flow
-3. No production RLS or migration proof for the new model set
-4. F11 duplicate downgrade bug still present in ingestion logic
-5. No read-only database or deployment evidence to prove the launch gates
+## Gaps by workstream
 
-## Minimum path to completion
+1. **Provenance and persistence:** Source, Lead, ListingReport and IngestionRun models, supporting Opportunity/Organization/UserProfile fields, adapters, migrations and associated RLS are absent.
+2. **Community and employer intake:** verified employer users can submit an opportunity, but there is no plan Lead API/lifecycle, helper channel, organization post-a-job form, triage SLA or origin cap.
+3. **Audience and location:** no production audience gate is present. The production hard gate retains F8; the production ingestion path retains F11.
+4. **Trust and reporting:** the existing checklist, report flagging and opportunity review queue satisfy only their named narrow sub-requirements. Automated official-domain checks, trusted-poster routing, report thresholds, timestamps and the 24-hour target are not implemented.
+5. **Operations and launch evidence:** plan-specific catalog cleanup, source-concentration and Uganda-performed metrics, and a complete launch gate are absent or UNVERIFIABLE. Without `AUDIT_DB_URL`, no live query is attempted.
+6. **Evidence capture:** plan screenshot extraction, field-level evidence and private retention workflow are absent.
 
-### Batch 1: schema and security
+## Existing sub-requirements credited
 
-- Add the four plan tables and required enums
-- Extend Opportunity/Organization/UserProfile with the plan fields
-- Add migration files and verify with Prisma validation
-- Add a table-by-table RLS checklist and check script
+| Register item | Credited sub-requirement | Still missing |
+|---|---|---|
+| C2 | Verified organization staff can submit an HTTPS opportunity into pending review. | Lead model/lifecycle, lead-specific form, provenance, cap and fast lane. |
+| T1 | Reviewer checklist records five basic checks. | Automated domain comparison, expanded risk signals and routing. |
+| T3 | Report intake flags an opportunity and records an event. | ListingReport records, thresholds, priority, abuse controls and response clock. |
+| T4 | Admin queue supports opportunity review and approve/reject decisions. | Planned lead/report workflow, priority routing and SLA. |
 
-### Batch 2: audience and visibility
+No “done” list includes pre-existing code with a known defect. In particular, F8 and F11 are level 0.
 
-- Add the audience gate function and shadow-mode flag
-- Wire it in feed, search, match, notification, and USSD flows
-- Include UI labels and review scripts covering Appendix B cases
+## Current risks
 
-### Batch 3: ingestion and trust controls
+- **F11:** actual execution shows identical and changed-link duplicate ingestion can move a verified listing to pending. The admin/manual API path and organization submission reach `ingestManualOpportunity`; organization submission adds organization verification and staff-membership checks before the call. The standalone reviewed-jobs script writes directly and bypasses it.
+- **F8:** actual execution shows the location hard gate rejects Gulu for a rule allowing Uganda or Kampala because current code compares `profile.location` only.
+- **Reports:** the current path flags on an individual report; it does not implement the planned reporting thresholds or response clock.
+- **Audience:** absence of a gate means today's feed can rank/display opportunities without the proposed fail-closed applicant-scope check.
+- **Unmerged development:** the branch and commit evidence is in [evidence/branch-and-history.txt](./evidence/branch-and-history.txt); unmerged code is not shipped.
 
-- Fix F11 downgrade bug in duplicate handling
-- Add report lifecycle and response-clock logic
-- Add lead intake and reporting controls with source tracing
+## Regression determination
 
-## Priority order
-
-1. Fix F11 and add the schema model set
-2. Add audience gate with shadow mode and producer-safe defaults
-3. Lock down RLS and migration evidence
-4. Run launch-gate checks against a read-only database
-5. Publish the operational review evidence for owner sign-off
+No REGRESSED status is justified. `git log --all` was checked for the audience module and the F8/F11 production paths. The planned fixes were not found as production implementations before removal; absence is not regression.

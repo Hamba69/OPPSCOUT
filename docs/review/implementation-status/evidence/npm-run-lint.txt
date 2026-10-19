@@ -1,0 +1,12 @@
+
+> oppscout@0.1.0 lint
+> eslint .
+
+
+E:\OPPSCOUT\imports\external-opportunities-intake\discovered-catalog.ts
+  32:7  warning  'reviewChecklist' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\OPPSCOUT\src\components\page-skeleton.tsx
+  4:30  warning  '_props' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 2 problems (0 errors, 2 warnings)

@@ -1,0 +1,58 @@
+HEAD: 7588d39f42d19f5f6cb98969a13c387cdf4f161c
+
+branch: main
+
+git branch -a:
+
+backup-before-workflow-rewrite
++ kepler/implement-orbitmatch-matching-engine
++ kepler/implement-orbitmatch-matching-engine-2
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+  remotes/origin/uiupdate
+  remotes/origin/vercel/install-vercel-web-analytics-wtmciu
+
+Commits since referenced baseline b3bcf65d5543e779618ee49cc52a814743e59504:
+7588d39 Merge branch 'main' of https://github.com/Hamba69/OPPSCOUT
+4709b68 review one run
+01fa5fd Update dashboard layout and navigation
+
+Unmerged plan-path commits:
+backup-before-workflow-rewrite	8449ea21c4847e86dd6958f162f903d4a350b912	additional todo features
+backup-before-workflow-rewrite	4bb77c1213f181167d5d4db5e159c25e6a94df15	auth gates and admin portal
+
+git status before generated outputs:
+M docs/review/implementation-status/00-status-report.md
+ M docs/review/implementation-status/01-status-register.csv
+ M docs/review/implementation-status/02-gap-analysis.md
+ M docs/review/implementation-status/03-owner-commands.md
+ M docs/review/implementation-status/04-validation-log.md
+ D docs/review/implementation-status/evidence/check-adapters.txt
+ D docs/review/implementation-status/evidence/check-behaviour.txt
+ D docs/review/implementation-status/evidence/check-wiring.txt
+ D docs/review/implementation-status/evidence/launch-gate.txt
+ D docs/review/implementation-status/evidence/verification-summary.txt
+ D scripts/review/status/check-adapters.ts
+ D scripts/review/status/check-behaviour.ts
+ D scripts/review/status/check-structure.ts
+ D scripts/review/status/check-wiring.ts
+ D scripts/review/status/launch-gate.ts
+ M scripts/review/status/verify-status-all.ts
+?? docs/review/implementation-status/evidence/branch-and-history.txt
+?? docs/review/implementation-status/evidence/database-status.txt
+?? docs/review/implementation-status/evidence/f11-execution.txt
+?? docs/review/implementation-status/evidence/f8-execution.txt
+?? docs/review/implementation-status/evidence/npm-run-lint.txt
+?? docs/review/implementation-status/evidence/npm-run-prisma-validate.txt
+?? docs/review/implementation-status/evidence/npm-run-test-reporter-dot.txt
+?? docs/review/implementation-status/evidence/npm-run-typecheck.txt
+
+Changes outside permitted directories before generation:
+(none)
+
+Migration directories checked: 20260818000000_phase_one_core, 20260818010000_phase_four_ussd_preferences, 20260818020000_phase_five_monetization_readiness, 20260818030000_production_readiness, 20260919000000_enable_public_rls, 20260925202703_server_profile_data_api_access, 20260925210023_server_repository_data_api_access, 20260925233000_optional_opportunity_deadline, 20261002200000_opportunity_origin, 20261003000000_admin_portal_feedback_telemetry, 20261003010000_profile_enrichment, 20261003020000_documents_candidates, 20261003191000_documents_server_data_api_access, 20261012093356_allow_unlinked_catalog_opportunities
+
+Current Prisma models: UserProfile, Organization, Opportunity, MatchResult, Notification, SavedOpportunity, EventLog, StoredDocument, SeekerAccessLog, SeekerPipelineEntry, Feedback, RequestMetric, WebVitalSample, MatchRun, UnmatchedTerm, AdminAccessLog, MetricRollup
+
+Current RLS allow-list content includes plan models: false
