@@ -1,0 +1,6 @@
+feature-flags reads audienceGate: NOT WIRED
+hard gate imported by feed or matching code: WIRED
+report route imports reportSuspiciousListing: WIRED
+org submission imported by v1 opportunities route: WIRED
+admin review page reads review queue: WIRED
+match engine imports rule-based gates: WIRED

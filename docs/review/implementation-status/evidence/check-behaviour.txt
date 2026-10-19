@@ -1,0 +1,4 @@
+B1: manual ingestion code exists; re-ingestion rule not proven in a memory adapter harness
+B2: hard-gate function exists and is relevant to Gulu/Uganda rule checks
+A1: audience gate module absent: no provider implementation in src/services/matching/audience.ts
+AppendixB: scratch contract test exists in scripts/review/verify-appendix-b.ts

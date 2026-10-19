@@ -1,0 +1,82 @@
+[
+  {
+    "id": "2ae0422c-2c75-4242-b76b-531af4e9ad7d",
+    "title": "UniSQ International Student Support and PhD Stipend scholarships 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "Australia",
+    "organizationId": "84bd9095-02b4-41bd-ad88-b6fea9f9c7d9"
+  },
+  {
+    "id": "c5f77384-04fe-47eb-839c-6eef8d673cc3",
+    "title": "Global UGRAD (undergraduate exchange)",
+    "sourceUrl": "https://www.advance-africa.com/Fully-Funded-Global-Undergraduate-Exchange-Program-Scholarships-to-USA.html",
+    "deadline": null,
+    "location": "USA",
+    "organizationId": "c2ef7f02-73d4-47e7-9a5b-a0e6406f87b3"
+  },
+  {
+    "id": "46d51a5f-ad89-4345-baa0-7927bbbc9c5a",
+    "title": "Japanese Government (MEXT) scholarships",
+    "sourceUrl": "https://www.advance-africa.com/Japanese-Government-Scholarships.html",
+    "deadline": null,
+    "location": "Japan",
+    "organizationId": "8787af3a-2ee1-45dd-93fe-dd8e1a6e5866"
+  },
+  {
+    "id": "1906d28f-79c9-42db-9aeb-f306ae98064d",
+    "title": "Dalai Lama Fellowship Programme",
+    "sourceUrl": "https://www.advance-africa.com/dalai-lama-fellowship-programme-for-emerging-changemakers.html",
+    "deadline": "2026-11-10T21:00:00",
+    "location": "Global",
+    "organizationId": "47a4805b-9532-4838-afab-8de2a8515dd8"
+  },
+  {
+    "id": "dd68383c-b25a-422c-b545-d5732fd8dc33",
+    "title": "Yale Maurice R. Greenberg World Fellows Program",
+    "sourceUrl": "https://www.advance-africa.com/fully-funded-yale-maurice-r-greenberg-world-fellows-program-for-midcareer-emerging-global-leaders.html",
+    "deadline": "2026-12-01T21:00:00",
+    "location": "USA",
+    "organizationId": "e5815de2-de06-4e1e-8006-a4f1886c145b"
+  },
+  {
+    "id": "3117fdc2-256c-4f5f-a62b-a3ad3d73bddd",
+    "title": "Equality Fund Journalism Fellowship",
+    "sourceUrl": "https://www.advance-africa.com/equality-fund-journalism-fellowship-for-journalists-worldwide.html",
+    "deadline": "2026-11-07T21:00:00",
+    "location": "Remote (confirm)",
+    "organizationId": "f95d8a80-a56e-459d-a880-dc60c2249741"
+  },
+  {
+    "id": "7908e0f7-5dca-4c3d-85a8-03c76b9d609b",
+    "title": "Berenson Fellowship Program",
+    "sourceUrl": "https://www.advance-africa.com/berenson-fellowship-program-for-scholars-from-all-nations.html",
+    "deadline": "2026-11-15T21:00:00",
+    "location": "Remote or onsite (confirm)",
+    "organizationId": "d7c3c04b-7554-45f2-a8f7-dd50e81a86d1"
+  },
+  {
+    "id": "9878c9c4-da63-4282-8fac-d34db290f50f",
+    "title": "Jean Monnet Fellowships 2027/28 (post-doc)",
+    "sourceUrl": "https://www.scholarshipset.com/scholarships/eui-jean-monnet-fellowships-2027-2028",
+    "deadline": "2026-10-25T21:00:00",
+    "location": "Italy",
+    "organizationId": "56ea5ce2-4a45-4ae7-ac42-0ef6a64217d0"
+  },
+  {
+    "id": "490aec5f-7428-4afc-84a0-8066c3b2900e",
+    "title": "Princeton in Africa Nexus Fellowships",
+    "sourceUrl": "https://www.advance-africa.com/princeton-in-africa-nexus-fellowships.html",
+    "deadline": "2026-10-17T21:00:00",
+    "location": "Africa",
+    "organizationId": "66666666-6666-4666-8666-000000000050"
+  },
+  {
+    "id": "3ee0cf62-abcf-48a7-b282-1d59105934d8",
+    "title": "TWAS Research Professors in Least Developed Countries",
+    "sourceUrl": "https://www.advance-africa.com/fully-funded-twas-research-professors-in-least-developed-countries.html",
+    "deadline": "2026-10-22T21:00:00",
+    "location": "Least developed countries",
+    "organizationId": "c017c13c-0402-499f-9aa4-c0238f00a59f"
+  }
+]

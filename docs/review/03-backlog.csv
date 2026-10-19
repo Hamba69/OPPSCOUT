@@ -1,0 +1,21 @@
+id,wp,batch,title,files,depends_on,effort,hours_low,hours_high,automation,flag,tests,acceptance,rollback
+A-01,WP-A,B1,Run offline and live catalogue audit,scripts/review/audit-live-catalog.ts;docs/review/evidence,none,S,3,5,AGENT+REVIEW,,catalog aggregation,Counts cite timestamp and SQL,Delete generated evidence
+B-01,WP-B,B1,Record model freeze decision,docs/deviations.md;docs/review/evidence/model-inventory.txt,WP-A,S,2,3,AGENT,,schema inventory,All schema models listed,Revert documentation
+C-01,WP-C,B2,Add provenance/report/lead schema,prisma/schema.prisma;prisma/migrations;supabase/migrations,WP-B,L,24,40,AGENT+REVIEW,audienceGate/leadIntake/trustV2,Prisma/RLS/adapters,Flags off and forward migration
+D-01,WP-D,B2,Preserve verified reingestion,src/services/ingestion/manual/index.ts;tests,WP-C,M,8,12,AGENT,trustV2,memory rows 14-15,Disable flag
+E-01,WP-E,B2,Resolve location hard gates,src/services/matching/rule-based/hard-gates.ts;tests,WP-C,M,8,14,AGENT,locationGateV2,row 13 and town rules,Disable flag
+F-01,WP-F,B3,Implement audience predicate and shadow diff,src/services/matching/audience.ts;src/app;tests,WP-C;WP-E;WP-A,L,24,36,AGENT+REVIEW,audienceGate,rows 1-12 and USSD parity,Disable gate
+G-01,WP-G,B3,Clean and classify catalogue,scripts/review/clean-catalog.ts;classify-audience.ts,WP-A;WP-F,M,12,20,AGENT+REVIEW,catalogCleanup,fixture dates and CSV,Inverse change log
+H-01,WP-H,B1,Generate pending Uganda worksheet,scripts/review/trace-pending-uganda.ts,WP-A,M,10,16,AGENT+REVIEW,,no-network fixture,No source mutation,Regenerate worksheet
+I-01,WP-I,B4,Implement lead intake API and worker,src/app/api/v1/leads;src/services;adapters,WP-C;WP-K,L,30,44,AGENT+REVIEW,leadIntake,auth/rate/fingerprint/expiry,Disable endpoint
+J-01,WP-J,B6,Implement screenshot evidence extraction,src/services/ai;src/app;documents,WP-C;WP-I,L,32,48,AGENT+REVIEW,screenshotExtraction,security/evidence/deletion,Disable upload
+K-01,WP-K,B4,Reconcile organization approval and trusted posters,src/app/api/v1/organizations;src/services;adapters,WP-C,L,24,40,AGENT+REVIEW,trustedPoster,domain/staff approval,Disable posting
+L-01,WP-L,B4,Implement trust v2 and origin cap,src/services/trust;tests,WP-C;WP-K,L,28,44,AGENT+REVIEW,trustV2,60 supplied trust fixtures,Disable signals
+M-01,WP-M,B4,Implement listing reports,src/services/trust/report.ts;src/app/api/v1/reports;adapters,WP-C;WP-L,M,16,26,AGENT+REVIEW,listingReports,independent reports and caps,Disable submission
+N-01,WP-N,B5,Add calibrated helper programme,src/app;src/services;adapters,WP-P;WP-Q,M,16,24,AGENT+REVIEW,helperProgramme,role and concentration tests,Disable role
+O-01,WP-O,B5,Add bounded source adapters and worker,src/services/ingestion;prisma;workflow,WP-C;WP-L,L,36,56,AGENT+REVIEW,automatedScraping,recorded HTTP and pause tests,Pause adapters
+P-01,WP-P,B5,Build unified admin review queue,src/app/(admin);src/services;adapters,WP-I;WP-K;WP-M,L,36,52,AGENT+REVIEW,reviewQueueV2,queue/audit/export tests,Disable queue
+Q-01,WP-Q,B6,Add KPI and SLO queries,src/services/kpi;src/config;scripts,WP-P,M,18,28,AGENT+REVIEW,kpiV2,metric fixtures and alerts,Disable alerts
+R-01,WP-R,B6,Run scale and freshness hardening,src/lib/repository;src/services/ingestion;scripts/audit-capacity.ts,WP-F;WP-O;WP-Q,L,28,44,AGENT+REVIEW,scaleV2,3000-row synthetic run,Disable worker
+S-01,WP-S,B6,Draft privacy retention and takedown artefacts,docs/review;retention tests,WP-J;WP-M,M,12,20,AGENT+REVIEW,retentionV2,counsel questions and deletion audit,Disable sweep
+T-01,WP-T,B6,Implement weekly launch gate report,scripts/review/check-launch-gates.ts;workflow,WP-A;WP-P;WP-Q;WP-R,M,14,22,AGENT+REVIEW,,all PASS/FAIL fixtures,Remove schedule

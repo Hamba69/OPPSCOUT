@@ -1,0 +1,53 @@
+{
+  "runAt": "2026-10-16T17:41:18.928Z",
+  "summary": {
+    "mode": "dry-run",
+    "urlsRun": 5,
+    "candidates": 0,
+    "errors": 5,
+    "inserts": 0,
+    "skipped": {}
+  },
+  "outcomes": [
+    {
+      "sourceUrl": "https://dmc-education.com/2026/10/14/hariss-international-recruitment-2026-apply-for-10-job-vacancies-closing-date-22-october/",
+      "leadIds": [
+        "JOB-001"
+      ],
+      "status": "error",
+      "error": "Anthropic returned invalid extracted fields."
+    },
+    {
+      "sourceUrl": "https://www.advance-africa.com/christian-blind-mission-director-community-based-inclusive-development-jobs-in-uganda.html",
+      "leadIds": [
+        "JOB-002"
+      ],
+      "status": "error",
+      "error": "The operation was aborted due to timeout"
+    },
+    {
+      "sourceUrl": "https://www.advance-africa.com/media-in-cooperation-and-transition-community-manager-uganda-journalist-protection-program-jobs-in-kenya.html",
+      "leadIds": [
+        "JOB-003"
+      ],
+      "status": "error",
+      "error": "Anthropic returned invalid extracted fields."
+    },
+    {
+      "sourceUrl": "https://www.advance-africa.com/horyal-investments-holding-company-ltd-director-of-agriculture-jobs-in-uganda.html",
+      "leadIds": [
+        "JOB-004"
+      ],
+      "status": "error",
+      "error": "Source returned 404."
+    },
+    {
+      "sourceUrl": "https://www.advance-africa.com/al-mansour-inventory-procurement-professional-jobs-in-uganda.html",
+      "leadIds": [
+        "JOB-005"
+      ],
+      "status": "error",
+      "error": "Source returned 404."
+    }
+  ]
+}

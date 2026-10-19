@@ -1,0 +1,9 @@
+prisma repo file: PRESENT
+supabase repo file: PRESENT
+memory repo file: PRESENT
+shared domain types file: PRESENT
+shared repository types file: PRESENT
+Lead methods in shared types: MISSING
+Source methods in shared types: MISSING
+ListingReport methods in shared types: MISSING
+IngestionRun methods in shared types: MISSING

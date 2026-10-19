@@ -1,0 +1,75 @@
+scripts/review/status/check-structure.ts: FAILED
+Command failed: npx tsx "E:\OPPSCOUT\scripts\review\status\check-structure.ts"
+node:fs:439
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: EISDIR: illegal operation on a directory, read
+    at readFileSync (node:fs:439:20)
+    at <anonymous> (E:\OPPSCOUT\scripts\review\status\check-structure.ts:34:161)
+    at Object.<anonymous> (E:\OPPSCOUT\scripts\review\status\check-structure.ts:44:60)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
+    at Object.transformer (E:\OPPSCOUT\node_modules\tsx\dist\register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1481:32)
+    at Module._load (node:internal/modules/cjs/loader:1300:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:339:3) {
+  errno: -4068,
+  code: 'EISDIR',
+  syscall: 'read'
+}
+
+Node.js v24.13.0
+
+
+---
+
+scripts/review/status/check-wiring.ts: OK
+feature-flags reads audienceGate: NOT WIRED
+hard gate imported by feed or matching code: WIRED
+report route imports reportSuspiciousListing: WIRED
+org submission imported by v1 opportunities route: WIRED
+admin review page reads review queue: WIRED
+match engine imports rule-based gates: WIRED
+
+
+---
+
+scripts/review/status/check-adapters.ts: OK
+prisma repo file: PRESENT
+supabase repo file: PRESENT
+memory repo file: PRESENT
+shared domain types file: PRESENT
+shared repository types file: PRESENT
+Lead methods in shared types: MISSING
+Source methods in shared types: MISSING
+ListingReport methods in shared types: MISSING
+IngestionRun methods in shared types: MISSING
+
+
+---
+
+scripts/review/status/check-behaviour.ts: OK
+B1: manual ingestion code exists; re-ingestion rule not proven in a memory adapter harness
+B2: hard-gate function exists and is relevant to Gulu/Uganda rule checks
+A1: audience gate module absent: no provider implementation in src/services/matching/audience.ts
+AppendixB: scratch contract test exists in scripts/review/verify-appendix-b.ts
+
+
+---
+
+scripts/review/status/launch-gate.ts: OK
+Launch gate conditions:
+- 200 live Uganda-relevant listings: UNVERIFIABLE
+- 150 performed in Uganda: UNVERIFIABLE
+- no origin above 10 before gate then 5% after gate: UNVERIFIABLE
+- at least 20 distinct organisations: UNVERIFIABLE
+- org_attested <= 25%: UNVERIFIABLE
+- report response within 24h for 95%: UNVERIFIABLE
+- audience gate enforced with shadow diff reviewed: UNVERIFIABLE
+- dead-link rate < 2%, freshness error < 1%: UNVERIFIABLE
+No read-only DATABASE_URL detected in the environment.
+Status: UNVERIFIABLE without a live read-only database or deployment output.
+Gate script path: E:\OPPSCOUT\scripts\review\status\launch-gate.ts
+checkRlsScriptExists: yes

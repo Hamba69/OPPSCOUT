@@ -1,0 +1,9 @@
+Command: npx prisma validate --schema docs/review/evidence/appendix-a-scratch.prisma
+Exit code: 0
+Output:
+Loaded Prisma config from prisma.config.ts.
+Prisma config detected, skipping environment variable loading.
+Prisma schema loaded from docs\review\evidence\appendix-a-scratch.prisma
+The schema at docs\review\evidence\appendix-a-scratch.prisma is valid.
+
+The scratch schema contains the repository schema plus Appendix A enums, Source, Lead, ListingReport, IngestionRun, and proposed Opportunity/Organization/UserProfile fields.

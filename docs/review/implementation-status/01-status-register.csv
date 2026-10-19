@@ -1,0 +1,17 @@
+id,section,item,level,special_status,evidence,notes
+M1,schema,Source/Lead/ListingReport/IngestionRun models,0,ABSENT,prisma/schema.prisma,Plan tables absent from current schema
+M2,schema,New enums for Source/Lead/Report state,0,ABSENT,prisma/schema.prisma,Enums absent
+M3,schema,Opportunity audience + provenance + source metadata columns,0,ABSENT,prisma/schema.prisma,Opportunity model not updated
+M4,schema,Organization officialDomains + trustedPoster + verification fields,0,ABSENT,prisma/schema.prisma,Not implemented
+M5,schema,User profile audience and residence fields,0,ABSENT,prisma/schema.prisma,Not implemented
+M6,security,RLS inventory for new tables,0,ABSENT,scripts/check-rls.ts,Generic script only
+M7,migration,Schema migration set for new plan tables,0,ABSENT,prisma/migrations,No plan migration set found
+A1,audience,Audience gate in production routing,0,ABSENT,src/app + src/services,Only scratch contract script exists
+A2,audience,Audience gate flag defaults off + shadow mode,0,ABSENT,src/config/feature-flags.ts,Flag missing
+B1,bugfix,F11 duplicate re-ingestion defect,2,ACTIVE,src/services/ingestion/manual/index.ts,Verified records can be downgraded
+B2,bugfix,F8 hard-gate behavior,2,PARTIAL,src/services/matching/rule-based/hard-gates.ts,Exists but not fully wired as production gate
+B3,trust,Suspicious listing reporting,1,PARTIAL,src/services/trust/report.ts,Report service exists but not plan workflow
+B4,review,Admin review queue,1,PARTIAL,src/app/admin review,Queue exists but not the plan flow
+K1,launch,Launch gate checker script,1,PARTIAL,scripts/review/status/launch-gate.ts,Script exists but no live DB evidence
+K2,launch,Read-only production gate outcome,0,UNVERIFIABLE,DATABASE_URL unavailable,No DB access available
+O1,ops,Capacity / audit script,2,PARTIAL,scripts/audit-capacity.ts,Script exists but no live output

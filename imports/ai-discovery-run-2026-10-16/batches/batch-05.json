@@ -1,0 +1,82 @@
+[
+  {
+    "id": "b71f413b-b764-4ea8-a20c-0ab6cd40cf38",
+    "title": "Margaret McNamara Educational Grants (African women)",
+    "sourceUrl": "https://www.advance-africa.com/Margaret-McNamara-Educational-Grants-for-African-Women.html",
+    "deadline": null,
+    "location": "South Africa, USA, Canada, Latin America",
+    "organizationId": "cf9a6e1e-a9b1-402c-b828-6d2c15ea1675"
+  },
+  {
+    "id": "9e65fa3c-fe46-4359-afbb-ca9ec7689c86",
+    "title": "Eni-Oxford MBA Scholarships for Africans",
+    "sourceUrl": "https://www.advance-africa.com/Eni-Oxford-MBA-Scholarships-for-Africans-to-Study-in-UK.html",
+    "deadline": null,
+    "location": "UK",
+    "organizationId": "af9138c5-a8f4-4a8b-b6d8-3aa0558f031f"
+  },
+  {
+    "id": "201c29ff-1410-4f4d-8afd-7c9ec7c87ea0",
+    "title": "Pauline Graham Scholarships for African women",
+    "sourceUrl": "https://www.advance-africa.com/MSc-Scholarships-for-African-Female-Students.html",
+    "deadline": null,
+    "location": "UK",
+    "organizationId": "bc1a0609-735b-4ec7-8cfd-08fde54362d9"
+  },
+  {
+    "id": "0ef95464-cb59-47f5-a98c-aecce4e92b96",
+    "title": "Macquarie University Africa scholarships",
+    "sourceUrl": "https://www.advance-africa.com/Macquarie-University-International-Scholarship.html",
+    "deadline": null,
+    "location": "Australia",
+    "organizationId": "b85d8b14-9e2a-49f3-8d5c-07ffcb381adb"
+  },
+  {
+    "id": "3d3e6ce2-7e81-4183-b1b2-fcc50f1bd3fe",
+    "title": "Weidenfeld-Hoffmann Scholarships and Leadership Programme 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "UK",
+    "organizationId": "cc1160f1-44c0-47b1-bcf3-8ac18cd5764e"
+  },
+  {
+    "id": "50237ff5-a7a8-48c6-a39b-c2c06d51b7c2",
+    "title": "Wageningen University Scholarship 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "Netherlands",
+    "organizationId": "3ba1abaa-6034-457a-b58e-7f237f8d9300"
+  },
+  {
+    "id": "b40220c1-8f8c-4a2d-a22e-8667955350b4",
+    "title": "ARES Scholarships 2027-2028",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "Belgium",
+    "organizationId": "2d3e405e-003d-4a8a-8767-ece2391b5e6c"
+  },
+  {
+    "id": "ee79de51-58f0-49b0-8e07-b80b6d344e2e",
+    "title": "Commonwealth Fellowships 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "UK",
+    "organizationId": "5c2c05a5-a5b9-4302-8b2c-a103a072fcd4"
+  },
+  {
+    "id": "8c143399-eb6c-4dcf-ae73-e9ddcddf2051",
+    "title": "Khalifa University Graduate Scholarship 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "UAE",
+    "organizationId": "27d3ec80-996a-4a46-b512-8868cd10bc8c"
+  },
+  {
+    "id": "65332e10-8223-436d-97e8-04f1c9f7563e",
+    "title": "NYCU International Students Scholarship 2027",
+    "sourceUrl": "https://www.scholarshiptab.com/scholarships-for/uganda",
+    "deadline": null,
+    "location": "Taiwan",
+    "organizationId": "43724fc0-804d-4885-a67e-ad22abf4c211"
+  }
+]

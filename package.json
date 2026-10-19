@@ -15,6 +15,7 @@
     "prisma:validate": "prisma validate",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx scripts/seed/index.ts",
+    "import:uganda-scan": "tsx scripts/import-uganda-scan.ts",
     "worker:notifications": "tsx scripts/worker/notifications.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "worker:freshness": "tsx scripts/worker/freshness.ts",

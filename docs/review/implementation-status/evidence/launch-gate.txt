@@ -1,0 +1,13 @@
+Launch gate conditions:
+- 200 live Uganda-relevant listings: UNVERIFIABLE
+- 150 performed in Uganda: UNVERIFIABLE
+- no origin above 10 before gate then 5% after gate: UNVERIFIABLE
+- at least 20 distinct organisations: UNVERIFIABLE
+- org_attested <= 25%: UNVERIFIABLE
+- report response within 24h for 95%: UNVERIFIABLE
+- audience gate enforced with shadow diff reviewed: UNVERIFIABLE
+- dead-link rate < 2%, freshness error < 1%: UNVERIFIABLE
+No read-only DATABASE_URL detected in the environment.
+Status: UNVERIFIABLE without a live read-only database or deployment output.
+Gate script path: E:\OPPSCOUT\scripts\review\status\launch-gate.ts
+checkRlsScriptExists: yes
