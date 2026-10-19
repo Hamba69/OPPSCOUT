@@ -1,0 +1,9 @@
+{
+  "snapshotCapturedAt": "2026-10-02T07:20:41.196Z",
+  "snapshotSha256": "5ee1ac8d27ea33dbd3c6ca0c2a4b80deb30ec77a598bf31b79f17783ec8bbdbc",
+  "opportunities": 115,
+  "organizations": 79,
+  "organizationLabelsAreSynthetic": true,
+  "sourceNamesWereNotPresentInSnapshot": true,
+  "databaseTarget": "127.0.0.1:54329"
+}

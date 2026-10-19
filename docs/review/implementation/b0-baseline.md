@@ -19,4 +19,19 @@ Checks ran in the isolated B0 worktree with database environment variables unset
 
 An initial concurrent check run had two extra timeouts in `profile-form.test.ts`; the serial rerun returned exactly the two known baseline failures. The initial build attempt used a dependency junction pointing outside the worktree and failed Turbopack's symlink check; the successful build ran with a physical dependency copy in the isolated worktree. That setup artifact is not a repository defect.
 
-No Docker executable or safe database was established during baseline. Database-gated work remains deferred until a local database can be provided or started.
+## B0 implementation verification
+
+| Command | Exit | Result |
+|---|---:|---|
+| `npm run prisma:validate` | 0 | Schema valid. |
+| `npm run typecheck` | 0 | Passed after B0 changes. |
+| `npm run lint` | 0 | No errors; the same four existing warnings remain. |
+| `npm test -- --reporter=dot --maxWorkers=1 tests/unit/db-guard.test.ts` | 0 | 1 file / 11 tests passed. |
+| `npm test -- --reporter=dot --maxWorkers=1` | 1 | 25 files / 95 tests passed; the same two known failures remain, in `auth-proxy.test.ts:15` and `auth-recovery.test.ts:28`. |
+| `npm run build` | 0 | Production build passed. |
+| `npm run impl:self-audit` | 0 | Changed-source and test hygiene checks passed. |
+| Pre-amendment `npm run impl:migration-rehearsal -- --apply` | 0 | Superseded: this used plain PostgreSQL on port 55432 and does not satisfy the amended Supabase-stack requirement. |
+| Post-amendment `npm run impl:migration-rehearsal -- --apply` | 1 | All 14 Prisma migrations applied to the local Supabase stack; the tracked Supabase mirror failed because it adds `Opportunity.organizationName`, already added by Prisma. The mirror was not edited or skipped; see [the rehearsal status](../../audits/migration-rehearsal-results.json). |
+| `npm run impl:migration-rehearsal -- --verify-snapshot-only` | 0 | Read-only comparison verified all 115 snapshot Opportunities unchanged (SHA-256 `e1c870c285493f14c9126ff83b3eb88db20d057679072cc114b4c03e92f5103b`). This does not convert the failed mirror rehearsal into a pass. |
+
+The prior migration and seed operations used only the B0 local PostgreSQL container bound to `127.0.0.1:55432`; no production database variables or credentials were used. Those results are retained as historical evidence but are superseded by the post-amendment rehearsal. The current local Supabase CLI stack used `127.0.0.1:54329`; no production database variables or credentials were used. `npm ci` remains unverified because the package tarball is absent from the local cache and registry requests fail with `ECONNRESET`.
