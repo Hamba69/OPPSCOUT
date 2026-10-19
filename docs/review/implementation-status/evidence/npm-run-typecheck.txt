@@ -1,3 +1,5 @@
 
 > oppscout@0.1.0 typecheck
 > tsc --noEmit
+
+src/app/(web)/settings/page.tsx(20,161): error TS2552: Cannot find name 'searchParams'. Did you mean 'URLSearchParams'?

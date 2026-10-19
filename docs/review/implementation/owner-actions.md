@@ -2,8 +2,10 @@
 
 ## Branch `backup-before-workflow-rewrite`
 
-**Owner authorization recorded 19 October 2026:** the owner explicitly requested: “stage, comiit, merge all branches sync and push everything.” This supersedes the prior no-merge restriction for this synchronization task.
+**Owner authorization recorded 19 October 2026:** the owner explicitly requested: “stage, comiit, merge all branches sync and push everything.” This superseded the prior no-merge restriction for this synchronization task.
 
-Scope: commit the current audit deliverables on `main`; integrate branch commits that are not already in `main` after checking mergeability; synchronize with `origin`; push the resulting changes. Preserve existing branch refs. Do not delete branches. Branch contents and overlap are recorded in [decisions.md](./decisions.md); equivalent work may already have reached `main` through other commits, so avoid duplicate changes.
+Completed locally: audit commit `5a917864d198c867c4ec93c91d373cf6ad96b080`; merge commit `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b` integrates `backup-before-workflow-rewrite`. Existing branch refs were preserved. No force push or branch deletion was performed.
 
-The remote-tracking branches will be checked for commits not already contained in `main`; no remote-only work should be silently overwritten. This authorization does not permit destructive resets or force pushes.
+Push is held: post-merge `npm run typecheck` fails because the merged settings page references undeclared `searchParams`. Fixing or reverting that product file would exceed the original read-only product-code scope. Do not push the merge until this scope conflict is resolved. Post-merge validation results and the audit regeneration are recorded in [the implementation-status validation log](../implementation-status/04-validation-log.md).
+
+The remote-tracking branches were checked for commits not already contained in `main`; no remote-only work should be silently overwritten. The authorization does not permit destructive resets or force pushes. Branch contents and overlap are recorded in [decisions.md](./decisions.md).

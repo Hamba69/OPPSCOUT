@@ -2,7 +2,7 @@
 
 ## Headline
 
-At commit `7588d39f42d19f5f6cb98969a13c387cdf4f161c` on branch `main`, 16 of 20 requirements are level 0, 4 are level 1, 0 are level 2, 0 are level 3, and 0 are level 4. Weighted engineering completeness is **5.0%**.
+At commit `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b` on branch `main`, 16 of 20 requirements are level 0, 4 are level 1, 0 are level 2, 0 are level 3, and 0 are level 4. Weighted engineering completeness is **5.0%**.
 
 Weights used: level 0 = 0%, level 1 = 25%, level 2 = 50%, level 3 = 75%, and level 4 = 100%. The score is the arithmetic mean of the per-row level weights, computed by parsing [01-status-register.csv](./01-status-register.csv); it measures engineering implementation only, not production readiness. Every row above level 0 records wiring, adapter, migration, RLS and test evidence, or explicitly says MISSING/not applicable.
 
@@ -16,7 +16,7 @@ No requirement is level 4: there is no production evidence for any planned capab
 
 ## Audit scope and baseline
 
-- Current HEAD: `7588d39f42d19f5f6cb98969a13c387cdf4f161c`; branch: `main`.
+- Current HEAD: `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b`; branch: `main`.
 - Previous audit baseline referenced by the request: `b3bcf65d5543e779618ee49cc52a814743e59504`. Current HEAD is later; intervening commits are recorded in `evidence/branch-and-history.txt`.
 - The initial read-only worktree inspection before audit edits was clean. At generation time, current uncommitted entries are recorded in `evidence/branch-and-history.txt`; changes under the audit directories are audit work in progress, not shipped product implementation.
 - This audit writes only to `docs/review/implementation-status/` and `scripts/review/status/`. No product, schema, migration, test, config or environment file was changed.
@@ -57,8 +57,7 @@ Branches from `git branch -a`: [recorded in evidence](./evidence/branch-and-hist
 
 Commits on other branches touching plan paths, not merged into `main`:
 
-- Exists on branch backup-before-workflow-rewrite, not merged into main: 8449ea21c4847e86dd6958f162f903d4a350b912
-- Exists on branch backup-before-workflow-rewrite, not merged into main: 4bb77c1213f181167d5d4db5e159c25e6a94df15
+- No unmerged commits touching the inspected plan paths were found.
 
 At generation time, uncommitted entries are the audit artifacts and audit script changes listed in [evidence/branch-and-history.txt](./evidence/branch-and-history.txt); they are in progress, not shipped product work. No product, test, migration, config or environment changes outside the two permitted directories were found: `(none)`.
 
@@ -73,11 +72,11 @@ Status labels use ABSENT for features not built, PARTIAL only for the four narro
 Confirmed expected baseline: 2 failed | 24 passed (26); 2 failed | 84 passed (86); both known failures match the supplied test names.
 
 tsconfig include paths are src and generated .next types only; scripts/review is excluded, so its files cannot cause a TypeScript typecheck failure.
+Typecheck failed because the merged settings-page integration references undeclared `searchParams` (src/app/(web)/settings/page.tsx(20,161): error TS2552: Cannot find name 'searchParams'. Did you mean 'URLSearchParams'?). This is in product source under `src/`, not in `scripts/review/`; the backup-branch merge introduced the reference.
 
 - `npm run prisma:validate`: exit 0.
-- `npm run typecheck`: exit 0.
+- `npm run typecheck`: exit 2.
 - `npm run lint`: exit 0; warnings are shown in the captured evidence, no lint errors.
 - `npm run test -- --reporter=dot`: exit 1; 2 failed | 24 passed (26); 2 failed | 84 passed (86).
-- Combined previous run's final exit code cannot be assigned to either subcommand because only the final chained result was recorded. Separate current executions both pass; no TypeScript failure is attributable to `scripts/review/`.
 
 See [04-validation-log.md](./04-validation-log.md) and individual command output in [evidence/](./evidence/).

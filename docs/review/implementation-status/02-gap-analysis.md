@@ -30,7 +30,7 @@ No “done” list includes pre-existing code with a known defect. In particular
 - **F8:** actual execution shows the location hard gate rejects Gulu for a rule allowing Uganda or Kampala because current code compares `profile.location` only.
 - **Reports:** the current path flags on an individual report; it does not implement the planned reporting thresholds or response clock.
 - **Audience:** absence of a gate means today's feed can rank/display opportunities without the proposed fail-closed applicant-scope check.
-- **Unmerged development:** the branch and commit evidence is in [evidence/branch-and-history.txt](./evidence/branch-and-history.txt); unmerged code is not shipped.
+- **Branch status:** no unmerged commits touching the inspected plan paths were found. `backup-before-workflow-rewrite` is merged into `main`; its branch ref remains preserved.
 
 ## Regression determination
 

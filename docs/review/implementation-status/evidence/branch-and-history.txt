@@ -1,4 +1,4 @@
-HEAD: 7588d39f42d19f5f6cb98969a13c387cdf4f161c
+HEAD: 10fdceedf4b0b01679f3bdfc18b86db53f86dd1b
 
 branch: main
 
@@ -14,39 +14,27 @@ backup-before-workflow-rewrite
   remotes/origin/vercel/install-vercel-web-analytics-wtmciu
 
 Commits since referenced baseline b3bcf65d5543e779618ee49cc52a814743e59504:
+10fdcee Merge branch 'backup-before-workflow-rewrite'
+5a91786 docs: regenerate implementation status audit
 7588d39 Merge branch 'main' of https://github.com/Hamba69/OPPSCOUT
 4709b68 review one run
 01fa5fd Update dashboard layout and navigation
+8449ea2 additional todo features
+4bb77c1 auth gates and admin portal
 
 Unmerged plan-path commits:
-backup-before-workflow-rewrite	8449ea21c4847e86dd6958f162f903d4a350b912	additional todo features
-backup-before-workflow-rewrite	4bb77c1213f181167d5d4db5e159c25e6a94df15	auth gates and admin portal
+(none)
 
 git status before generated outputs:
 M docs/review/implementation-status/00-status-report.md
- M docs/review/implementation-status/01-status-register.csv
  M docs/review/implementation-status/02-gap-analysis.md
- M docs/review/implementation-status/03-owner-commands.md
  M docs/review/implementation-status/04-validation-log.md
- D docs/review/implementation-status/evidence/check-adapters.txt
- D docs/review/implementation-status/evidence/check-behaviour.txt
- D docs/review/implementation-status/evidence/check-wiring.txt
- D docs/review/implementation-status/evidence/launch-gate.txt
- D docs/review/implementation-status/evidence/verification-summary.txt
- D scripts/review/status/check-adapters.ts
- D scripts/review/status/check-behaviour.ts
- D scripts/review/status/check-structure.ts
- D scripts/review/status/check-wiring.ts
- D scripts/review/status/launch-gate.ts
+ M docs/review/implementation-status/evidence/branch-and-history.txt
+ M docs/review/implementation-status/evidence/npm-run-test-reporter-dot.txt
+ M docs/review/implementation-status/evidence/npm-run-typecheck.txt
+ M docs/review/implementation/decisions.md
+ M docs/review/implementation/owner-actions.md
  M scripts/review/status/verify-status-all.ts
-?? docs/review/implementation-status/evidence/branch-and-history.txt
-?? docs/review/implementation-status/evidence/database-status.txt
-?? docs/review/implementation-status/evidence/f11-execution.txt
-?? docs/review/implementation-status/evidence/f8-execution.txt
-?? docs/review/implementation-status/evidence/npm-run-lint.txt
-?? docs/review/implementation-status/evidence/npm-run-prisma-validate.txt
-?? docs/review/implementation-status/evidence/npm-run-test-reporter-dot.txt
-?? docs/review/implementation-status/evidence/npm-run-typecheck.txt
 
 Changes outside permitted directories before generation:
 (none)

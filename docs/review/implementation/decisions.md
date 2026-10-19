@@ -1,19 +1,19 @@
 # B0 — Existing branch review
 
 **Reviewed:** 19 October 2026  
-**Current branch:** `main` at `7588d39f42d19f5f6cb98969a13c387cdf4f161c`  
+**Current branch:** `main` at merge commit `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b`
 **Branch reviewed:** `backup-before-workflow-rewrite`
 
 ## Branch status
 
-The local branch contains the two requested commits and diverges from `main` at `80a53fd3ffb2ed49b5fe2997f72ca35780c28643`.
+The local branch contains the two requested commits and diverged from `main` at `80a53fd3ffb2ed49b5fe2997f72ca35780c28643`. The branch was subsequently merged into `main` by merge commit `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b`, with the original branch ref preserved.
 
 | Commit | Subject | Date | Summary |
 |---|---|---|---|
 | `4bb77c1213f181167d5d4db5e159c25e6a94df15` | `auth gates and admin portal` | 3 October 2026 | 107 changed files; admin portal and access gates, feedback, telemetry, monitoring, profile enrichment, report-review wiring, and schema/migrations. |
 | `8449ea21c4847e86dd6958f162f903d4a350b912` | `additional todo features` | 3 October 2026 | 33 changed files; organization and candidate workflows, private seeker documents, document retention worker, schema/migration, and RLS inventory updates. |
 
-Neither commit is an ancestor of current `main`; `git rev-list --left-right --count main...backup-before-workflow-rewrite` reports 17 commits on the `main` side and 2 on the branch side. This is a statement about commit ancestry, not a claim that all the branch's features are absent from the current tree. Some equivalent work is present in current `main` under other commits. The branch-specific commits remain unmerged and are not treated as shipped implementation evidence in the implementation-status score.
+Both commits are ancestors of current `main`. The merge retained current-main content for conflicting paths; the net merge changes were `.github/workflows/telemetry-retention.yml` and a settings-page integration for `AdminPortalTrigger`. The branch ref remains available as historical provenance. This is a statement about commit ancestry, not a claim that all the branch's features are absent from the current tree. Some equivalent work is present in current `main` under other commits.
 
 ## Contents and overlap with the plan
 
@@ -42,5 +42,6 @@ The commit adds or changes:
 
 ## B0 disposition
 
-Keep the branch as historical/unmerged work for owner review. Do not build on it, merge it, or delete it based on this audit. Compare its feature intent with the current `main` tree before any future integration to avoid duplicating work already present through other commits. The decision can change only through an explicit owner instruction recorded in [owner-actions.md](./owner-actions.md).
+The owner later explicitly authorized merging all branches for synchronization; see [owner-actions.md](./owner-actions.md). The branch was merged into `main` without deleting its ref. Do not delete the retained branch. Its branch-only implementation is not automatically credited as completion of plan requirements: the audit scores the current product tree against each specific requirement and records evidence or missing work per row.
 
+Post-merge validation found that the merged settings-page integration references `searchParams` without declaring it, causing `npm run typecheck` to fail at `src/app/(web)/settings/page.tsx:20`. The original audit instruction restricts writes to audit tooling and reports; the product file has not been modified to fix or revert that change. The merge remains local and must not be pushed until the owner resolves the product-code scope or authorizes the minimal correction. See [owner-actions.md](./owner-actions.md).

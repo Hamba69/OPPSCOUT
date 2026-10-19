@@ -559,6 +559,17 @@ async function main(): Promise<void> {
   const typecheckScope = scriptsIncluded
     ? "tsconfig includes scripts/review, so audit scripts are in typecheck scope."
     : "tsconfig include paths are src and generated .next types only; scripts/review is excluded, so its files cannot cause a TypeScript typecheck failure.";
+  const typecheckDiagnostic = commandResults[1].output
+    .split(/\r?\n/)
+    .find((line) => /\berror TS\d+:/.test(line));
+  const typecheckOutcome = commandResults[1].exitCode === 0
+    ? "Typecheck passed."
+    : /settings\/page\.tsx.*Cannot find name 'searchParams'/.test(commandResults[1].output)
+      ? `Typecheck failed because the merged settings-page integration references undeclared \`searchParams\` (${typecheckDiagnostic ?? "compiler diagnostic captured in evidence"}). This is in product source under \`src/\`, not in \`scripts/review/\`; the backup-branch merge introduced the reference.`
+      : `Typecheck failed with exit code ${commandResults[1].exitCode}. First compiler diagnostic: \`${typecheckDiagnostic ?? "see full output in evidence"}\`.`;
+  const branchStatusSummary = unmerged.length
+    ? "- **Unmerged development:** the branch and commit evidence is in [evidence/branch-and-history.txt](./evidence/branch-and-history.txt); unmerged code is not shipped."
+    : "- **Branch status:** no unmerged commits touching the inspected plan paths were found. `backup-before-workflow-rewrite` is merged into `main`; its branch ref remains preserved.";
   const branchEvidence = unmerged.length
     ? unmerged.map((line) => `- Exists on branch ${line.split("\t")[0]}, not merged into main: ${line.split("\t")[1]}`)
     : ["- No unmerged commits touching the inspected plan paths were found."];
@@ -637,12 +648,12 @@ Status labels use ABSENT for features not built, PARTIAL only for the four narro
 ${testOutcome}
 
 ${typecheckScope}
+${typecheckOutcome}
 
 - \`npm run prisma:validate\`: exit ${commandResults[0].exitCode}.
 - \`npm run typecheck\`: exit ${commandResults[1].exitCode}.
 - \`npm run lint\`: exit ${lintResult.exitCode}; warnings are shown in the captured evidence, no lint errors.
 - \`npm run test -- --reporter=dot\`: exit ${commandResults[3].exitCode}; ${tests.files}; ${tests.tests}.
-- Combined previous run's final exit code cannot be assigned to either subcommand because only the final chained result was recorded. Separate current executions both pass; no TypeScript failure is attributable to \`scripts/review/\`.
 
 See [04-validation-log.md](./04-validation-log.md) and individual command output in [evidence/](./evidence/).
 `;
@@ -679,7 +690,7 @@ No “done” list includes pre-existing code with a known defect. In particular
 - **F8:** actual execution shows the location hard gate rejects Gulu for a rule allowing Uganda or Kampala because current code compares \`profile.location\` only.
 - **Reports:** the current path flags on an individual report; it does not implement the planned reporting thresholds or response clock.
 - **Audience:** absence of a gate means today's feed can rank/display opportunities without the proposed fail-closed applicant-scope check.
-- **Unmerged development:** the branch and commit evidence is in [evidence/branch-and-history.txt](./evidence/branch-and-history.txt); unmerged code is not shipped.
+${branchStatusSummary}
 
 ## Regression determination
 
@@ -746,6 +757,8 @@ This run observed 24 passing and 2 failing test files (84 passing tests, 2 faili
 ## TypeScript scope
 
 \`tsconfig.json\` includes \`src\` and generated \`.next/types\` only; it excludes \`scripts/review/\`. The isolated \`npm run typecheck\` execution exited ${commandResults[1].exitCode}. Therefore audit script files cannot have caused a typecheck failure in this run.
+
+${typecheckOutcome}
 
 ## Offline database behavior
 
