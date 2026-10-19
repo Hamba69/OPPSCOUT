@@ -5,12 +5,12 @@
 
  RUN  v3.2.7 E:/OPPSCOUT
 
-······x···············x·······························································
+······x·············x·································································
 
  Test Files  2 failed | 24 passed (26)
       Tests  2 failed | 84 passed (86)
-   Start at  10:29:40
-   Duration  9.40s (transform 4.73s, setup 300ms, collect 15.17s, tests 8.63s, environment 2.98s, prepare 9.74s)
+   Start at  10:33:00
+   Duration  10.16s (transform 5.68s, setup 351ms, collect 16.78s, tests 9.29s, environment 3.25s, prepare 7.33s)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯

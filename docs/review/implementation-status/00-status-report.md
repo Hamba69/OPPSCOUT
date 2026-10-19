@@ -2,7 +2,7 @@
 
 ## Headline
 
-At commit `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b` on branch `main`, 16 of 20 requirements are level 0, 4 are level 1, 0 are level 2, 0 are level 3, and 0 are level 4. Weighted engineering completeness is **5.0%**.
+At commit `52944852587a5a108a88e6589a4e5805fcba1912` on branch `main`, 16 of 20 requirements are level 0, 4 are level 1, 0 are level 2, 0 are level 3, and 0 are level 4. Weighted engineering completeness is **5.0%**.
 
 Weights used: level 0 = 0%, level 1 = 25%, level 2 = 50%, level 3 = 75%, and level 4 = 100%. The score is the arithmetic mean of the per-row level weights, computed by parsing [01-status-register.csv](./01-status-register.csv); it measures engineering implementation only, not production readiness. Every row above level 0 records wiring, adapter, migration, RLS and test evidence, or explicitly says MISSING/not applicable.
 
@@ -16,7 +16,7 @@ No requirement is level 4: there is no production evidence for any planned capab
 
 ## Audit scope and baseline
 
-- Current HEAD: `10fdceedf4b0b01679f3bdfc18b86db53f86dd1b`; branch: `main`.
+- Current HEAD: `52944852587a5a108a88e6589a4e5805fcba1912`; branch: `main`.
 - Previous audit baseline referenced by the request: `b3bcf65d5543e779618ee49cc52a814743e59504`. Current HEAD is later; intervening commits are recorded in `evidence/branch-and-history.txt`.
 - The initial read-only worktree inspection before audit edits was clean. At generation time, current uncommitted entries are recorded in `evidence/branch-and-history.txt`; changes under the audit directories are audit work in progress, not shipped product implementation.
 - This audit writes only to `docs/review/implementation-status/` and `scripts/review/status/`. No product, schema, migration, test, config or environment file was changed.
