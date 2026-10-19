@@ -1,0 +1,75 @@
+{
+  "localStackAttempts": [
+    {
+      "command": ".\\scripts\\review\\impl\\local-db.ps1 -Action Start -Reset",
+      "exitCode": 0,
+      "durationMs": null,
+      "firstOutput": "Supabase local stack started with project configuration at supabase/config.toml; generated keys were suppressed.",
+      "lastOutput": "Supabase local stack started with project configuration at supabase/config.toml; generated keys were suppressed."
+    },
+    {
+      "command": "npm run impl:db-preflight -- --variable=LOCAL_DATABASE_URL",
+      "exitCode": 0,
+      "durationMs": 1563,
+      "firstOutput": "LOCAL_DATABASE_URL: reachable and authenticated (TCP and PostgreSQL checks each bounded to 2000 ms).",
+      "lastOutput": "LOCAL_DATABASE_URL: reachable and authenticated (TCP and PostgreSQL checks each bounded to 2000 ms)."
+    }
+  ],
+  "command": "npm run impl:migration-rehearsal -- --apply",
+  "startedAt": "2026-10-19T11:05:32.992Z",
+  "completedAt": "2026-10-19T11:05:37.283Z",
+  "durationMs": 4291,
+  "exitCode": 1,
+  "target": {
+    "hostname": "127.0.0.1",
+    "port": 54329,
+    "database": "postgres"
+  },
+  "failureStage": "Supabase mirror migrations",
+  "failure": "Supabase mirror migrations failed with exit code 1: {\"_tag\":\"Error\",\"error\":{\"code\":\"LegacyMigrationApplyError\",\"message\":\"effect/sql/SqlError: Failed to execute statement\\nAt statement: 0\\nALTER TABLE public.\\\"Opportunity\\\"\\r\\n  ALTER COLUMN \\\"organizationId\\\" DROP NOT NULL,\\r\\n  ADD COLUMN \\\"organizationName\\\" text\"}} | Connecting to local database... | Applying migration 20261012093356_allow_unlinked_catalog_opportunities.sql...",
+  "prismaMigrationExitCode": 0,
+  "prismaMigrationCount": 14,
+  "prismaMigrations": [
+    "20260818000000_phase_one_core",
+    "20260818010000_phase_four_ussd_preferences",
+    "20260818020000_phase_five_monetization_readiness",
+    "20260818030000_production_readiness",
+    "20260919000000_enable_public_rls",
+    "20260925202703_server_profile_data_api_access",
+    "20260925210023_server_repository_data_api_access",
+    "20260925233000_optional_opportunity_deadline",
+    "20261002200000_opportunity_origin",
+    "20261003000000_admin_portal_feedback_telemetry",
+    "20261003010000_profile_enrichment",
+    "20261003020000_documents_candidates",
+    "20261003191000_documents_server_data_api_access",
+    "20261012093356_allow_unlinked_catalog_opportunities"
+  ],
+  "localOpportunityCount": 115,
+  "organizationNameColumnExists": true,
+  "supabaseMirrorMigrations": [
+    "20261012093356_allow_unlinked_catalog_opportunities.sql"
+  ],
+  "supabaseMirrorMigrationExitCode": 1,
+  "completedSteps": [
+    "prisma migrate deploy",
+    "read applied Prisma migration history"
+  ],
+  "snapshotVerification": "not reached",
+  "firstOutput": "Prisma schema loaded from prisma\\schema.prisma",
+  "lastOutput": "Applying migration 20261012093356_allow_unlinked_catalog_opportunities.sql...",
+  "snapshotVerificationResult": {
+    "command": "npm run impl:migration-rehearsal -- --verify-snapshot-only",
+    "startedAt": "2026-10-19T11:05:38.855Z",
+    "completedAt": "2026-10-19T11:05:38.983Z",
+    "durationMs": 128,
+    "exitCode": 0,
+    "target": {
+      "hostname": "127.0.0.1",
+      "port": 54329,
+      "database": "postgres"
+    },
+    "snapshotOpportunitiesUnchanged": 115,
+    "rowDigestSha256": "e1c870c285493f14c9126ff83b3eb88db20d057679072cc114b4c03e92f5103b"
+  }
+}
