@@ -9,3 +9,13 @@ Phase 3 clarification: the build guide asks shadow scraping to use a staging tab
 Phase 4 schema correction: the USSD menu explicitly requires persisted notification frequency, but the Phase 1 end-state `UserProfile` field list omitted it. A `notificationFrequency` field and enum were added to the existing entity; no new entity or frozen interface changed.
 
 Production-readiness schema correction: the matching specification requires enforceable age gates, but the planned `UserProfile` fields omitted a date from which age can be verified. A nullable `dateOfBirth` field was added to the existing entity so age-gated opportunities can pass or fail deterministically instead of permanently excluding every user.
+
+## Technical Review Plan, Revision 2
+
+### D1 — Four approved plan entities
+
+**Decision:** Add `Source`, `Lead`, `ListingReport`, and `IngestionRun`; the earlier seven-entity freeze is lifted in practice.
+
+**Evidence:** At review commit `7588d39f42d19f5f6cb98969a13c387cdf4f161c`, `prisma/schema.prisma` defines 17 models. The ten models added since the freeze are `StoredDocument`, `SeekerAccessLog`, `SeekerPipelineEntry`, `Feedback`, `RequestMetric`, `WebVitalSample`, `MatchRun`, `UnmatchedTerm`, `AdminAccessLog`, and `MetricRollup`.
+
+**Effect:** The plan's four entities may be implemented with relations, indexes, migrations, adapter contracts, and RLS. See [the B0 decision record](./review/implementation/decisions.md).
