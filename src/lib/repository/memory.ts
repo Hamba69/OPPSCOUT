@@ -3,7 +3,17 @@ import type { Dataset, DataRow } from "@/lib/admin-data";
 import { AdminDataRepository } from "@/lib/repository/admin-base";
 import { randomUUID } from "node:crypto";
 
-import type { Opportunity, Organization, SavedOpportunity, TrustChecklist, UserProfile } from "@/core/entities/domain";
+import type {
+  IngestionRun,
+  Lead,
+  ListingReport,
+  Opportunity,
+  Organization,
+  SavedOpportunity,
+  Source,
+  TrustChecklist,
+  UserProfile,
+} from "@/core/entities/domain";
 import { NotFoundError } from "@/core/errors/app-error";
 import {
   DEMO_ORG_ID,
@@ -13,12 +23,20 @@ import { getDemoCatalog } from "@/data/demo-catalog";
 import type {
   OpportunityFilters,
   OpportunityInput,
+  IngestionRunFilters,
+  IngestionRunInput,
+  LeadFilters,
+  LeadInput,
+  ListingReportFilters,
+  ListingReportInput,
   OrganizationInput,
   ProfileInput,
   Repository,
+  SourceInput,
   StoredMatchResult,
   StoredNotification,
 } from "@/lib/repository/types";
+import { deriveOfficialDomains } from "@/lib/repository/organization-domains";
 
 export const DEMO_USER_ID = "11111111-1111-4111-8111-111111111111";
 export const DEMO_SECOND_USER_ID = "11111111-1111-4111-8111-111111111112";
@@ -40,6 +58,8 @@ const initialProfile: UserProfile = {
   fieldOfStudy: "computer science",
   graduationStatus: "final year",
   dateOfBirth: new Date("2002-05-14T00:00:00.000Z"),
+  countryOfResidence: "UG",
+  openToAbroad: false,
   skills: ["javascript", "research", "communication", "data analysis"],
   workExperience: [{ title: "Student researcher", organization: "Makerere AI Lab", months: 8 }],
   internshipExperience: [{ title: "Web intern", organization: "Kampala Civic Lab", months: 3 }],
@@ -95,12 +115,22 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       internshipExperience: [], certifications: [], profileCompletenessScore: 85 }],
   ]);
   private readonly demoCatalog = getDemoCatalog();
-  private readonly organizations = new Map<string, Organization>(this.demoCatalog.organizations.map((item) => [item.id, copy(item)]));
+  private readonly organizations = new Map<string, Organization>(this.demoCatalog.organizations.map((item) => [item.id, {
+    ...copy(item),
+    officialDomains: deriveOfficialDomains(item.officialLinks),
+    trustedPoster: item.trustedPoster ?? false,
+    verifiedAt: item.verifiedAt ?? null,
+    verifiedBy: item.verifiedBy ?? null,
+  }]));
   private readonly opportunities = new Map<string, Opportunity>(this.demoCatalog.opportunities.map((item) => [item.id, copy(item)]));
   private readonly matches = new Map<string, StoredMatchResult>();
   private readonly saved = new Map<string, SavedOpportunity>();
   private readonly notifications = new Map<string, StoredNotification>();
   private readonly events = new Map<string, import("@/core/entities/domain").EventLog>();
+  private readonly sources = new Map<string, Source>();
+  private readonly leads = new Map<string, Lead>();
+  private readonly listingReports = new Map<string, ListingReport>();
+  private readonly ingestionRuns = new Map<string, IngestionRun>();
 
   public async getProfile(userId: string): Promise<UserProfile | null> {
     return copy(this.profiles.get(userId) ?? null);
@@ -126,6 +156,8 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       fieldOfStudy: input.fieldOfStudy ?? null,
       graduationStatus: input.graduationStatus ?? null,
       dateOfBirth: input.dateOfBirth ?? null,
+      countryOfResidence: input.countryOfResidence ?? "UG",
+      openToAbroad: input.openToAbroad ?? false,
       skills: input.skills ?? [],
       workExperience: input.workExperience ?? [],
       internshipExperience: input.internshipExperience ?? [],
@@ -155,7 +187,13 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   public async updateProfile(userId: string, input: ProfileInput): Promise<UserProfile> {
     const current = this.profiles.get(userId);
     if (!current) throw new NotFoundError("Profile");
-    const profile = { ...current, ...copy(input), updatedAt: new Date() };
+    const profile = {
+      ...current,
+      ...copy(input),
+      countryOfResidence: input.countryOfResidence ?? current.countryOfResidence ?? "UG",
+      openToAbroad: input.openToAbroad ?? current.openToAbroad ?? false,
+      updatedAt: new Date(),
+    };
     this.profiles.set(userId, profile);
     return copy(profile);
   }
@@ -196,6 +234,8 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       organization: organization ? { id: organization.id, name: organization.name, verificationStatus: organization.verificationStatus } : undefined,
       publicationDate: input.publicationDate ?? new Date(),
       checkedAt: input.checkedAt ?? new Date(),
+      lastSeenAt: input.lastSeenAt ?? new Date(),
+      needsRecheck: input.needsRecheck ?? false,
       reviewChecklist: {},
       reviewNotes: null,
       reviewerId: null,
@@ -237,7 +277,11 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   public async createOrganization(input: OrganizationInput): Promise<Organization> {
     const timestamp = new Date();
     const organization: Organization = {
-      ...copy(input), id: randomUUID(), verificationStatus: "pending", postingHistory: [], subscriptionTier: "free", subscriptionStatus: "inactive", monetizationEnabled: false, promotedListingCredits: 0, promotionPolicy: {}, createdAt: timestamp, updatedAt: timestamp,
+      ...copy(input), officialDomains: deriveOfficialDomains(input.officialLinks),
+      trustedPoster: false,
+      verifiedAt: null,
+      verifiedBy: null,
+      id: randomUUID(), verificationStatus: "pending", postingHistory: [], subscriptionTier: "free", subscriptionStatus: "inactive", monetizationEnabled: false, promotedListingCredits: 0, promotionPolicy: {}, createdAt: timestamp, updatedAt: timestamp,
     };
     this.organizations.set(organization.id, organization);
     return copy(organization);
@@ -246,7 +290,13 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
     const current = this.organizations.get(id);
     if (!current) throw new NotFoundError("Organization");
-    const organization = { ...current, ...copy(input), id, updatedAt: new Date() };
+    const organization = {
+      ...current,
+      ...copy(input),
+      officialDomains: input.officialLinks ? deriveOfficialDomains(input.officialLinks) : current.officialDomains,
+      id,
+      updatedAt: new Date(),
+    };
     this.organizations.set(id, organization);
     return copy(organization);
   }
@@ -261,6 +311,175 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
 
   public async updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization> {
     const current = this.organizations.get(id); if (!current) throw new NotFoundError("Organization"); const organization = { ...current, ...copy(input), updatedAt: new Date() }; this.organizations.set(id, organization); return copy(organization);
+  }
+
+  public async listSources(filters: { status?: Source["status"]; organizationId?: string } = {}): Promise<Source[]> {
+    return copy([...this.sources.values()].filter((item) =>
+      (!filters.status || item.status === filters.status) &&
+      (!filters.organizationId || item.organizationId === filters.organizationId)
+    ));
+  }
+
+  public async getSource(id: string): Promise<Source | null> {
+    return copy(this.sources.get(id) ?? null);
+  }
+
+  public async createSource(input: SourceInput): Promise<Source> {
+    if ([...this.sources.values()].some((item) => item.baseUrl === input.baseUrl)) throw new Error("Source URL already exists");
+    const timestamp = new Date();
+    const source: Source = {
+      ...copy(input),
+      id: randomUUID(),
+      organizationId: input.organizationId ?? null,
+      status: input.status ?? "proposed",
+      termsReviewedAt: input.termsReviewedAt ?? null,
+      termsNotes: input.termsNotes ?? null,
+      crawlIntervalHours: input.crawlIntervalHours ?? 24,
+      lastRunAt: input.lastRunAt ?? null,
+      lastSuccessAt: input.lastSuccessAt ?? null,
+      consecutiveFailures: input.consecutiveFailures ?? 0,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    };
+    this.sources.set(source.id, source);
+    return copy(source);
+  }
+
+  public async updateSource(id: string, input: Partial<SourceInput>): Promise<Source> {
+    const current = this.sources.get(id);
+    if (!current) throw new NotFoundError("Source");
+    if (input.baseUrl && [...this.sources.values()].some((item) => item.id !== id && item.baseUrl === input.baseUrl)) throw new Error("Source URL already exists");
+    const source = { ...current, ...copy(input), id, updatedAt: new Date() };
+    this.sources.set(id, source);
+    return copy(source);
+  }
+
+  public async listLeads(filters: LeadFilters = {}): Promise<Lead[]> {
+    return copy([...this.leads.values()].filter((item) =>
+      (!filters.status || item.status === filters.status) &&
+      (!filters.sourceId || item.sourceId === filters.sourceId) &&
+      (!filters.submittedById || item.submittedById === filters.submittedById)
+    ));
+  }
+
+  public async getLead(id: string): Promise<Lead | null> {
+    return copy(this.leads.get(id) ?? null);
+  }
+
+  public async createLead(input: LeadInput): Promise<Lead> {
+    if ([...this.leads.values()].some((item) => item.fingerprint === input.fingerprint)) throw new Error("Lead fingerprint already exists");
+    if (input.promotedOpportunityId && [...this.leads.values()].some((item) => item.promotedOpportunityId === input.promotedOpportunityId)) throw new Error("Opportunity is already promoted from a lead");
+    const lead: Lead = {
+      ...copy(input),
+      id: randomUUID(),
+      status: input.status ?? "new",
+      sourceId: input.sourceId ?? null,
+      submittedById: input.submittedById ?? null,
+      rawUrl: input.rawUrl ?? null,
+      canonicalUrl: input.canonicalUrl ?? null,
+      screenshotPath: input.screenshotPath ?? null,
+      note: input.note ?? null,
+      extracted: input.extracted ?? {},
+      candidateOrgName: input.candidateOrgName ?? null,
+      officialUrl: input.officialUrl ?? null,
+      organizationId: input.organizationId ?? null,
+      duplicateOfId: input.duplicateOfId ?? null,
+      promotedOpportunityId: input.promotedOpportunityId ?? null,
+      rejectReason: input.rejectReason ?? null,
+      createdAt: new Date(),
+      tracedAt: input.tracedAt ?? null,
+      resolvedAt: input.resolvedAt ?? null,
+    };
+    this.leads.set(lead.id, lead);
+    return copy(lead);
+  }
+
+  public async updateLead(id: string, input: Partial<LeadInput>): Promise<Lead> {
+    const current = this.leads.get(id);
+    if (!current) throw new NotFoundError("Lead");
+    if (input.fingerprint && [...this.leads.values()].some((item) => item.id !== id && item.fingerprint === input.fingerprint)) throw new Error("Lead fingerprint already exists");
+    if (input.promotedOpportunityId && [...this.leads.values()].some((item) => item.id !== id && item.promotedOpportunityId === input.promotedOpportunityId)) throw new Error("Opportunity is already promoted from a lead");
+    const lead = { ...current, ...copy(input), id };
+    this.leads.set(id, lead);
+    return copy(lead);
+  }
+
+  public async listListingReports(filters: ListingReportFilters = {}): Promise<ListingReport[]> {
+    return copy([...this.listingReports.values()].filter((item) =>
+      (!filters.opportunityId || item.opportunityId === filters.opportunityId) &&
+      (!filters.reporterId || item.reporterId === filters.reporterId) &&
+      (!filters.status || item.status === filters.status)
+    ));
+  }
+
+  public async getListingReport(id: string): Promise<ListingReport | null> {
+    return copy(this.listingReports.get(id) ?? null);
+  }
+
+  public async createListingReport(input: ListingReportInput): Promise<ListingReport> {
+    if (input.reporterId && [...this.listingReports.values()].some((item) => item.opportunityId === input.opportunityId && item.reporterId === input.reporterId)) throw new Error("Reporter has already reported this opportunity");
+    const report: ListingReport = {
+      ...copy(input),
+      id: randomUUID(),
+      reporterId: input.reporterId ?? null,
+      details: input.details ?? null,
+      status: input.status ?? "open",
+      createdAt: new Date(),
+      resolvedAt: input.resolvedAt ?? null,
+      resolvedBy: input.resolvedBy ?? null,
+      resolutionNote: input.resolutionNote ?? null,
+    };
+    this.listingReports.set(report.id, report);
+    return copy(report);
+  }
+
+  public async updateListingReport(id: string, input: Partial<ListingReportInput>): Promise<ListingReport> {
+    const current = this.listingReports.get(id);
+    if (!current) throw new NotFoundError("Listing report");
+    const opportunityId = input.opportunityId ?? current.opportunityId;
+    const reporterId = input.reporterId === undefined ? current.reporterId : input.reporterId;
+    if (reporterId && [...this.listingReports.values()].some((item) =>
+      item.id !== id && item.opportunityId === opportunityId && item.reporterId === reporterId
+    )) throw new Error("Reporter has already reported this opportunity");
+    const report = { ...current, ...copy(input), id };
+    this.listingReports.set(id, report);
+    return copy(report);
+  }
+
+  public async listIngestionRuns(filters: IngestionRunFilters = {}): Promise<IngestionRun[]> {
+    return copy([...this.ingestionRuns.values()].filter((item) =>
+      (!filters.sourceId || item.sourceId === filters.sourceId) &&
+      (!filters.startedAfter || item.startedAt >= filters.startedAfter)
+    ));
+  }
+
+  public async getIngestionRun(id: string): Promise<IngestionRun | null> {
+    return copy(this.ingestionRuns.get(id) ?? null);
+  }
+
+  public async createIngestionRun(input: IngestionRunInput): Promise<IngestionRun> {
+    const run: IngestionRun = {
+      ...copy(input),
+      id: randomUUID(),
+      startedAt: input.startedAt ?? new Date(),
+      finishedAt: input.finishedAt ?? null,
+      fetched: input.fetched ?? 0,
+      created: input.created ?? 0,
+      updated: input.updated ?? 0,
+      duplicates: input.duplicates ?? 0,
+      failed: input.failed ?? 0,
+      errors: input.errors ?? [],
+    };
+    this.ingestionRuns.set(run.id, run);
+    return copy(run);
+  }
+
+  public async updateIngestionRun(id: string, input: Partial<IngestionRunInput>): Promise<IngestionRun> {
+    const current = this.ingestionRuns.get(id);
+    if (!current) throw new NotFoundError("Ingestion run");
+    const run = { ...current, ...copy(input), id };
+    this.ingestionRuns.set(id, run);
+    return copy(run);
   }
 
   public async upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult> {

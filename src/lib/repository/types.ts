@@ -2,6 +2,12 @@ import type { AdminRepository } from "@/lib/admin-data";
 import type {
   EventLog,
   EventType,
+  IngestionRun,
+  Lead,
+  LeadChannel,
+  LeadStatus,
+  ListingReport,
+  ReportStatus,
   Opportunity,
   OpportunityOrigin,
   OpportunityStatus,
@@ -9,6 +15,9 @@ import type {
   PreferredChannel,
   SavedOpportunity,
   SavedStatus,
+  Source,
+  SourceKind,
+  SourceStatus,
   TrustChecklist,
   UserProfile,
   VerificationStatus,
@@ -68,6 +77,8 @@ export interface ProfileInput {
   fieldOfStudy?: string | null;
   graduationStatus?: string | null;
   dateOfBirth?: Date | null;
+  countryOfResidence?: string | null;
+  openToAbroad?: boolean;
   skills?: string[];
   workExperience?: UserProfile["workExperience"];
   internshipExperience?: UserProfile["internshipExperience"];
@@ -114,6 +125,86 @@ export interface OrganizationInput {
   dashboardUsers: string[];
 }
 
+export interface SourceInput {
+  name: string;
+  kind: SourceKind;
+  baseUrl: string;
+  organizationId?: string | null;
+  status?: SourceStatus;
+  termsReviewedAt?: Date | null;
+  termsNotes?: string | null;
+  crawlIntervalHours?: number;
+  lastRunAt?: Date | null;
+  lastSuccessAt?: Date | null;
+  consecutiveFailures?: number;
+}
+
+export interface LeadInput {
+  channel: LeadChannel;
+  fingerprint: string;
+  status?: LeadStatus;
+  sourceId?: string | null;
+  submittedById?: string | null;
+  rawUrl?: string | null;
+  canonicalUrl?: string | null;
+  screenshotPath?: string | null;
+  note?: string | null;
+  extracted?: Record<string, unknown>;
+  candidateOrgName?: string | null;
+  officialUrl?: string | null;
+  organizationId?: string | null;
+  duplicateOfId?: string | null;
+  promotedOpportunityId?: string | null;
+  rejectReason?: string | null;
+  tracedAt?: Date | null;
+  resolvedAt?: Date | null;
+}
+
+export interface ListingReportInput {
+  opportunityId: string;
+  reason: string;
+  reporterId?: string | null;
+  details?: string | null;
+  status?: ReportStatus;
+  resolvedAt?: Date | null;
+  resolvedBy?: string | null;
+  resolutionNote?: string | null;
+}
+
+export interface IngestionRunInput {
+  sourceId: string;
+  startedAt?: Date;
+  finishedAt?: Date | null;
+  fetched?: number;
+  created?: number;
+  updated?: number;
+  duplicates?: number;
+  failed?: number;
+  errors?: unknown[];
+}
+
+export interface LeadFilters {
+  status?: LeadStatus;
+  sourceId?: string;
+  submittedById?: string;
+}
+
+export interface ListingReportFilters {
+  opportunityId?: string;
+  reporterId?: string;
+  status?: ReportStatus;
+}
+
+export interface IngestionRunFilters {
+  sourceId?: string;
+  startedAfter?: Date;
+}
+
+export interface SourceFilters {
+  status?: SourceStatus;
+  organizationId?: string;
+}
+
 export interface Repository extends AdminRepository {
   getProfile(userId: string): Promise<UserProfile | null>;
   listProfiles(): Promise<UserProfile[]>;
@@ -132,6 +223,22 @@ export interface Repository extends AdminRepository {
   updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization>;
   reviewOrganization(id: string, approved: boolean): Promise<Organization>;
   updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization>;
+  listSources(filters?: SourceFilters): Promise<Source[]>;
+  getSource(id: string): Promise<Source | null>;
+  createSource(input: SourceInput): Promise<Source>;
+  updateSource(id: string, input: Partial<SourceInput>): Promise<Source>;
+  listLeads(filters?: LeadFilters): Promise<Lead[]>;
+  getLead(id: string): Promise<Lead | null>;
+  createLead(input: LeadInput): Promise<Lead>;
+  updateLead(id: string, input: Partial<LeadInput>): Promise<Lead>;
+  listListingReports(filters?: ListingReportFilters): Promise<ListingReport[]>;
+  getListingReport(id: string): Promise<ListingReport | null>;
+  createListingReport(input: ListingReportInput): Promise<ListingReport>;
+  updateListingReport(id: string, input: Partial<ListingReportInput>): Promise<ListingReport>;
+  listIngestionRuns(filters?: IngestionRunFilters): Promise<IngestionRun[]>;
+  getIngestionRun(id: string): Promise<IngestionRun | null>;
+  createIngestionRun(input: IngestionRunInput): Promise<IngestionRun>;
+  updateIngestionRun(id: string, input: Partial<IngestionRunInput>): Promise<IngestionRun>;
   upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult>;
   listMatches(userId: string): Promise<StoredMatchResult[]>;
   getMatch(userId: string, id: string): Promise<StoredMatchResult | null>;

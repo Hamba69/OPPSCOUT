@@ -100,9 +100,77 @@ enum EventType {
   report
 }
 
+enum ApplicantScope {
+  uganda_residents
+  ugandan_citizens
+  african_nationals
+  global
+}
+
+enum RemoteEligibility {
+  unknown
+  uganda
+  east_africa
+  africa
+  global
+}
+
+enum ProvenanceType {
+  official_page
+  application_system
+  org_attested
+}
+
+enum SourceKind {
+  api
+  careers_page
+  rss
+  newspaper
+  partner
+  community
+}
+
+enum SourceStatus {
+  proposed
+  approved
+  paused
+  blocked
+}
+
+enum LeadChannel {
+  whatsapp
+  tiktok
+  instagram
+  facebook
+  linkedin
+  newspaper
+  web
+  email
+  employer
+  other
+}
+
+enum LeadStatus {
+  new
+  tracing
+  traced
+  rejected
+  duplicate
+  promoted
+  expired
+}
+
+enum ReportStatus {
+  open
+  actioned
+  dismissed
+}
+
 model UserProfile {
   id                       String                @id @db.Uuid
   name                     String
+  countryOfResidence       String                @default("UG")
+  openToAbroad             Boolean               @default(false)
   phone                    String?               @unique
   email                    String?               @unique
   preferredChannel         PreferredChannel      @default(web)
@@ -141,6 +209,8 @@ model UserProfile {
   notifications            Notification[]
   savedOpportunities       SavedOpportunity[]
   events                   EventLog[]
+  submittedLeads           Lead[]
+  listingReports           ListingReport[]
 
   @@index([preferredChannel])
 }
@@ -150,6 +220,10 @@ model Organization {
   name                   String
   sector                 String
   officialLinks          String[]           @default([])
+  officialDomains        String[]           @default([])
+  trustedPoster          Boolean            @default(false)
+  verifiedAt             DateTime?
+  verifiedBy             String?
   officialEmail          String?
   registrationProof      String?
   accountableContact     String?
@@ -164,6 +238,8 @@ model Organization {
   promotedListingCredits Int                @default(0)
   promotionPolicy        Json               @default("{}")
   opportunities          Opportunity[]
+  sources                Source[]
+  leads                  Lead[]
 
   @@index([verificationStatus])
 }
@@ -193,13 +269,33 @@ model Opportunity {
   reviewNotes        String?
   reviewerId         String?
   reviewedAt         DateTime?
+  audience           ApplicantScope?
+  countryCodes       String[]           @default([])
+  regions            String[]           @default([])
+  remoteEligibility  RemoteEligibility  @default(unknown)
+  eligibleCountries  String[]           @default([])
+  provenanceType     ProvenanceType?
+  sourceId           String?            @db.Uuid
+  leadId             String?            @unique @db.Uuid
+  canonicalUrl       String?
+  contentHash        String?
+  deadlineDateOnly   Boolean            @default(false)
+  lastSeenAt         DateTime?
+  needsRecheck       Boolean            @default(false)
   organization       Organization?      @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  sourceRecord       Source?            @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  promotedLead       Lead?              @relation("LeadOpportunity", fields: [leadId], references: [id], onDelete: SetNull)
+  promotedFromLead   Lead?              @relation("LeadPromotion")
   matches            MatchResult[]
   savedBy            SavedOpportunity[]
   events             EventLog[]
+  listingReports     ListingReport[]
 
   @@index([verificationStatus, status, deadline])
   @@index([organizationId, title, deadline])
+  @@index([audience, status])
+  @@index([canonicalUrl])
+  @@index([organizationId, status])
 }
 
 model MatchResult {
@@ -514,4 +610,99 @@ model MetricRollup {
   samples   Int
 
   @@unique([day, metric, dimension])
+}
+
+model Source {
+  id                  String      @id @default(uuid()) @db.Uuid
+  name                String
+  kind                SourceKind
+  baseUrl             String      @unique
+  organizationId      String?     @db.Uuid
+  status              SourceStatus @default(proposed)
+  termsReviewedAt     DateTime?
+  termsNotes          String?
+  crawlIntervalHours  Int         @default(24)
+  lastRunAt           DateTime?
+  lastSuccessAt       DateTime?
+  consecutiveFailures Int         @default(0)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  organization        Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  leads               Lead[]
+  opportunities       Opportunity[]
+  ingestionRuns       IngestionRun[]
+
+  @@index([status, lastRunAt])
+  @@index([organizationId])
+}
+
+model Lead {
+  id                    String      @id @default(uuid()) @db.Uuid
+  channel               LeadChannel
+  status                LeadStatus  @default(new)
+  sourceId              String?     @db.Uuid
+  submittedById         String?     @db.Uuid
+  rawUrl                String?
+  canonicalUrl          String?
+  screenshotPath        String?
+  note                  String?
+  extracted             Json        @default("{}")
+  candidateOrgName      String?
+  officialUrl           String?
+  organizationId        String?     @db.Uuid
+  fingerprint           String      @unique
+  duplicateOfId         String?     @db.Uuid
+  promotedOpportunityId String?     @unique @db.Uuid
+  rejectReason          String?
+  createdAt             DateTime    @default(now())
+  tracedAt              DateTime?
+  resolvedAt            DateTime?
+  source                Source?     @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  submittedBy           UserProfile? @relation(fields: [submittedById], references: [id], onDelete: SetNull)
+  organization          Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  duplicateOf           Lead?       @relation("LeadDuplicates", fields: [duplicateOfId], references: [id], onDelete: SetNull)
+  duplicates            Lead[]      @relation("LeadDuplicates")
+  promotedOpportunity   Opportunity? @relation("LeadPromotion", fields: [promotedOpportunityId], references: [id], onDelete: SetNull)
+  promotedAsOpportunity Opportunity? @relation("LeadOpportunity")
+
+  @@index([status, createdAt])
+  @@index([canonicalUrl])
+  @@index([submittedById, status])
+  @@index([sourceId, createdAt])
+  @@index([organizationId, status])
+}
+
+model ListingReport {
+  id             String       @id @default(uuid()) @db.Uuid
+  opportunityId  String       @db.Uuid
+  reporterId     String?      @db.Uuid
+  reason         String
+  details        String?
+  status         ReportStatus @default(open)
+  createdAt      DateTime     @default(now())
+  resolvedAt     DateTime?
+  resolvedBy     String?
+  resolutionNote String?
+  opportunity    Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Restrict)
+  reporter       UserProfile? @relation(fields: [reporterId], references: [id], onDelete: SetNull)
+
+  @@unique([opportunityId, reporterId])
+  @@index([status, createdAt])
+  @@index([opportunityId])
+}
+
+model IngestionRun {
+  id         String    @id @default(uuid()) @db.Uuid
+  sourceId   String    @db.Uuid
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+  fetched    Int       @default(0)
+  created    Int       @default(0)
+  updated    Int       @default(0)
+  duplicates Int       @default(0)
+  failed     Int       @default(0)
+  errors     Json      @default("[]")
+  source     Source    @relation(fields: [sourceId], references: [id], onDelete: Restrict)
+
+  @@index([sourceId, startedAt])
 }
