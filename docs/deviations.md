@@ -24,6 +24,10 @@ Production-readiness schema correction: the matching specification requires enfo
 
 **Effect:** The plan's four entities may be implemented with relations, indexes, migrations, adapter contracts, and RLS. See [the B0 decision record](./review/implementation/decisions.md).
 
+### 20 October 2026 — Dev Supabase rehearsal target
+
+The owner supplied a separate Supabase dev project (`rmmwkuihqmezwdugttsr`, `ap-northeast-1`) for B2 preservation and RLS rehearsal. The DB guard accepts that one remote project only through `DEV_*_URL` and rejects matches against project refs derived from the existing production `DATABASE_URL`, `DIRECT_URL`, or `NEXT_PUBLIC_SUPABASE_URL`. Migration and seed commands use only `DEV_DIRECT_URL`; the rehearsal resets only the dev `public` schema, applies Prisma migrations up to B2, seeds the catalogue snapshot, applies B2, and compares the snapshot fields. Supabase mirror migrations are deliberately excluded. `local-db.ps1` remains an optional local-only path. The rehearsal is development evidence; the owner’s production `npm run check:rls` remains authoritative.
+
 ### D11 — Supabase-faithful local database rehearsal
 
 The owner amended the database protocol after a plain PostgreSQL start exposed missing Supabase roles/schemas. Because Supabase CLI `2.109.1` is installed, B0 now prefers its local stack on `127.0.0.1:54329`; the old port-55432 result is superseded. The fallback bootstrap at `scripts/review/impl/local-db/00-supabase-bootstrap.sql` is used only if the CLI is unavailable, and its Auth/Storage stubs are an approximation. Local stub RLS results are rehearsal only; the owner's production `npm run check:rls` remains authoritative.

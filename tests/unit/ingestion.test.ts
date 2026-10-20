@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { DEMO_ORG_ID, DEMO_ORG_USER_ID, MemoryRepository } from "@/lib/repository/memory";
 import { refreshOpportunityLifecycle } from "@/services/ingestion/freshness";
@@ -52,44 +52,57 @@ describe("ingestion quality", () => {
   });
 
   it("keeps a verified listing verified when an authoritative duplicate is re-ingested", async () => {
-    const repository = new MemoryRepository();
-    const input = {
-      title: "Verified Community Data Fellowship",
-      organizationId: DEMO_ORG_ID,
-      category: "fellowship",
-      description: "A practical fellowship using local evidence to support community programmes in Uganda.",
-      eligibility: { educationLevels: ["bachelors"] },
-      requiredSkills: ["research"],
-      preferredSkills: [],
-      location: "Kampala",
-      workMode: "hybrid" as const,
-      deadline: new Date(Date.now() + 30 * 86_400_000),
-      applicationMethod: "Apply on the official page",
-      sourceUrl: "https://example.org/verified-community-data",
-      verificationStatus: "pending" as const,
-      source: "org_submitted" as const,
-      status: "open" as const,
-    };
-    const created = await ingestManualOpportunity(repository, input);
-    await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01T00:00:00.000Z"));
+    try {
+      const repository = new MemoryRepository();
+      const input = {
+        title: "Verified Community Data Fellowship",
+        organizationId: DEMO_ORG_ID,
+        category: "fellowship",
+        description: "A practical fellowship using local evidence to support community programmes in Uganda.",
+        eligibility: { educationLevels: ["bachelors"] },
+        requiredSkills: ["research"],
+        preferredSkills: [],
+        location: "Kampala",
+        workMode: "hybrid" as const,
+        deadline: new Date(Date.now() + 30 * 86_400_000),
+        applicationMethod: "Apply on the official page",
+        sourceUrl: "https://example.org/verified-community-data",
+        verificationStatus: "pending" as const,
+        source: "org_submitted" as const,
+        status: "open" as const,
+      };
+      const created = await ingestManualOpportunity(repository, input);
+      expect(created.needsRecheck).toBe(false);
+      await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
 
-    const duplicate = await ingestManualOpportunity(repository, input);
+      vi.advanceTimersByTime(1_000);
+      const previousLastSeenAt = created.lastSeenAt;
+      const duplicate = await ingestManualOpportunity(repository, input);
 
-    expect(duplicate.id).toBe(created.id);
-    expect(duplicate.verificationStatus).toBe("verified");
+      expect(duplicate.id).toBe(created.id);
+      expect(duplicate.verificationStatus).toBe("verified");
+      expect(duplicate.needsRecheck).toBe(false);
+      expect(duplicate.lastSeenAt?.getTime()).toBeGreaterThan(previousLastSeenAt?.getTime() ?? 0);
 
-    const changedLink = await ingestManualOpportunity(repository, {
-      ...input,
-      sourceUrl: "https://example.org/verified-community-data-updated",
-    });
-    expect(changedLink.verificationStatus).toBe("pending");
+      const changedLink = await ingestManualOpportunity(repository, {
+        ...input,
+        sourceUrl: "https://example.org/verified-community-data-updated",
+      });
+      expect(changedLink.verificationStatus).toBe("pending");
+      expect(changedLink.needsRecheck).toBe(true);
 
-    await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
-    const suspicious = await ingestManualOpportunity(repository, {
-      ...input,
-      applicationMethod: "Send money to secure the application.",
-    });
-    expect(suspicious.verificationStatus).toBe("flagged");
+      await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
+      const suspicious = await ingestManualOpportunity(repository, {
+        ...input,
+        applicationMethod: "Send money to secure the application.",
+      });
+      expect(suspicious.verificationStatus).toBe("flagged");
+      expect(suspicious.needsRecheck).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("automatically closes deadline-passed listings", async () => {

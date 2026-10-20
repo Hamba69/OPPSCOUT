@@ -25,7 +25,11 @@ async function main(): Promise<void> {
     ORDER BY tablename, policyname
   `);
 
-  const required = ["Feedback", "RequestMetric", "WebVitalSample", "MatchRun", "UnmatchedTerm", "AdminAccessLog", "MetricRollup", "StoredDocument", "SeekerAccessLog", "SeekerPipelineEntry"];
+  const required = [
+    "Feedback", "RequestMetric", "WebVitalSample", "MatchRun", "UnmatchedTerm",
+    "AdminAccessLog", "MetricRollup", "StoredDocument", "SeekerAccessLog",
+    "SeekerPipelineEntry", "Source", "Lead", "ListingReport", "IngestionRun",
+  ];
   const missing = required.filter(name => !rows.some(row => row.table_name === name));
   if (missing.length) throw new Error(`Missing RLS tables: ${missing.join(", ")}`);
 
