@@ -11,9 +11,15 @@ export async function ingestManualOpportunity(repository: Repository, input: Opp
   if (duplicate) {
     const incomingIsAuthoritative = SOURCE_AUTHORITY[input.source] >= SOURCE_AUTHORITY[duplicate.source];
     if (!incomingIsAuthoritative && !suspicious) return duplicate;
+    const applicationLinkChanged =
+      input.applicationMethod !== duplicate.applicationMethod || input.sourceUrl !== duplicate.sourceUrl;
     return repository.updateOpportunity(duplicate.id, {
       ...(incomingIsAuthoritative ? input : {}),
-      verificationStatus: suspicious || duplicate.verificationStatus === "flagged" ? "flagged" : "pending",
+      verificationStatus: suspicious || duplicate.verificationStatus === "flagged"
+        ? "flagged"
+        : duplicate.verificationStatus === "verified" && !applicationLinkChanged
+          ? "verified"
+          : "pending",
     });
   }
   return repository.createOpportunity({

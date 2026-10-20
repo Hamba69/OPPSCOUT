@@ -2,6 +2,10 @@
 
 Prior-phase clarifications are retained below; the Revision 2 schema decision is recorded under D1.
 
+## 20 October 2026 — B1 model inventory
+
+The current Prisma schema has 17 models. The generated inventory is [model-inventory.txt](./review/evidence/model-inventory.txt). D1 is approved: B2 may add the four planned models `Source`, `Lead`, `ListingReport`, and `IngestionRun`, with RLS and adapter support. This approval supersedes the earlier seven-entity freeze; it does not authorize production migrations or writes.
+
 Operational note: local development and automated tests can use an isolated in-memory repository when `OPPSCOUT_DATA_MODE=memory`. Production always requires PostgreSQL through Prisma; the adapter does not change the production data model or API contracts.
 
 Phase 3 clarification: the build guide asks shadow scraping to use a staging table, while the master data-model contract forbids tables beyond the seven canonical entities. Shadow candidates therefore use a private Supabase Storage bucket through a provider-neutral adapter. This preserves zero writes to live `Opportunity` rows and avoids changing the master schema.

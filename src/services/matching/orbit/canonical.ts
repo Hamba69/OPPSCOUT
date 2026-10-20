@@ -95,12 +95,26 @@ export const FIELD_INDEX = new ConceptIndex(FIELD_CONCEPTS, FIELD_RELATIONS, "fi
 
 // Location symmetry: same place 1, same commuting zone 0.85, same region 0.5, anything else 0.
 export function locationSimilarity(a: string, b: string): number {
-  const x = canonicalPhrase(a), y = canonicalPhrase(b);
-  for (const [raw,key] of [[a,x],[b,y]]) if (key && key !== "uganda" && key !== "remote" && !LOCATION_PARENT[key] && !COMMUTE_ZONES.some(zone => zone.includes(key))) observeUnmatched("location",raw);
-  if (!x || !y) return 0;
-  if (x === y || y === "uganda" || x === "uganda") return 1;
-  if (COMMUTE_ZONES.some((zone) => zone.includes(x) && zone.includes(y))) return 0.85;
-  const px = LOCATION_PARENT[x] ?? x, py = LOCATION_PARENT[y] ?? y;
-  if (px === py && px !== "uganda") return 0.5;
-  return 0;
+  const parts = (value: string) => value.split(/[,;|\/]/).map(canonicalPhrase).filter(Boolean);
+  const recognized = (key: string) =>
+    key === "uganda" || key === "remote" || Boolean(LOCATION_PARENT[key]) || COMMUTE_ZONES.some((zone) => zone.includes(key));
+  const left = parts(a);
+  const right = parts(b);
+  if (!left.length || !right.length) return 0;
+  for (const [raw, locationParts] of [[a, left], [b, right]] as const) {
+    if (!locationParts.some(recognized)) observeUnmatched("location", raw);
+  }
+  let best = 0;
+  for (const x of left) {
+    for (const y of right) {
+      if (x === y || y === "uganda" || x === "uganda") best = Math.max(best, 1);
+      else if (COMMUTE_ZONES.some((zone) => zone.includes(x) && zone.includes(y))) best = Math.max(best, 0.85);
+      else {
+        const px = LOCATION_PARENT[x] ?? x;
+        const py = LOCATION_PARENT[y] ?? y;
+        if (px === py && px !== "uganda") best = Math.max(best, 0.5);
+      }
+    }
+  }
+  return best;
 }

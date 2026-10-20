@@ -24,6 +24,25 @@ function ageOn(dateOfBirth: Date, at: Date): number {
   return age;
 }
 
+const COUNTRY_NAMES: Readonly<Record<string, string>> = {
+  BI: "Burundi",
+  KE: "Kenya",
+  RW: "Rwanda",
+  SS: "South Sudan",
+  TZ: "Tanzania",
+  UG: "Uganda",
+};
+
+function residenceTerms(profile: UserProfile): string[] {
+  const country = profile.countryOfResidence ?? "UG";
+  const countryCode = country.trim().toUpperCase();
+  return [
+    normalize(profile.location ?? ""),
+    normalize(country),
+    normalize(COUNTRY_NAMES[countryCode] ?? ""),
+  ].filter(Boolean);
+}
+
 export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity): GateResult {
   const passed: MatchFactor[] = [];
   const failed: MatchFactor[] = [];
@@ -71,13 +90,15 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
   }
 
   for (const rule of eligibility.programmeRules ?? []) {
-    const values =
-      rule.field === "language"
-        ? profile.languages
-        : [rule.field === "graduationStatus" ? profile.graduationStatus ?? "" : profile.location ?? ""];
-    const matches = rule.allowedValues.some((allowed) =>
-      values.some((value) => normalize(value) === normalize(allowed)),
-    );
+    const values = rule.field === "language"
+      ? profile.languages
+      : rule.field === "graduationStatus"
+        ? [profile.graduationStatus ?? ""]
+        : residenceTerms(profile);
+    const matches = rule.allowedValues.some((allowed) => {
+      const normalizedAllowed = normalize(allowed);
+      return values.some((value) => normalize(value) === normalizedAllowed);
+    });
     (matches ? passed : failed).push({
       label: rule.label,
       detail: matches

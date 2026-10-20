@@ -59,6 +59,7 @@ export interface UserProfile {
   fieldOfStudy: string | null;
   graduationStatus: string | null;
   dateOfBirth: Date | null;
+  countryOfResidence?: string | null;
   skills: string[];
   workExperience: ExperienceEntry[];
   internshipExperience: ExperienceEntry[];

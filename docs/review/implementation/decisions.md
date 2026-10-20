@@ -77,8 +77,7 @@ Plan recommendation, using Kampala as the user base.
 
 ### D5
 
-Three reviewers at about 5 to 6 hours a week each; helper pilot of 5 growing to 8 to 10 by week 4. Owner action.  
-Plan recommendation.
+Three reviewers at about 5 to 6 hours a week each; helper pilot of 5 growing to 8 to 10 by week 4. Approved as the planning default. The owner action is to supply the names of the three reviewers and the helper roster. Until supplied, every roster entry remains an explicit `OWNER-SUPPLIED: TBD` placeholder; no names are inferred or invented.
 
 ### D6
 
@@ -118,3 +117,12 @@ Plan recommendation.
 The owner clarified that a plain PostgreSQL image is not a faithful Supabase migration target. Supabase CLI `2.109.1` is installed, so the local protocol now prefers its real PostgreSQL/Auth/Storage stack on loopback port `54329`. On 19 October 2026, Docker Desktop's engine first returned HTTP 500; after a targeted restart of the identified Docker Desktop processes and its only WSL distribution, the local Supabase reset/start and authenticated preflight succeeded. All 14 Prisma migrations then applied to the local stack. The one tracked Supabase mirror failed on repeated application attempts because it tries to add `Opportunity.organizationName` a second time. This migration-chain finding is not a successful full rehearsal; the mirror was not edited or skipped. After the failure, the local empty fixture database was seeded with the captured 115 opportunities and 79 synthetic organization references, and a separate read-only check confirmed all 115 opportunities match the snapshot. That check does not convert the failed mirror rehearsal into a pass. The historical plain-PostgreSQL run remains superseded. A minimal idempotent bootstrap remains only as a fallback if the CLI is unavailable; its auth/storage stubs are not authoritative evidence for RLS or policies. The production run of `npm run check:rls` remains the authority. This amendment changes local validation only; it does not change product code or touch production.
 
 The SQL files in both Prisma and Supabase migration directories were searched for `auth.`, `storage.`, `extensions.`, `pgrst`, `anon`, `authenticated`, `service_role`, and `auth.uid()`. Current migration references and the Supabase mirror rehearsal failure are recorded in [the database status report](./db-status.md). There is one tracked Supabase mirror migration, `20261012093356_allow_unlinked_catalog_opportunities.sql`. After Prisma applies all 14 migrations, this mirror fails because it attempts to add `Opportunity.organizationName` again. The migration is left unchanged and is recorded as a finding; do not skip it or report the Supabase mirror rehearsal as passing.
+
+## B1 and B2 execution decisions — 20 October 2026
+
+- **D1:** approved; implement all four new models (`Source`, `Lead`, `ListingReport`, and `IngestionRun`) with RLS and repository-adapter support.
+- **D2:** approved; keep pending catalogue listings visible until the 21-record trace is complete. After completion, hide pending listings by default behind the approved visibility flag, with an explicit unreviewed toggle and a visible-catalogue KPI. The current worksheet is not a completed trace.
+- **D3–D10:** approved as recommended in the plan. D5 remains an owner action for three reviewer names and the helper roster; use only `OWNER-SUPPLIED: TBD` placeholders until then. D6 permission owners and outreach-list evidence likewise remain owner-supplied actions.
+- **Batch numbering:** the plan’s earlier B1 label covers evidence baseline only, while the final prompt defines B1 as the F11/F8/F7 defect-fix batch. Keep the evidence baseline as a B1 prerequisite and include F11, F8, and F7 fixes and regression tests in B1. B2 remains the safe domain foundation.
+- **Worktree:** B1 is based on `plan/b0-foundation` (PR #4), with both B0 commits in its ancestry. The original `E:\OPPSCOUT` checkout remains on `main`; its pre-existing `next-env.d.ts` modification is untouched.
+- **Commit trailers:** B0’s already-pushed commit trailers are malformed; leave those commits unchanged. New commits use the correctly formatted `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>` trailer.

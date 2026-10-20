@@ -94,7 +94,7 @@ assertContract(13, rhodesRule.some((allowed) => residenceTerms({ location: "Gulu
 assertContract(13, !["kampala"].some((allowed) => residenceTerms({ location: "Gulu", countryOfResidence: "UG", openToAbroad: false }).includes(allowed)), "Gulu does not satisfy a Kampala-only rule");
 const current = { verificationStatus: "verified", title: "Role", deadline: "2027-01-01", location: "Kampala", applicationMethod: "Apply", sourceUrl: "https://employer.example/job", description: "Original description", lastSeenAt: "yesterday" };
 const unchanged = reingestVerified(current, { title: current.title, deadline: current.deadline, location: current.location, applicationMethod: current.applicationMethod, sourceUrl: current.sourceUrl, description: current.description }, "today");
-assertContract(14, unchanged.verificationStatus === "verified" && unchanged.lastSeenAt === "today", "unchanged duplicate stays verified and refreshes lastSeenAt");
+assertContract(14, unchanged.verificationStatus === "verified" && unchanged.lastSeenAt === "today", "in-memory unchanged duplicate stays verified and refreshes lastSeenAt; not migration preservation");
 const changedLink = reingestVerified(current, { title: current.title, deadline: current.deadline, location: current.location, applicationMethod: "Apply here", sourceUrl: "https://employer.example/new-job", description: current.description }, "today");
 assertContract(15, changedLink.verificationStatus === "pending", "changed application link requires review");
 const existingAtCap = 10;

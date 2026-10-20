@@ -8,8 +8,8 @@ M6,security,RLS inventory for new tables,0,ABSENT,scripts/check-rls.ts,Generic s
 M7,migration,Schema migration set for new plan tables,0,ABSENT,prisma/migrations,No plan migration set found
 A1,audience,Audience gate in production routing,0,ABSENT,src/app + src/services,Only scratch contract script exists
 A2,audience,Audience gate flag defaults off + shadow mode,0,ABSENT,src/config/feature-flags.ts,Flag missing
-B1,bugfix,F11 duplicate re-ingestion defect,2,ACTIVE,src/services/ingestion/manual/index.ts,Verified records can be downgraded
-B2,bugfix,F8 hard-gate behavior,2,PARTIAL,src/services/matching/rule-based/hard-gates.ts,Exists but not fully wired as production gate
+B1,bugfix,F11/F8/F7 defect fixes,2,DONE,"src/services/ingestion/manual/index.ts; src/services/matching; tests/unit","Regression tests failed before and pass after the B1 fixes"
+B2,foundation,Approved Source/Lead/ListingReport/IngestionRun schema and adapters,0,PENDING,"prisma/schema.prisma; src/lib/repository","D1 approved; awaiting implementation and local migration-preservation validation"
 B3,trust,Suspicious listing reporting,1,PARTIAL,src/services/trust/report.ts,Report service exists but not plan workflow
 B4,review,Admin review queue,1,PARTIAL,src/app/admin review,Queue exists but not the plan flow
 K1,launch,Launch gate checker script,1,PARTIAL,scripts/review/status/launch-gate.ts,Script exists but no live DB evidence

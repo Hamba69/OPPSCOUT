@@ -48,4 +48,23 @@ describe("Phase 1 rule matching", () => {
     expect(result.eligible).toBe(false);
     expect(result.failed[0]?.detail).toMatch(/date of birth/i);
   });
+
+  it("resolves a Ugandan town to country-level rules without matching another town", async () => {
+    const { profile, opportunity } = await fixtures();
+    const fromGulu = { ...profile, location: "Gulu" };
+    const countryRule = {
+      ...opportunity,
+      eligibility: {
+        programmeRules: [{ field: "location" as const, allowedValues: ["Uganda"], label: "Uganda residency" }],
+      },
+    };
+    const townRule = {
+      ...countryRule,
+      eligibility: {
+        programmeRules: [{ field: "location" as const, allowedValues: ["Kampala"], label: "Kampala residency" }],
+      },
+    };
+    expect(evaluateHardGates(fromGulu, countryRule).eligible).toBe(true);
+    expect(evaluateHardGates(fromGulu, townRule).eligible).toBe(false);
+  });
 });
