@@ -18,6 +18,22 @@ describe("OrbitMatch", () => {
     expect(locationSimilarity("Jinja", "Mbale")).toBe(0.5);
     expect(locationSimilarity("Kampala", "Gulu")).toBe(0);
   });
+  it("matches a preferred town inside a multi-place listing", () => {
+    expect(locationSimilarity("Jinja", "Jinja, Uganda; Minna, Nigeria; Kinshasa, DRC")).toBe(1);
+  });
+  it.each(["scholarship", "fellowship", "grant"])("does not penalize %s listings for their programme location", async (category) => {
+    const repo = new MemoryRepository();
+    const profile = { ...(await repo.getProfile(DEMO_USER_ID))!, location: "Gulu", preferredLocations: ["Gulu"] };
+    const opportunity = {
+      ...(await repo.getOpportunity(PRIMARY_SEED_OPPORTUNITY_ID))!,
+      category,
+      location: "Oxford, United Kingdom",
+      workMode: "onsite" as const,
+    };
+    const result = await new OrbitMatchEngine().score(profile, opportunity);
+    expect(result.matchedFactors.find((factor) => factor.label === "Location")?.detail)
+      .toBe("Study location is set by the programme.");
+  });
   it("is deterministic, bounded, and always explains itself", async () => {
     const repo = new MemoryRepository();
     const profile = (await repo.getProfile(DEMO_USER_ID))!; const opp = (await repo.getOpportunity(PRIMARY_SEED_OPPORTUNITY_ID))!;

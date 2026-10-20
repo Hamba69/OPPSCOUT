@@ -165,3 +165,9 @@ At the plan’s stated three reviewers and roughly 5–6 hours each per week, ca
 ## What remains unverified
 
 Provide a read-only `DATABASE_URL` or owner-run SQL output. The owner should run the exact live commands in [04-decisions-and-questions.md](04-decisions-and-questions.md), without sharing credentials. Needed evidence includes current catalogue counts, RLS/policy state, live deadlines, 21-record trace results, measured week-two funnel capacity, and the 20-job category split.
+
+## B1 evidence refresh — 20 October 2026
+
+The offline snapshot verifier passed against the 2 October snapshot: 115 rows, 57 Uganda-matched rows, 52 pending Uganda rows across statuses, 21 pending active Uganda records (20 jobs), 79 exact organizations, and a largest organization group of 6. These are historical snapshot counts, not live production counts. The model inventory contains all 17 Prisma models, and the pending Uganda worksheet contains 21 records marked `not_started`; it is a tracing worksheet, not a completed source verification. See [model-inventory.txt](evidence/model-inventory.txt), [pending-uganda.csv](evidence/pending-uganda.csv), and [live-catalog.txt](evidence/live-catalog.txt).
+
+The live audit was not run because no restricted read-only `AUDIT_DB_URL` was supplied. No hosted application database was queried. Production counts, live RLS state, and completion of the record-tracing pass remain UNVERIFIABLE.

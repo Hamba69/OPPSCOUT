@@ -331,7 +331,7 @@ Topological order: A, B, C, D/E, G/H, I/K/M, J/L/O, P, N/Q/R/S, T.
 
 ### B1 — Evidence baseline
 
-Goal: run WP-A, WP-B, and WP-H from a clean checkout. Preconditions: repository checkout, Node/npm, optional read-only database. Steps: run `npx tsx scripts/review/verify-all.ts`; run the live audit if credentials are supplied; generate the pending Uganda worksheet; inventory models; review output. Tests: verifier, schema inventory, no-network assertion. Done: evidence files cite timestamps and no product files changed. Rollback: remove generated evidence only. Report counts, failed queries, and missing access.
+Goal: complete WP-A, WP-B, and WP-H as B1 prerequisites, then fix F11, F8, and F7 in the same B1 batch. Preconditions: repository checkout, Node/npm, optional read-only database, and the guarded local Supabase preflight for migration-preservation validation. Run the free-disk preflight first; it warns below 3 GB on either the worktree or temporary/build/database-data drive. Steps: run `npx tsx scripts/review/verify-all.ts`; run the live audit only with an explicitly supplied read-only database URL; generate the pending Uganda worksheet; inventory models; review output; implement the three defect fixes with regression tests. Do not stop shared processes or write to a hosted database. Tests: offline verifier, schema inventory, no-network assertion, F11/F8/F7 regression tests, and the real local migration-preservation test before B2. Done: evidence files cite timestamps; tests reproduce each defect before and pass after its fix. Rollback: revert only the B1 changes. Report counts, failed queries, and missing access.
 
 ### B2 — Safe domain foundation
 

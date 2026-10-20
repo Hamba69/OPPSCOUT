@@ -1,0 +1,18 @@
+B1 live catalogue audit
+Recorded: 20 October 2026
+Status: NOT RUN
+
+Reason: no restricted read-only AUDIT_DB_URL was supplied. The configured application database URLs point to a hosted Supabase pooler and were not used for audit queries. No live database connection was attempted.
+
+Offline source: docs/audits/catalog-snapshot.json
+Snapshot capturedAt: 2026-10-02T07:20:41.196Z
+Offline snapshot verification: PASS
+Snapshot rows: 115
+Uganda-matched rows: 57
+Pending Uganda rows across statuses: 52
+Pending active Uganda rows: 21
+Pending active Uganda jobs: 20
+Exact organizations: 79
+Largest exact organization group: 6
+
+These counts describe the dated repository snapshot only. They are not live production counts. The 21-row pending Uganda worksheet is generated for human tracing; no records have been traced or re-verified by this run.

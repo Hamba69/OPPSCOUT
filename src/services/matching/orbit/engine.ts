@@ -33,6 +33,7 @@ const INTEREST_EXPANSIONS: Record<string, string[]> = {
   media: ["communications", "social media"], education: ["education"], security: ["cybersecurity"],
 };
 const CATEGORY_ALIASES: Record<string, string> = { job: "job", jobs: "job", employment: "job", internship: "internship", internships: "internship", scholarship: "scholarship", scholarships: "scholarship", fellowship: "fellowship", fellowships: "fellowship", consultancy: "consultancy" };
+const STUDY_CATEGORIES = new Set(["scholarship", "fellowship", "grant"]);
 
 function similarity(label: string, pool: string[], index: typeof SKILL_INDEX, soft: boolean, canonical: boolean): { score: number; via: string | null } {
   if (!canonical) {
@@ -99,6 +100,9 @@ export class OrbitMatchEngine implements MatchEngine {
   }
 
   private location(profile: UserProfile, opp: Opportunity): Dim {
+    if (STUDY_CATEGORIES.has(opp.category.toLowerCase())) {
+      return { ratio: 1, matched: [{ label: "Location", detail: "Study location is set by the programme." }], missing: [] };
+    }
     const prefs = [profile.location ?? "", ...profile.preferredLocations].filter(Boolean);
     const remote = opp.workMode === "remote" || canonicalPhrase(opp.location) === "remote";
     if (remote) return { ratio: 1, matched: [{ label: "Location", detail: "This can be done remotely." }], missing: [] };

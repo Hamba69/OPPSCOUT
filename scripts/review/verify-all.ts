@@ -1,6 +1,11 @@
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
+const diskCheck = spawnSync(process.execPath, [resolve(process.cwd(), "scripts/review/check-free-disk.mjs")], {
+  stdio: "inherit",
+});
+if (diskCheck.status !== 0) process.exit(diskCheck.status ?? 1);
+
 const commands = [
   ["snapshot", "verify-snapshot.ts"],
   ["structure", "verify-structure.ts"],

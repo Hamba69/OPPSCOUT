@@ -51,6 +51,47 @@ describe("ingestion quality", () => {
     expect((await repository.listOpportunities({ organizationId: DEMO_ORG_ID })).filter((item) => item.id === first.id)).toHaveLength(1);
   });
 
+  it("keeps a verified listing verified when an authoritative duplicate is re-ingested", async () => {
+    const repository = new MemoryRepository();
+    const input = {
+      title: "Verified Community Data Fellowship",
+      organizationId: DEMO_ORG_ID,
+      category: "fellowship",
+      description: "A practical fellowship using local evidence to support community programmes in Uganda.",
+      eligibility: { educationLevels: ["bachelors"] },
+      requiredSkills: ["research"],
+      preferredSkills: [],
+      location: "Kampala",
+      workMode: "hybrid" as const,
+      deadline: new Date(Date.now() + 30 * 86_400_000),
+      applicationMethod: "Apply on the official page",
+      sourceUrl: "https://example.org/verified-community-data",
+      verificationStatus: "pending" as const,
+      source: "org_submitted" as const,
+      status: "open" as const,
+    };
+    const created = await ingestManualOpportunity(repository, input);
+    await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
+
+    const duplicate = await ingestManualOpportunity(repository, input);
+
+    expect(duplicate.id).toBe(created.id);
+    expect(duplicate.verificationStatus).toBe("verified");
+
+    const changedLink = await ingestManualOpportunity(repository, {
+      ...input,
+      sourceUrl: "https://example.org/verified-community-data-updated",
+    });
+    expect(changedLink.verificationStatus).toBe("pending");
+
+    await repository.updateOpportunity(created.id, { verificationStatus: "verified" });
+    const suspicious = await ingestManualOpportunity(repository, {
+      ...input,
+      applicationMethod: "Send money to secure the application.",
+    });
+    expect(suspicious.verificationStatus).toBe("flagged");
+  });
+
   it("automatically closes deadline-passed listings", async () => {
     const repository = new MemoryRepository();
     const opportunities = await repository.listOpportunities();
