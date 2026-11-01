@@ -1,0 +1,156 @@
+{
+  "reviewDate": "2026-11-01",
+  "approvals": [
+    {
+      "id": "c995327c",
+      "duplicates": ["1906d28f"],
+      "sources": ["https://dalailamafellows.com/apply/"],
+      "evidence": "Closing time is explicitly 22:00 UTC on 11 November 2026. No project funding is offered.",
+      "fields": {
+        "description": "A year of contemplative leadership learning, coaching and community for changemakers. The 2027 fellowship runs from April 2027 to March 2028, with virtual onboarding in March. It does not fund participants' social projects.",
+        "sourceUrl": "https://dalailamafellows.com/apply/",
+        "deadline": "2026-11-11T22:00:00Z",
+        "location": "Worldwide; online programme and local community project",
+        "workMode": "remote",
+        "eligibility": { "additionalRequirements": ["Be aged 20-36 on 1 April 2027 and fluent in English.", "Have an ongoing social-change project or a credible plan, strong community knowledge and sustained involvement.", "Commit roughly 12 hours monthly plus project work, and attend the May 2027 virtual assembly."] },
+        "applicationMethod": "Apply through the portal linked from the official page with essays, video, CV and a recommendation. Submit all materials by 11 November 2026 at 22:00 UTC."
+      }
+    },
+    {
+      "id": "b30d502e",
+      "duplicates": ["dd68383c"],
+      "sources": ["https://jackson.yale.edu/international-leadership-center/yale-world-fellows"],
+      "evidence": "The official $20 application fee is disclosed, not represented as free. Deadline 2 December at 14:00 Eastern converts to 19:00 UTC.",
+      "fields": {
+        "description": "Yale's four-month residential leadership fellowship runs from mid-August to mid-December. Support includes a living stipend, furnished accommodation, medical insurance and return travel. This is not a degree scholarship. A USD 20 application fee applies.",
+        "sourceUrl": "https://jackson.yale.edu/international-leadership-center/yale-world-fellows",
+        "deadline": "2026-12-02T19:00:00Z",
+        "location": "New Haven, United States",
+        "workMode": "onsite",
+        "eligibility": { "additionalRequirements": ["Normally 5-25 years into a professional career; full-time students and academics are excluded.", "Citizenship outside the US is required; dual US citizens can apply, with preference for work outside the US.", "English fluency and residence at Yale throughout the programme are required."] },
+        "applicationMethod": "Use Yale's linked application portal. Supply a CV, personal statement, video and three recommendations; pay the disclosed USD 20 fee only through the official process."
+      }
+    },
+    {
+      "id": "66b016e7",
+      "sources": ["https://loebfellowship.gsd.harvard.edu/apply-nominate/", "https://loebfellowship.gsd.harvard.edu/apply-nominate/apply/"],
+      "evidence": "No application fee. Official deadline is 5 January 2027 at 23:59 Eastern; references have a separate seven-day extension.",
+      "fields": {
+        "description": "A Harvard fellowship for experienced practitioners shaping the built and natural environment. It provides time for learning, reflection and professional development. No completed university degree is required, and applying is free.",
+        "sourceUrl": "https://loebfellowship.gsd.harvard.edu/apply-nominate/",
+        "deadline": "2027-01-06T04:59:00Z",
+        "location": "Cambridge, Massachusetts, United States",
+        "workMode": "onsite",
+        "eligibility": { "minimumExperienceMonths": 96, "additionalRequirements": ["At least eight years of relevant professional practice, leadership potential and work improving the built or natural environment.", "This is a practitioner fellowship, not an academic sabbatical or artist residency. Review residence and work commitments in the official FAQs."] },
+        "applicationMethod": "Apply through the linked SlideRoom portal with your CV and three professional referees. Supporting work samples are encouraged. Submit by 5 January 2027, 23:59 Eastern; recommendations are due seven days later."
+      }
+    },
+    {
+      "id": "a0ba640c",
+      "sources": ["https://afsee.atlanticfellows.lse.ac.uk/en-gb/apply", "https://afsee.atlanticfellows.lse.ac.uk/en-gb/active-fellowship-year"],
+      "evidence": "Application heading explicitly confirms the 2027-28 cohort and 11 January 2027 at 17:00 UK time. A lower timeline label incorrectly says 2026-27; the cohort heading and dates agree.",
+      "fields": {
+        "description": "An LSE fellowship for experienced people working to challenge social and economic inequality. Residential fellows study an MSc; the non-residential track combines continued local work with fellowship learning. Choose the track that fits your circumstances.",
+        "sourceUrl": "https://afsee.atlanticfellows.lse.ac.uk/en-gb/apply",
+        "deadline": "2027-01-11T17:00:00Z",
+        "location": "London, United Kingdom; residential and non-residential tracks",
+        "workMode": "hybrid",
+        "eligibility": { "minimumExperienceMonths": 84, "additionalRequirements": ["At least seven years of experience and a demonstrated commitment to tackling inequality.", "Meet LSE English-language requirements. Residential applicants must also qualify for the MSc in Inequalities and Social Science."] },
+        "applicationMethod": "Use the LSE Graduate Application System linked on the official page. Provide your CV, statement, required education documents and two referees. Submit by 11 January 2027 at 17:00 UK time; follow the separate reference requirements."
+      }
+    },
+    {
+      "id": "cfaa36af",
+      "sources": ["https://www.ugc.edu.hk/eng/rgc/funding_opport/hkpfs/", "https://cerg1.ugc.edu.hk/hkpfs/enquiry.html"],
+      "evidence": "Initial application deadline is noon Hong Kong time, 1 December 2026. RGC charges no fee; universities may charge admission fees.",
+      "fields": {
+        "description": "The Hong Kong PhD Fellowship Scheme supports outstanding new full-time doctoral students at participating universities. Selection considers academic achievement, research potential, communication and leadership. Initial RGC applications are free; university admission fees may apply.",
+        "sourceUrl": "https://www.ugc.edu.hk/eng/rgc/funding_opport/hkpfs/",
+        "deadline": "2026-12-01T04:00:00Z",
+        "location": "Hong Kong",
+        "workMode": "onsite",
+        "eligibility": { "additionalRequirements": ["Apply as a new full-time PhD student at a participating university; applicants of all nationalities may apply.", "Meet the chosen university's academic and language requirements."] },
+        "applicationMethod": "Submit one initial RGC application by noon Hong Kong time on 1 December 2026 to obtain a reference number. Then submit full applications to up to two programmes, quoting that number and meeting each university's deadline."
+      }
+    },
+    {
+      "id": "77777777-7777-4777-8777-000000000008",
+      "sources": ["https://cifar.ca/next-generation/global-scholars/"],
+      "evidence": "Official HTML fetched directly after search-tool access failed. Deadline 4 November 2026, noon EST. Postdoctoral fellows are explicitly ineligible.",
+      "fields": {
+        "title": "CIFAR Global Scholars Programme 2027-2029",
+        "description": "A two-year research and leadership programme for early-career independent researchers, with CAD 100,000 in research support and participation in an international research network. This is not a postdoctoral fellowship.",
+        "sourceUrl": "https://cifar.ca/next-generation/global-scholars/",
+        "deadline": "2026-11-04T17:00:00Z",
+        "location": "Worldwide; international research meetings",
+        "workMode": "hybrid",
+        "eligibility": { "educationLevels": ["phd"], "additionalRequirements": ["Hold an independent full-time research position with graduate supervision or teaching duties, secure from April 2027 through March 2029.", "First qualifying post-PhD appointment must start between 1 July 2022 and 31 December 2026; stated exceptions may apply.", "Match a recruiting CIFAR research theme, speak English, attend interviews and travel to meetings. Postdoctoral fellows are ineligible."] },
+        "applicationMethod": "Use the application link on CIFAR's official programme page. Submit by 4 November 2026 at 12:00 EST (17:00 UTC), following the current programme overview and portal requirements."
+      }
+    },
+    {
+      "id": "0d2f6ed9",
+      "sources": ["https://www.gatescambridge.org/apply/timeline/", "https://www.gatescambridge.org/apply/eligibility/", "https://www.gatescambridge.org/apply/how-to-apply/", "https://www.postgraduate.study.cam.ac.uk/apply/how/application-fee"],
+      "evidence": "Direct official HTML confirms course-specific deadlines. The catalogue uses the earliest international-round deadline, not a universal deadline. University admission charges are legitimate and disclosed.",
+      "fields": {
+        "description": "Postgraduate funding at Cambridge for eligible applicants from outside the UK. International-round deadlines are course-dependent: 8 December 2026 or 6 January 2027 at 23:59 UK time. The catalogue shows the earlier date; check your course. The US-resident US-citizen round has closed.",
+        "sourceUrl": "https://www.gatescambridge.org/apply/timeline/",
+        "deadline": "2026-12-08T23:59:00Z",
+        "location": "Cambridge, United Kingdom",
+        "workMode": "onsite",
+        "eligibility": { "additionalRequirements": ["Hold citizenship outside the UK and apply for an eligible PhD, MLitt or one-year postgraduate course.", "Check course exclusions and admission requirements. Funding cannot cover the remainder of a course already started.", "US citizens resident in the US cannot switch to this later round."] },
+        "applicationMethod": "Complete admission and Gates funding sections in Cambridge's official portal, including scholarship questions and references. Confirm the course deadline. University application fees apply unless waived; check the official fee and waiver guidance."
+      }
+    },
+    {
+      "id": "49169456",
+      "sources": ["https://www.dependency.uni-bonn.de/en/outreach/news-bcdss/call-for-applications-heinz-heinen-fellowships-2027-2028"],
+      "evidence": "Deadline explicitly 10 January 2027 at 23:59 CET. Applications go to the university's published email address.",
+      "fields": {
+        "description": "Bonn fellowships supporting historical research on slavery and dependency before 1900. Categories include advanced doctoral researchers, postdoctoral researchers, professors and alternative knowledge producers. Duration and financial support depend on the category.",
+        "sourceUrl": "https://www.dependency.uni-bonn.de/en/outreach/news-bcdss/call-for-applications-heinz-heinen-fellowships-2027-2028",
+        "deadline": "2027-01-10T22:59:00Z",
+        "location": "Bonn, Germany",
+        "workMode": "onsite",
+        "eligibility": { "additionalRequirements": ["Propose historically focused, preferably comparative research before 1900 aligned with the centre's research areas.", "Meet the chosen fellowship category's career-stage and document requirements; earliest start is 1 October 2027."] },
+        "applicationMethod": "Send the required English documents as one PDF to application@dependency.uni-bonn.de by 10 January 2027 at 23:59 CET. Follow the category-specific call; referees send required letters directly to the same official address."
+      }
+    },
+    {
+      "id": "4f0005de",
+      "sources": ["https://globalhealth.harvard.edu/2027-2028-harvard-lead-fellowship-application-is-now-open/", "https://globalhealth.harvard.edu/fellowships/harvard-lead-fellowship/"],
+      "evidence": "Deadline 15 November 2026, 23:59 EST. Official eligibility welcomes all gender identities; title alone must not become a gender restriction.",
+      "fields": {
+        "description": "A year of global-health leadership development combining virtual learning with six weeks in residence at Harvard in April 2028. The programme runs September 2027-August 2028. Travel, visa, housing and residence support are covered under the fellowship.",
+        "sourceUrl": "https://globalhealth.harvard.edu/fellowships/harvard-lead-fellowship/",
+        "deadline": "2026-11-16T04:59:00Z",
+        "location": "Online and Cambridge, Massachusetts, United States",
+        "workMode": "hybrid",
+        "eligibility": { "educationLevels": ["masters", "phd"], "minimumExperienceMonths": 120, "additionalRequirements": ["Work full-time in global health, based in a low- or middle-income country, with a relevant Master's degree and ten years of professional experience beyond education.", "Have employer support and leave for six weeks, J-1 visa eligibility and a plan to return home.", "No full-time fellowship lasting four months or more during the preceding two years. All gender identities are welcomed."] },
+        "applicationMethod": "Use Harvard's linked application form and prepare the CV, intent letter, essays, institutional and mentor commitments, and references. Submit by 15 November 2026 at 23:59 EST."
+      }
+    }
+  ],
+  "holds": [
+    { "id": "77777777-7777-4777-8777-000000000082", "close": true, "reason": "Frontline AIDS explicitly says its Rapid Response Fund is closed. The archive's March 2027 deadline is not evidence of availability.", "sources": ["https://frontlineaids.org/our-programmes/rapid-response-fund/"] },
+    { "id": "68bbd830", "close": true, "reason": "Maypole is not accepting applications now; the next submission window starts 1 January 2027.", "sources": ["https://www.maypolefund.org/apply/", "https://www.maypolefund.org/deadlines/"] },
+    { "id": "77777777-7777-4777-8777-000000000007", "close": true, "reason": "Edinburgh's mandatory information-session registration and initial declaration deadline have passed. November 19 is only for applicants who already completed prior stages. This is not open entry for new applicants.", "sources": ["https://edinburgh-global.ed.ac.uk/mastercard-foundation-scholars-program/apply-for-a-scholarship/how-to-apply"] },
+    { "id": "77777777-7777-4777-8777-000000000011", "close": true, "reason": "Edinburgh's initial declaration closed 26 October; only previously invited applicants may continue to the November main-application deadline. Also overlaps df93ee83.", "sources": ["https://edinburgh-global.ed.ac.uk/mastercard-foundation-scholars-program/apply-for-a-scholarship/how-to-apply"] },
+    { "id": "df93ee83", "close": true, "reason": "Duplicate Edinburgh online-scholarship lead. New-applicant intake is closed; later deadline only applies to applicants already through the mandatory earlier stages.", "sources": ["https://edinburgh-global.ed.ac.uk/mastercard-foundation-scholars-program/apply-for-a-scholarship/how-to-apply"] },
+    { "id": "c3719390", "reason": "Programme page describes 2027 and ages 18-28, but linked portal still describes the 2026 cohort and ages 16-28. Current deadline and portal cycle need reconciliation.", "sources": ["https://bevisioneers.world/fellowship", "https://applications.bevisioneers.world/"] },
+    { "id": "357eea8a", "reason": "Official CISAC call is open and gives 2 December 2026, but precise cutoff is absent and recommendation timing differs between the main page and FAQ. Do not turn an imported noon timestamp into a verified deadline.", "sources": ["https://cisac.fsi.stanford.edu/cisac-fellowships", "https://cisac.fsi.stanford.edu/content/frequently-asked-questions-4"] },
+    { "id": "34de787c", "reason": "Ernest May call is open with a 1 December date and 15 December references deadline. Exact closing time is not confirmed; imported noon timestamp is not source-supported.", "sources": ["https://www.belfercenter.org/fellowship/ernest-may-fellowship-history-and-policy", "https://www.belfercenter.org/fellowships"] },
+    { "id": "dca28047", "reason": "UCL confirms 7 November but not an exact closing time. Airfares and visas are excluded from funding. Imported noon cutoff and broad fully-funded claim need correction before approval.", "sources": ["https://www.ucl.ac.uk/ioe/hp-ucl-ioe-fellowship-ai-education"] },
+    { "id": "7908e0f7", "reason": "Berenson source has conflicting application-cycle text: a November 2026 deadline alongside a message that the previous cycle is closed and a future-link placeholder. Resolve current portal availability before approval.", "sources": ["https://itatti.harvard.edu/berenson-fellowship"] },
+    { "id": "77777777-7777-4777-8777-000000000015", "reason": "Foundation confirms 2027 fellowships and 20 November closing date. Host-specific requirements, routes and exact cutoffs have not all been validated.", "sources": ["https://mo.ibrahim.foundation/fellowships", "https://mo.ibrahim.foundation/news/2026/applications-open-2027-ibrahim-leadership-fellowships"] },
+    { "id": "d7581e80", "reason": "IMF general programme page confirms the scheme, but the 2027 Workday advert yielded no readable content. Its exact closing deadline and full vacancy requirements remain unresolved.", "sources": ["https://www.imf.org/en/about/careers/economist-program", "https://imf.wd5.myworkdayjobs.com/en-US/IMF/job/Economist-Program-2027_26-R9861"] },
+    { "id": "3d3e6ce2", "reason": "Oxford scholarship has eligible-course and country restrictions and course-specific December/January deadlines. No single verified cutoff yet; current null deadline would be misleadingly rendered as open until filled.", "sources": ["https://www.ox.ac.uk/admissions/graduate/fees-and-funding/fees-funding-and-scholarship-search/weidenfeld-hoffmann-scholarships-and-leadership-programme"] },
+    { "id": "eb43a980", "reason": "World Bank programme page inspected, but current-cycle call, nomination requirements and exact cutoff were not fully reviewed. No approval based on the aggregator alone.", "sources": ["https://academy.worldbank.org/en/prosperity/institutions/government-analytics-fellowship"] },
+    { "id": "93629a28", "reason": "TWAS programme is for host institutions inviting recognised scientists, not ordinary individual applicants. Official date is 23 November with no confirmed cutoff time. Applicant-scope enforcement is absent in current app; keep pending.", "sources": ["https://twas.org/opportunity/twas-visiting-expert-programme"] },
+    { "id": "3ee0cf62", "reason": "Official TWAS date is 23 November, contradicting the stored October deadline. Requests are institutional and invitees must be TWAS members or young affiliates/alumni. Leave closed/pending until applicant scope and deadline representation are resolved.", "sources": ["https://twas.org/opportunity/twas-research-professors-ldcs"] },
+    { "id": "77777777-7777-4777-8777-000000000086", "reason": "GFCF accepts enquiries year-round but does not necessarily run an annual open call. Generic archive deadline and open-grant wording are unsupported; institutional applicant restrictions need enforcement.", "sources": ["https://globalfundcommunityfoundations.org/what-we-do/grants/"] },
+    { "id": "77777777-7777-4777-8777-000000000089", "reason": "COMO accepts enquiries from locally registered charities, not individuals. No March 2027 deadline is published. Applicant-scope and enquiry-versus-award distinctions must be represented before approval.", "sources": ["https://comofoundation.org/partnerships/becoming-a-partner/", "https://comofoundation.org/partnerships/faq/"] },
+    { "id": "865bdb0e", "reason": "FoodTech 500 is a company ranking, not an individual grant. Official pages conflict between CET and CEST for the November 15 cutoff; institutional scope and time require resolution.", "sources": ["https://forwardfooding.com/foodtech500/", "https://forwardfooding.com/blog/the-foodtech-500/whats-new-in-the-2026-foodtech-500/"] },
+    { "id": "0ecde5ec", "reason": "Melton programme page still says 2027 applications opening soon, while indexed organisational social copy says open. Confirm current programme application route and cutoff; do not confuse this with its separate student programme.", "sources": ["https://meltonfoundation.org/global-solvers-accelerator-2026/"] }
+  ]
+}

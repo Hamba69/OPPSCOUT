@@ -1,0 +1,13 @@
+{
+  "applied": 144,
+  "decisions": {
+    "close-expired": 113,
+    "close-unavailable": 6,
+    "hold": 14,
+    "close-duplicate": 2,
+    "approve": 9
+  },
+  "activeVerified": 26,
+  "verifiedReadBack": true,
+  "checkedAt": "2026-10-31T23:22:30.855Z"
+}
