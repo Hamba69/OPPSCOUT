@@ -26,7 +26,12 @@
     "check:rls": "tsx scripts/check-rls.ts",
     "worker:telemetry-retention": "tsx --conditions=react-server scripts/worker/telemetry-retention.ts",
     "worker:documents-sweep": "tsx scripts/worker/documents-sweep.ts",
-    "admin:hash-password": "tsx scripts/admin-hash-password.ts"
+    "admin:hash-password": "tsx scripts/admin-hash-password.ts",
+    "impl:self-audit": "tsx scripts/review/impl/self-audit.ts",
+    "impl:checks": "tsx scripts/review/impl/run-checks.ts",
+    "impl:db-preflight": "tsx scripts/review/impl/preflight-db.ts",
+    "impl:migration-rehearsal": "tsx scripts/migration-rehearsal.ts",
+    "impl:seed-snapshot": "tsx scripts/review/impl/seed-snapshot.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

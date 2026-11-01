@@ -5,5 +5,6 @@ playwright-report/
 test-results/
 .env
 .env.local
+.env.local-db
 *.log
 prisma/dev.db
