@@ -10,6 +10,14 @@ export type SavedStatus = "saved" | "applied" | "expired";
 export type SubscriptionTier = "free" | "growth" | "partner";
 export type SubscriptionStatus = "inactive" | "trial" | "active" | "past_due" | "cancelled";
 export type EventType = "view" | "save" | "click" | "apply_intent" | "report";
+export type ApplicantScope = "uganda_residents" | "ugandan_citizens" | "african_nationals" | "global";
+export type RemoteEligibility = "unknown" | "uganda" | "east_africa" | "africa" | "global";
+export type ProvenanceType = "official_page" | "application_system" | "org_attested";
+export type SourceKind = "api" | "careers_page" | "rss" | "newspaper" | "partner" | "community";
+export type SourceStatus = "proposed" | "approved" | "paused" | "blocked";
+export type LeadChannel = "whatsapp" | "tiktok" | "instagram" | "facebook" | "linkedin" | "newspaper" | "web" | "email" | "employer" | "other";
+export type LeadStatus = "new" | "tracing" | "traced" | "rejected" | "duplicate" | "promoted" | "expired";
+export type ReportStatus = "open" | "actioned" | "dismissed";
 
 export interface ExperienceEntry {
   title: string;
@@ -60,6 +68,7 @@ export interface UserProfile {
   graduationStatus: string | null;
   dateOfBirth: Date | null;
   countryOfResidence?: string | null;
+  openToAbroad?: boolean;
   skills: string[];
   workExperience: ExperienceEntry[];
   internshipExperience: ExperienceEntry[];
@@ -88,10 +97,14 @@ export interface Organization {
   name: string;
   sector: string;
   officialLinks: string[];
+  officialDomains?: string[];
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
   verificationStatus: VerificationStatus;
+  trustedPoster?: boolean;
+  verifiedAt?: Date | null;
+  verifiedBy?: string | null;
   dashboardUsers: string[];
   postingHistory: Array<{ opportunityId: string; postedAt: string }>;
   createdAt: Date;
@@ -137,6 +150,19 @@ export interface Opportunity {
   reviewNotes: string | null;
   reviewerId: string | null;
   reviewedAt: Date | null;
+  audience?: ApplicantScope | null;
+  countryCodes?: string[];
+  regions?: string[];
+  remoteEligibility?: RemoteEligibility;
+  eligibleCountries?: string[];
+  provenanceType?: ProvenanceType | null;
+  sourceId?: string | null;
+  leadId?: string | null;
+  canonicalUrl?: string | null;
+  contentHash?: string | null;
+  deadlineDateOnly?: boolean;
+  lastSeenAt?: Date | null;
+  needsRecheck?: boolean;
 }
 
 export interface SavedOpportunity {
@@ -156,4 +182,70 @@ export interface EventLog {
   opportunityId: string | null;
   timestamp: Date;
   metadata: Record<string, unknown>;
+}
+
+export interface Source {
+  id: string;
+  name: string;
+  kind: SourceKind;
+  baseUrl: string;
+  organizationId: string | null;
+  status: SourceStatus;
+  termsReviewedAt: Date | null;
+  termsNotes: string | null;
+  crawlIntervalHours: number;
+  lastRunAt: Date | null;
+  lastSuccessAt: Date | null;
+  consecutiveFailures: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Lead {
+  id: string;
+  channel: LeadChannel;
+  status: LeadStatus;
+  sourceId: string | null;
+  submittedById: string | null;
+  rawUrl: string | null;
+  canonicalUrl: string | null;
+  screenshotPath: string | null;
+  note: string | null;
+  extracted: Record<string, unknown>;
+  candidateOrgName: string | null;
+  officialUrl: string | null;
+  organizationId: string | null;
+  fingerprint: string;
+  duplicateOfId: string | null;
+  promotedOpportunityId: string | null;
+  rejectReason: string | null;
+  createdAt: Date;
+  tracedAt: Date | null;
+  resolvedAt: Date | null;
+}
+
+export interface ListingReport {
+  id: string;
+  opportunityId: string;
+  reporterId: string | null;
+  reason: string;
+  details: string | null;
+  status: ReportStatus;
+  createdAt: Date;
+  resolvedAt: Date | null;
+  resolvedBy: string | null;
+  resolutionNote: string | null;
+}
+
+export interface IngestionRun {
+  id: string;
+  sourceId: string;
+  startedAt: Date;
+  finishedAt: Date | null;
+  fetched: number;
+  created: number;
+  updated: number;
+  duplicates: number;
+  failed: number;
+  errors: unknown[];
 }

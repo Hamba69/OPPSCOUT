@@ -7,7 +7,8 @@ import {
 } from "@/lib/safety/db-guard";
 
 const productionRef = "abcdefghijklmnopqrst";
-const developmentRef = "zyxwvutsrqponmlkjihg";
+const unknownRef = "zyxwvutsrqponmlkjihg";
+const approvedDevRef = "rmmwkuihqmezwdugttsr";
 
 describe("database write guard", () => {
   it("allows explicit local URLs without contacting a database", () => {
@@ -44,14 +45,62 @@ describe("database write guard", () => {
     }
   });
 
-  it("accepts a distinct remote dev project when its project ref is provable", () => {
+  it("accepts the explicitly approved remote dev project through DEV variables", () => {
     const target = assertSafeDatabaseTarget({
       variableName: "DEV_DIRECT_URL",
-      value: `postgresql://postgres.${developmentRef}:pw@db.${developmentRef}.supabase.co:5432/postgres`,
+      value: `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`,
       productionProjectRef: productionRef,
       repositoryDatabaseUrl: `postgresql://postgres.${productionRef}:pw@db.${productionRef}.supabase.co:5432/postgres`,
+      productionProjectUrls: [],
     });
-    expect(target).toMatchObject({ projectRef: developmentRef, isLocal: false });
+    expect(target).toMatchObject({ projectRef: approvedDevRef, hostname: "aws-0-ap-northeast-1.pooler.supabase.com", port: 5432, isLocal: false });
+    expect(() => assertSafeDatabaseTarget({
+      variableName: "DEV_DATABASE_URL",
+      value: `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres`,
+      productionProjectRef: productionRef,
+      productionProjectUrls: [],
+    })).not.toThrow();
+  });
+
+  it("rejects a dev URL whose ref matches any configured production URL", () => {
+    const value = `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`;
+    for (const productionUrl of [
+      `postgresql://postgres.${approvedDevRef}:pw@db.${approvedDevRef}.supabase.co:5432/postgres`,
+      `postgresql://postgres.${approvedDevRef}:pw@db.${approvedDevRef}.supabase.co:5432/postgres`,
+      `https://${approvedDevRef}.supabase.co`,
+    ]) {
+      expect(() => assertSafeDatabaseTarget({
+        variableName: "DEV_DIRECT_URL",
+        value,
+        productionProjectUrls: [productionUrl],
+      })).toThrow(/matches a configured production reference/);
+    }
+  });
+
+  it("rejects an unapproved remote project reference", () => {
+    expect(() => assertSafeDatabaseTarget({
+      variableName: "DEV_DIRECT_URL",
+      value: `postgresql://postgres.${unknownRef}:pw@db.${unknownRef}.supabase.co:5432/postgres`,
+      productionProjectRef: productionRef,
+      productionProjectUrls: [],
+    })).toThrow(/not on the explicit development allowlist/);
+  });
+
+  it("rejects an unknown remote host even when the username resembles an approved ref", () => {
+    expect(() => assertSafeDatabaseTarget({
+      variableName: "DEV_DIRECT_URL",
+      value: `postgresql://postgres.${approvedDevRef}:pw@db.example.net:5432/postgres`,
+      productionProjectRef: productionRef,
+      productionProjectUrls: [],
+    })).toThrow(/reference cannot be determined/);
+  });
+
+  it("rejects the approved project when a production URL cannot be parsed", () => {
+    expect(() => assertSafeDatabaseTarget({
+      variableName: "DEV_DIRECT_URL",
+      value: `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`,
+      productionProjectUrls: ["not-a-production-url"],
+    })).toThrow(/production project reference cannot be determined/);
   });
 
   it("rejects production and default environment variable names", () => {
@@ -87,33 +136,37 @@ describe("database write guard", () => {
     })).toThrow(/reference cannot be determined/);
   });
 
-  it("rejects remote writes without a production comparison reference", () => {
-    expect(() => assertSafeDatabaseTarget({
+  it("allows only the allowlisted dev project even when production URL variables are absent", () => {
+    expect(assertSafeDatabaseTarget({
       variableName: "DEV_DATABASE_URL",
-      value: `postgresql://postgres.${developmentRef}:pw@db.${developmentRef}.supabase.co:5432/postgres`,
-    })).toThrow(/cannot be established/);
+      value: `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres`,
+      productionProjectUrls: [],
+    }).projectRef).toBe(approvedDevRef);
   });
 
   it("rejects remote references matching either production reference", () => {
-    const value = `postgresql://postgres.${productionRef}:pw@db.${productionRef}.supabase.co:5432/postgres`;
+    const value = `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`;
     expect(() => assertSafeDatabaseTarget({
       variableName: "DEV_DATABASE_URL",
       value,
-      productionProjectRef: productionRef,
+      productionProjectRef: approvedDevRef,
+      productionProjectUrls: [],
     })).toThrow(/matches a configured production reference/);
     expect(() => assertSafeDatabaseTarget({
       variableName: "DEV_DATABASE_URL",
       value,
       repositoryDatabaseUrl: value,
+      productionProjectUrls: [],
     })).toThrow(/matches a configured production reference/);
   });
 
   it("fails closed if the repository's production URL cannot be parsed", () => {
     expect(() => assertSafeDatabaseTarget({
       variableName: "DEV_DATABASE_URL",
-      value: `postgresql://postgres.${developmentRef}:pw@db.${developmentRef}.supabase.co:5432/postgres`,
+      value: `postgresql://postgres.${approvedDevRef}:pw@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`,
       productionProjectRef: productionRef,
       repositoryDatabaseUrl: "not-a-url",
+      productionProjectUrls: [],
     })).toThrow(UnsafeDatabaseTargetError);
   });
 

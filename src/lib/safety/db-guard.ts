@@ -1,6 +1,7 @@
 const ALLOWED_VARIABLE = /^(LOCAL|DEV)_(DATABASE|DIRECT)_URL$/;
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "host.docker.internal"]);
 const PROJECT_REF = /^[a-z0-9]{20}$/i;
+const ALLOWED_DEV_PROJECT_REFS = new Set(["rmmwkuihqmezwdugttsr"]);
 
 export interface DatabaseTarget {
   variableName: string;
@@ -15,6 +16,7 @@ export interface DatabaseGuardOptions {
   value: string | undefined;
   productionProjectRef?: string;
   repositoryDatabaseUrl?: string;
+  productionProjectUrls?: Array<string | undefined>;
 }
 
 export class UnsafeDatabaseTargetError extends Error {
@@ -55,6 +57,19 @@ export function parseSupabaseProjectRef(value: string | undefined): string | nul
   return userRef?.[1].toLowerCase() ?? null;
 }
 
+function parseProjectRefFromConfiguredUrl(value: string): string | null {
+  try {
+    const parsed = new URL(value);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      const match = parsed.hostname.toLowerCase().match(/^([a-z0-9]{20})\.supabase\.co$/);
+      return match?.[1] ?? null;
+    }
+    return parseSupabaseProjectRef(value);
+  } catch {
+    return null;
+  }
+}
+
 export function assertSafeDatabaseTarget(options: DatabaseGuardOptions): DatabaseTarget {
   const { variableName } = options;
   if (!ALLOWED_VARIABLE.test(variableName)) {
@@ -88,6 +103,9 @@ export function assertSafeDatabaseTarget(options: DatabaseGuardOptions): Databas
   if (!projectRef) {
     throw new UnsafeDatabaseTargetError("Remote database project reference cannot be determined.");
   }
+  if (!ALLOWED_DEV_PROJECT_REFS.has(projectRef)) {
+    throw new UnsafeDatabaseTargetError("Remote database project is not on the explicit development allowlist.");
+  }
 
   const configuredProductionRef = options.productionProjectRef?.trim().toLowerCase();
   if (configuredProductionRef && !PROJECT_REF.test(configuredProductionRef)) {
@@ -101,10 +119,24 @@ export function assertSafeDatabaseTarget(options: DatabaseGuardOptions): Databas
     throw new UnsafeDatabaseTargetError("Production project reference from DATABASE_URL cannot be determined.");
   }
 
-  if (!configuredProductionRef && !repositoryRef) {
-    throw new UnsafeDatabaseTargetError("Remote database safety cannot be established without a production project reference.");
+  const configuredProductionUrls = options.productionProjectUrls ?? [
+    process.env.DATABASE_URL,
+    process.env.DIRECT_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+  ];
+  const productionRefs = configuredProductionUrls
+    .filter((value): value is string => Boolean(value))
+    .map(parseProjectRefFromConfiguredUrl);
+  if (productionRefs.some((ref) => ref === null)) {
+    throw new UnsafeDatabaseTargetError("A configured production project reference cannot be determined.");
   }
-  if (projectRef === configuredProductionRef || projectRef === repositoryRef) {
+  const knownProductionRefs = new Set([
+    ...(configuredProductionRef ? [configuredProductionRef] : []),
+    ...(repositoryRef ? [repositoryRef] : []),
+    ...productionRefs.filter((ref): ref is string => ref !== null),
+  ]);
+
+  if (knownProductionRefs.has(projectRef)) {
     throw new UnsafeDatabaseTargetError("Remote database project matches a configured production reference.");
   }
 

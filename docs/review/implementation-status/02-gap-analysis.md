@@ -4,28 +4,26 @@
 
 The repo is not in a launch-ready state for the plan. The main blockers are:
 
-1. Missing source-of-truth schema for Source, Lead, ListingReport, and IngestionRun
-2. No audience gate connected to the actual app flow
-3. No production RLS or migration proof for the new model set
-4. F11 duplicate downgrade bug still present in ingestion logic
-5. No read-only database or deployment evidence to prove the launch gates
+1. No production audience gate connected to the actual app flow
+2. The B2 schema migration has not passed the required local snapshot-preservation test
+3. No live database or deployment evidence is available to prove the launch gates
 
 ## Minimum path to completion
 
-### Batch 1: schema and security
+### B2: domain foundation
 
 - Add the four plan tables and required enums
 - Extend Opportunity/Organization/UserProfile with the plan fields
-- Add migration files and verify with Prisma validation
-- Add a table-by-table RLS checklist and check script
+- Add repository CRUD support, migration, and RLS coverage
+- Run the migration-preservation test before applying the migration
 
-### Batch 2: audience and visibility
+### B3: audience and visibility
 
 - Add the audience gate function and shadow-mode flag
 - Wire it in feed, search, match, notification, and USSD flows
 - Include UI labels and review scripts covering Appendix B cases
 
-### Batch 3: ingestion and trust controls
+### Later: ingestion and trust controls
 
 - Fix F11 downgrade bug in duplicate handling
 - Add report lifecycle and response-clock logic
@@ -33,7 +31,7 @@ The repo is not in a launch-ready state for the plan. The main blockers are:
 
 ## Priority order
 
-1. Fix F11 and add the schema model set
+1. Complete local migration-preservation validation for B2
 2. Add audience gate with shadow mode and producer-safe defaults
 3. Lock down RLS and migration evidence
 4. Run launch-gate checks against a read-only database

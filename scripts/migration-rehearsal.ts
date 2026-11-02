@@ -10,7 +10,8 @@ import { assertSafeDatabaseTarget } from "@/lib/safety/db-guard";
 const args = process.argv.slice(2);
 const apply = args.includes("--apply");
 const verifySnapshotOnly = args.includes("--verify-snapshot-only");
-const unsupported = args.filter((argument) => argument !== "--apply" && argument !== "--verify-snapshot-only");
+const verifyDevSnapshotOnly = args.includes("--verify-dev-snapshot-only");
+const unsupported = args.filter((argument) => argument !== "--apply" && argument !== "--verify-snapshot-only" && argument !== "--verify-dev-snapshot-only");
 const snapshotPath = resolve(process.cwd(), "docs/audits/catalog-snapshot.json");
 const resultPath = resolve(process.cwd(), "docs/audits/migration-rehearsal-results.json");
 const snapshotSchema = z.object({
@@ -41,15 +42,24 @@ const snapshotSchema = z.object({
   })),
 });
 
-function connectionIdentity(value: string | undefined, variableName: string) {
+function connectionIdentity(value: string | undefined, variableName: string, requireLocal = true) {
   if (!value) throw new Error(`${variableName} is required when applying the rehearsal.`);
   const target = assertSafeDatabaseTarget({
     variableName,
     value,
     productionProjectRef: process.env.PROD_PROJECT_REF,
-    repositoryDatabaseUrl: process.env.DATABASE_URL,
+    repositoryDatabaseUrl: variableName === "DEV_DIRECT_URL"
+      ? process.env.OPPSCOUT_PRODUCTION_DATABASE_URL
+      : process.env.DATABASE_URL,
+    productionProjectUrls: variableName === "DEV_DIRECT_URL"
+      ? [
+          process.env.OPPSCOUT_PRODUCTION_DATABASE_URL,
+          process.env.OPPSCOUT_PRODUCTION_DIRECT_URL,
+          process.env.OPPSCOUT_PRODUCTION_SUPABASE_URL,
+        ]
+      : undefined,
   });
-  if (!target.isLocal) throw new Error(`${variableName} must point to loopback for migration rehearsal.`);
+  if (requireLocal && !target.isLocal) throw new Error(`${variableName} must point to loopback for migration rehearsal.`);
   const parsed = new URL(value);
   return {
     target,
@@ -187,26 +197,38 @@ async function verifySnapshot(): Promise<{ count: number; digest: string } | nul
 
 async function main(): Promise<void> {
   if (unsupported.length) throw new Error(`Unsupported arguments: ${unsupported.join(", ")}.`);
-  if (apply && verifySnapshotOnly) throw new Error("--apply and --verify-snapshot-only cannot be used together.");
-  if (verifySnapshotOnly) {
+  if ((apply && (verifySnapshotOnly || verifyDevSnapshotOnly)) || (verifySnapshotOnly && verifyDevSnapshotOnly)) {
+    throw new Error("Choose exactly one of --apply, --verify-snapshot-only, or --verify-dev-snapshot-only.");
+  }
+  if (verifySnapshotOnly || verifyDevSnapshotOnly) {
     const verificationStartedAt = new Date();
     const verificationStarted = Date.now();
-    const regular = connectionIdentity(process.env.LOCAL_DATABASE_URL, "LOCAL_DATABASE_URL");
-    const direct = connectionIdentity(process.env.LOCAL_DIRECT_URL, "LOCAL_DIRECT_URL");
-    if (regular.target.hostname !== direct.target.hostname
-      || regular.target.port !== direct.target.port
-      || regular.database !== direct.database) {
-      throw new Error("LOCAL_DATABASE_URL and LOCAL_DIRECT_URL must address the same local database.");
+    const variableName = verifyDevSnapshotOnly ? "DEV_DIRECT_URL" : "LOCAL_DATABASE_URL";
+    const connectionUrl = process.env[variableName];
+    const regular = connectionIdentity(connectionUrl, variableName, !verifyDevSnapshotOnly);
+    if (verifyDevSnapshotOnly) {
+      if (regular.target.isLocal || regular.target.projectRef !== "rmmwkuihqmezwdugttsr") {
+        throw new Error("Snapshot verification requires the explicitly approved remote dev project through DEV_DIRECT_URL.");
+      }
+    } else {
+      const direct = connectionIdentity(process.env.LOCAL_DIRECT_URL, "LOCAL_DIRECT_URL");
+      if (regular.target.hostname !== direct.target.hostname
+        || regular.target.port !== direct.target.port
+        || regular.database !== direct.database) {
+        throw new Error("LOCAL_DATABASE_URL and LOCAL_DIRECT_URL must address the same local database.");
+      }
     }
-    process.env.DATABASE_URL = process.env.LOCAL_DATABASE_URL;
-    process.env.DIRECT_URL = process.env.LOCAL_DIRECT_URL;
+    process.env.DATABASE_URL = connectionUrl;
+    process.env.DIRECT_URL = connectionUrl;
     let snapshotResult: { count: number; digest: string } | null;
     try {
       snapshotResult = await verifySnapshot();
       if (!snapshotResult) throw new Error("Snapshot verification requires seeded Opportunity rows.");
     } catch (error: unknown) {
       recordSnapshotVerification({
-        command: "npm run impl:migration-rehearsal -- --verify-snapshot-only",
+        command: verifyDevSnapshotOnly
+          ? "npm run impl:migration-rehearsal -- --verify-dev-snapshot-only"
+          : "npm run impl:migration-rehearsal -- --verify-snapshot-only",
         startedAt: verificationStartedAt.toISOString(),
         completedAt: new Date().toISOString(),
         durationMs: Date.now() - verificationStarted,
@@ -221,7 +243,9 @@ async function main(): Promise<void> {
       throw error;
     }
     recordSnapshotVerification({
-      command: "npm run impl:migration-rehearsal -- --verify-snapshot-only",
+      command: verifyDevSnapshotOnly
+        ? "npm run impl:migration-rehearsal -- --verify-dev-snapshot-only"
+        : "npm run impl:migration-rehearsal -- --verify-snapshot-only",
       startedAt: verificationStartedAt.toISOString(),
       completedAt: new Date().toISOString(),
       durationMs: Date.now() - verificationStarted,

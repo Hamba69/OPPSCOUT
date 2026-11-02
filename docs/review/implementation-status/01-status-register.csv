@@ -1,15 +1,15 @@
 id,section,item,level,special_status,evidence,notes
-M1,schema,Source/Lead/ListingReport/IngestionRun models,0,ABSENT,prisma/schema.prisma,Plan tables absent from current schema
-M2,schema,New enums for Source/Lead/Report state,0,ABSENT,prisma/schema.prisma,Enums absent
-M3,schema,Opportunity audience + provenance + source metadata columns,0,ABSENT,prisma/schema.prisma,Opportunity model not updated
-M4,schema,Organization officialDomains + trustedPoster + verification fields,0,ABSENT,prisma/schema.prisma,Not implemented
-M5,schema,User profile audience and residence fields,0,ABSENT,prisma/schema.prisma,Not implemented
-M6,security,RLS inventory for new tables,0,ABSENT,scripts/check-rls.ts,Generic script only
-M7,migration,Schema migration set for new plan tables,0,ABSENT,prisma/migrations,No plan migration set found
+M1,schema,Source/Lead/ListingReport/IngestionRun models,2,IMPLEMENTED,prisma/schema.prisma;src/lib/repository,Four approved models and Prisma/Supabase/memory CRUD paths are present
+M2,schema,New enums for Source/Lead/Report state,2,IMPLEMENTED,prisma/schema.prisma,Enums added and Prisma client regenerated
+M3,schema,Opportunity audience + provenance + source metadata columns,2,IMPLEMENTED,prisma/schema.prisma;src/core/entities/domain.ts,Approved audience/provenance and re-ingestion fields are present
+M4,schema,Organization officialDomains + trustedPoster + verification fields,2,IMPLEMENTED,prisma/schema.prisma;src/lib/repository/organization-domains.ts,Domain derivation and trust defaults are present
+M5,schema,User profile audience and residence fields,2,IMPLEMENTED,prisma/schema.prisma;src/lib/profile-store.ts,Country and abroad defaults are applied across profile adapters
+M6,security,RLS inventory for new tables,2,IMPLEMENTED_PENDING_DB_VALIDATION,scripts/check-rls.ts;prisma/migrations/20261020120000_b2_domain_foundation/migration.sql,New tables are in the required inventory and migration enables RLS; live DB check remains pending
+M7,migration,Schema migration set for new plan tables,1,PENDING_PRESERVATION_TEST,prisma/migrations/20261020120000_b2_domain_foundation,Additive migration generated and reviewed; do not apply before the real snapshot-preservation test
 A1,audience,Audience gate in production routing,0,ABSENT,src/app + src/services,Only scratch contract script exists
 A2,audience,Audience gate flag defaults off + shadow mode,0,ABSENT,src/config/feature-flags.ts,Flag missing
 B1,bugfix,F11/F8/F7 defect fixes,2,DONE,"src/services/ingestion/manual/index.ts; src/services/matching; tests/unit","Regression tests failed before and pass after the B1 fixes"
-B2,foundation,Approved Source/Lead/ListingReport/IngestionRun schema and adapters,0,PENDING,"prisma/schema.prisma; src/lib/repository","D1 approved; awaiting implementation and local migration-preservation validation"
+B2,foundation,Approved Source/Lead/ListingReport/IngestionRun schema and adapters,1,PENDING_PRESERVATION_TEST,"prisma/schema.prisma; src/lib/repository; tests/unit/b2-domain-foundation.test.ts","Schema, CRUD, defaults, RLS inventory, and focused tests implemented; local migration-preservation validation is still required"
 B3,trust,Suspicious listing reporting,1,PARTIAL,src/services/trust/report.ts,Report service exists but not plan workflow
 B4,review,Admin review queue,1,PARTIAL,src/app/admin review,Queue exists but not the plan flow
 K1,launch,Launch gate checker script,1,PARTIAL,scripts/review/status/launch-gate.ts,Script exists but no live DB evidence

@@ -13,18 +13,38 @@ import {
   WorkMode as PrismaWorkMode,
 } from "@prisma/client";
 
-import type { EventLog, Opportunity, Organization, SavedOpportunity, TrustChecklist, UserProfile } from "@/core/entities/domain";
+import type {
+  EventLog,
+  IngestionRun,
+  Lead,
+  ListingReport,
+  Opportunity,
+  Organization,
+  SavedOpportunity,
+  Source,
+  TrustChecklist,
+  UserProfile,
+} from "@/core/entities/domain";
 import { NotFoundError } from "@/core/errors/app-error";
 import { prisma } from "@/lib/db";
 import type {
   OpportunityFilters,
   OpportunityInput,
+  IngestionRunFilters,
+  IngestionRunInput,
+  LeadFilters,
+  LeadInput,
+  ListingReportFilters,
+  ListingReportInput,
   OrganizationInput,
   ProfileInput,
   Repository,
+  SourceFilters,
+  SourceInput,
   StoredMatchResult,
   StoredNotification,
 } from "@/lib/repository/types";
+import { deriveOfficialDomains } from "@/lib/repository/organization-domains";
 
 type PrismaOpportunityRecord = Prisma.OpportunityGetPayload<{ include: { organization: true } }>;
 type PrismaMatchRecord = Prisma.MatchResultGetPayload<{ include: { opportunity: { include: { organization: true } } } }>;
@@ -36,6 +56,8 @@ function asJson(value: unknown): Prisma.InputJsonValue {
 function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findUniqueOrThrow>>): UserProfile {
   return {
     ...value,
+    countryOfResidence: value.countryOfResidence ?? "UG",
+    openToAbroad: value.openToAbroad ?? false,
     workModePreference: value.workModePreference === "unknown" ? null : value.workModePreference,
     preferredChannel: value.preferredChannel,
     notificationFrequency: value.notificationFrequency,
@@ -50,6 +72,8 @@ function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findU
 function organizationFromDb(value: Awaited<ReturnType<typeof prisma.organization.findUniqueOrThrow>>): Organization {
   return {
     ...value,
+    officialDomains: value.officialDomains,
+    trustedPoster: value.trustedPoster ?? false,
     verificationStatus: value.verificationStatus,
     postingHistory: value.postingHistory as unknown as Organization["postingHistory"],
     promotionPolicy: value.promotionPolicy as Record<string, unknown>,
@@ -193,12 +217,23 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
   }
 
   public async createOrganization(input: OrganizationInput): Promise<Organization> {
-    const value = await prisma.organization.create({ data: { ...input, verificationStatus: "pending", postingHistory: [] } });
+    const value = await prisma.organization.create({ data: {
+      ...input,
+      officialDomains: deriveOfficialDomains(input.officialLinks),
+      trustedPoster: false,
+      verifiedAt: null,
+      verifiedBy: null,
+      verificationStatus: "pending",
+      postingHistory: [],
+    } });
     return organizationFromDb(value);
   }
 
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
-    const value = await prisma.organization.update({ where: { id }, data: input });
+    const value = await prisma.organization.update({ where: { id }, data: {
+      ...input,
+      officialDomains: input.officialLinks ? deriveOfficialDomains(input.officialLinks) : undefined,
+    } });
     return organizationFromDb(value);
   }
 
@@ -209,6 +244,116 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
 
   public async updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization> {
     const value = await prisma.organization.update({ where: { id }, data: { ...input, promotionPolicy: input.promotionPolicy ? asJson(input.promotionPolicy) : undefined } }); return organizationFromDb(value);
+  }
+
+  public async listSources(filters: SourceFilters = {}): Promise<Source[]> {
+    const values = await prisma.source.findMany({
+      where: { status: filters.status, organizationId: filters.organizationId },
+      orderBy: { name: "asc" },
+    });
+    return values;
+  }
+
+  public async getSource(id: string): Promise<Source | null> {
+    return prisma.source.findUnique({ where: { id } });
+  }
+
+  public async createSource(input: SourceInput): Promise<Source> {
+    return prisma.source.create({ data: input });
+  }
+
+  public async updateSource(id: string, input: Partial<SourceInput>): Promise<Source> {
+    return prisma.source.update({ where: { id }, data: input });
+  }
+
+  public async listLeads(filters: LeadFilters = {}): Promise<Lead[]> {
+    return prisma.lead.findMany({
+      where: {
+        status: filters.status,
+        sourceId: filters.sourceId,
+        submittedById: filters.submittedById,
+      },
+      orderBy: { createdAt: "desc" },
+    }).then((values) => values.map((value) => ({
+      ...value,
+      extracted: value.extracted as Record<string, unknown>,
+    })));
+  }
+
+  public async getLead(id: string): Promise<Lead | null> {
+    const value = await prisma.lead.findUnique({ where: { id } });
+    return value ? { ...value, extracted: value.extracted as Record<string, unknown> } : null;
+  }
+
+  public async createLead(input: LeadInput): Promise<Lead> {
+    const value = await prisma.lead.create({
+      data: { ...input, extracted: asJson(input.extracted ?? {}) },
+    });
+    return { ...value, extracted: value.extracted as Record<string, unknown> };
+  }
+
+  public async updateLead(id: string, input: Partial<LeadInput>): Promise<Lead> {
+    const value = await prisma.lead.update({
+      where: { id },
+      data: { ...input, extracted: input.extracted === undefined ? undefined : asJson(input.extracted) },
+    });
+    return { ...value, extracted: value.extracted as Record<string, unknown> };
+  }
+
+  public async listListingReports(filters: ListingReportFilters = {}): Promise<ListingReport[]> {
+    return prisma.listingReport.findMany({
+      where: {
+        opportunityId: filters.opportunityId,
+        reporterId: filters.reporterId,
+        status: filters.status,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  }
+
+  public async getListingReport(id: string): Promise<ListingReport | null> {
+    return prisma.listingReport.findUnique({ where: { id } });
+  }
+
+  public async createListingReport(input: ListingReportInput): Promise<ListingReport> {
+    return prisma.listingReport.create({ data: input });
+  }
+
+  public async updateListingReport(id: string, input: Partial<ListingReportInput>): Promise<ListingReport> {
+    return prisma.listingReport.update({ where: { id }, data: input });
+  }
+
+  public async listIngestionRuns(filters: IngestionRunFilters = {}): Promise<IngestionRun[]> {
+    return prisma.ingestionRun.findMany({
+      where: {
+        sourceId: filters.sourceId,
+        startedAt: filters.startedAfter ? { gte: filters.startedAfter } : undefined,
+      },
+      orderBy: { startedAt: "desc" },
+    }).then((values) => values.map((value) => ({
+      ...value,
+      errors: value.errors as unknown[],
+    })));
+  }
+
+  public async getIngestionRun(id: string): Promise<IngestionRun | null> {
+    const value = await prisma.ingestionRun.findUnique({ where: { id } });
+    return value ? { ...value, errors: value.errors as unknown[] } : null;
+  }
+
+  public async createIngestionRun(input: IngestionRunInput): Promise<IngestionRun> {
+    const value = await prisma.ingestionRun.create({
+      data: { ...input, errors: asJson(input.errors ?? []) },
+    });
+    return { ...value, errors: value.errors as unknown[] };
+  }
+
+  public async updateIngestionRun(id: string, input: Partial<IngestionRunInput>): Promise<IngestionRun> {
+    const value = await prisma.ingestionRun.update({
+      where: { id },
+      data: { ...input, errors: input.errors === undefined ? undefined : asJson(input.errors) },
+    });
+    return { ...value, errors: value.errors as unknown[] };
   }
 
   public async upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult> {
@@ -336,6 +481,8 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
       id: userId,
       ...input,
       name: input.name ?? "",
+      countryOfResidence: input.countryOfResidence ?? "UG",
+      openToAbroad: input.openToAbroad ?? false,
       preferredChannel: input.preferredChannel as PrismaPreferredChannel | undefined,
       secondaryChannels: input.secondaryChannels as PrismaPreferredChannel[] | undefined,
       workModePreference: input.workModePreference as PrismaWorkMode | null | undefined,
@@ -349,6 +496,8 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
   private profileUpdateData(input: ProfileInput): Prisma.UserProfileUncheckedUpdateInput {
     return {
       ...input,
+      countryOfResidence: input.countryOfResidence === undefined ? undefined : input.countryOfResidence ?? "UG",
+      openToAbroad: input.openToAbroad,
       preferredChannel: input.preferredChannel as PrismaPreferredChannel | undefined,
       secondaryChannels: input.secondaryChannels as PrismaPreferredChannel[] | undefined,
       workModePreference: input.workModePreference as PrismaWorkMode | null | undefined,

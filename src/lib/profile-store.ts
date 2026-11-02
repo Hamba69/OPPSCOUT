@@ -15,6 +15,8 @@ function profileFromSupabase(value: unknown): UserProfile {
   const row = value as SupabaseProfileRow;
   return {
     ...row,
+    countryOfResidence: row.countryOfResidence ?? "UG",
+    openToAbroad: row.openToAbroad ?? false,
     dateOfBirth: row.dateOfBirth ? new Date(`${row.dateOfBirth.slice(0, 10)}T00:00:00.000Z`) : null,
     createdAt: new Date(row.createdAt),
     updatedAt: new Date(row.updatedAt),
@@ -25,6 +27,7 @@ function profileData(input: ProfileInput): Record<string, unknown> {
   const { dateOfBirth, ...rest } = input;
   return {
     ...rest,
+    ...(input.countryOfResidence === null ? { countryOfResidence: "UG" } : {}),
     ...(dateOfBirth === undefined
       ? {}
       : { dateOfBirth: dateOfBirth?.toISOString().slice(0, 10) ?? null }),
@@ -59,6 +62,8 @@ export async function createUserProfile(userId: string, input: ProfileInput): Pr
       id: userId,
       ...profileData(input),
       name: input.name ?? "",
+      countryOfResidence: input.countryOfResidence ?? "UG",
+      openToAbroad: input.openToAbroad ?? false,
       updatedAt: new Date().toISOString(),
     })
     .select("*")

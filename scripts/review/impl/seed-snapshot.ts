@@ -8,6 +8,7 @@ import { assertSafeDatabaseTarget } from "@/lib/safety/db-guard";
 
 const snapshotPath = resolve(process.cwd(), "docs/audits/catalog-snapshot.json");
 const apply = process.argv.includes("--apply");
+const useDevDatabase = process.argv.includes("--dev");
 const snapshotSchema = z.object({
   capturedAt: z.string().datetime(),
   total: z.number().int().nonnegative(),
@@ -81,24 +82,43 @@ function loadSnapshot() {
 }
 
 async function seed(data: ReturnType<typeof loadSnapshot>["data"], fingerprint: string): Promise<void> {
+  const variableName = useDevDatabase ? "DEV_DIRECT_URL" : "LOCAL_DATABASE_URL";
+  const value = process.env[variableName];
+  const productionDatabaseUrl = useDevDatabase
+    ? process.env.OPPSCOUT_PRODUCTION_DATABASE_URL
+    : process.env.DATABASE_URL;
+  const productionProjectUrls = useDevDatabase
+    ? [
+        process.env.OPPSCOUT_PRODUCTION_DATABASE_URL,
+        process.env.OPPSCOUT_PRODUCTION_DIRECT_URL,
+        process.env.OPPSCOUT_PRODUCTION_SUPABASE_URL,
+      ]
+    : undefined;
   const target = assertSafeDatabaseTarget({
-    variableName: "LOCAL_DATABASE_URL",
-    value: process.env.LOCAL_DATABASE_URL,
+    variableName,
+    value,
     productionProjectRef: process.env.PROD_PROJECT_REF,
-    repositoryDatabaseUrl: process.env.DATABASE_URL,
+    repositoryDatabaseUrl: productionDatabaseUrl,
+    productionProjectUrls,
   });
-  const direct = assertSafeDatabaseTarget({
-    variableName: "LOCAL_DIRECT_URL",
-    value: process.env.LOCAL_DIRECT_URL,
-    productionProjectRef: process.env.PROD_PROJECT_REF,
-    repositoryDatabaseUrl: process.env.DATABASE_URL,
-  });
-  if (!target.isLocal || !direct.isLocal || target.hostname !== direct.hostname || target.port !== direct.port) {
-    throw new Error("Snapshot seed requires matching loopback-only LOCAL_DATABASE_URL and LOCAL_DIRECT_URL values.");
+  if (useDevDatabase) {
+    if (target.isLocal || target.projectRef !== "rmmwkuihqmezwdugttsr") {
+      throw new Error("Snapshot seed requires the explicitly approved remote dev project through DEV_DIRECT_URL.");
+    }
+  } else {
+    const direct = assertSafeDatabaseTarget({
+      variableName: "LOCAL_DIRECT_URL",
+      value: process.env.LOCAL_DIRECT_URL,
+      productionProjectRef: process.env.PROD_PROJECT_REF,
+      repositoryDatabaseUrl: productionDatabaseUrl,
+    });
+    if (!target.isLocal || !direct.isLocal || target.hostname !== direct.hostname || target.port !== direct.port) {
+      throw new Error("Snapshot seed requires matching loopback-only LOCAL_DATABASE_URL and LOCAL_DIRECT_URL values.");
+    }
   }
 
-  process.env.DATABASE_URL = process.env.LOCAL_DATABASE_URL;
-  process.env.DIRECT_URL = process.env.LOCAL_DIRECT_URL;
+  process.env.DATABASE_URL = value;
+  process.env.DIRECT_URL = value;
   const prisma = new PrismaClient();
   try {
     const existing = await prisma.opportunity.count();
@@ -163,6 +183,8 @@ async function seed(data: ReturnType<typeof loadSnapshot>["data"], fingerprint: 
 }
 
 async function main(): Promise<void> {
+  const unsupported = process.argv.slice(2).filter((argument) => argument !== "--apply" && argument !== "--dev");
+  if (unsupported.length) throw new Error(`Unsupported arguments: ${unsupported.join(", ")}.`);
   const { raw, data } = loadSnapshot();
   const fingerprint = createHash("sha256").update(raw).digest("hex");
   if (!apply) {

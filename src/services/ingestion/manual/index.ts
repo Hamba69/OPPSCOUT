@@ -10,11 +10,16 @@ export async function ingestManualOpportunity(repository: Repository, input: Opp
   const duplicate = await findDuplicateOpportunity(repository, { ...input, origin });
   if (duplicate) {
     const incomingIsAuthoritative = SOURCE_AUTHORITY[input.source] >= SOURCE_AUTHORITY[duplicate.source];
-    if (!incomingIsAuthoritative && !suspicious) return duplicate;
+    const lastSeenAt = new Date();
+    if (!incomingIsAuthoritative && !suspicious) {
+      return repository.updateOpportunity(duplicate.id, { lastSeenAt });
+    }
     const applicationLinkChanged =
       input.applicationMethod !== duplicate.applicationMethod || input.sourceUrl !== duplicate.sourceUrl;
     return repository.updateOpportunity(duplicate.id, {
       ...(incomingIsAuthoritative ? input : {}),
+      lastSeenAt,
+      needsRecheck: suspicious || applicationLinkChanged,
       verificationStatus: suspicious || duplicate.verificationStatus === "flagged"
         ? "flagged"
         : duplicate.verificationStatus === "verified" && !applicationLinkChanged
@@ -29,5 +34,7 @@ export async function ingestManualOpportunity(repository: Repository, input: Opp
     verificationStatus: suspicious ? "flagged" : "pending",
     status: "open",
     checkedAt: new Date(),
+    lastSeenAt: new Date(),
+    needsRecheck: suspicious,
   });
 }

@@ -6,9 +6,13 @@ import { parseDatabaseDate as asDate } from "@/lib/database-date";
 
 import type {
   EventLog,
+  IngestionRun,
+  Lead,
+  ListingReport,
   Opportunity,
   Organization,
   SavedOpportunity,
+  Source,
   TrustChecklist,
   UserProfile,
 } from "@/core/entities/domain";
@@ -18,12 +22,21 @@ import { createServiceRoleClient } from "@/lib/supabase/admin";
 import type {
   OpportunityFilters,
   OpportunityInput,
+  IngestionRunFilters,
+  IngestionRunInput,
+  LeadFilters,
+  LeadInput,
+  ListingReportFilters,
+  ListingReportInput,
   OrganizationInput,
   ProfileInput,
   Repository,
+  SourceFilters,
+  SourceInput,
   StoredMatchResult,
   StoredNotification,
 } from "@/lib/repository/types";
+import { deriveOfficialDomains } from "@/lib/repository/organization-domains";
 
 type DbRow = Record<string, unknown>;
 type DataClient = ReturnType<typeof createServiceRoleClient>;
@@ -32,6 +45,11 @@ type DataClient = ReturnType<typeof createServiceRoleClient>;
 function organizationFromRow(row: DbRow): Organization {
   return {
     ...row,
+    officialDomains: Array.isArray(row.officialDomains)
+      ? row.officialDomains
+      : deriveOfficialDomains((row.officialLinks as string[] | undefined) ?? []),
+    trustedPoster: row.trustedPoster ?? false,
+    verifiedAt: asDate(row.verifiedAt),
     createdAt: asDate(row.createdAt)!,
     updatedAt: asDate(row.updatedAt)!,
     postingHistory: row.postingHistory ?? [],
@@ -46,6 +64,7 @@ function opportunityFromRow(row: DbRow, organization?: DbRow): Opportunity {
     deadline: asDate(row.deadline),
     publicationDate: asDate(row.publicationDate)!,
     checkedAt: asDate(row.checkedAt)!,
+    lastSeenAt: asDate(row.lastSeenAt),
     reviewedAt: asDate(row.reviewedAt),
     eligibility: row.eligibility ?? {},
     reviewChecklist: row.reviewChecklist ?? {},
@@ -78,6 +97,44 @@ function notificationFromRow(row: DbRow): StoredNotification {
 
 function eventFromRow(row: DbRow): EventLog {
   return { ...row, timestamp: asDate(row.timestamp)!, metadata: row.metadata ?? {} } as EventLog;
+}
+
+function sourceFromRow(row: DbRow): Source {
+  return {
+    ...row,
+    termsReviewedAt: asDate(row.termsReviewedAt),
+    lastRunAt: asDate(row.lastRunAt),
+    lastSuccessAt: asDate(row.lastSuccessAt),
+    createdAt: asDate(row.createdAt)!,
+    updatedAt: asDate(row.updatedAt)!,
+  } as Source;
+}
+
+function leadFromRow(row: DbRow): Lead {
+  return {
+    ...row,
+    extracted: row.extracted ?? {},
+    createdAt: asDate(row.createdAt)!,
+    tracedAt: asDate(row.tracedAt),
+    resolvedAt: asDate(row.resolvedAt),
+  } as Lead;
+}
+
+function listingReportFromRow(row: DbRow): ListingReport {
+  return {
+    ...row,
+    createdAt: asDate(row.createdAt)!,
+    resolvedAt: asDate(row.resolvedAt),
+  } as ListingReport;
+}
+
+function ingestionRunFromRow(row: DbRow): IngestionRun {
+  return {
+    ...row,
+    startedAt: asDate(row.startedAt)!,
+    finishedAt: asDate(row.finishedAt),
+    errors: Array.isArray(row.errors) ? row.errors : [],
+  } as IngestionRun;
 }
 
 function matchFromRow(row: DbRow, opportunity?: Opportunity): StoredMatchResult {
@@ -178,6 +235,8 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
       id: randomUUID(),
       publicationDate: input.publicationDate?.toISOString() ?? now,
       checkedAt: input.checkedAt?.toISOString() ?? now,
+      lastSeenAt: input.lastSeenAt?.toISOString() ?? now,
+      needsRecheck: input.needsRecheck ?? false,
     };
     const { data, error } = await this.client.from("Opportunity").insert(insert).select("*").single();
     const created = checked(data, error, "Could not create opportunity");
@@ -208,7 +267,12 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   public async updateOpportunity(id: string, input: Partial<OpportunityInput>): Promise<Opportunity> {
-    const { data, error } = await this.client.from("Opportunity").update(input).eq("id", id).select("*").maybeSingle();
+    const { data, error } = await this.client.from("Opportunity").update({
+      ...input,
+      publicationDate: input.publicationDate?.toISOString(),
+      checkedAt: input.checkedAt?.toISOString(),
+      lastSeenAt: input.lastSeenAt?.toISOString() ?? (input.lastSeenAt === null ? null : undefined),
+    }).eq("id", id).select("*").maybeSingle();
     const row = checked(data, error, "Opportunity");
     return (await this.opportunitiesWithOrganizations([row]))[0];
   }
@@ -242,6 +306,10 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     const { data, error } = await this.client.from("Organization")
       .insert({
         ...input,
+        officialDomains: deriveOfficialDomains(input.officialLinks),
+        trustedPoster: false,
+        verifiedAt: null,
+        verifiedBy: null,
         id: randomUUID(),
         verificationStatus: "pending",
         postingHistory: [],
@@ -254,11 +322,165 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
 
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
     const { data, error } = await this.client.from("Organization")
-      .update({ ...input, updatedAt: new Date().toISOString() })
+      .update({
+        ...input,
+        officialDomains: input.officialLinks ? deriveOfficialDomains(input.officialLinks) : undefined,
+        updatedAt: new Date().toISOString(),
+      })
       .eq("id", id)
       .select("*")
       .maybeSingle();
     return organizationFromRow(checked(data, error, "Organization"));
+  }
+
+  public async listSources(filters: SourceFilters = {}): Promise<Source[]> {
+    let query = this.client.from("Source").select("*");
+    if (filters.status) query = query.eq("status", filters.status);
+    if (filters.organizationId) query = query.eq("organizationId", filters.organizationId);
+    const { data, error } = await query.order("name", { ascending: true });
+    return checked(data, error, "Could not list sources").map(sourceFromRow);
+  }
+
+  public async getSource(id: string): Promise<Source | null> {
+    const { data, error } = await this.client.from("Source").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(`Could not read source: ${error.message}`);
+    return data ? sourceFromRow(data) : null;
+  }
+
+  public async createSource(input: SourceInput): Promise<Source> {
+    const timestamp = new Date().toISOString();
+    const { data, error } = await this.client.from("Source").insert({
+      ...input,
+      id: randomUUID(),
+      status: input.status ?? "proposed",
+      termsReviewedAt: input.termsReviewedAt?.toISOString() ?? null,
+      crawlIntervalHours: input.crawlIntervalHours ?? 24,
+      lastRunAt: input.lastRunAt?.toISOString() ?? null,
+      lastSuccessAt: input.lastSuccessAt?.toISOString() ?? null,
+      consecutiveFailures: input.consecutiveFailures ?? 0,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    }).select("*").single();
+    return sourceFromRow(checked(data, error, "Could not create source"));
+  }
+
+  public async updateSource(id: string, input: Partial<SourceInput>): Promise<Source> {
+    const { data, error } = await this.client.from("Source").update({
+      ...input,
+      termsReviewedAt: input.termsReviewedAt?.toISOString() ?? (input.termsReviewedAt === null ? null : undefined),
+      lastRunAt: input.lastRunAt?.toISOString() ?? (input.lastRunAt === null ? null : undefined),
+      lastSuccessAt: input.lastSuccessAt?.toISOString() ?? (input.lastSuccessAt === null ? null : undefined),
+      updatedAt: new Date().toISOString(),
+    }).eq("id", id).select("*").maybeSingle();
+    return sourceFromRow(checked(data, error, "Source"));
+  }
+
+  public async listLeads(filters: LeadFilters = {}): Promise<Lead[]> {
+    let query = this.client.from("Lead").select("*");
+    if (filters.status) query = query.eq("status", filters.status);
+    if (filters.sourceId) query = query.eq("sourceId", filters.sourceId);
+    if (filters.submittedById) query = query.eq("submittedById", filters.submittedById);
+    const { data, error } = await query.order("createdAt", { ascending: false });
+    return checked(data, error, "Could not list leads").map(leadFromRow);
+  }
+
+  public async getLead(id: string): Promise<Lead | null> {
+    const { data, error } = await this.client.from("Lead").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(`Could not read lead: ${error.message}`);
+    return data ? leadFromRow(data) : null;
+  }
+
+  public async createLead(input: LeadInput): Promise<Lead> {
+    const { data, error } = await this.client.from("Lead").insert({
+      ...input,
+      id: randomUUID(),
+      status: input.status ?? "new",
+      extracted: input.extracted ?? {},
+      createdAt: new Date().toISOString(),
+    }).select("*").single();
+    return leadFromRow(checked(data, error, "Could not create lead"));
+  }
+
+  public async updateLead(id: string, input: Partial<LeadInput>): Promise<Lead> {
+    const { data, error } = await this.client.from("Lead").update({
+      ...input,
+      tracedAt: input.tracedAt?.toISOString() ?? (input.tracedAt === null ? null : undefined),
+      resolvedAt: input.resolvedAt?.toISOString() ?? (input.resolvedAt === null ? null : undefined),
+    }).eq("id", id).select("*").maybeSingle();
+    return leadFromRow(checked(data, error, "Lead"));
+  }
+
+  public async listListingReports(filters: ListingReportFilters = {}): Promise<ListingReport[]> {
+    let query = this.client.from("ListingReport").select("*");
+    if (filters.opportunityId) query = query.eq("opportunityId", filters.opportunityId);
+    if (filters.reporterId) query = query.eq("reporterId", filters.reporterId);
+    if (filters.status) query = query.eq("status", filters.status);
+    const { data, error } = await query.order("createdAt", { ascending: false });
+    return checked(data, error, "Could not list listing reports").map(listingReportFromRow);
+  }
+
+  public async getListingReport(id: string): Promise<ListingReport | null> {
+    const { data, error } = await this.client.from("ListingReport").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(`Could not read listing report: ${error.message}`);
+    return data ? listingReportFromRow(data) : null;
+  }
+
+  public async createListingReport(input: ListingReportInput): Promise<ListingReport> {
+    const { data, error } = await this.client.from("ListingReport").insert({
+      ...input,
+      id: randomUUID(),
+      status: input.status ?? "open",
+      createdAt: new Date().toISOString(),
+      resolvedAt: input.resolvedAt?.toISOString() ?? null,
+    }).select("*").single();
+    return listingReportFromRow(checked(data, error, "Could not create listing report"));
+  }
+
+  public async updateListingReport(id: string, input: Partial<ListingReportInput>): Promise<ListingReport> {
+    const { data, error } = await this.client.from("ListingReport").update({
+      ...input,
+      resolvedAt: input.resolvedAt?.toISOString() ?? (input.resolvedAt === null ? null : undefined),
+    }).eq("id", id).select("*").maybeSingle();
+    return listingReportFromRow(checked(data, error, "Listing report"));
+  }
+
+  public async listIngestionRuns(filters: IngestionRunFilters = {}): Promise<IngestionRun[]> {
+    let query = this.client.from("IngestionRun").select("*");
+    if (filters.sourceId) query = query.eq("sourceId", filters.sourceId);
+    if (filters.startedAfter) query = query.gte("startedAt", filters.startedAfter.toISOString());
+    const { data, error } = await query.order("startedAt", { ascending: false });
+    return checked(data, error, "Could not list ingestion runs").map(ingestionRunFromRow);
+  }
+
+  public async getIngestionRun(id: string): Promise<IngestionRun | null> {
+    const { data, error } = await this.client.from("IngestionRun").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(`Could not read ingestion run: ${error.message}`);
+    return data ? ingestionRunFromRow(data) : null;
+  }
+
+  public async createIngestionRun(input: IngestionRunInput): Promise<IngestionRun> {
+    const { data, error } = await this.client.from("IngestionRun").insert({
+      ...input,
+      id: randomUUID(),
+      startedAt: input.startedAt?.toISOString() ?? new Date().toISOString(),
+      finishedAt: input.finishedAt?.toISOString() ?? null,
+      fetched: input.fetched ?? 0,
+      created: input.created ?? 0,
+      updated: input.updated ?? 0,
+      duplicates: input.duplicates ?? 0,
+      failed: input.failed ?? 0,
+      errors: input.errors ?? [],
+    }).select("*").single();
+    return ingestionRunFromRow(checked(data, error, "Could not create ingestion run"));
+  }
+
+  public async updateIngestionRun(id: string, input: Partial<IngestionRunInput>): Promise<IngestionRun> {
+    const { data, error } = await this.client.from("IngestionRun").update({
+      ...input,
+      startedAt: input.startedAt?.toISOString() ?? undefined,
+      finishedAt: input.finishedAt?.toISOString() ?? (input.finishedAt === null ? null : undefined),
+    }).eq("id", id).select("*").maybeSingle();
+    return ingestionRunFromRow(checked(data, error, "Ingestion run"));
   }
 
   public async reviewOrganization(id: string, approved: boolean): Promise<Organization> {
