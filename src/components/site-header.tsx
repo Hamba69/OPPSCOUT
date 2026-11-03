@@ -73,11 +73,15 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Eleme
   const bare = bareHeaderPaths.includes(pathname);
   const home = isSeeker ? "/feed" : isAdmin ? "/admin/overview" : isStaff ? "/dashboard" : "/";
 
-  return <header className="sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur">
-    <div className="mx-auto grid min-h-16 max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:px-6 md:grid-cols-[1fr_auto_1fr] lg:px-8">
-      <Link href={home} className="flex shrink-0 items-center gap-2 justify-self-start text-xl font-bold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} />oppscout</Link>
+  return <header className={isLanding ? "relative z-30" : "sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur"}>
+    <div className={`mx-auto grid ${isLanding ? "min-h-20" : "min-h-16"} max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:px-6 md:grid-cols-[1fr_auto_1fr] lg:px-8`}>
+      <Link href={home} className="flex shrink-0 items-center gap-2 justify-self-start text-xl font-bold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} /><span className={isLanding ? "max-[380px]:sr-only" : undefined}>oppscout</span></Link>
       <div className="hidden self-stretch md:flex">{isSeeker && <HeaderTabs />}</div>
       <div className="flex items-center gap-2 justify-self-end">
+        {isLanding && <>
+          <Link href="/login" className="button-secondary !min-h-11 !px-3 text-sm sm:!px-5">Log in</Link>
+          <Link href="/profile" className="button !min-h-11 !px-3 text-sm sm:!px-5">Get started</Link>
+        </>}
         {!bare && !isLanding && (signedIn || isSeeker || isStaff) && <AccountMenu seeker={isSeeker} admin={isAdmin} />}
       </div>
     </div>
