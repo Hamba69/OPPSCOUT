@@ -144,7 +144,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               <input
                 id="auth-email"
                 ref={emailInput}
-                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
+                className="w-full rounded-2xl border border-ink/10 bg-butter py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -160,16 +160,6 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               <label htmlFor="auth-password" className="block text-sm font-semibold text-ink">
                 Password
               </label>
-              {isSignin && (
-                <button
-                  type="button"
-                  className="text-sm font-semibold text-navy underline underline-offset-2 transition hover:text-ink"
-                  disabled={busy}
-                  onClick={recoverPassword}
-                >
-                  Forgot password?
-                </button>
-              )}
             </div>
             <div className="relative">
               <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2">
@@ -177,7 +167,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               </span>
               <input
                 id="auth-password"
-                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
+                className="w-full rounded-2xl border border-ink/10 bg-butter py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 minLength={8}
@@ -194,6 +184,16 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
+            {isSignin && (
+              <button
+                type="button"
+                className="ml-auto mt-1.5 block text-sm font-semibold text-navy underline underline-offset-2 transition hover:text-ink"
+                disabled={busy}
+                onClick={recoverPassword}
+              >
+                Forgot password?
+              </button>
+            )}
             {!isSignin && (
               <p className="mt-1.5 text-xs text-navy/70">At least 8 characters.</p>
             )}
