@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { OpportunityOrigin } from "@/core/entities/domain";
+import { SaveButton } from "@/components/save-button";
 
 export interface MatchCardProps {
   id: string;
@@ -19,64 +20,45 @@ export interface MatchCardProps {
   daysLeft: number | null;
 }
 
+const preferredLabels = new Set(["Skills", "Field of study", "Career direction", "Experience", "Education eligibility", "Location"]);
+
+const iconProps = { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
+
 export function MatchCard(props: MatchCardProps): React.JSX.Element {
-  const daysLeft = props.daysLeft;
-  // Prefer skills / field / career factors for the card summary; fall back to any matched factors.
-  const preferredLabels = new Set(["Skills", "Field of study", "Career direction", "Experience", "Education eligibility", "Location"]);
-  const ranked = [
-    ...props.matched.filter((f) => preferredLabels.has(f.label)),
-    ...props.matched.filter((f) => !preferredLabels.has(f.label)),
-  ];
-  const highlights = ranked.slice(0, 3);
+  const { daysLeft } = props;
+  // One clear reason per card: prefer skills / field / career factors, fall back to any matched factor.
+  const reason = props.matched.find((factor) => preferredLabels.has(factor.label)) ?? props.matched[0];
   const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
   const workMode = props.workMode === "unknown" ? "Work mode not stated" : props.workMode;
   const deadlineLabel = props.deadline
     ? `Closes ${new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" })}`
     : "Open until filled";
   return (
-    <article className="card match-lift flex h-full flex-col">
-      <div className="flex items-start justify-between gap-3">
+    <article className="card match-lift flex flex-col !rounded-2xl !shadow-none">
+      <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-lg font-extrabold leading-snug text-ink">{props.title}</h2>
-          <p className="mt-0.5 text-sm font-medium text-navy">{props.organization}</p>
+          <p className="text-[13px] font-semibold text-navy">{props.organization}</p>
+          <h2 className="mt-0.5 text-lg font-bold leading-snug text-ink">{props.title}</h2>
         </div>
-        <span className="match-score shrink-0">{props.score}% match</span>
+        <span className="shrink-0 rounded-full bg-leaf/10 px-3 py-1 text-[13px] font-bold text-[#145347]">{props.score}% match</span>
       </div>
-      <p className="mt-2 text-xs font-semibold text-navy">
-        {props.origin === "organization" ? "Posted through OppScout by the organization" : "Sourced for the OppScout catalog"}
-      </p>
-      <p className="mt-3 text-sm text-navy">
-        <span className="capitalize">
+      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-navy">
+        <span className="inline-flex items-center gap-1.5 capitalize">
+          <svg {...iconProps}><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" /><circle cx="12" cy="9" r="2.5" /></svg>
           {props.location} · {workMode}
-        </span>{" "}
-        ·{" "}
-        {urgent ? (
-          <strong className="text-[#B3261E]">
-            Closes in {daysLeft} {daysLeft === 1 ? "day" : "days"}
-          </strong>
-        ) : (
-          deadlineLabel
-        )}
-      </p>
-      {highlights.length > 0 && (
-        <ul className="mt-3 space-y-2 rounded-2xl bg-butter px-4 py-3 text-sm leading-6 text-ink">
-          {highlights.map((factor) => (
-            <li key={`${factor.label}-${factor.detail}`}>
-              <strong className="text-leaf">{factor.label}:</strong> {factor.detail}
-            </li>
-          ))}
-        </ul>
-      )}
-      {props.missing.length > 0 && (
-        <p className="mt-2 text-xs text-navy">
-          To prepare: {props.missing.slice(0, 2).map((f) => f.label).join(" · ")}
-          {props.missing.length > 2 ? "…" : ""}
-        </p>
-      )}
-      <div className="mt-auto pt-4">
-        <Link className="text-link" href={`/opportunity/${props.opportunityId}`}>
-          View details
-        </Link>
+        </span>
+        <span className={`inline-flex items-center gap-1.5 ${urgent ? "font-bold text-[#B3261E]" : ""}`}>
+          <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+          {urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : deadlineLabel}
+        </span>
+      </div>
+      {reason && <p className="mt-3.5 text-sm leading-6 text-ink"><strong className="font-bold text-[#145347]">Why it fits:</strong> {reason.detail}</p>}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.08] pt-3.5">
+        {props.sourceUrl ? <span className="text-[13px] font-semibold text-[#145347]">Official source linked</span> : <span />}
+        <div className="flex gap-2">
+          <SaveButton opportunityId={props.opportunityId} />
+          <Link className="button !min-h-11 !px-4" href={`/opportunity/${props.opportunityId}`}>View details</Link>
+        </div>
       </div>
     </article>
   );

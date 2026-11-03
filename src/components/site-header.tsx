@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { Logo } from "@/components/logo";
-import { SectionNav } from "@/components/section-nav";
 
 const seekerLinks = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"]] as const;
 const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/opportunity"];
@@ -40,7 +39,7 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
     <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={admin ? "Account" : seeker ? "Profile and settings" : "Account"}
       onPointerDown={(event) => { pointerType.current = event.pointerType; }}
       onClick={(event) => { if (event.detail > 0 && pointerType.current === "mouse") { setOpen(true); return; } setOpen((value) => !value); }}
-      className="flex size-11 cursor-pointer items-center justify-center rounded-full border-2 border-honey bg-butter text-ink">
+      className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-ink/15 bg-white text-ink transition hover:bg-cream">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
     </button>
     {open && <div className="absolute right-0 top-full z-50 pt-2">
@@ -55,6 +54,16 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
   </div>;
 }
 
+function HeaderTabs(): React.JSX.Element {
+  const pathname = usePathname();
+  return <nav aria-label="Main navigation" className="flex items-stretch gap-8">
+    {seekerLinks.map(([name, href]) => {
+      const active = pathname === href || pathname.startsWith(`${href}/`) || (href === "/feed" && pathname.startsWith("/opportunity/"));
+      return <Link key={href} href={href} prefetch aria-current={active ? "page" : undefined} className="tab-link">{name}</Link>;
+    })}
+  </nav>;
+}
+
 export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Element {
   const pathname = usePathname();
   const isLanding = pathname === "/";
@@ -64,13 +73,13 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Eleme
   const bare = bareHeaderPaths.includes(pathname);
   const home = isSeeker ? "/feed" : isAdmin ? "/admin/overview" : isStaff ? "/dashboard" : "/";
 
-  return <header className="sticky top-0 z-30 border-b border-ink/[.06] bg-cream/95 backdrop-blur">
-    <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
-      <Link href={home} className="flex shrink-0 items-center gap-2 text-xl font-extrabold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} />oppscout</Link>
-      {isSeeker && <div className="hidden md:block"><SectionNav label="Main navigation" links={seekerLinks} /></div>}
-      {!bare && <div className="flex items-center gap-2">
-        {!isLanding && (signedIn || isSeeker || isStaff) && <AccountMenu seeker={isSeeker} admin={isAdmin} />}
-      </div>}
+  return <header className="sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur">
+    <div className="mx-auto grid min-h-16 max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:px-6 md:grid-cols-[1fr_auto_1fr] lg:px-8">
+      <Link href={home} className="flex shrink-0 items-center gap-2 justify-self-start text-xl font-bold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} />oppscout</Link>
+      <div className="hidden self-stretch md:flex">{isSeeker && <HeaderTabs />}</div>
+      <div className="flex items-center gap-2 justify-self-end">
+        {!bare && !isLanding && (signedIn || isSeeker || isStaff) && <AccountMenu seeker={isSeeker} admin={isAdmin} />}
+      </div>
     </div>
   </header>;
 }
