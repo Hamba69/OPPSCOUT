@@ -5,12 +5,47 @@ import { AuthForm } from "@/components/auth-form";
 
 export const dynamic = "force-dynamic";
 
-interface LoginPageProps { searchParams: Promise<{ next?: string; error?: string }> }
+interface LoginPageProps { searchParams: Promise<{ next?: string; error?: string; mode?: string }> }
 
 export default async function LoginPage({ searchParams }: LoginPageProps): Promise<React.JSX.Element> {
-  const { next: requested, error } = await searchParams;
+  const { next: requested, error, mode } = await searchParams;
   const auth = await getOptionalAuth();
   if (auth) redirect(homePathForRole(auth.role));
   const nextPath = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/feed";
-  return <main className="page-shell animate-in"><div className="text-center"><div className="flex justify-center"><Logo size={64} /></div><h1 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl">Welcome to OppScout</h1><p className="mx-auto mt-3 max-w-xl text-navy">Sign in or create an account to see opportunities that fit you.</p></div>{error === "callback" && <p className="mx-auto mt-6 max-w-lg rounded-2xl border border-coral bg-coral/15 p-3 text-sm font-bold text-ink" role="alert">Your email link is invalid or has expired. To reset your password, enter your email below and choose “Forgot your password?”.</p>}<AuthForm nextPath={nextPath} /></main>;
+
+  return (
+    <main className="relative min-h-[100dvh] overflow-hidden">
+      {/* Soft gold wash behind the card (matches mockups) */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% -10%, #FFF6C8 0%, #FAFAF6 55%, #FAFAF6 100%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-lg flex-col px-4 pb-10 pt-8 sm:px-6">
+        {/* Brand mark */}
+        <div className="mb-8 flex items-center gap-2">
+          <Logo size={36} />
+          <span className="text-lg font-bold tracking-tight text-ink">oppscout</span>
+        </div>
+
+        {error === "callback" && (
+          <p
+            className="mb-6 rounded-2xl border border-coral bg-coral/15 p-3 text-sm font-bold text-ink"
+            role="alert"
+          >
+            Your email link is invalid or has expired. To reset your password, enter your email below
+            and choose “Forgot password?”.
+          </p>
+        )}
+
+        <div className="flex flex-1 flex-col justify-center">
+          <AuthForm nextPath={nextPath} initialMode={mode === "signup" ? "signup" : "signin"} />
+        </div>
+      </div>
+    </main>
+  );
 }
