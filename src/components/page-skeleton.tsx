@@ -1,9 +1,9 @@
 import { Logo } from "@/components/logo";
 import styles from "@/components/page-skeleton.module.css";
 
-export function PageSkeleton(_props: { section: "matches" | "provider" | "admin" }): React.JSX.Element {
+export function PageSkeleton({ section }: { section: "matches" | "provider" | "admin" }): React.JSX.Element {
   return (
-    <main className={styles.page} aria-busy="true">
+    <main className={styles.page} aria-busy="true" data-section={section} aria-live="polite">
       <div className={styles.stage}>
         <div className={styles.logoOrbit} aria-hidden="true">
           <div className={styles.outerOrbit} />

@@ -1,4 +1,4 @@
-import type { Opportunity, Organization, TrustChecklist } from "@/core/entities/domain";
+import type { Opportunity, Organization } from "@/core/entities/domain";
 
 /**
  * Discovered opportunity catalogue — output of a simulated
@@ -28,8 +28,6 @@ import type { Opportunity, Organization, TrustChecklist } from "@/core/entities/
 export const SEED_SNAPSHOT_AT = new Date("2026-09-25T12:00:00.000Z");
 
 const REVIEWER_ID = "22222222-2222-4222-8222-222222222299";
-
-const reviewChecklist: TrustChecklist = { sourceAuthentic: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true };
 
 export const ORG_ID = {
   aasm: "66666666-6666-4666-8666-000000000001",
