@@ -38,7 +38,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
             <span className="size-1.5 rounded-full bg-amber" aria-hidden="true" />MEET YOUR OPPORTUNITIES
           </span>
           <h1 className="hero-title mx-auto mt-7 max-w-3xl tracking-tight text-ink">The right opportunity is already out there.</h1>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-navy sm:text-[17px]">OppScout finds you the opportunities before they close.</p>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-navy sm:text-[17px]">Find the opportunities before they close.</p>
         </section>
 
         <section aria-hidden="true" className="flex justify-center pt-12 sm:pt-16">
@@ -49,7 +49,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         <section aria-labelledby="how-it-works" className={`${wrap} pt-20 sm:pt-24`}>
           <h2 id="how-it-works" className="text-center text-3xl font-bold text-ink">How OppScout works</h2>
-          <p className="mt-2 text-center text-sm text-navy">Follow the trail!</p>
+          
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
             {steps.map(([title, text], index) => <li key={title} className="rounded-[18px] border border-ink/10 bg-white p-6">
               <span className="grid size-8 place-items-center rounded-full bg-amber font-bold text-ink" aria-hidden="true">{index + 1}</span>
