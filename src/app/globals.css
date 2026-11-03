@@ -86,10 +86,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 /* Selected category in the matches rail: gold text plus a gold bar (left edge on desktop, underline in the mobile row),
    so the selection does not rely on text colour alone. */
 .rail-link { position: relative; }
-.rail-link[aria-pressed="true"] { color: #f2b705; font-weight: 700; }
-.rail-link[aria-pressed="true"]::before { content: ""; position: absolute; left: 0.875rem; right: 0.875rem; bottom: 0.25rem; height: 3px; border-radius: 9999px; background: #ffd700; }
+.rail-link[aria-pressed="true"], .rail-link[aria-current="page"] { color: #f2b705; font-weight: 700; }
+.rail-link[aria-pressed="true"]::before, .rail-link[aria-current="page"]::before { content: ""; position: absolute; left: 0.875rem; right: 0.875rem; bottom: 0.25rem; height: 3px; border-radius: 9999px; background: #ffd700; }
 @media (min-width: 768px) {
-  .rail-link[aria-pressed="true"]::before { left: 0; right: auto; top: 0.5rem; bottom: 0.5rem; width: 4px; height: auto; }
+  .rail-link[aria-pressed="true"]::before, .rail-link[aria-current="page"]::before { left: 0; right: auto; top: 0.5rem; bottom: 0.5rem; width: 4px; height: auto; }
 }
 
 @keyframes page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
