@@ -11,9 +11,9 @@ export const dynamic = "force-dynamic";
 const wrap = "mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8";
 
 const steps = [
-  ["You tell us who you are", "Share your study field, skills and where you would like to work. A few minutes is enough."],
-  ["We check the gate first", "Eligibility comes before ranking. If you don’t qualify, it never reaches your feed, so you never waste time."],
-  ["You get matches with reasons", "Every match explains why it fits and what to prepare, and links to the official source so you can apply safely."],
+  ["You tell us what you're looking for", "Share your study field, skills and opportunity preferences. A few minutes is enough."],
+  ["We check the gate first", "Eligibility comes before ranking. If the opportunity doesn't meet your criteria, it never reaches your feed, so you never waste time."],
+  ["Meet your matches", "Every match explains why it fits and what to prepare, and links to the official source so you can apply safely."],
 ] as const;
 
 const promises = [

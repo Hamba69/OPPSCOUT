@@ -126,15 +126,10 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
           {isSignin ? "WELCOME BACK" : "GET STARTED"}
         </div>
 
-        {/* Heading + subtitle */}
+        {/* Heading */}
         <h1 className="text-[1.75rem] font-extrabold leading-tight tracking-tight text-ink">
           {isSignin ? "Log in" : "Create your account"}
         </h1>
-        <p className="mt-2 text-[0.95rem] leading-relaxed text-navy">
-          {isSignin
-            ? "Pick up where you left off."
-            : "Get matches that fit you, and hear before they close."}
-        </p>
 
         <form className="mt-6 space-y-4" onSubmit={submit}>
           {/* Email */}
@@ -149,7 +144,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               <input
                 id="auth-email"
                 ref={emailInput}
-                className="w-full rounded-2xl border border-ink/10 bg-[#F7F6F2] py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 focus:border-navy/30 focus:bg-white focus:ring-4 focus:ring-navy/10"
+                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -182,7 +177,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               </span>
               <input
                 id="auth-password"
-                className="w-full rounded-2xl border border-ink/10 bg-[#F7F6F2] py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 focus:border-navy/30 focus:bg-white focus:ring-4 focus:ring-navy/10"
+                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-navy/50 hover:ring-4 hover:ring-navy/15 focus:border-navy focus:ring-4 focus:ring-navy/30"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 minLength={8}
