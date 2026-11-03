@@ -91,11 +91,8 @@ export default async function OpportunitiesPage({
               </Link>
             </div>
           )}
-          <p className="mt-4 text-sm font-semibold text-navy" role="status">
-            Showing {items.length} {items.length === 1 ? "opportunity" : "opportunities"}
-          </p>
           {items.length ? (
-            <div className="mt-3 grid gap-5 md:grid-cols-2">
+            <div className="mt-4 grid gap-5 md:grid-cols-2">
               {items.map((item) => (
                 <OpportunityListCard key={item.id} item={item} now={now} />
               ))}
