@@ -8,7 +8,7 @@ import { BottomTabs } from "@/components/bottom-tabs";
 import { SiteHeader } from "@/components/site-header";
 import { hasPageSession } from "@/lib/auth";
 
-import "./globals.css";
+import "../globals.css";
 
 const sans = Montserrat({
   subsets: ["latin"],
