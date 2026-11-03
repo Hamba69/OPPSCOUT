@@ -28,13 +28,11 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   });
   return (
     <main className="page-shell animate-in sm:!py-10">
-      <div className="page-header">
-        <div>
-          <h1>Your matches</h1>
-          <p>Opportunities that fit your profile.</p>
-        </div>
-        <Link href="/profile" className="button-secondary !min-h-11 !px-5">Edit profile</Link>
-      </div>
+      <header className="relative mb-8 text-center">
+        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Your matches</h1>
+        <p className="mt-1 text-sm text-navy">Opportunities that fit your profile.</p>
+        <Link href="/profile" className="button-secondary mx-auto mt-4 !min-h-11 !px-5 md:absolute md:right-0 md:top-0 md:mt-0">Edit profile</Link>
+      </header>
       {matches.length ? <FeedBrowser items={items} /> : <div>{isProfileCompleteForMatching(profile)
         ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
         : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}</div>}

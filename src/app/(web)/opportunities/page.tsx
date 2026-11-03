@@ -26,9 +26,6 @@ export default async function OpportunitiesPage({
     now,
   );
 
-  const chip = (active: boolean): string =>
-    `chip ${active ? "!border-amber !bg-amber !text-ink" : ""}`;
-
   const typeHref = (name?: string): string => {
     const params = new URLSearchParams();
     if (name) params.set("type", name);
@@ -38,82 +35,84 @@ export default async function OpportunitiesPage({
   };
 
   return (
-    <main className="page-shell animate-in">
-      <div className="text-center">
+    <main className="page-shell animate-in sm:!py-10">
+      <header className="text-center">
         <h1 className="text-2xl font-semibold text-ink sm:text-3xl">The Opportunities</h1>
-        <p className="mt-1 text-sm text-navy">
-        Open catalog listings, with verified matches prioritised
-        </p>
-      </div>
+        <p className="mt-1 text-sm text-navy">Open catalog listings, with verified matches prioritised</p>
+      </header>
 
-      <form action="/opportunities" method="get" role="search" className="mt-5">
-        {type && <input type="hidden" name="type" value={type} />}
-        <label>
-          <span className="sr-only">Search</span>
-          <span className="flex gap-2">
-            <input
-              className="field"
-              type="search"
-              name="q"
-              defaultValue={q}
-              placeholder="Institution, skill, title, or place"
-            />
-            <button className="button shrink-0" type="submit">
-              Search
-            </button>
-          </span>
-        </label>
-      </form>
-
-      <nav
-        aria-label="Filter by type"
-        className="no-scrollbar -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0"
-      >
-        <Link href={typeHref()} className={chip(!type)} aria-current={!type ? "page" : undefined}>
-          All
-        </Link>
-        {categories.map((name) => (
-          <Link
-            key={name}
-            href={typeHref(name)}
-            className={chip(type === name)}
-            aria-current={type === name ? "page" : undefined}
-          >
-            {choiceLabel(name)}
+      <div className="mt-8 flex flex-col gap-6 md:flex-row md:gap-10">
+        <nav
+          aria-label="Filter by category"
+          className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:w-56 md:shrink-0 md:flex-col md:overflow-visible md:px-0"
+        >
+          <Link href={typeHref()} className="rail-link" aria-current={!type ? "page" : undefined}>
+            All
           </Link>
-        ))}
-      </nav>
-
-      {(query || type) && (
-        <div className="mt-5 flex justify-end">
-          <Link
-            href="/opportunities"
-            className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4"
-          >
-            Clear filters
-          </Link>
-        </div>
-      )}
-      <p className="mt-4 text-sm font-semibold text-navy" role="status">
-        Showing {items.length} {items.length === 1 ? "opportunity" : "opportunities"}
-      </p>
-      {items.length ? (
-        <div className="mt-3 grid gap-5 md:grid-cols-2">
-          {items.map((item) => (
-            <OpportunityListCard key={item.id} item={item} now={now} />
+          {categories.map((name) => (
+            <Link
+              key={name}
+              href={typeHref(name)}
+              className="rail-link"
+              aria-current={type === name ? "page" : undefined}
+            >
+              {choiceLabel(name)}
+            </Link>
           ))}
-        </div>
-      ) : (
-        <section className="card mt-4 bg-butter text-center">
-          <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
-          <p className="mt-2 text-sm text-navy">
-            Try different words, another category, or clear your filters.
+        </nav>
+
+        <section aria-label="Opportunities" className="min-w-0 flex-1">
+          <form action="/opportunities" method="get" role="search">
+            {type && <input type="hidden" name="type" value={type} />}
+            <label>
+              <span className="sr-only">Search</span>
+              <span className="flex gap-2">
+                <input
+                  className="field"
+                  type="search"
+                  name="q"
+                  defaultValue={q}
+                  placeholder="Institution, skill, title, or place"
+                />
+                <button className="button shrink-0" type="submit">
+                  Search
+                </button>
+              </span>
+            </label>
+          </form>
+
+          {(query || type) && (
+            <div className="mt-3 flex justify-end">
+              <Link
+                href="/opportunities"
+                className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4"
+              >
+                Clear filters
+              </Link>
+            </div>
+          )}
+          <p className="mt-4 text-sm font-semibold text-navy" role="status">
+            Showing {items.length} {items.length === 1 ? "opportunity" : "opportunities"}
           </p>
-          <Link href="/opportunities" className="button mt-4">
-            Show all
-          </Link>
+          {items.length ? (
+            <div className="mt-3 grid gap-5 md:grid-cols-2">
+              {items.map((item) => (
+                <OpportunityListCard key={item.id} item={item} now={now} />
+              ))}
+            </div>
+          ) : (
+            <section className="card mt-4 bg-butter text-center">
+              <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
+              <p className="mt-2 text-sm text-navy">
+                Try different words, another category, or clear your filters.
+              </p>
+              <Link href="/opportunities" className="button mt-4">
+                Show all
+              </Link>
+            </section>
+          )}
         </section>
-      )}
+      </div>
     </main>
   );
 }

@@ -16,5 +16,31 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
     const opportunity = opportunities.get(item.opportunityId);
     return opportunity ? [{ item, opportunity }] : [];
   });
-  return <main className="page-shell animate-in"><h1 className="text-2xl font-semibold text-ink sm:text-3xl">Saved Opportunities</h1><div className="mt-8 space-y-4">{items.length ? items.map(({ item, opportunity }) => <article key={item.id} className="card flex flex-wrap items-center justify-between gap-4"><div><span className={`pill capitalize ${item.status === "applied" ? "!border-leaf/40 !bg-leaf/10 !text-leaf" : ""}`}>{item.status}</span><h2 className="mt-2 text-lg font-extrabold text-ink">{opportunity!.title}</h2><p className="mt-1 text-sm text-navy">Deadline {opportunity!.deadline?.toLocaleDateString("en-UG", { dateStyle: "medium" }) ?? "Rolling; no closing date published"}</p></div><Link className="button-secondary" href={`/opportunity/${opportunity!.id}`}>Open</Link></article>) : <section className="card bg-butter text-center"><div className="flex justify-center"><Logo size={56} /></div><h2 className="mt-3 text-xl font-extrabold text-ink">Your shortlist is empty</h2><p className="mt-2 text-navy">Found something promising? Save a match to keep its deadline and next steps together here.</p><Link href="/feed" className="button mt-5">Browse matches</Link></section>}</div></main>;
+  return (
+    <main className="page-shell animate-in sm:!py-10">
+      <header className="text-center">
+        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Saved Opportunities</h1>
+        <p className="mt-1 text-sm text-navy">Your preferred opportunities</p>
+      </header>
+      <div className="mt-8 space-y-4">
+        {items.length ? items.map(({ item, opportunity }) => (
+          <article key={item.id} className="card match-lift flex flex-wrap items-center justify-between gap-4 !rounded-2xl !shadow-none">
+            <div>
+              <span className={`pill capitalize ${item.status === "applied" ? "!border-leaf/40 !bg-leaf/10 !text-leaf" : ""}`}>{item.status}</span>
+              <h2 className="mt-2 text-lg font-bold text-ink">{opportunity.title}</h2>
+              <p className="mt-1 text-sm text-navy">Deadline {opportunity.deadline?.toLocaleDateString("en-UG", { dateStyle: "medium" }) ?? "Rolling; no closing date published"}</p>
+            </div>
+            <Link className="button-secondary" href={`/opportunity/${opportunity.id}`}>Open</Link>
+          </article>
+        )) : (
+          <section className="card bg-butter text-center">
+            <div className="flex justify-center"><Logo size={56} /></div>
+            <h2 className="mt-3 text-xl font-extrabold text-ink">Your shortlist is empty</h2>
+            <p className="mt-2 text-navy">Found something promising? Save a match to keep its deadline and next steps together here.</p>
+            <Link href="/feed" className="button mt-5">Browse matches</Link>
+          </section>
+        )}
+      </div>
+    </main>
+  );
 }
