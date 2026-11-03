@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getOptionalAuth, homePathForRole } from "@/lib/auth";
-import { Logo } from "@/components/logo";
 import { AuthForm } from "@/components/auth-form";
 
 export const dynamic = "force-dynamic";
@@ -26,12 +25,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps): Promi
       />
 
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-lg flex-col px-4 pb-10 pt-8 sm:px-6">
-        {/* Brand mark */}
-        <div className="mb-8 flex items-center gap-2">
-          <Logo size={36} />
-          <span className="text-lg font-bold tracking-tight text-ink">oppscout</span>
-        </div>
-
         {error === "callback" && (
           <p
             className="mb-6 rounded-2xl border border-coral bg-coral/15 p-3 text-sm font-bold text-ink"
