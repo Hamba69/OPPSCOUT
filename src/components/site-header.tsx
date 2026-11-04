@@ -34,9 +34,9 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
   }, [open]);
 
   if (seeker && !admin) {
-    const active = pathname === "/profile";
+    const active = ["/profile", "/feedback", "/settings"].some((path) => pathname === path || pathname.startsWith(`${path}/`));
     return <Link href="/profile" aria-label="Profile" title="Profile" aria-current={active ? "page" : undefined}
-      className={`flex size-11 items-center justify-center rounded-full border text-ink transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${active ? "border-amber bg-amber/50" : "border-ink/15 bg-white hover:bg-cream"}`}>
+      className={`flex size-11 items-center justify-center rounded-full border-2 bg-white text-ink transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${active ? "border-[#ffd700]" : "border-ink/15 hover:bg-cream"}`}>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
     </Link>;
   }
