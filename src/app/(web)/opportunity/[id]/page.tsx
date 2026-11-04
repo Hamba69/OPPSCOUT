@@ -8,15 +8,15 @@ import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { buildRankedFeed } from "@/services/matching/feed";
 
-type Props = { params: Promise<{ id: string }> };
+type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ from?: string }> };
 export const dynamic = "force-dynamic";
 
 export function generateMetadata(): Metadata {
   return { title: "Opportunity" };
 }
 
-export default async function OpportunityPage({ params }: Props): Promise<React.JSX.Element> {
-  const { id } = await params;
+export default async function OpportunityPage({ params, searchParams }: Props): Promise<React.JSX.Element> {
+  const [{ id }, { from }] = await Promise.all([params, searchParams]);
   const [repository, auth] = await Promise.all([getRepository(), requirePageAuth(["user"])]);
   const { userId } = auth;
   const opportunity = await repository.getOpportunity(id);
@@ -29,8 +29,10 @@ export default async function OpportunityPage({ params }: Props): Promise<React.
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
   const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Open until filled";
   const workMode = opportunity.workMode === "unknown" ? "Work mode not stated" : opportunity.workMode;
+  const backHref = from === "matches" ? "/feed" : "/opportunities";
+  const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";
   return <main className="page-shell animate-in mx-auto max-w-3xl">
-    <Link href="/opportunities" className="mb-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-navy hover:text-ink"><ArrowLeftIcon /> Back to opportunities</Link>
+    <Link href={backHref} aria-label={backLabel} title={backLabel} className="mb-2 inline-flex size-11 items-center justify-center rounded-full text-navy transition hover:bg-butter hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon /></Link>
     <span className="badge-verified"><CheckIcon /> Verified listing</span>
     <h1 className="mt-3 text-2xl font-extrabold text-ink sm:text-4xl">{opportunity.title}</h1>
     <p className="mt-1 font-bold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>

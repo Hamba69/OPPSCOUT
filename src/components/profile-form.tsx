@@ -171,12 +171,11 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
     } catch { setStatus("error"); }
   }
 
-  return <div className="mt-6 grid gap-8 lg:grid-cols-[15rem_1fr]">
-    <nav aria-label="Profile sections" className="hidden lg:block"><ol className="sticky top-24 space-y-1">{SECTIONS.map(([id, label]) => <li key={id}>
-      <a href={`#${id}`} className="flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 text-sm font-semibold text-navy hover:bg-butter hover:text-ink">{label}
-        <span aria-label={done[id] ? "Complete" : "Incomplete"} className={`size-2.5 rounded-full ${done[id] ? "bg-leaf" : "bg-ink/15"}`} /></a></li>)}</ol></nav>
+  return <div className="mt-6">
+    <nav aria-label="Profile sections" className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:overflow-visible md:px-0">{SECTIONS.map(([id, label]) =>
+      <a key={id} href={`#${id}`} className="rail-link">{label}<span aria-label={done[id] ? "Complete" : "Incomplete"} className={`ml-2 size-2.5 shrink-0 rounded-full ${done[id] ? "bg-leaf" : "bg-ink/15"}`} /></a>)}</nav>
 
-    <form onSubmit={submit} noValidate className="space-y-5">
+    <form onSubmit={submit} noValidate className="mt-5 space-y-5">
       <Section id="personal" title="Personal details" hint="Used to contact you about opportunities. Never shown to other users." done={done.personal}>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Full name" required error={errors.name}><input className="field" value={state.name} autoComplete="name" maxLength={120} required aria-invalid={Boolean(errors.name)} onChange={(event) => set("name", event.target.value)} placeholder="e.g. Amina Nakato" /></Field>

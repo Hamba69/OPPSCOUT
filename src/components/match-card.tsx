@@ -57,7 +57,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
         {props.sourceUrl ? <span className="text-[13px] font-semibold text-[#145347]">Official source linked</span> : <span />}
         <div className="flex gap-2">
           <SaveButton opportunityId={props.opportunityId} />
-          <Link className="button !min-h-11 !px-4" href={`/opportunity/${props.opportunityId}`}>View details</Link>
+          <Link className="button !min-h-11 !px-4" href={`/opportunity/${props.opportunityId}?from=matches`}>View details</Link>
         </div>
       </div>
     </article>

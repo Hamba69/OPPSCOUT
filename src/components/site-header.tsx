@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/logo";
 
 const seekerLinks = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities", "/opportunities"]] as const;
-const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/opportunity"];
+const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/feedback", "/opportunity"];
 const bareHeaderPaths = ["/login", "/reset-password"];
 
 const menuItem = "flex min-h-11 w-full items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter focus-visible:bg-butter";
@@ -32,6 +32,11 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
     return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+
+  if (seeker && !admin) return <Link href="/profile" aria-label="Profile" title="Profile" aria-current={pathname === "/profile" ? "page" : undefined}
+    className="flex size-11 items-center justify-center rounded-full border border-ink/15 bg-white text-ink transition hover:bg-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
+  </Link>;
 
   return <div ref={wrapper} className="relative"
     onPointerEnter={(event) => { pointerType.current = event.pointerType; if (event.pointerType === "mouse") setOpen(true); }}

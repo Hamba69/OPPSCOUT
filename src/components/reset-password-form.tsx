@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const expiredMessage = "Your reset session has expired or is invalid. Request a new reset email.";
 
-export function ResetPasswordForm(): React.JSX.Element {
+export function ResetPasswordForm({ returnTo = "/feed" }: { returnTo?: "/feed" | "/settings" }): React.JSX.Element {
   const router = useRouter();
   const [busy, setBusy] = useState(true);
   const [message, setMessage] = useState("");
@@ -36,9 +36,9 @@ export function ResetPasswordForm(): React.JSX.Element {
 
   useEffect(() => {
     if (!complete) return;
-    const timeout = window.setTimeout(() => { router.replace("/feed"); router.refresh(); }, 1500);
+    const timeout = window.setTimeout(() => { router.replace(returnTo); router.refresh(); }, 1500);
     return () => window.clearTimeout(timeout);
-  }, [complete, router]);
+  }, [complete, router, returnTo]);
 
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -54,7 +54,7 @@ export function ResetPasswordForm(): React.JSX.Element {
         return;
       }
       setComplete(true);
-      setMessage("Password updated. Taking you to your feed…");
+      setMessage(returnTo === "/settings" ? "Password updated. Returning to your account…" : "Password updated. Taking you to your feed…");
     } catch {
       setMessage("Unable to update your password. Please try again.");
     } finally {

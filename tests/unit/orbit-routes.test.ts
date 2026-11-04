@@ -58,11 +58,14 @@ describe("OrbitMatch route rendering", () => {
     expect(saved.querySelector("article h2")?.textContent).toBe(match.opportunity!.title);
     expect(saved.querySelector("article a")?.getAttribute("href")).toBe(`/opportunity/${match.opportunityId}`);
 
-    const detail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }) }))).window.document;
+    const detail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({}) }))).window.document;
     expect(detail.querySelector("main")?.textContent).toContain(`${match.score}%`);
+    expect(detail.querySelector('a[aria-label="Back to opportunities"]')?.getAttribute("href")).toBe("/opportunities");
     for (const factor of [...match.matchedFactors, ...match.missingFactors]) {
       expect(detail.querySelector("main")?.textContent).toContain(factor.detail);
     }
+    const matchDetail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({ from: "matches" }) }))).window.document;
+    expect(matchDetail.querySelector('a[aria-label="Back to matches"]')?.getAttribute("href")).toBe("/feed");
     const response = await explainMatch(new Request(`http://localhost/api/v1/matches/${match.id}/explanation`), { params: Promise.resolve({ id: match.id }) });
     expect(response.status).toBe(200);
     const { data } = await response.json() as { data: MatchResult };
