@@ -17,6 +17,16 @@ beforeEach(() => { vi.clearAllMocks(); vi.stubGlobal("fetch", mocks.fetch); mock
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("selectable matching profile", () => {
+  it("shows a live completion percentage with remaining field names on hover", () => {
+    render(createElement(ProfileForm, { choices: buildProfileChoices(getDemoCatalog().opportunities), isNew: false, nextPath: "/feed", initial }));
+
+    const progress = screen.getByRole("progressbar", { name: "Profile completeness" });
+    expect(Number(progress.getAttribute("aria-valuenow"))).toBeLessThan(100);
+    expect(document.getElementById("profile-completeness-details")?.textContent).toContain("Fields remaining:");
+    expect(document.querySelector('[role="tooltip"]')?.textContent).toContain("Work arrangement");
+    expect(screen.queryByRole("navigation", { name: "Profile sections" })).toBeNull();
+  });
+
   it("saves experience and certifications while preserving organization details", async () => {
     render(createElement(ProfileForm, { choices: buildProfileChoices(getDemoCatalog().opportunities), isNew: false, nextPath: "/feed", initial: { ...initial, certifications: ["CPA (U)"], workExperience: [{ title: "Analyst", organization: "Prior employer", months: 48 }] } }));
     fireEvent.change(within(screen.getByRole("group", { name: "Work experience 1" })).getByLabelText(/^Years/), { target: { value: "5" } });

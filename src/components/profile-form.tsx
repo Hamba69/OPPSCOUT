@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { ProfileMultiChoice, ProfileSelect } from "@/components/profile-choice";
+import { calculateProfileCompleteness, getIncompleteProfileFields } from "@/services/profile/completeness";
 import type { ProfileChoice, ProfileChoices } from "@/services/profile/choices";
 
 export interface ExperienceItem { title: string; organization: string; months: number }
@@ -35,11 +36,6 @@ const GRADUATION: ProfileChoice[] = [
   { value: "phd student", label: "PhD student" }, { value: "graduated within 12 months", label: "Graduated within the last 12 months" }, { value: "graduated", label: "Graduated" },
 ];
 const WORK_MODES = [["", "No preference"], ["onsite", "On-site"], ["hybrid", "Hybrid"], ["remote", "Remote"]] as const;
-
-const SECTIONS = [
-  ["personal", "Personal details"], ["education", "Education"], ["skills", "Skills and languages"],
-  ["experience", "Experience"], ["preferences", "Opportunity preferences"], ["work", "Links and projects"], ["visibility", "Visibility"],
-] as const;
 
 function Field({ label, required, hint, error, children }: { label: string; required?: boolean; hint?: string; error?: string; children: React.ReactNode }): React.JSX.Element {
   return <label className="block"><span className="label">{label}{required && <span className="text-[#B3261E]" aria-hidden="true"> *</span>}{!required && <span className="ml-1 text-xs font-medium text-navy">(optional)</span>}</span>
@@ -128,6 +124,14 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
     work: Boolean(state.githubUrl || state.portfolioUrl || state.otherLinks.length || state.projects.length),
     visibility: state.shareWithOrganizations,
   };
+  const completenessProfile = {
+    ...state,
+    dateOfBirth: state.dateOfBirth ? new Date(`${state.dateOfBirth}T00:00:00Z`) : null,
+    workModePreference: state.workModePreference || null,
+  };
+  const completeness = calculateProfileCompleteness(completenessProfile);
+  const incompleteFields = getIncompleteProfileFields(completenessProfile);
+  const remainingLabel = incompleteFields.length ? `Fields remaining: ${incompleteFields.join(", ")}` : "All profile fields are complete.";
   const birthDate = state.dateOfBirth ? new Date(`${state.dateOfBirth}T00:00:00Z`) : null;
   const now = new Date();
   const adult = Boolean(birthDate && (now.getUTCFullYear() - birthDate.getUTCFullYear() - (
@@ -172,10 +176,19 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
   }
 
   return <div className="mt-6">
-    <nav aria-label="Profile sections" className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:overflow-visible md:px-0">{SECTIONS.map(([id, label]) =>
-      <a key={id} href={`#${id}`} className="rail-link">{label}<span aria-label={done[id] ? "Complete" : "Incomplete"} className={`ml-2 size-2.5 shrink-0 rounded-full ${done[id] ? "bg-leaf" : "bg-ink/15"}`} /></a>)}</nav>
+    <div className="mb-5 max-w-[14rem]">
+      <div className="group relative w-fit">
+        <p className="text-sm font-bold text-ink" tabIndex={0} aria-describedby="profile-completeness-details">{completeness}% complete</p>
+        <div aria-hidden="true" role="tooltip" className="pointer-events-none absolute left-0 top-full z-20 hidden max-h-64 w-72 max-w-[calc(100vw-2rem)] overflow-y-auto rounded-xl border border-ink/10 bg-white p-3 text-xs text-navy shadow-soft group-hover:block group-focus-within:block">
+          <strong className="text-ink">{incompleteFields.length ? "Fields remaining" : "Profile complete"}</strong>
+          {incompleteFields.length > 0 && <ul className="mt-1 list-inside list-disc">{incompleteFields.map((field) => <li key={field}>{field}</li>)}</ul>}
+        </div>
+      </div>
+      <p id="profile-completeness-details" className="sr-only">{remainingLabel}</p>
+      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-leaf" style={{ width: `${completeness}%` }} /></div>
+    </div>
 
-    <form onSubmit={submit} noValidate className="mt-5 space-y-5">
+    <form onSubmit={submit} noValidate className="space-y-5">
       <Section id="personal" title="Personal details" hint="Used to contact you about opportunities. Never shown to other users." done={done.personal}>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Full name" required error={errors.name}><input className="field" value={state.name} autoComplete="name" maxLength={120} required aria-invalid={Boolean(errors.name)} onChange={(event) => set("name", event.target.value)} placeholder="e.g. Amina Nakato" /></Field>

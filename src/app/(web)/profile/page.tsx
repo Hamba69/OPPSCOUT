@@ -24,13 +24,9 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     otherLinks: profile?.otherLinks ?? [], projects: (profile?.projects ?? []).map((item) => ({ ...item, url: item.url ?? "", role: item.role ?? "" })),
     shareWithOrganizations: profile?.shareWithOrganizations ?? false, shareContactDetails: profile?.shareContactDetails ?? false,
   };
-  const score = profile?.profileCompletenessScore ?? 0;
   return <main className="page-shell animate-in">
     <ProfileArea active="profile">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div><h1 className="text-2xl font-extrabold text-ink sm:text-4xl">Edit profile</h1><p className="mt-1 max-w-xl text-navy">Update your details and save your changes. Fields marked * are required.</p></div>
-        <div className="w-full max-w-[14rem]"><p className="text-sm font-bold text-ink">{score}% complete</p><div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={score} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-leaf" style={{ width: `${score}%` }} /></div></div>
-      </div>
+      <h1 className="text-2xl font-extrabold text-ink sm:text-4xl">Edit profile</h1>
       <ProfileForm initial={initial} choices={choices} isNew={!profile} nextPath={nextPath} />
     </ProfileArea>
   </main>;
