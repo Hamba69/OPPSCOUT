@@ -27,6 +27,19 @@ describe("selectable matching profile", () => {
     expect(screen.queryByRole("navigation", { name: "Profile sections" })).toBeNull();
   });
 
+  it("only shows checkbox choices after searching and lets users add a custom value", () => {
+    render(createElement(ProfileForm, { choices: buildProfileChoices(getDemoCatalog().opportunities), isNew: false, nextPath: "/feed", initial }));
+
+    const skills = within(screen.getByRole("group", { name: "Skills" }));
+    expect(skills.queryByRole("checkbox")).toBeNull();
+    fireEvent.change(skills.getByLabelText("Search skills"), { target: { value: "javascript" } });
+    expect(skills.getByRole("checkbox", { name: "JavaScript" })).toBeTruthy();
+    expect(skills.queryByRole("button", { name: /Show all/ })).toBeNull();
+    fireEvent.change(skills.getByLabelText("Search skills"), { target: { value: "community mapping" } });
+    fireEvent.click(skills.getByRole("button", { name: "Add “community mapping”" }));
+    expect(skills.getByRole("button", { name: "Remove Community Mapping" })).toBeTruthy();
+  });
+
   it("saves experience and certifications while preserving organization details", async () => {
     render(createElement(ProfileForm, { choices: buildProfileChoices(getDemoCatalog().opportunities), isNew: false, nextPath: "/feed", initial: { ...initial, certifications: ["CPA (U)"], workExperience: [{ title: "Analyst", organization: "Prior employer", months: 48 }] } }));
     fireEvent.change(within(screen.getByRole("group", { name: "Work experience 1" })).getByLabelText(/^Years/), { target: { value: "5" } });
@@ -51,7 +64,9 @@ describe("selectable matching profile", () => {
     fireEvent.click(screen.getByRole("checkbox", { name: "JavaScript" }));
     fireEvent.change(screen.getByLabelText("Search skills"), { target: { value: "sql" } });
     fireEvent.click(screen.getByRole("checkbox", { name: "SQL" }));
+    fireEvent.change(screen.getByLabelText("Search languages"), { target: { value: "english" } });
     fireEvent.click(screen.getByRole("checkbox", { name: "English" }));
+    fireEvent.change(screen.getByLabelText("Search opportunity types"), { target: { value: "jobs" } });
     fireEvent.click(screen.getByRole("checkbox", { name: "Jobs" }));
     fireEvent.change(screen.getByLabelText(/^Work arrangement/), { target: { value: "hybrid" } });
     fireEvent.click(screen.getByRole("button", { name: /Save changes/ }));

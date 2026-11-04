@@ -185,7 +185,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
         </div>
       </div>
       <p id="profile-completeness-details" className="sr-only">{remainingLabel}</p>
-      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-leaf" style={{ width: `${completeness}%` }} /></div>
+      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-[#ffd700]" style={{ width: `${completeness}%` }} /></div>
     </div>
 
     <form onSubmit={submit} noValidate className="space-y-5">
