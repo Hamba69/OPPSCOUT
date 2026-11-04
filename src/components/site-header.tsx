@@ -33,10 +33,13 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  if (seeker && !admin) return <Link href="/profile" aria-label="Profile" title="Profile" aria-current={pathname === "/profile" ? "page" : undefined}
-    className="flex size-11 items-center justify-center rounded-full border border-ink/15 bg-white text-ink transition hover:bg-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
-  </Link>;
+  if (seeker && !admin) {
+    const active = pathname === "/profile";
+    return <Link href="/profile" aria-label="Profile" title="Profile" aria-current={active ? "page" : undefined}
+      className={`flex size-11 items-center justify-center rounded-full border text-ink transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${active ? "border-amber bg-amber/50" : "border-ink/15 bg-white hover:bg-cream"}`}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
+    </Link>;
+  }
 
   return <div ref={wrapper} className="relative"
     onPointerEnter={(event) => { pointerType.current = event.pointerType; if (event.pointerType === "mouse") setOpen(true); }}

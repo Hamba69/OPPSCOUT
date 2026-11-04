@@ -18,14 +18,16 @@ export function SettingsForm({
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const secondary = ["email", "sms", "ussd"].filter(
+    const secondary = ["email", "sms"].filter(
       (value) => data.get(`secondary-${value}`) === "on" && value !== data.get("preferredChannel"),
     );
     const response = await fetch("/api/v1/notifications/preferences", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        preferredChannel: String(data.get("preferredChannel")),
+        preferredChannel: ["email", "sms", "web"].includes(String(data.get("preferredChannel")))
+          ? String(data.get("preferredChannel"))
+          : "web",
         secondaryChannels: secondary,
         notificationFrequency: String(data.get("frequency")),
         notificationsEnabled: data.get("enabled") === "on",
@@ -38,10 +40,9 @@ export function SettingsForm({
     <form onSubmit={submit} className="card mt-4 space-y-4">
       <label>
         <span className="label">Best way to reach you</span>
-        <select name="preferredChannel" defaultValue={channel} className="field">
+        <select name="preferredChannel" defaultValue={["email", "sms", "web"].includes(channel) ? channel : "web"} className="field">
           <option value="email">Email</option>
           <option value="sms">SMS</option>
-          <option value="ussd">USSD inbox</option>
           <option value="web">In-app only</option>
         </select>
       </label>
@@ -53,7 +54,6 @@ export function SettingsForm({
             [
               ["email", "Email"],
               ["sms", "SMS"],
-              ["ussd", "USSD"],
             ] as const
           ).map(([value, name]) => (
             <label
