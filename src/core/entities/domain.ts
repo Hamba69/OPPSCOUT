@@ -90,6 +90,8 @@ export interface Organization {
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
+  additionalAccountableContact?: string | null;
+  additionalAccountableContactPhone?: string | null;
   verificationStatus: VerificationStatus;
   dashboardUsers: string[];
   postingHistory: Array<{ opportunityId: string; postedAt: string }>;

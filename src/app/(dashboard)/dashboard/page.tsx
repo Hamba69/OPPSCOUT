@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 
@@ -44,30 +43,25 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
 
   return (
     <main className="page-shell animate-in">
-      <header className="page-header">
-        <div>
-          <p className="eyebrow">Publisher workspace</p>
-          <h1>{organization.name}</h1>
-          <p>Create and manage opportunities for your audience.</p>
-        </div>
-        <Link href="/dashboard/opportunities/new" className="button min-h-11 !px-5">
-          Post an opportunity
-        </Link>
+      <header className="mb-10 text-center">
+        <p className="eyebrow">Publisher workspace</p>
+        <h1 className="mt-2 !text-3xl !font-extrabold sm:!text-4xl">{organization.name}</h1>
+        <p className="mt-3 text-navy">Create and manage opportunities for your audience.</p>
       </header>
 
-      <section aria-label="Publisher overview metrics" className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <section aria-label="Publisher overview metrics" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {metrics.map((metric) => (
-          <article key={metric.label} className={`rounded-2xl border border-ink/[.08] border-t-4 ${metric.accent} bg-white p-6 shadow-soft sm:p-7`}>
+          <article key={metric.label} className={`min-h-64 rounded-2xl border border-ink/[.08] border-t-4 ${metric.accent} bg-white p-8 shadow-soft sm:p-9`}>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold text-navy">{metric.label}</p>
-                <p className={`mt-4 text-4xl font-extrabold tracking-tight ${metric.valueColor}`}>{metric.value}</p>
+                <p className="text-base font-bold text-navy">{metric.label}</p>
+                <p className={`mt-5 text-5xl font-extrabold tracking-tight ${metric.valueColor}`}>{metric.value}</p>
               </div>
-              <span aria-hidden="true" className="grid size-11 shrink-0 place-items-center rounded-2xl bg-cream text-xl font-bold text-ink">
+              <span aria-hidden="true" className="grid size-14 shrink-0 place-items-center rounded-2xl bg-cream text-2xl font-bold text-ink">
                 {metric.icon}
               </span>
             </div>
-            <p className="mt-5 border-t border-ink/[.08] pt-4 text-sm leading-6 text-navy">{metric.detail}</p>
+            <p className="mt-7 border-t border-ink/[.08] pt-5 text-sm leading-6 text-navy">{metric.detail}</p>
           </article>
         ))}
       </section>

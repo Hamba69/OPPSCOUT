@@ -7,8 +7,6 @@ const links = [
   ["Overview", "/dashboard"],
   ["Opportunities", "/dashboard/opportunities"],
   ["Matches", "/dashboard/candidates"],
-  ["Analytics", "/dashboard/analytics"],
-  ["Monetization", "/dashboard/monetization"],
   ["Publisher profile", "/dashboard/organization"],
 ] as const;
 

@@ -111,6 +111,8 @@ export interface OrganizationInput {
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
+  additionalAccountableContact?: string | null;
+  additionalAccountableContactPhone?: string | null;
   dashboardUsers: string[];
 }
 

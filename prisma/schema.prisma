@@ -153,6 +153,8 @@ model Organization {
   officialEmail          String?
   registrationProof      String?
   accountableContact     String?
+  additionalAccountableContact      String?
+  additionalAccountableContactPhone String?
   verificationStatus     VerificationStatus @default(unverified)
   dashboardUsers         String[]           @default([])
   postingHistory         Json               @default("[]")

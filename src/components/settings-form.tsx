@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useTransientMessage } from "@/hooks/use-transient-message";
 
 export function SettingsForm({
   channel,
@@ -13,7 +13,7 @@ export function SettingsForm({
   frequency: string;
   enabled: boolean;
 }): React.JSX.Element {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useTransientMessage<string>();
 
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -21,19 +21,23 @@ export function SettingsForm({
     const secondary = ["email", "sms"].filter(
       (value) => data.get(`secondary-${value}`) === "on" && value !== data.get("preferredChannel"),
     );
-    const response = await fetch("/api/v1/notifications/preferences", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        preferredChannel: ["email", "sms", "web"].includes(String(data.get("preferredChannel")))
-          ? String(data.get("preferredChannel"))
-          : "web",
-        secondaryChannels: secondary,
-        notificationFrequency: String(data.get("frequency")),
-        notificationsEnabled: data.get("enabled") === "on",
-      }),
-    });
-    setMessage(response.ok ? "Preferences saved." : "We could not save your preferences. Please try again.");
+    try {
+      const response = await fetch("/api/v1/notifications/preferences", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          preferredChannel: ["email", "sms", "web"].includes(String(data.get("preferredChannel")))
+            ? String(data.get("preferredChannel"))
+            : "web",
+          secondaryChannels: secondary,
+          notificationFrequency: String(data.get("frequency")),
+          notificationsEnabled: data.get("enabled") === "on",
+        }),
+      });
+      setMessage(response.ok ? "Preferences saved." : "We could not save your preferences. Please try again.");
+    } catch {
+      setMessage("Could not connect. Please try saving your preferences again.");
+    }
   }
 
   return (
@@ -100,11 +104,7 @@ export function SettingsForm({
         Save preferences
       </button>
 
-      {message && (
-        <p className="rounded-xl bg-leaf/10 px-3 py-2 text-sm font-semibold text-leaf" role="status">
-          {message}
-        </p>
-      )}
+      {message && <p className="text-sm font-bold text-[#B8860B]" role="status" aria-live="polite">{message}</p>}
     </form>
   );
 }

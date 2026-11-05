@@ -2,7 +2,7 @@ import { ForbiddenError, NotFoundError } from "@/core/errors/app-error";
 import { apiHandler, success } from "@/lib/api";
 import { requireAuth, requireRole } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
-import { organizationSchema, parseJson } from "@/lib/validation";
+import { organizationPatchSchema, parseJson } from "@/lib/validation";
 
 type Context = { params: Promise<{ id: string }> };
 
@@ -28,7 +28,7 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
     requireRole(auth, ["organization", "admin"]);
     const { id } = await context.params;
     assertScope(auth.role, auth.organizationId, id);
-    const input = await parseJson(request, organizationSchema.partial().strict());
+    const input = await parseJson(request, organizationPatchSchema);
     return success(await (await getRepository()).updateOrganization(id, input));
   });
 }

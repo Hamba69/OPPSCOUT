@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 
 import { ProfileMultiChoice, ProfileSelect } from "@/components/profile-choice";
 import type { Opportunity } from "@/core/entities/domain";
+import { useTransientMessage } from "@/hooks/use-transient-message";
 import type { ProfileChoices } from "@/services/profile/choices";
 
 const EDUCATION_ORDER = ["no formal education", "secondary", "certificate", "diploma", "bachelors", "masters", "phd"];
 
 export function OpportunityForm({ organizationId, choices, initial }: { organizationId: string; choices: ProfileChoices; initial?: Opportunity }): React.JSX.Element {
   const router = useRouter();
-  const [message, setMessage] = useState<{ tone: "ok" | "error" | "busy"; text: string } | null>(null);
+  const [message, setMessage] = useTransientMessage<{ tone: "ok" | "error" | "busy"; text: string }>();
+  const [submitting, setSubmitting] = useState(false);
   const [educationLevels, setEducationLevels] = useState<string[]>(initial?.eligibility.educationLevels ?? []);
   const [fieldsOfStudy, setFieldsOfStudy] = useState<string[]>(initial?.eligibility.fieldsOfStudy ?? []);
   const [requiredSkills, setRequiredSkills] = useState<string[]>(initial?.requiredSkills ?? []);
@@ -24,6 +26,7 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
     if (!location) { setMessage({ tone: "error", text: "Select the location of the opportunity." }); return; }
     const form = event.currentTarget; const data = new FormData(form);
     setMessage({ tone: "busy", text: initial ? "Saving changes…" : "Submitting for review…" });
+    setSubmitting(true);
     const closingDate = String(data.get("deadline") ?? "");
     const body = {
       title: String(data.get("title")).trim(), ...(!initial ? { organizationId } : {}), category: String(data.get("category")), description: String(data.get("description")).trim(),
@@ -44,6 +47,7 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
       form.reset(); setEducationLevels([]); setFieldsOfStudy([]); setRequiredSkills([]); setLocation("");
       setMessage({ tone: "ok", text: "Submitted. Your listing will be published once our team has reviewed it." });
     } catch { setMessage({ tone: "error", text: "Could not connect. Please check your connection and try again." }); }
+    finally { setSubmitting(false); }
   }
 
   return <form onSubmit={submit} className="mt-6 space-y-5">
@@ -67,7 +71,7 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
       <label><span className="label">Application instructions</span><input className="field" name="applicationMethod" required defaultValue={initial?.applicationMethod} placeholder="e.g. Submit your CV and cover letter on the careers page" /></label>
       <label><span className="label">Official application link</span><input className="field" type="url" name="sourceUrl" required defaultValue={initial?.sourceUrl} placeholder="https://www.example.org/careers/role" /><span className="mt-1 block text-xs text-navy">Must be on your publisher’s official website and start with https://. Applicants are never charged to apply.</span></label>
     </section>
-    <div className="flex flex-wrap items-center gap-4"><button className="button" disabled={message?.tone === "busy"}>{initial ? "Save changes" : "Submit for review"}</button>
-      {message && <p className={`rounded-2xl border px-3 py-2 text-sm font-semibold ${message.tone === "error" ? "border-[#B3261E]/40 bg-[#B3261E]/10 text-[#7A1A14]" : "border-honey bg-butter text-ink"}`} role="status" aria-live="polite">{message.text}</p>}</div>
+    <div className="flex flex-wrap items-center gap-4"><button className="button" disabled={submitting}>{submitting ? "Please wait…" : initial ? "Save changes" : "Submit for review"}</button>
+      {message && <p className="text-sm font-bold text-[#B8860B]" role="status" aria-live="polite">{message.text}</p>}</div>
   </form>;
 }
