@@ -12,6 +12,9 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
     login.searchParams.set("next", `${request.nextUrl.pathname}${request.nextUrl.search}`);
     return NextResponse.redirect(login);
   }
+  if (request.nextUrl.pathname === "/dashboard/analytics" || request.nextUrl.pathname === "/dashboard/monetization") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
   return session.response;
 }
 
