@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const steps = [
-  ["Create an account", "Use an email that is separate from any personal account."],
+  ["Create an account", "Sign up in a few steps."],
   ["Get verified", "We review your organization’s details. This usually takes up to {hours} hours."],
   ["Submit an opportunity", "Add the details and where people can apply."],
   ["Reach people who fit", "After review, matched people appear, only if they chose to share their profile."],
