@@ -53,11 +53,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </ol>
         </section>
 
-        <section aria-labelledby="trust-promises" className={`${wrap} pt-16 sm:pt-[72px]`}>
-          <div className="rounded-[20px] border border-leaf/25 bg-leaf/[.06] p-6 sm:p-8">
-            
-          </div>
-        </section>
+      
 
         <footer className={`${wrap} mt-16 pb-10 text-sm text-navy`}>
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6">
