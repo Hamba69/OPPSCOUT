@@ -18,7 +18,7 @@ export default async function OrganizationLoginPage(): Promise<React.JSX.Element
       {auth
         ? auth.role === "user"
           ? <Link href="/onboarding/organization" className="publisher-submit mt-6 inline-flex items-center justify-center">Continue with this account</Link>
-          : <form action="/auth/logout" method="post" className="mt-6"><input type="hidden" name="next" value="/organizations/login" /><button className="publisher-submit">Sign out</button></form>
+          : <form action="/auth/logout" method="post" className="mt-6"><button className="publisher-submit">Sign out</button></form>
         : <PublisherAuthForm mode="login" nextPath="/dashboard" />}
       <p className="publisher-divider">New organization? <Link href="/organizations/signup">Create a publisher account</Link></p>
     </section>

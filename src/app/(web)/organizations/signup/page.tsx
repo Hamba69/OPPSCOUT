@@ -20,7 +20,7 @@ export default async function OrganizationSignupPage(): Promise<React.JSX.Elemen
         ? <>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link href="/onboarding/organization" className="publisher-submit inline-flex items-center justify-center">Continue with this account</Link>
-            <form action="/auth/logout" method="post" className="sm:ml-0"><input type="hidden" name="next" value="/organizations/signup" /><button className="publisher-submit !bg-transparent !text-ink ring-1 ring-inset ring-ink/15 hover:brightness-95">Sign out</button></form>
+            <form action="/auth/logout" method="post" className="sm:ml-0"><button className="publisher-submit !bg-transparent !text-ink ring-1 ring-inset ring-ink/15 hover:brightness-95">Sign out</button></form>
           </div>
         </>
         : <>

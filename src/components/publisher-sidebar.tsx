@@ -26,7 +26,7 @@ export function PublisherSidebar(): React.JSX.Element {
               href={href}
               prefetch
               aria-current={active ? "page" : undefined}
-              className={`rail-link ${active ? "bg-butter text-ink" : ""}`}
+              className="rail-link"
             >
               {label}
             </Link>
