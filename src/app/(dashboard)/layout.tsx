@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { SectionNav } from "@/components/section-nav";
+import { PublisherSidebar } from "@/components/publisher-sidebar";
 import { getOptionalAuth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -10,5 +10,10 @@ export default async function ProviderLayout({ children }: { children: React.Rea
   if (!auth) redirect("/organizations/login");
   if (auth.role === "user") redirect("/onboarding/organization");
 
-  return <><div className="mx-auto w-fit max-w-full px-2 pt-1"><SectionNav label="Publisher tools" links={[["Overview", "/dashboard"], ["Opportunities", "/dashboard/opportunities"], ["Matches", "/dashboard/candidates"], ["Profile", "/dashboard/organization"]]} /></div>{children}</>;
+  return (
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 sm:px-6 md:flex-row md:gap-8 lg:px-8">
+      <PublisherSidebar />
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
+  );
 }

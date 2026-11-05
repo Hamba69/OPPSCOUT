@@ -3,8 +3,74 @@ import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 
 export const dynamic = "force-dynamic";
+
 export default async function DashboardPage(): Promise<React.JSX.Element> {
-  const repository = await getRepository(); const auth = await requirePageAuth(["organization"]); const organizationId = auth.organizationId!;
-  const [organization, opportunities] = await Promise.all([repository.getOrganization(organizationId), repository.listOpportunities({ organizationId, origin: "organization" })]);
-  return <main className="page-shell animate-in"><header className="text-center"><h1 className="text-3xl font-extrabold text-ink sm:text-4xl">Publisher overview</h1><p className="mt-2 text-navy">{organization?.name} · Create and manage opportunities for your audience.</p><Link href="/dashboard/opportunities/new" className="button mt-5">Post an opportunity</Link></header><div className="mt-8 grid gap-4 sm:grid-cols-3"><div className="card border-honey bg-butter"><p className="text-3xl font-extrabold text-ink">{opportunities.length}</p><p className="text-sm font-bold text-navy">Total opportunities</p></div><div className="card"><p className="text-3xl font-extrabold text-leaf">{opportunities.filter((item) => item.verificationStatus === "verified").length}</p><p className="text-sm font-bold text-navy">Published</p></div><div className="card"><p className="text-3xl font-extrabold text-ink">{opportunities.filter((item) => item.verificationStatus === "pending").length}</p><p className="text-sm font-bold text-navy">In review</p></div></div></main>;
+  const auth = await requirePageAuth(["organization"]);
+  const organizationId = auth.organizationId;
+  if (!organizationId) throw new Error("Publisher account is missing its organization.");
+  const repository = await getRepository();
+  const [organization, opportunities] = await Promise.all([
+    repository.getOrganization(organizationId),
+    repository.listOpportunities({ organizationId, origin: "organization" }),
+  ]);
+  if (!organization) throw new Error("Publisher profile is missing.");
+
+  const metrics = [
+    {
+      label: "Total opportunities",
+      value: opportunities.length,
+      detail: "All opportunities you have submitted",
+      accent: "border-t-amber",
+      valueColor: "text-ink",
+      icon: "↗",
+    },
+    {
+      label: "Published",
+      value: opportunities.filter((item) => item.verificationStatus === "verified").length,
+      detail: "Verified and visible to opportunity seekers",
+      accent: "border-t-leaf",
+      valueColor: "text-leaf",
+      icon: "✓",
+    },
+    {
+      label: "In review",
+      value: opportunities.filter((item) => item.verificationStatus === "pending").length,
+      detail: "Awaiting a review by the OppScout team",
+      accent: "border-t-honey",
+      valueColor: "text-ink",
+      icon: "◷",
+    },
+  ] as const;
+
+  return (
+    <main className="page-shell animate-in">
+      <header className="page-header">
+        <div>
+          <p className="eyebrow">Publisher workspace</p>
+          <h1>{organization.name}</h1>
+          <p>Create and manage opportunities for your audience.</p>
+        </div>
+        <Link href="/dashboard/opportunities/new" className="button min-h-11 !px-5">
+          Post an opportunity
+        </Link>
+      </header>
+
+      <section aria-label="Publisher overview metrics" className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {metrics.map((metric) => (
+          <article key={metric.label} className={`rounded-2xl border border-ink/[.08] border-t-4 ${metric.accent} bg-white p-6 shadow-soft sm:p-7`}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-bold text-navy">{metric.label}</p>
+                <p className={`mt-4 text-4xl font-extrabold tracking-tight ${metric.valueColor}`}>{metric.value}</p>
+              </div>
+              <span aria-hidden="true" className="grid size-11 shrink-0 place-items-center rounded-2xl bg-cream text-xl font-bold text-ink">
+                {metric.icon}
+              </span>
+            </div>
+            <p className="mt-5 border-t border-ink/[.08] pt-4 text-sm leading-6 text-navy">{metric.detail}</p>
+          </article>
+        ))}
+      </section>
+    </main>
+  );
 }
