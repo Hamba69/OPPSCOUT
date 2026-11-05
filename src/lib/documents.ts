@@ -39,7 +39,7 @@ export function hasDocumentSignature(bytes: Uint8Array, extension: keyof typeof 
 
 export async function canAccessDocument(auth: AuthContext, document: { ownerId: string; ownerType: string; purpose: string; status: string; shareWithOrganizations: boolean }, context: { seeker: { dateOfBirth: Date | null; shareWithOrganizations: boolean } | null; organizationVerified: boolean; hasMatch: boolean }): Promise<boolean> {
   if (auth.role === "admin") return true;
-  if (auth.role === "user" && document.ownerType === "user" && document.ownerId === auth.userId) return true;
+  if ((auth.role === "user" || auth.role === "organization") && document.ownerType === "user" && document.ownerId === auth.userId) return true;
   if (auth.role !== "organization" || document.ownerType !== "user" || document.purpose !== "research_paper") return false;
   if (!context.organizationVerified || document.status !== "ready" || !document.shareWithOrganizations || !context.seeker?.shareWithOrganizations || !context.hasMatch) return false;
   const dob = context.seeker.dateOfBirth;

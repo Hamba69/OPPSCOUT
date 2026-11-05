@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
 type Mode = "login" | "signup";
@@ -76,6 +77,12 @@ export function PublisherAuthForm({ mode, nextPath }: { mode: Mode; nextPath: st
       router.refresh();
       return;
     }
+    const passwordError = validateSignupPassword(password);
+    if (passwordError) {
+      setBusy(false);
+      setMessage(passwordError);
+      return;
+    }
     const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
     const { data: result, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: redirectTo } });
     setBusy(false);
@@ -85,10 +92,10 @@ export function PublisherAuthForm({ mode, nextPath }: { mode: Mode; nextPath: st
   }
 
   return <form className="mt-6" onSubmit={submit}>
-    <label htmlFor="publisher-email" className="publisher-label">Work email</label>
+    <label htmlFor="publisher-email" className="publisher-label">Email</label>
     <div className="publisher-input">
       <MailIcon />
-      <input ref={emailInput} id="publisher-email" type="email" name="email" autoComplete="email" placeholder="name@organization.org" required />
+      <input ref={emailInput} id="publisher-email" type="email" name="email" autoComplete="email" placeholder="you@example.com" required />
     </div>
 
     <div className="mt-5 flex items-baseline justify-between gap-3">
@@ -97,14 +104,15 @@ export function PublisherAuthForm({ mode, nextPath }: { mode: Mode; nextPath: st
     </div>
     <div className="publisher-input mt-2">
       <LockIcon />
-      <input id="publisher-password" type={showPassword ? "text" : "password"} name="password" minLength={8} autoComplete={signup ? "new-password" : "current-password"} placeholder={signup ? "Create a password" : "Enter your password"} required />
+      <input id="publisher-password" type={showPassword ? "text" : "password"} name="password" minLength={signup ? 12 : undefined} autoComplete={signup ? "new-password" : "current-password"} placeholder={signup ? "Create a password" : "Enter your password"} required />
       <button type="button" className="text-sm font-semibold text-navy hover:text-ink" aria-pressed={showPassword} onClick={() => setShowPassword((value) => !value)}>{showPassword ? "Hide" : "Show"}</button>
     </div>
-    {signup && <p className="mt-2 text-xs text-navy">At least 8 characters.</p>}
+    {signup && <p className="mt-2 text-xs text-navy">Use 12+ characters with uppercase, lowercase, a number and a symbol.</p>}
 
     <button className="publisher-submit mt-5" disabled={busy}>{busy ? "Please wait…" : <>{signup ? "Create publisher account" : "Log in"}<ArrowIcon /></>}</button>
 
     {confirmationPending && <button type="button" className="mt-3 text-sm font-bold underline underline-offset-4" disabled={busy} onClick={resendConfirmation}>Resend confirmation email</button>}
     {message && <p className="mt-4 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+    <p className="mt-4 text-center text-xs leading-5 text-navy">Your personal and publisher access use the same email and password. Sign in with those credentials on either page.</p>
   </form>;
 }

@@ -51,7 +51,8 @@ export async function requireAuth(request: Request): Promise<AuthContext> {
 }
 
 export function requireRole(auth: AuthContext, roles: AppRole[]): void {
-  if (!roles.includes(auth.role)) throw new ForbiddenError();
+  if (roles.includes(auth.role) || (auth.role === "organization" && roles.includes("user"))) return;
+  throw new ForbiddenError();
 }
 
 export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<AuthContext> {

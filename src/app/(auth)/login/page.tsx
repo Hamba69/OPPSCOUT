@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getOptionalAuth, homePathForRole } from "@/lib/auth";
+import { getOptionalAuth } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
 
 export const dynamic = "force-dynamic";
@@ -9,8 +9,8 @@ interface LoginPageProps { searchParams: Promise<{ next?: string; error?: string
 export default async function LoginPage({ searchParams }: LoginPageProps): Promise<React.JSX.Element> {
   const { next: requested, error, mode } = await searchParams;
   const auth = await getOptionalAuth();
-  if (auth) redirect(homePathForRole(auth.role));
-  const nextPath = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/feed";
+  const nextPath = requested?.startsWith("/") && !requested.startsWith("//") && !requested.includes("\\") ? requested : "/feed";
+  if (auth) redirect(nextPath);
 
   return (
     <main className="relative min-h-[100dvh] overflow-hidden">

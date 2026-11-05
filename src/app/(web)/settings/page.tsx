@@ -22,9 +22,9 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
         <div className="mt-4 flex flex-wrap gap-3">
           <Link href="/reset-password?returnTo=%2Fsettings" className="button-secondary">Change password</Link>
           <form action="/auth/logout" method="post"><button className="button-secondary">Sign out</button></form>
-          <form action="/auth/logout" method="post"><button className="button-secondary">Add another account</button></form>
+          <Link href="/organizations/login" className="button-secondary">Publisher access</Link>
         </div>
-        <p className="mt-3 text-sm text-navy">Adding another account signs you out first, then lets you sign in or create a different account.</p>
+        <p className="mt-3 text-sm text-navy">Use the same email and password for your personal and publisher access.</p>
       </section>
       <h2 className="mt-8 text-lg font-extrabold text-ink">Notifications</h2>
       <p className="mt-1 text-sm text-navy">Choose how and when we notify you about new matches and closing dates.</p>

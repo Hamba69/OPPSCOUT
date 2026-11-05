@@ -15,6 +15,7 @@ export default async function OrganizationSignupPage(): Promise<React.JSX.Elemen
       <span className="publisher-pill">Publisher account</span>
       <h1>Create a publisher account</h1>
       <p className="publisher-sub">Submit and manage opportunities for your organization.</p>
+      {auth && <p className="mt-5 rounded-xl border border-leaf/30 bg-leaf/[.07] p-4 text-sm font-bold leading-snug text-leaf">Your personal and publisher access use the same email and password. Sign in with those credentials on either page.</p>}
       {auth?.role === "user"
         ? <>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">

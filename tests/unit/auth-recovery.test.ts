@@ -66,13 +66,13 @@ describe("password recovery", () => {
     render(createElement(ResetPasswordPage));
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
     vi.useFakeTimers();
-    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "test-password-only" } });
+    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "Test-password-123!" } });
     await fireEvent.submit(screen.getByRole("button").closest("form")!);
     // Flush React updates before advancing the redirect timer.
     const { act } = await import("@testing-library/react");
     await act(async () => { await Promise.resolve(); });
     expect(screen.getByRole("status").textContent).toContain("Password updated");
-    expect(mocks.updateUser).toHaveBeenCalledWith({ password: "test-password-only" });
+    expect(mocks.updateUser).toHaveBeenCalledWith({ password: "Test-password-123!" });
     expect(mocks.replace).not.toHaveBeenCalled();
     await act(async () => { vi.advanceTimersByTime(1500); });
     expect(mocks.replace).toHaveBeenCalledWith("/feed");
@@ -82,9 +82,18 @@ describe("password recovery", () => {
     mocks.updateUser.mockResolvedValue({ error: { status: 401, message: "expired" } });
     render(createElement(ResetPasswordPage));
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
-    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "test-password-only" } });
+    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "Test-password-123!" } });
     fireEvent.submit(screen.getByRole("button").closest("form")!);
     await screen.findByText(/Your reset session has expired/);
     expect(mocks.replace).not.toHaveBeenCalled();
+  });
+
+  it("rejects weak new passwords before updating the account", async () => {
+    render(createElement(ResetPasswordPage));
+    await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
+    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "short!" } });
+    fireEvent.submit(screen.getByRole("button").closest("form")!);
+    await screen.findByText("Use at least 12 characters.");
+    expect(mocks.updateUser).not.toHaveBeenCalled();
   });
 });

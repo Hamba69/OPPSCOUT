@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
 function MailIcon(): React.JSX.Element {
@@ -73,6 +74,12 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
       }
       router.push(nextPath);
       router.refresh();
+      return;
+    }
+    const passwordError = validateSignupPassword(password);
+    if (passwordError) {
+      setBusy(false);
+      setMessage(passwordError);
       return;
     }
     const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
@@ -170,7 +177,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
                 className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                minLength={8}
+                minLength={isSignin ? undefined : 12}
                 autoComplete={isSignin ? "current-password" : "new-password"}
                 placeholder={isSignin ? "Enter your password" : "Create a password"}
                 required
@@ -195,7 +202,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               </button>
             )}
             {!isSignin && (
-              <p className="mt-1.5 text-xs text-navy/70">At least 8 characters.</p>
+              <p className="mt-1.5 text-xs text-navy/70">Use 12+ characters with uppercase, lowercase, a number and a symbol.</p>
             )}
           </div>
 
@@ -233,6 +240,10 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
             </p>
           )}
         </form>
+
+        <p className="mt-4 text-center text-xs leading-5 text-navy">
+          Your personal and publisher access use the same email and password. Sign in with those credentials on either page.
+        </p>
 
         {/* Footer switch */}
         <div className="mt-6 border-t border-ink/[0.06] pt-5 text-center text-sm text-navy">

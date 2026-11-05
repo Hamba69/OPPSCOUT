@@ -20,7 +20,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
       hasMatch = Boolean(matches.data?.length);
     }
     if (!await canAccessDocument(auth, document, { seeker, organizationVerified, hasMatch })) return Response.json({ error: { code: "NOT_FOUND", message: "Document not found." } }, { status: 404 });
-    if (auth.role === "organization" && auth.organizationId) await db.from("SeekerAccessLog").insert({ organizationId: auth.organizationId, seekerId: document.ownerId, action: "download_document", documentId: id });
+    if (auth.role === "organization" && auth.organizationId && document.ownerId !== auth.userId) await db.from("SeekerAccessLog").insert({ organizationId: auth.organizationId, seekerId: document.ownerId, action: "download_document", documentId: id });
     const signed = await storageClient().createSignedUrl(document.storagePath, 60, { download: document.originalFileName });
     if (signed.error || !signed.data) throw new Error(`Could not create document URL: ${signed.error?.message ?? "unknown error"}`);
     return success({ url: signed.data.signedUrl, expiresInSeconds: 60 });

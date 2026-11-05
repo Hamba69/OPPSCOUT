@@ -13,7 +13,6 @@ export const dynamic = "force-dynamic";
 
 export default async function FeedPage(): Promise<React.JSX.Element> {
   const auth = await requirePageAuth(["user", "organization", "admin"]);
-  if (auth.role === "organization") redirect("/dashboard");
   if (auth.role === "admin") redirect("/admin/kpis");
   const { userId } = auth;
   const [profile, repository] = await Promise.all([getUserProfile(userId), getRepository()]);
