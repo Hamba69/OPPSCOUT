@@ -16,12 +16,6 @@ const steps = [
   ["Meet your matches", "Every match explains why it fits and what to prepare, and links to the official source so you can apply safely."],
 ] as const;
 
-const promises = [
-  ["Every listing checked", "We confirm the official source, the deadline and duplicates before a listing reaches you."],
-  ["No application fees", "Listings that ask for payment or sensitive details are held back for review."],
-  ["Official sources linked", "Go straight to the organization’s own page. Report anything that looks wrong."],
-] as const;
-
 // Soft gold glow in the top-right corner and a faint green wash on the left. Static, no animation.
 const glow = "radial-gradient(ellipse 45% 55% at 88% 0%, rgba(255,215,0,0.30), transparent 70%), radial-gradient(ellipse 40% 40% at 8% 60%, rgba(31,126,110,0.07), transparent 70%)";
 
@@ -61,13 +55,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         <section aria-labelledby="trust-promises" className={`${wrap} pt-16 sm:pt-[72px]`}>
           <div className="rounded-[20px] border border-leaf/25 bg-leaf/[.06] p-6 sm:p-8">
-            <h2 id="trust-promises" className="text-2xl font-bold text-ink">Your next step should feel safe.</h2>
-            <ul className="mt-6 grid gap-6 md:grid-cols-3">
-              {promises.map(([title, description]) => <li key={title}>
-                <strong className="block text-base font-bold text-ink">{title}</strong>
-                <span className="mt-1 block text-sm leading-6 text-navy">{description}</span>
-              </li>)}
-            </ul>
+            <p id="trust-promises" className="text-2xl font-bold text-ink">Let us make your next step feel safe.</p>
           </div>
         </section>
 
