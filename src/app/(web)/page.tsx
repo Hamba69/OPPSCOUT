@@ -55,7 +55,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         <section aria-labelledby="trust-promises" className={`${wrap} pt-16 sm:pt-[72px]`}>
           <div className="rounded-[20px] border border-leaf/25 bg-leaf/[.06] p-6 sm:p-8">
-            <p id="trust-promises" className="text-2xl font-bold text-ink">Let us make your next step feel safe.</p>
+            
           </div>
         </section>
 
