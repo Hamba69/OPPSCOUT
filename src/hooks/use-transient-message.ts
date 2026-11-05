@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function useTransientMessage<T>(duration = 3000): readonly [T | null, (message: T | null) => void] {
+export function useTransientMessage<T>(duration = 10000): readonly [T | null, (message: T | null) => void] {
   const [message, setMessage] = useState<T | null>(null);
 
   useEffect(() => {

@@ -35,6 +35,7 @@ export const ADMIN_COLUMNS: Record<string, string[]> = {
     "officialEmail",
     "registrationProof",
     "accountableContact",
+    "accountableContacts",
     "verificationStatus",
     "dashboardUsers",
     "postingHistory",

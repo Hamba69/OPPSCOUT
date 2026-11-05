@@ -72,6 +72,6 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
       <label><span className="label">Official application link</span><input className="field" type="url" name="sourceUrl" required defaultValue={initial?.sourceUrl} placeholder="https://www.example.org/careers/role" /><span className="mt-1 block text-xs text-navy">Must be on your publisher’s official website and start with https://. Applicants are never charged to apply.</span></label>
     </section>
     <div className="flex flex-wrap items-center gap-4"><button className="button" disabled={submitting}>{submitting ? "Please wait…" : initial ? "Save changes" : "Submit for review"}</button>
-      {message && <p className="text-sm font-bold text-[#B8860B]" role="status" aria-live="polite">{message.text}</p>}</div>
+      {message && <p className="text-sm font-medium text-[#D4A900]" role="status" aria-live="polite">{message.text}</p>}</div>
   </form>;
 }

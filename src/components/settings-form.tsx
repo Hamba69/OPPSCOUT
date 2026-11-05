@@ -104,7 +104,7 @@ export function SettingsForm({
         Save preferences
       </button>
 
-      {message && <p className="text-sm font-bold text-[#B8860B]" role="status" aria-live="polite">{message}</p>}
+      {message && <p className="text-sm font-medium text-[#D4A900]" role="status" aria-live="polite">{message}</p>}
     </form>
   );
 }

@@ -29,6 +29,14 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
     const { id } = await context.params;
     assertScope(auth.role, auth.organizationId, id);
     const input = await parseJson(request, organizationPatchSchema);
-    return success(await (await getRepository()).updateOrganization(id, input));
+    const [primary, secondary] = input.accountableContacts ?? [];
+    return success(await (await getRepository()).updateOrganization(id, {
+      ...input,
+      ...(input.accountableContacts ? {
+        accountableContact: primary.name,
+        additionalAccountableContact: secondary?.name ?? null,
+        additionalAccountableContactPhone: secondary?.phone ?? null,
+      } : {}),
+    }));
   });
 }

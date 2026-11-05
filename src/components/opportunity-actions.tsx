@@ -63,6 +63,6 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
     </div>
     {reporting && <form onSubmit={report} className="card mt-4 space-y-3"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
       <div className="flex gap-2"><button className="button" disabled={busy || !reason.trim()}>{busy ? "Sending…" : "Submit report"}</button><button type="button" className="button-secondary" onClick={() => setReporting(false)} disabled={busy}>Cancel</button></div></form>}
-    {message && <p className="mt-3 text-sm font-bold text-[#B8860B]" role="status" aria-live="polite">{message}</p>}
+    {message && <p className="mt-3 text-sm font-medium text-[#D4A900]" role="status" aria-live="polite">{message}</p>}
   </div>;
 }

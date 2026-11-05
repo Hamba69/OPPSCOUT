@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { ExternalIcon } from "@/components/icons";
+import type { AccountableContact } from "@/core/entities/domain";
 import { StatusBadge } from "@/components/status-badge";
 
 interface OrganizationReviewCardProps {
@@ -13,6 +14,7 @@ interface OrganizationReviewCardProps {
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
+  accountableContacts?: AccountableContact[];
   additionalAccountableContact?: string | null;
   additionalAccountableContactPhone?: string | null;
   status: string;
@@ -21,6 +23,12 @@ interface OrganizationReviewCardProps {
 export function OrganizationReviewCard(props: OrganizationReviewCardProps): React.JSX.Element {
   const [message, setMessage] = useState("");
   const [done, setDone] = useState(false);
+  const contacts = props.accountableContacts?.length ? props.accountableContacts : [
+    ...(props.accountableContact ? [{ name: props.accountableContact, phone: "" }] : []),
+    ...(props.additionalAccountableContact || props.additionalAccountableContactPhone
+      ? [{ name: props.additionalAccountableContact ?? "", phone: props.additionalAccountableContactPhone ?? "" }]
+      : []),
+  ];
 
   async function decide(approved: boolean): Promise<void> {
     const response = await fetch(`/api/v1/organizations/review/${props.id}`, {
@@ -32,5 +40,5 @@ export function OrganizationReviewCard(props: OrganizationReviewCardProps): Reac
     if (response.ok) setDone(true);
   }
 
-  return <article className={`card ${done ? "opacity-60" : ""}`}><div className="flex items-start justify-between gap-3"><div><StatusBadge value={props.status} /><h2 className="mt-2 text-lg font-extrabold text-ink">{props.name}</h2><p className="text-sm font-bold text-navy">{props.sector}</p></div>{props.officialLinks[0] && <a className="button-secondary" href={props.officialLinks[0]} target="_blank" rel="noreferrer">Check site <ExternalIcon /></a>}</div><dl className="mt-5 grid gap-2 text-sm"><div><dt className="font-bold text-navy">Official email</dt><dd className="text-ink">{props.officialEmail ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Registration proof</dt><dd className="text-ink">{props.registrationProof ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Accountable contact</dt><dd className="text-ink">{props.accountableContact ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Additional accountable contact</dt><dd className="text-ink">{props.additionalAccountableContact ? `${props.additionalAccountableContact} · ${props.additionalAccountableContactPhone ?? "Phone not supplied"}` : "Not supplied"}</dd></div></dl><div className="mt-5 flex flex-wrap gap-2"><button className="button" disabled={done} onClick={() => void decide(true)}>Verify organization</button><button className="button-secondary" disabled={done} onClick={() => void decide(false)}>Keep flagged</button></div>{message && <p className="mt-3 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</article>;
+  return <article className={`card ${done ? "opacity-60" : ""}`}><div className="flex items-start justify-between gap-3"><div><StatusBadge value={props.status} /><h2 className="mt-2 text-lg font-extrabold text-ink">{props.name}</h2><p className="text-sm font-bold text-navy">{props.sector}</p></div>{props.officialLinks[0] && <a className="button-secondary" href={props.officialLinks[0]} target="_blank" rel="noreferrer">Check site <ExternalIcon /></a>}</div><dl className="mt-5 grid gap-2 text-sm"><div><dt className="font-bold text-navy">Official email</dt><dd className="text-ink">{props.officialEmail ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Registration proof</dt><dd className="text-ink">{props.registrationProof ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Accountable contacts</dt><dd className="text-ink">{contacts.length ? <ul>{contacts.map((contact, index) => <li key={`${contact.name}-${index}`}>{contact.name || "Name not supplied"} · {contact.phone || "Phone not supplied"}</li>)}</ul> : "Not supplied"}</dd></div></dl><div className="mt-5 flex flex-wrap gap-2"><button className="button" disabled={done} onClick={() => void decide(true)}>Verify organization</button><button className="button-secondary" disabled={done} onClick={() => void decide(false)}>Keep flagged</button></div>{message && <p className="mt-3 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</article>;
 }

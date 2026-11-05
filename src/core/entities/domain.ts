@@ -82,6 +82,11 @@ export interface UserProfile {
   updatedAt: Date;
 }
 
+export interface AccountableContact {
+  name: string;
+  phone: string;
+}
+
 export interface Organization {
   id: string;
   name: string;
@@ -90,6 +95,7 @@ export interface Organization {
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
+  accountableContacts?: AccountableContact[];
   additionalAccountableContact?: string | null;
   additionalAccountableContactPhone?: string | null;
   verificationStatus: VerificationStatus;

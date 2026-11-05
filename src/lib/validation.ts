@@ -114,25 +114,13 @@ const organizationFields = {
   officialLinks: z.array(z.string().url()).min(1).max(10),
   officialEmail: z.string().email().nullable(),
   registrationProof: z.string().trim().min(3).max(500).nullable(),
-  accountableContact: z.string().trim().min(2).max(180).nullable(),
-  additionalAccountableContact: z.string().trim().min(2).max(180).nullable().optional(),
-  additionalAccountableContactPhone: z.string().trim().max(32).regex(/^\+?[0-9\s().-]{7,32}$/, "Enter a valid phone number.").nullable().optional(),
+  accountableContacts: z.array(z.object({
+    name: z.string().trim().min(2).max(180),
+    phone: z.string().trim().max(32).regex(/^\+?[0-9\s().-]{7,32}$/, "Enter a valid phone number."),
+  }).strict()).min(1).max(10),
 };
-
-const validateAdditionalContact = (value: {
-  additionalAccountableContact?: string | null;
-  additionalAccountableContactPhone?: string | null;
-}) => Boolean(value.additionalAccountableContact) === Boolean(value.additionalAccountableContactPhone);
-
-export const organizationSchema = z.object(organizationFields).strict().refine(
-  validateAdditionalContact,
-  { message: "Add both the additional contact name and phone number.", path: ["additionalAccountableContactPhone"] },
-);
-
-export const organizationPatchSchema = z.object(organizationFields).partial().strict().refine(
-  validateAdditionalContact,
-  { message: "Add both the additional contact name and phone number.", path: ["additionalAccountableContactPhone"] },
-);
+export const organizationSchema = z.object(organizationFields).strict();
+export const organizationPatchSchema = z.object(organizationFields).partial().strict();
 
 export const profileDocumentSchema = z.object({
   title: z.string().trim().min(3).max(120),

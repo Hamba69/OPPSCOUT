@@ -1,5 +1,6 @@
 import type { AdminRepository } from "@/lib/admin-data";
 import type {
+  AccountableContact,
   EventLog,
   EventType,
   Opportunity,
@@ -111,6 +112,7 @@ export interface OrganizationInput {
   officialEmail: string | null;
   registrationProof: string | null;
   accountableContact: string | null;
+  accountableContacts: AccountableContact[];
   additionalAccountableContact?: string | null;
   additionalAccountableContactPhone?: string | null;
   dashboardUsers: string[];

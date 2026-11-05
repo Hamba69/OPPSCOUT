@@ -32,6 +32,7 @@ type DataClient = ReturnType<typeof createServiceRoleClient>;
 function organizationFromRow(row: DbRow): Organization {
   return {
     ...row,
+    accountableContacts: Array.isArray(row.accountableContacts) ? row.accountableContacts : [],
     createdAt: asDate(row.createdAt)!,
     updatedAt: asDate(row.updatedAt)!,
     postingHistory: row.postingHistory ?? [],

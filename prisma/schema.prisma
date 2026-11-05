@@ -153,6 +153,7 @@ model Organization {
   officialEmail          String?
   registrationProof      String?
   accountableContact     String?
+  accountableContacts   Json               @default("[]")
   additionalAccountableContact      String?
   additionalAccountableContactPhone String?
   verificationStatus     VerificationStatus @default(unverified)

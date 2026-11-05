@@ -50,6 +50,7 @@ function profileFromDb(value: Awaited<ReturnType<typeof prisma.userProfile.findU
 function organizationFromDb(value: Awaited<ReturnType<typeof prisma.organization.findUniqueOrThrow>>): Organization {
   return {
     ...value,
+    accountableContacts: value.accountableContacts as unknown as Organization["accountableContacts"],
     verificationStatus: value.verificationStatus,
     postingHistory: value.postingHistory as unknown as Organization["postingHistory"],
     promotionPolicy: value.promotionPolicy as Record<string, unknown>,
@@ -193,12 +194,15 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
   }
 
   public async createOrganization(input: OrganizationInput): Promise<Organization> {
-    const value = await prisma.organization.create({ data: { ...input, verificationStatus: "pending", postingHistory: [] } });
+    const value = await prisma.organization.create({ data: { ...input, accountableContacts: asJson(input.accountableContacts), verificationStatus: "pending", postingHistory: [] } });
     return organizationFromDb(value);
   }
 
   public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
-    const value = await prisma.organization.update({ where: { id }, data: input });
+    const value = await prisma.organization.update({ where: { id }, data: {
+      ...input,
+      accountableContacts: input.accountableContacts ? asJson(input.accountableContacts) : undefined,
+    } });
     return organizationFromDb(value);
   }
 

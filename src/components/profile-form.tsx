@@ -105,7 +105,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
   const [dirty, setDirty] = useState(false);
   useEffect(() => {
     if (status !== "saved" && status !== "error") return;
-    const timeout = window.setTimeout(() => setStatus("idle"), 3000);
+    const timeout = window.setTimeout(() => setStatus("idle"), 10000);
     return () => window.clearTimeout(timeout);
   }, [status]);
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -256,8 +256,8 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
       <div className="sticky bottom-24 z-10 flex flex-wrap items-center gap-3 rounded-3xl border border-ink/10 bg-white/95 p-3 shadow-soft backdrop-blur md:bottom-4">
         <button className="button" disabled={status === "saving"}>{status === "saving" ? "Saving…" : isNew ? "Save and see my matches" : "Save changes"}</button>
         <p className="min-w-0 flex-1 text-sm" role="status" aria-live="polite">
-          {status === "saved" && <span className="font-bold text-[#B8860B]">Profile saved. <Link href="/feed" className="underline">View my matches</Link></span>}
-          {status === "error" && <span className="font-bold text-[#B8860B]">{Object.keys(errors).length ? "Please correct the highlighted fields." : "We could not save your profile. Please try again."}</span>}
+          {status === "saved" && <span className="font-medium text-[#D4A900]">Profile saved. <Link href="/feed" className="underline">View my matches</Link></span>}
+          {status === "error" && <span className="font-medium text-[#D4A900]">{Object.keys(errors).length ? "Please correct the highlighted fields." : "We could not save your profile. Please try again."}</span>}
           {status === "idle" && dirty && <span className="text-navy">You have unsaved changes.</span>}
         </p>
       </div>
