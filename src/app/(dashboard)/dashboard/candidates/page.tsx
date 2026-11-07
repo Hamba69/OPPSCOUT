@@ -26,7 +26,7 @@ export default async function CandidatesPage(): Promise<React.JSX.Element> {
         <div>
           <p className="eyebrow">Publisher workspace</p>
           <h1 className="!text-left !font-extrabold">Matches</h1>
-          <p>People matching your open, verified opportunities who chose to share their profiles.</p>
+          <p>People matching your open, verified opportunities.</p>
         </div>
         <span className="pill">{candidates.length} profiles</span>
       </header>

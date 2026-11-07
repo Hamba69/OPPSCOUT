@@ -54,7 +54,7 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
         <div>
           <p className="eyebrow">Publisher workspace</p>
           <h1 className="mt-1 !text-left !text-3xl !font-extrabold sm:!text-4xl">{organization.name}</h1>
-          <p className="mt-2 text-sm text-navy">A quick view of your listings and publisher account.</p>
+          
         </div>
       </header>
 
@@ -93,9 +93,9 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/[.08] px-5 py-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">Recent activity</p>
-            <h2 id="recent-opportunities-heading" className="mt-1 text-lg font-extrabold text-ink">Latest opportunities</h2>
+            <h2 id="recent-opportunities-heading" className="mt-1 text-lg font-extrabold text-ink">Latest postings</h2>
           </div>
-          <Link className="button-secondary" href="/dashboard/opportunities">View all opportunities</Link>
+          <Link className="button-secondary" href="/dashboard/opportunities">View all postings</Link>
         </div>
         {recentOpportunities.length ? (
           <ul className="divide-y divide-ink/[.08]">

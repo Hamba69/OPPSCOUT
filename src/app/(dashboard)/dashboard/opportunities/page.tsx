@@ -22,7 +22,7 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
         <div>
           <p className="eyebrow">Publisher workspace</p>
           <h1 className="!text-left !font-extrabold">Your opportunities</h1>
-          <p>Manage your listings from submission through review and closing date.</p>
+          <p>Manage your postings from submission through review and closing date.</p>
         </div>
         <span className="pill">{opportunities.length} total</span>
       </header>
