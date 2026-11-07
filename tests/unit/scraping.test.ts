@@ -158,6 +158,41 @@ describe("scraper shadow mode", () => {
     expect(await repository.listOpportunities()).toHaveLength(10);
   });
 
+  it("wraps weekly page batches around the sitemap instead of rescanning its first pages", async () => {
+    vi.stubEnv("OPPSCOUT_SCRAPER_ALLOWED_HOSTS", "jobadverts.co.ke");
+    const visited: string[] = [];
+    const fetcher: typeof fetch = async (input) => {
+      const url = String(input);
+      if (url.endsWith("/robots.txt")) return new Response("User-agent: *\nSitemap: https://jobadverts.co.ke/sitemap.xml");
+      if (url.endsWith("/sitemap.xml")) {
+        return new Response("<urlset><url><loc>https://jobadverts.co.ke/one</loc></url><url><loc>https://jobadverts.co.ke/two</loc></url><url><loc>https://jobadverts.co.ke/three</loc></url></urlset>");
+      }
+      visited.push(url);
+      return new Response("<html><body>Not an opportunity</body></html>");
+    };
+    const dependencies = [
+      new MemoryRepository(),
+      { extract: async () => ({ isOpportunity: false as const }) },
+      new MemoryShadowOpportunityStore(),
+      fetcher,
+      async () => {},
+    ] as const;
+    const input = {
+      sourceUrl: "https://jobadverts.co.ke/",
+      organizationId: null,
+      pageLimit: 2,
+    };
+
+    await runPermittedSourceDiscovery({ ...input, startAt: 0 }, ...dependencies);
+    await runPermittedSourceDiscovery({ ...input, startAt: 2 }, ...dependencies);
+
+    expect(visited).toEqual([
+      "https://jobadverts.co.ke/one",
+      "https://jobadverts.co.ke/two",
+      "https://jobadverts.co.ke/three",
+    ]);
+  });
+
   it("refuses hosts unless explicitly allowlisted", async () => {
     vi.stubEnv("OPPSCOUT_SCRAPER_ALLOWED_HOSTS", "");
     const fetcher = vi.fn<typeof fetch>();

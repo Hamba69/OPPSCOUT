@@ -112,7 +112,7 @@ export const opportunitySchema = z.object({
 const organizationFields = {
   name: z.string().trim().min(2).max(180),
   sector: z.string().trim().min(2).max(120),
-  officialLinks: z.array(publicHttpsUrl).min(1).max(10),
+  officialLinks: z.array(publicHttpsUrl).max(10).default([]),
   officialEmail: z.string().email().nullable(),
   registrationProof: z.string().trim().min(3).max(500).nullable(),
   accountableContacts: z.array(z.object({
@@ -139,14 +139,14 @@ export function organizationEmailMatchesWebsite(officialEmail: string | null | u
 }
 const organizationObjectSchema = z.object(organizationFields).strict();
 export const organizationSchema = organizationObjectSchema.refine(
-  (value) => organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
+  (value) => !value.officialLinks.length || organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
   { message: "Use an official email address that matches the organization's website domain.", path: ["officialEmail"] },
 ).refine(
   (value) => Boolean(value.registrationProof?.trim()),
   { message: "Enter the organization's URSB registration number.", path: ["registrationProof"] },
 );
-export const organizationSubmissionSchema = z.object({ ...organizationFields, registrationProofDocumentId: z.string().uuid() }).strict().refine(
-  (value) => organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
+export const organizationSubmissionSchema = z.object({ ...organizationFields, registrationProofDocumentId: z.string().uuid().optional() }).strict().refine(
+  (value) => !value.officialLinks.length || organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
   { message: "Use an official email address that matches the organization's website domain.", path: ["officialEmail"] },
 ).refine(
   (value) => Boolean(value.registrationProof?.trim()),

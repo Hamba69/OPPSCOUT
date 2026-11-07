@@ -145,7 +145,7 @@ Plan recommendation.
 
 ### D9
 
-`org_attested` provenance is allowed with all three conditions enforced in code: registration proof, a named contact confirmed by a logged call, and no more than 25 percent of the live catalogue.  
+`org_attested` provenance is allowed with all three conditions enforced in code: a supplied URSB registration number (supporting documentary proof is optional), a named contact confirmed by a logged call, and no more than 25 percent of the live catalogue. An official website is optional; when supplied, it must be public HTTPS and the official email must match its domain.
 Plan recommendation.
 
 ### D10

@@ -19,7 +19,7 @@ describe("publisher verification requirements", () => {
     expect(isPublicHttpsUrl("https://user:pass@example.org")).toBe(false);
   });
 
-  it("requires a URSB number and uploaded proof for publisher onboarding", () => {
+  it("requires a URSB number while allowing the website and supporting proof to be omitted", () => {
     const submission = {
       name: "Example Organization",
       sector: "Education",
@@ -32,5 +32,19 @@ describe("publisher verification requirements", () => {
     expect(organizationSubmissionSchema.safeParse(submission).success).toBe(true);
     expect(organizationSubmissionSchema.safeParse({ ...submission, officialEmail: "publisher@gmail.com" }).success).toBe(false);
     expect(organizationSubmissionSchema.safeParse({ ...submission, registrationProofDocumentId: "" }).success).toBe(false);
+    expect(organizationSubmissionSchema.safeParse({
+      ...submission,
+      officialLinks: [],
+      registrationProofDocumentId: undefined,
+    }).success).toBe(true);
+    expect(organizationSubmissionSchema.safeParse({
+      ...submission,
+      officialLinks: ["http://example.org"],
+    }).success).toBe(false);
+    expect(organizationSubmissionSchema.safeParse({
+      ...submission,
+      registrationProof: "",
+      registrationProofDocumentId: undefined,
+    }).success).toBe(false);
   });
 });

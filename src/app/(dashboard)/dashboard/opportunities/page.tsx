@@ -26,8 +26,12 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
           <h1 className="!text-left !font-extrabold">Your active opportunities</h1>
           <p>Manage current postings through review and their closing date.</p>
         </div>
-        <span className="pill">{opportunities.length} total</span>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link className="button-secondary" href="/feedback" aria-label="Contact the OppScout admin team">Contact admin</Link>
+          <span className="pill">{opportunities.length} total</span>
+        </div>
       </header>
+      <p className="mb-5 text-sm text-navy">Need help with publisher verification or a listing? Contact the OppScout team.</p>
 
       {opportunities.length ? (
         <div className="space-y-5">

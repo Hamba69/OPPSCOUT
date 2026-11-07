@@ -11,17 +11,18 @@ export async function POST(request: Request): Promise<Response> {
     requireRole(auth, ["user", "organization", "admin"]);
     if (auth.organizationId) throw new ForbiddenError();
     const input = await parseJson(request, organizationSubmissionSchema);
-    const db = createServiceRoleClient();
-    const { data: proof, error } = await db.from("StoredDocument")
-      .select("id")
-      .eq("id", input.registrationProofDocumentId)
-      .eq("ownerType", "user")
-      .eq("ownerId", auth.userId)
-      .eq("purpose", "registration_proof")
-      .eq("status", "ready")
-      .maybeSingle();
-    if (error) throw new Error(`Could not verify registration proof upload: ${error.message}`);
-    if (!proof) throw new ForbiddenError();
+    if (input.registrationProofDocumentId) {
+      const { data: proof, error } = await createServiceRoleClient().from("StoredDocument")
+        .select("id")
+        .eq("id", input.registrationProofDocumentId)
+        .eq("ownerType", "user")
+        .eq("ownerId", auth.userId)
+        .eq("purpose", "registration_proof")
+        .eq("status", "ready")
+        .maybeSingle();
+      if (error) throw new Error(`Could not verify registration proof upload: ${error.message}`);
+      if (!proof) throw new ForbiddenError();
+    }
     const [primary, secondary] = input.accountableContacts;
     return success(await (await getRepository()).createOrganization({
       name: input.name,

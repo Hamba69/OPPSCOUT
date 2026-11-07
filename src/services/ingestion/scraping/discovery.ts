@@ -186,7 +186,9 @@ export async function runPermittedSourceDiscovery(
   }
 
   const pageUrls = [...pages];
-  const selected = pageUrls.slice(input.startAt, input.startAt + input.pageLimit);
+  const batchCycleLength = Math.ceil(pageUrls.length / input.pageLimit) * input.pageLimit;
+  const startAt = batchCycleLength > 0 ? input.startAt % batchCycleLength : 0;
+  const selected = pageUrls.slice(startAt, startAt + input.pageLimit);
   const candidates: ShadowCandidate[] = [];
   let skippedPages = 0;
   const failedPages: SourceDiscoveryResult["failedPages"] = [];
@@ -212,7 +214,7 @@ export async function runPermittedSourceDiscovery(
       throw error;
     }
   }
-  const nextStartAt = input.startAt + selected.length < pageUrls.length ? input.startAt + selected.length : null;
+  const nextStartAt = startAt + selected.length < pageUrls.length ? startAt + selected.length : null;
   return {
     sourceHost: host,
     sitemapCount: visitedSitemaps.size,

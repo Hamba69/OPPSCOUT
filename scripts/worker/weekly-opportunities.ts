@@ -7,12 +7,19 @@ import { getShadowOpportunityStore } from "@/services/ingestion/scraping/store";
 import { queueCandidatesForAdminReview } from "@/services/ingestion/scraping/review-queue";
 import { refreshOpportunityLifecycle } from "@/services/ingestion/freshness";
 
+function getWeeklyStartAt(now = new Date()): number {
+  const firstMonday = Date.UTC(1970, 0, 5);
+  const week = Math.max(0, Math.floor((now.getTime() - firstMonday) / (7 * 24 * 60 * 60 * 1_000)));
+  return week * SCRAPING_RULES.maximumPagesPerRun;
+}
+
 async function main(): Promise<void> {
   const repository = await getRepository();
   const sweep = await refreshOpportunityLifecycle(repository);
   const store = getShadowOpportunityStore();
   const prunedShadowCandidates = await store.prune();
   console.log(JSON.stringify({ lifecycleSweep: sweep, prunedShadowCandidates }));
+  const startAt = getWeeklyStartAt();
 
   const configuredHosts = [...new Set((process.env.OPPSCOUT_SCRAPER_ALLOWED_HOSTS ?? "")
     .split(",")
@@ -35,7 +42,7 @@ async function main(): Promise<void> {
       {
         sourceUrl: `https://${host}/`,
         organizationId: null,
-        startAt: 0,
+        startAt,
         pageLimit: SCRAPING_RULES.maximumPagesPerRun,
       },
       repository,

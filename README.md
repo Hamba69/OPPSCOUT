@@ -27,6 +27,7 @@ For Vercel, configure both database variables separately in **Production, Previe
 
 Later-phase integrations are deliberately gated:
 
+- Publisher onboarding requires an official email and URSB registration number. An official website and supporting URSB document are optional; any website supplied must be public HTTPS and match the email domain.
 - AI matching needs `ANTHROPIC_API_KEY` plus a passing `npm run validate:ai` result recorded through `OPPSCOUT_AI_COMPARISON_APPROVED=true` before `OPPSCOUT_AI_DEFAULT=true` is permitted.
 - The weekly GitHub Actions workflow removes expired/stale listings from active feeds and review queues, prunes old shadow candidates, and scans only explicitly approved hosts. Findings with a future deadline, explicit application link, and application domain matching a verified publisher enter the admin queue as pending; incomplete findings stay in private shadow storage. Nothing is auto-verified or published.
 - Scholarships, grants, fellowships, trainings, and internships may be on-site abroad. Matching does not penalize their location or work mode; admin review still must confirm Ugandans are eligible before publication.

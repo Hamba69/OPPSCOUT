@@ -42,11 +42,6 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
     if (input.registrationProof !== undefined && !input.registrationProof?.trim()) {
       throw new ValidationError("Enter the organization's URSB registration number.");
     }
-    const registrationNumberChanged = organizationInput.registrationProof !== undefined &&
-      organizationInput.registrationProof !== current.registrationProof;
-    if (registrationNumberChanged && !registrationProofDocumentId) {
-      throw new ValidationError("Upload new URSB registration proof when changing the registration number.");
-    }
     if (registrationProofDocumentId) {
       const { data: proof, error } = await createServiceRoleClient().from("StoredDocument")
         .select("id")
@@ -63,10 +58,10 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
       (input.name !== undefined && input.name !== current.name) ||
       JSON.stringify(officialLinks) !== JSON.stringify(current.officialLinks) ||
       officialEmail !== current.officialEmail ||
-      registrationNumberChanged ||
+      (organizationInput.registrationProof !== undefined && organizationInput.registrationProof !== current.registrationProof) ||
       registrationProofDocumentId !== undefined;
-    if (verificationDetailsChanged && !organizationEmailMatchesWebsite(officialEmail, officialLinks)) {
-      throw new ValidationError("Use an official email address that matches the organization's website domain.");
+    if (verificationDetailsChanged && officialLinks.length > 0 && !organizationEmailMatchesWebsite(officialEmail, officialLinks)) {
+      throw new ValidationError("When a website is supplied, use an official email address that matches its domain.");
     }
     const [primary, secondary] = input.accountableContacts ?? [];
     const updated = await repository.updateOrganization(id, {
