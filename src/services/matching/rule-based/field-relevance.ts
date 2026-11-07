@@ -11,16 +11,7 @@ export interface DimensionScore {
 export function scoreFieldRelevance(profile: UserProfile, opportunity: Opportunity): DimensionScore {
   const accepted = opportunity.eligibility.fieldsOfStudy ?? [];
   if (!accepted.length) {
-    return {
-      ratio: 1,
-      matched: [{
-        label: "Field of study",
-        detail: profile.fieldOfStudy
-          ? `Your field (${profile.fieldOfStudy}${profile.institution ? ` at ${profile.institution}` : ""}) is not restricted by this listing; still confirm official requirements.`
-          : "No study-field restriction is recorded; check the official requirements.",
-      }],
-      missing: [],
-    };
+    return { ratio: 1, matched: [], missing: [] };
   }
   const matches = Boolean(profile.fieldOfStudy) && includesNormalized(accepted, profile.fieldOfStudy ?? "");
   return matches

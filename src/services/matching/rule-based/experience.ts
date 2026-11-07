@@ -8,16 +8,7 @@ export function scoreExperience(profile: UserProfile, opportunity: Opportunity):
     0,
   );
   if (requiredMonths === 0) {
-    return {
-      ratio: 1,
-      matched: [{
-        label: "Experience",
-        detail: months
-          ? `You have about ${months} months of recorded experience; this listing has no minimum experience gate.`
-          : "No minimum experience is recorded on this listing.",
-      }],
-      missing: [],
-    };
+    return { ratio: 1, matched: [], missing: [] };
   }
   const ratio = Math.min(months / requiredMonths, 1);
   return months >= requiredMonths

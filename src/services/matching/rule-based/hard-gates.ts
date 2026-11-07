@@ -86,12 +86,5 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
     });
   }
 
-  if (!passed.length && !failed.length) {
-    passed.push({
-      label: "Eligibility gates",
-      detail: "No mandatory exclusion rule applies to your profile for this listing.",
-    });
-  }
-
   return { eligible: failed.length === 0, passed, failed };
 }

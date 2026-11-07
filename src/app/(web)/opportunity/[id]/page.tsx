@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Link from "next/link";
-import { AlertIcon, ArrowLeftIcon, CheckIcon, ExternalIcon } from "@/components/icons";
+import { ArrowLeftIcon, CheckIcon } from "@/components/icons";
 import { OpportunityActions } from "@/components/opportunity-actions";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
@@ -23,34 +23,29 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   if (!opportunity || !["open", "closing_soon"].includes(opportunity.status) ||
     (opportunity.deadline && opportunity.deadline <= new Date()) ||
     opportunity.verificationStatus !== "verified") notFound();
-  const verified = opportunity.verificationStatus === "verified";
-  const match = verified ? (await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, opportunityIds: new Set([id]), opportunities: [opportunity] })).find((item) => item.opportunityId === id) : undefined;
+  const match = (await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, opportunityIds: new Set([id]), opportunities: [opportunity] })).find((item) => item.opportunityId === id);
   const sourceHref = opportunity.sourceUrl;
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
-  const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Open until filled";
-  const workMode = opportunity.workMode === "unknown" ? "Work mode not stated" : opportunity.workMode;
+  const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Deadline not published";
+  const workMode = opportunity.workMode && opportunity.workMode !== "unknown" ? opportunity.workMode : null;
+  const relevantWhyItFits = (match?.matchedFactors ?? []).filter((factor) => {
+    const label = factor.label.toLowerCase();
+    const detail = factor.detail.toLowerCase();
+    return !label.includes("eligibility") && !detail.includes("no mandatory exclusion") && !detail.includes("mandatory eligibility checks") && !detail.includes("field of study") && !detail.includes("no field of study");
+  });
   const backHref = from === "matches" ? "/feed" : "/opportunities";
   const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";
   return <main className="page-shell animate-in mx-auto max-w-3xl">
     <Link href={backHref} aria-label={backLabel} title={backLabel} className="mb-2 inline-flex size-11 items-center justify-center rounded-full text-navy transition hover:bg-butter hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon /></Link>
-    <span className="badge-verified"><CheckIcon /> Verified listing</span>
     <h1 className="mt-3 text-2xl font-extrabold text-ink sm:text-4xl">{opportunity.title}</h1>
     <p className="mt-1 font-bold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
-    <p className="mt-2 text-sm text-navy">
-      {opportunity.origin === "organization"
-        ? "Submitted through OppScout by this organization."
-        : "Sourced for the OppScout catalog. The named organization did not post this listing through the app."}
-    </p>
     <section className="card mt-5 flex items-center justify-between gap-4 border-2 border-honey bg-butter">
       {match ? <div><p className="text-xs font-semibold text-navy">Your match</p><p className="text-4xl font-extrabold text-leaf">{match.score}%</p></div> : <div><p className="text-xs font-semibold text-navy">Type</p><p className="font-extrabold capitalize text-ink">{opportunity.category}</p></div>}
-      <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location} · {workMode}</p></div>
+      <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location}{workMode ? ` · ${workMode}` : ""}</p></div>
     </section>
     {!match ? <p className="mt-3 rounded-2xl bg-ink/[.04] p-4 text-sm text-navy">This opportunity is not in your matches, so you may not meet every requirement. Check the details below and the official source before applying.</p> : null}
     <OpportunityActions opportunityId={id} sourceUrl={sourceHref} />
-    {match && <section className="mt-8"><h2 className="text-lg font-extrabold text-ink">Why it fits</h2><ul className="mt-3 space-y-3">{match.matchedFactors.map((factor) => <li key={`${factor.label}-${factor.detail}`} className="text-sm"><strong className="flex items-center gap-1.5 text-leaf"><CheckIcon /> {factor.label}</strong><span className="text-navy">{factor.detail}</span></li>)}</ul></section>}
-    {match && match.missingFactors.length > 0 && <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">To prepare</h2><ul className="mt-3 space-y-3">{match.missingFactors.map((factor) => <li key={`${factor.label}-${factor.detail}`} className="text-sm"><strong className="flex items-center gap-1.5 text-ink"><AlertIcon /> {factor.label}</strong><span className="text-navy">{factor.detail}</span></li>)}</ul></section>}
-    <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">About this opportunity</h2><p className="mt-2 leading-7 text-ink">{opportunity.description}</p></section>
-    <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">How to apply</h2><p className="mt-2 leading-7 text-ink">{opportunity.applicationMethod}</p></section>
-    <p className="mt-6 text-xs text-navy">Published {opportunity.publicationDate.toLocaleDateString("en-UG")} · Source checked {opportunity.checkedAt.toLocaleDateString("en-UG")} · <a className="font-bold underline" href={sourceHref} target="_blank" rel="noreferrer">Open official source <ExternalIcon /></a></p>
+    {relevantWhyItFits.length > 0 && <section className="mt-8"><h2 className="text-lg font-extrabold text-ink">Why it fits</h2><ul className="mt-3 space-y-3">{relevantWhyItFits.map((factor) => <li key={`${factor.label}-${factor.detail}`} className="text-sm"><strong className="flex items-center gap-1.5 text-leaf"><CheckIcon /> {factor.label}</strong><span className="text-navy">{factor.detail}</span></li>)}</ul></section>}
+    {opportunity.description && <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">About this opportunity</h2><p className="mt-2 leading-7 text-ink">{opportunity.description}</p></section>}
   </main>;
 }

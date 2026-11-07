@@ -20,19 +20,32 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
     <main className="page-shell animate-in sm:!py-10">
       <header className="text-center">
         <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Saved Opportunities</h1>
-        <p className="mt-1 text-sm text-navy">Your preferred opportunities</p>
+        <p className="mt-1 text-sm text-navy">Your shortlist with the next deadline clearly in view.</p>
       </header>
       <div className="mt-8 space-y-4">
-        {items.length ? items.map(({ item, opportunity }) => (
-          <article key={item.id} className="card match-lift flex flex-wrap items-center justify-between gap-4 !rounded-2xl !shadow-none">
-            <div>
-              <span className={`pill capitalize ${item.status === "applied" ? "!border-leaf/40 !bg-leaf/10 !text-leaf" : ""}`}>{item.status}</span>
-              <h2 className="mt-2 text-lg font-bold text-ink">{opportunity.title}</h2>
-              <p className="mt-1 text-sm text-navy">Deadline {opportunity.deadline?.toLocaleDateString("en-UG", { dateStyle: "medium" }) ?? "Rolling; no closing date published"}</p>
-            </div>
-            <Link className="button-secondary" href={`/opportunity/${opportunity.id}`}>Open</Link>
-          </article>
-        )) : (
+        {items.length ? items.map(({ item, opportunity }) => {
+          const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - Date.now()) / 86_400_000) : null;
+          const countdown = opportunity.deadline
+            ? daysLeft !== null && daysLeft > 0
+              ? `${daysLeft} ${daysLeft === 1 ? "day" : "days"} left`
+              : `Closed ${opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" })}`
+            : "Deadline not published";
+
+          return (
+            <article key={item.id} className="card match-lift !rounded-2xl !shadow-none">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <span className={`pill capitalize ${item.status === "applied" ? "!border-leaf/40 !bg-leaf/10 !text-leaf" : ""}`}>{item.status}</span>
+                <span className="rounded-full bg-butter px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-navy">{countdown}</span>
+              </div>
+              <h2 className="mt-3 text-xl font-extrabold text-ink">{opportunity.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-navy">{opportunity.description?.trim() || "Official opportunity details are available on the listing page."}</p>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.08] pt-3">
+                <p className="text-sm font-medium text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
+                <Link className="button-secondary" href={`/opportunity/${opportunity.id}`}>View details</Link>
+              </div>
+            </article>
+          );
+        }) : (
           <section className="card bg-butter text-center">
             <div className="flex justify-center"><Logo size={56} /></div>
             <h2 className="mt-3 text-xl font-extrabold text-ink">Your shortlist is empty</h2>

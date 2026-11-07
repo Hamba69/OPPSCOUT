@@ -26,13 +26,17 @@ const iconProps = { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", s
 
 export function MatchCard(props: MatchCardProps): React.JSX.Element {
   const { daysLeft } = props;
-  // One clear reason per card: prefer skills / field / career factors, fall back to any matched factor.
-  const reason = props.matched.find((factor) => preferredLabels.has(factor.label)) ?? props.matched[0];
+  const relevantMatched = props.matched.filter((factor) => {
+    const label = factor.label.toLowerCase();
+    const detail = factor.detail.toLowerCase();
+    return !label.includes("eligibility") && !detail.includes("no mandatory exclusion") && !detail.includes("mandatory eligibility checks") && !detail.includes("field of study") && !detail.includes("no field of study");
+  });
+  const reason = relevantMatched.find((factor) => preferredLabels.has(factor.label)) ?? relevantMatched[0];
   const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
-  const workMode = props.workMode === "unknown" ? "Work mode not stated" : props.workMode;
+  const workMode = props.workMode && props.workMode !== "unknown" ? props.workMode : null;
   const deadlineLabel = props.deadline
     ? `Closes ${new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" })}`
-    : "Open until filled";
+    : "Deadline not published";
   return (
     <article className="card match-lift flex flex-col !rounded-2xl !shadow-none">
       <div className="flex items-start justify-between gap-4">
@@ -45,7 +49,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
       <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-navy">
         <span className="inline-flex items-center gap-1.5 capitalize">
           <svg {...iconProps}><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" /><circle cx="12" cy="9" r="2.5" /></svg>
-          {props.location} · {workMode}
+          {props.location}{workMode ? ` · ${workMode}` : ""}
         </span>
         <span className={`inline-flex items-center gap-1.5 ${urgent ? "font-bold text-[#B3261E]" : ""}`}>
           <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
@@ -54,7 +58,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
       </div>
       {reason && <p className="mt-3.5 text-sm leading-6 text-ink"><strong className="font-bold text-[#145347]">Why it fits:</strong> {reason.detail}</p>}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.08] pt-3.5">
-        {props.sourceUrl ? <span className="text-[13px] font-semibold text-[#145347]">Official source linked</span> : <span />}
+        <span />
         <div className="flex gap-2">
           <SaveButton opportunityId={props.opportunityId} />
           <Link className="button !min-h-11 !px-4" href={`/opportunity/${props.opportunityId}?from=matches`}>View details</Link>

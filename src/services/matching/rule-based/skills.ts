@@ -8,16 +8,7 @@ export function scoreSkills(profile: UserProfile, opportunity: Opportunity): Dim
     ...opportunity.preferredSkills.map((skill) => ({ skill, importance: 1 })),
   ];
   if (!requirements.length) {
-    return {
-      ratio: 1,
-      matched: [{
-        label: "Skills",
-        detail: profile.skills.length
-          ? `Your profile skills (${profile.skills.slice(0, 4).join(", ")}${profile.skills.length > 4 ? "…" : ""}) are relevant; the listing does not list hard skill filters.`
-          : "No specific skill requirements are recorded on this listing.",
-      }],
-      missing: [],
-    };
+    return { ratio: 1, matched: [], missing: [] };
   }
   const matched = requirements.filter(({ skill }) => includesNormalized(profile.skills, skill));
   const missing = requirements.filter(({ skill }) => !includesNormalized(profile.skills, skill));
