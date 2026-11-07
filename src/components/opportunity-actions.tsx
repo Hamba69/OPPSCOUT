@@ -4,10 +4,19 @@ import { ExternalIcon } from "@/components/icons";
 import { useTransientMessage } from "@/hooks/use-transient-message";
 import { useEffect, useRef, useState } from "react";
 
-export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId: string; sourceUrl: string }): React.JSX.Element {
+export function OpportunityActions({
+  opportunityId,
+  sourceUrl,
+  savedId,
+}: {
+  opportunityId: string;
+  sourceUrl: string;
+  savedId?: string;
+}): React.JSX.Element {
   const tracked = useRef(false);
   const [message, setMessage] = useTransientMessage<string>();
   const [busy, setBusy] = useState(false);
+  const [currentSavedId, setCurrentSavedId] = useState(savedId);
   const [reporting, setReporting] = useState(false);
   const [reason, setReason] = useState("");
   useEffect(() => {
@@ -20,9 +29,30 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
     if (busy) return;
     setBusy(true);
     try {
-    const response = await fetch("/api/v1/saved", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ opportunityId }) });
-    setMessage(response.ok ? "Saved. We’ll keep track of any closing date." : "Could not save this yet.");
+      const response = await fetch("/api/v1/saved", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ opportunityId }) });
+      if (!response.ok) {
+        setMessage("Could not save this yet.");
+        return;
+      }
+      const body = await response.json() as { data?: { id?: string } };
+      setCurrentSavedId(body.data?.id);
+      setMessage("Saved. We’ll keep track of any closing date.");
     } catch { setMessage("Could not connect. Please try saving again."); }
+    finally { setBusy(false); }
+  }
+
+  async function unsave(): Promise<void> {
+    if (busy || !currentSavedId) return;
+    setBusy(true);
+    try {
+      const response = await fetch(`/api/v1/saved/${currentSavedId}`, { method: "DELETE" });
+      if (!response.ok) {
+        setMessage("Could not remove this opportunity from your saved list.");
+        return;
+      }
+      setCurrentSavedId(undefined);
+      setMessage("Removed from your saved opportunities.");
+    } catch { setMessage("Could not connect. Please try again."); }
     finally { setBusy(false); }
   }
 
@@ -45,7 +75,7 @@ export function OpportunityActions({ opportunityId, sourceUrl }: { opportunityId
   return <div className="mt-5">
     <a className="button w-full sm:w-auto" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}>Apply on official site <ExternalIcon /></a>
     <div className="mt-3 flex flex-wrap gap-2">
-      <button type="button" className="button-secondary" disabled={busy} onClick={save}>{busy ? "Working…" : "Save for later"}</button>
+      <button type="button" className="button-secondary" disabled={busy} onClick={currentSavedId ? unsave : save}>{busy ? "Working…" : currentSavedId ? "Unsave" : "Save for later"}</button>
       <button type="button" className="min-h-12 rounded-2xl px-4 text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>Report a problem</button>
     </div>
     {reporting && <form onSubmit={report} className="card mt-4 space-y-3"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
