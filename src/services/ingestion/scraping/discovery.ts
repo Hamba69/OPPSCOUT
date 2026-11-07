@@ -109,7 +109,7 @@ async function fetchPermittedText(
   policy: RobotsPolicy,
   fetcher: typeof fetch,
   delay: (milliseconds: number) => Promise<void>,
-  maximumBytes = SCRAPING_RULES.maximumDocumentBytes,
+  maximumBytes: number = SCRAPING_RULES.maximumDocumentBytes,
 ): Promise<string> {
   let url = assertPermittedUrl(value, host);
   if (!robotsAllows(url, policy)) throw new AppError("The page is disallowed by robots.txt.", 403, "ROBOTS_DISALLOWS_SOURCE");
