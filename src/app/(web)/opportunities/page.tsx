@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { OpportunityListCard } from "@/components/opportunity-list-card";
+import { OpportunitiesBrowser } from "@/components/opportunities-browser";
 import { requirePageAuth } from "@/lib/auth";
 import { browseOpportunities } from "@/lib/opportunity-browse";
 import { choiceLabel } from "@/services/profile/choices";
@@ -92,11 +92,7 @@ export default async function OpportunitiesPage({
             </div>
           )}
           {items.length ? (
-            <div className="mt-4 grid gap-5 md:grid-cols-2">
-              {items.map((item) => (
-                <OpportunityListCard key={item.id} item={item} now={now} />
-              ))}
-            </div>
+            <OpportunitiesBrowser items={items} now={now} />
           ) : (
             <section className="card mt-4 bg-butter text-center">
               <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
