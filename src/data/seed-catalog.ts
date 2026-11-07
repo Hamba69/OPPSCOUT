@@ -14,6 +14,8 @@ export const PRIMARY_SEED_OPPORTUNITY_ID = "55555555-5555-4555-8555-555555555551
 
 const reviewChecklist: TrustChecklist = {
   sourceAuthentic: true,
+  officialApplicationLink: true,
+  eligibleForUgandans: true,
   noInappropriateFees: true,
   noSensitiveDataAsk: true,
   deadlinePlausible: true,

@@ -75,7 +75,7 @@ export function getDemoCatalog(now = new Date()): { organizations: Organization[
       deadline: new Date(now.getTime() + listing.days * 86_400_000), applicationMethod: listing.application,
       sourceUrl: `https://example.org/oppscout-demo/${id}`, verificationStatus: "verified", source: "org_submitted", origin: "catalog",
       publicationDate: published, checkedAt: now, status: listing.days <= 3 ? "closing_soon" : "open",
-      reviewChecklist: { sourceAuthentic: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true },
+      reviewChecklist: { sourceAuthentic: true, officialApplicationLink: true, eligibleForUgandans: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true },
       reviewNotes: "Fictional demo fixture illustrating a completed review; not a real vacancy or verification claim.",
       reviewerId: "22222222-2222-4222-8222-222222222222", reviewedAt: new Date(published.getTime() + (index + 4) * 3_600_000),
     };

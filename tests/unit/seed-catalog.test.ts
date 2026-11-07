@@ -30,6 +30,8 @@ describe("current opportunity seed catalogue", () => {
       expect(opportunity.reviewedAt).not.toBeNull();
       expect(opportunity.reviewChecklist).toEqual({
         sourceAuthentic: true,
+        officialApplicationLink: true,
+        eligibleForUgandans: true,
         noInappropriateFees: true,
         noSensitiveDataAsk: true,
         deadlinePlausible: true,

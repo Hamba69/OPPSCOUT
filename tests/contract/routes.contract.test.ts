@@ -159,7 +159,7 @@ describe("every Phase 1 /api/v1 route", () => {
     expect(queueResponse.status).toBe(200);
     const queue = await data<Array<{ id: string }>>(queueResponse);
     expect(queue.some((item) => item.id === opportunityId)).toBe(true);
-    expect((await reviewItemRoute.PATCH(request(`/api/v1/reports/review/${opportunityId}`, "PATCH", { checklist: { sourceAuthentic: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true }, approved: true, notes: "Confirmed" }, adminHeaders), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(200);
+    expect((await reviewItemRoute.PATCH(request(`/api/v1/reports/review/${opportunityId}`, "PATCH", { checklist: { sourceAuthentic: true, officialApplicationLink: true, eligibleForUgandans: true, noInappropriateFees: true, noSensitiveDataAsk: true, deadlinePlausible: true, duplicateChecked: true }, approved: true, notes: "Confirmed" }, adminHeaders), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(200);
   });
 
   it("serves the admin SLO snapshot and profile deletion route", async () => {

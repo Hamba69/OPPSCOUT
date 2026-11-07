@@ -3,6 +3,8 @@ import { appUrl } from "@/config/app";
 import type { PreferredChannel, UserProfile } from "@/core/entities/domain";
 import type { NotificationChannel, NotificationPriority } from "@/core/interfaces/notification-channel";
 import type { Repository, StoredMatchResult, StoredNotification } from "@/lib/repository/types";
+import { buildRankedFeed } from "@/services/matching/feed";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 export interface ChannelRegistry {
   app: NotificationChannel;
@@ -61,7 +63,11 @@ function digestDue(profile: UserProfile, recent: StoredNotification[], now: Date
 export async function runNotificationScheduler(repository: Repository, channels: ChannelRegistry, userId: string, now = new Date()): Promise<DeliveryAttempt[]> {
   const profile = await repository.getProfile(userId);
   if (!profile || !profile.notificationsEnabled) return [];
-  const matches = await repository.listMatches(userId);
+  const matches = await buildRankedFeed(repository, userId, now, undefined, {
+    persist: false,
+    telemetry: false,
+    trigger: "notification_run",
+  });
   const saved = await repository.listSaved(userId);
   const savedIds = new Set(saved.filter((item) => item.status === "saved").map((item) => item.opportunityId));
   const recentSince = new Date(now.getTime() - Math.max(NOTIFICATION_RULES.deduplicationWindowHours, 24 * 7) * 3_600_000);
@@ -73,7 +79,7 @@ export async function runNotificationScheduler(repository: Repository, channels:
 
   for (const match of matches) {
     const opportunity = await repository.getOpportunity(match.opportunityId) ?? match.opportunity;
-    if (!opportunity || (opportunity.deadline && opportunity.deadline <= now)) continue;
+    if (!opportunity || !isUserVisibleOpportunity(opportunity, now)) continue;
     const majorChange = savedIds.has(opportunity.id) && opportunity.checkedAt.getTime() > match.createdAt.getTime();
     const changeKey = `${opportunity.id}:major-change:${opportunity.checkedAt.toISOString()}`;
     if (majorChange && !recent.some((item) => item.triggerKey === changeKey && item.status !== "failed")) {

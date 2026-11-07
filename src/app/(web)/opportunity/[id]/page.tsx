@@ -7,6 +7,7 @@ import { OpportunityActions } from "@/components/opportunity-actions";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { buildRankedFeed } from "@/services/matching/feed";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ from?: string }> };
 export const dynamic = "force-dynamic";
@@ -20,14 +21,13 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   const [repository, auth] = await Promise.all([getRepository(), requirePageAuth(["user"])]);
   const { userId } = auth;
   const opportunity = await repository.getOpportunity(id);
-  if (!opportunity || !["open", "closing_soon"].includes(opportunity.status) ||
-    (opportunity.deadline && opportunity.deadline <= new Date()) ||
-    opportunity.verificationStatus !== "verified") notFound();
+  if (!opportunity || !isUserVisibleOpportunity(opportunity)) notFound();
   const [match, saved] = await Promise.all([
-    buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, opportunityIds: new Set([id]), opportunities: [opportunity] })
+    buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, telemetry: false, opportunityIds: new Set([id]), opportunities: [opportunity] })
       .then((matches) => matches.find((item) => item.opportunityId === id)),
     repository.listSaved(userId),
   ]);
+  if (!match) notFound();
   const savedId = saved.find((item) => item.opportunityId === id)?.id;
   const sourceHref = opportunity.sourceUrl;
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;

@@ -4,6 +4,8 @@ import { requireAuth, requireRole } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { opportunitySchema, parseJson } from "@/lib/validation";
 import { containsSuspiciousRequest } from "@/services/trust/checklist";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { buildRankedFeed } from "@/services/matching/feed";
 
 type Context = { params: Promise<{ id: string }> };
 
@@ -11,8 +13,18 @@ export async function GET(request: Request, context: Context): Promise<Response>
   return apiHandler(request, async () => {
     const auth = await requireAuth(request);
     const { id } = await context.params;
-    const opportunity = await (await getRepository()).getOpportunity(id);
-    if (!opportunity || (auth.role === "user" && opportunity.verificationStatus !== "verified")) throw new NotFoundError("Opportunity");
+    const repository = await getRepository();
+    const opportunity = await repository.getOpportunity(id);
+    if (!opportunity || (auth.role === "user" && !isUserVisibleOpportunity(opportunity))) throw new NotFoundError("Opportunity");
+    if (auth.role === "user") {
+      const matches = await buildRankedFeed(repository, auth.userId, new Date(), undefined, {
+        persist: false,
+        telemetry: false,
+        opportunityIds: new Set([id]),
+        opportunities: [opportunity],
+      });
+      if (!matches.length) throw new NotFoundError("Opportunity");
+    }
     return success(opportunity, 200, opportunity.checkedAt);
   });
 }

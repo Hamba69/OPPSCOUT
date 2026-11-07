@@ -7,6 +7,8 @@ import { submitOrganizationOpportunity } from "@/services/ingestion/org-submissi
 import { ingestManualOpportunity } from "@/services/ingestion/manual";
 import { opportunitySchema, parseJson } from "@/lib/validation";
 import { publisherCanPost } from "@/lib/publisher-verification";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { buildRankedFeed } from "@/services/matching/feed";
 
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
@@ -22,9 +24,20 @@ export async function GET(request: Request): Promise<Response> {
       organizationId: auth.role === "organization" ? auth.organizationId ?? undefined : url.searchParams.get("organizationId") ?? undefined,
       origin: auth.role === "organization" ? "organization" : undefined,
     };
-    const rows = await (await getRepository()).listOpportunities(filters);
+    const repository = await getRepository();
+    const rows = await repository.listOpportunities(filters);
     const now = new Date();
-    const opportunities = auth.role === "user" ? rows.filter(item => !item.deadline || item.deadline > now) : rows;
+    let opportunities = rows;
+    if (auth.role === "user") {
+      const verified = rows.filter((item) => isUserVisibleOpportunity(item, now));
+      const matches = await buildRankedFeed(repository, auth.userId, now, undefined, {
+        persist: false,
+        telemetry: false,
+        opportunities: verified,
+      });
+      const relevantIds = new Set(matches.map((match) => match.opportunityId));
+      opportunities = verified.filter((item) => relevantIds.has(item.id));
+    }
     const freshest = opportunities.reduce((date, item) => item.checkedAt > date ? item.checkedAt : date, new Date(0));
     return success(opportunities, 200, freshest.getTime() ? freshest : new Date());
   });

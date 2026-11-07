@@ -4,6 +4,8 @@ import { Logo } from "@/components/logo";
 
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { buildRankedFeed } from "@/services/matching/feed";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +14,17 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
   const { userId } = auth;
   const saved = await repository.listSaved(userId);
   const opportunities = new Map((await repository.listOpportunities({ opportunityIds: saved.map((item) => item.opportunityId) })).map((opportunity) => [opportunity.id, opportunity]));
+  const visibleOpportunities = [...opportunities.values()].filter((opportunity) => isUserVisibleOpportunity(opportunity));
+  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, {
+    persist: false,
+    telemetry: false,
+    opportunities: visibleOpportunities,
+    opportunityIds: new Set(visibleOpportunities.map((opportunity) => opportunity.id)),
+  });
+  const relevantIds = new Set(matches.map((match) => match.opportunityId));
   const items = saved.flatMap((item) => {
     const opportunity = opportunities.get(item.opportunityId);
-    return opportunity ? [{ item, opportunity }] : [];
+    return opportunity && relevantIds.has(opportunity.id) ? [{ item, opportunity }] : [];
   });
   return (
     <main className="page-shell animate-in sm:!py-10">

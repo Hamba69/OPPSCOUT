@@ -4,12 +4,40 @@ import { ingestManualOpportunity } from '@/services/ingestion/manual';
 import { AnthropicOpportunityExtractor } from '@/services/ai/anthropic-extractor';
 import { buildRankedFeed } from '@/services/matching/feed';
 import { checklistIsComplete } from '@/services/trust/checklist';
+import { isUserVisibleOpportunity } from '@/services/trust/user-publication-policy';
 import type { TrustChecklist } from '@/core/entities/domain';
 
 describe('catalog trust and eligibility safety', () => {
   it('does not accept an empty or partial trust checklist', () => {
     expect(checklistIsComplete({} as TrustChecklist)).toBe(false);
     expect(checklistIsComplete({ sourceAuthentic: true } as TrustChecklist)).toBe(false);
+  });
+  it('only exposes verified listings with a future deadline, safe source and complete review', async () => {
+    const repository = new MemoryRepository();
+    const current = (await repository.listOpportunities({ verificationStatus: 'verified' }))[0];
+    const valid = {
+      ...current,
+      status: 'open' as const,
+      deadline: new Date(Date.now() + 86_400_000),
+      sourceUrl: 'https://official.example/apply',
+      reviewChecklist: {
+        sourceAuthentic: true,
+        officialApplicationLink: true,
+        eligibleForUgandans: true,
+        noInappropriateFees: true,
+        noSensitiveDataAsk: true,
+        deadlinePlausible: true,
+        duplicateChecked: true,
+      },
+    };
+
+    expect(isUserVisibleOpportunity(valid)).toBe(true);
+    expect(isUserVisibleOpportunity({ ...valid, deadline: null })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, deadline: new Date(Date.now() - 1) })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, sourceUrl: 'http://official.example/apply' })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, reviewChecklist: { ...valid.reviewChecklist, eligibleForUgandans: false } })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, organization: { ...valid.organization!, verificationStatus: 'pending' } })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, reviewedAt: null })).toBe(false);
   });
   it('requires re-review when an approved listing is replaced by a duplicate submission', async () => {
     const repository = new MemoryRepository();

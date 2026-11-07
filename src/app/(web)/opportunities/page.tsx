@@ -38,7 +38,7 @@ export default async function OpportunitiesPage({
     <main className="page-shell animate-in sm:!py-10">
       <header className="text-center">
         <h1 className="text-2xl font-semibold text-ink sm:text-3xl">The Opportunities</h1>
-        <p className="mt-1 text-sm text-navy">Open catalog listings, with verified matches prioritised</p>
+        <p className="mt-1 text-sm text-navy">Verified, open opportunities that meet your profile and eligibility</p>
       </header>
 
       <div className="mt-8 flex flex-col gap-6 md:flex-row md:gap-10">

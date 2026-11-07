@@ -32,6 +32,8 @@ function checklistComplete(checklist: Partial<TrustChecklist> | undefined | null
   if (!checklist) return false;
   return (
     checklist.sourceAuthentic === true &&
+    checklist.officialApplicationLink === true &&
+    checklist.eligibleForUgandans === true &&
     checklist.noInappropriateFees === true &&
     checklist.noSensitiveDataAsk === true &&
     checklist.deadlinePlausible === true &&
@@ -122,6 +124,8 @@ export function getDiscoveredOpportunities(): Opportunity[] {
 
     const reviewChecklist: TrustChecklist = {
       sourceAuthentic: false,
+      officialApplicationLink: false,
+      eligibleForUgandans: false,
       noInappropriateFees: !feeConcern,
       noSensitiveDataAsk: !containsTrustSignal,
       deadlinePlausible: false,

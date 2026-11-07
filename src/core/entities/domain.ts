@@ -112,6 +112,8 @@ export interface Organization {
 
 export interface TrustChecklist {
   sourceAuthentic: boolean;
+  officialApplicationLink: boolean;
+  eligibleForUgandans: boolean;
   noInappropriateFees: boolean;
   noSensitiveDataAsk: boolean;
   deadlinePlausible: boolean;

@@ -4,6 +4,7 @@ import { EmptyState } from "@/components/empty-state";
 import { StatusBadge } from "@/components/status-badge";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,7 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
     organizationId: auth.organizationId ?? undefined,
     origin: "organization",
   });
-  const publishedCount = opportunities.filter((item) => item.verificationStatus === "verified").length;
+  const publishedCount = opportunities.filter((item) => isUserVisibleOpportunity(item)).length;
   const reviewCount = opportunities.filter((item) => item.verificationStatus === "pending").length;
 
   return (

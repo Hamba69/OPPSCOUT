@@ -12,6 +12,7 @@ import type { MatchEngine } from "@/core/interfaces/match-engine";
 import type { Repository, StoredMatchResult } from "@/lib/repository/types";
 import { evaluateHardGates } from "@/services/matching/rule-based/hard-gates";
 import { resolveMatchEngine } from "@/services/matching/engine-selector";
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 export interface RankedMatch extends StoredMatchResult {
   urgencyRank: number;
@@ -63,11 +64,9 @@ async function buildObservedFeed(
     ? new Map((matchRows ?? []).map((match) => [match.opportunityId, match]))
     : undefined;
   const opportunities = listedOpportunities
-    .filter((opportunity) => opportunity.verificationStatus === "verified" && ["open", "closing_soon"].includes(opportunity.status))
+    .filter((opportunity) => isUserVisibleOpportunity(opportunity, now))
     .filter((opportunity) => !options.opportunityIds || options.opportunityIds.has(opportunity.id));
-  const evaluated = opportunities
-    .filter((opportunity) => !opportunity.deadline || opportunity.deadline > now)
-    .map((opportunity) => ({ opportunity, gates: evaluateHardGates(profile, opportunity) }));
+  const evaluated = opportunities.map((opportunity) => ({ opportunity, gates: evaluateHardGates(profile, opportunity) }));
   const eligible = evaluated.filter((item) => item.gates.eligible);
   const scored = await Promise.all(eligible.map(async ({ opportunity, gates }) => {
     const result = await engine.score(profile, opportunity);
@@ -75,7 +74,8 @@ async function buildObservedFeed(
     result.matchedFactors.unshift(...gates.passed);
     return { opportunity, result };
   }));
-  const matches = await Promise.all(scored.map(async ({ opportunity, result }) => {
+  const relevant = scored.filter(({ result }) => result.score >= AI_RULES.relevanceThreshold);
+  const matches = await Promise.all(relevant.map(async ({ opportunity, result }) => {
     const stored = options.persist === false
       ? {
           id: persistedMatches?.get(opportunity.id)?.id ?? randomUUID(),

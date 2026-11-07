@@ -103,7 +103,7 @@ export const opportunitySchema = z.object({
     z.literal("").transform(() => null),
   ]),
   applicationMethod: z.string().trim().min(5).max(500),
-  sourceUrl: z.string().url().refine((url) => url.startsWith("https://"), "Official source URL must use HTTPS."),
+  sourceUrl: publicHttpsUrl,
   verificationStatus: z.enum(["unverified", "pending", "verified", "flagged"]).default("pending"),
   source: z.enum(["org_submitted", "scraped", "partner_feed"]).default("org_submitted"),
   status: z.enum(["open", "closing_soon", "closed", "stale", "removed"]).default("open"),
@@ -171,6 +171,8 @@ export const reportSchema = z.object({
 
 export const trustChecklistSchema = z.object({
   sourceAuthentic: z.boolean(),
+  officialApplicationLink: z.boolean(),
+  eligibleForUgandans: z.boolean(),
   noInappropriateFees: z.boolean(),
   noSensitiveDataAsk: z.boolean(),
   deadlinePlausible: z.boolean(),

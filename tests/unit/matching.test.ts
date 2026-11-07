@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
+import { AI_RULES } from "@/config/ai-rules";
 import { PRIMARY_SEED_OPPORTUNITY_ID } from "@/data/seed-catalog";
 import { MemoryRepository, DEMO_USER_ID } from "@/lib/repository/memory";
 import { buildRankedFeed } from "@/services/matching/feed";
@@ -31,6 +32,30 @@ describe("Phase 1 rule matching", () => {
     await repository.updateProfile(DEMO_USER_ID, { educationLevel: "secondary" });
     const feed = await buildRankedFeed(repository, DEMO_USER_ID);
     expect(feed.map((match) => match.opportunityId)).not.toContain(PRIMARY_SEED_OPPORTUNITY_ID);
+  });
+
+  it("only returns candidates at the configured relevance threshold", async () => {
+    const repository = new MemoryRepository();
+    const baseline = await buildRankedFeed(repository, DEMO_USER_ID);
+    const opportunity = baseline[0]?.opportunity;
+    expect(opportunity).toBeDefined();
+    const engineAt = (score: number) => ({
+      score: async (_profile: UserProfile, _opportunity: Opportunity) => ({
+        score,
+        matchedFactors: [],
+        missingFactors: [],
+        generatedBy: "rules" as const,
+      }),
+    };
+    const options = {
+      persist: false,
+      telemetry: false,
+      opportunities: [opportunity!],
+    };
+    const belowThreshold = await buildRankedFeed(repository, DEMO_USER_ID, new Date(), engineAt(AI_RULES.relevanceThreshold - 1), options);
+    expect(belowThreshold).toHaveLength(0);
+    const atThreshold = await buildRankedFeed(repository, DEMO_USER_ID, new Date(), engineAt(AI_RULES.relevanceThreshold), options);
+    expect(atThreshold).toHaveLength(1);
   });
 
   it("passes a verified age and fails a missing mandatory certification", async () => {
