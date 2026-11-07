@@ -25,7 +25,7 @@ export function OpportunitiesBrowser({
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="mt-3 flex justify-end">
         <label>
           <span className="sr-only">Sort opportunities</span>
           <select
