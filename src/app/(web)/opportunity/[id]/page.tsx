@@ -28,11 +28,6 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
   const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Deadline not published";
   const workMode = opportunity.workMode && opportunity.workMode !== "unknown" ? opportunity.workMode : null;
-  const relevantWhyItFits = (match?.matchedFactors ?? []).filter((factor) => {
-    const label = factor.label.toLowerCase();
-    const detail = factor.detail.toLowerCase();
-    return !label.includes("eligibility") && !detail.includes("no mandatory exclusion") && !detail.includes("mandatory eligibility checks") && !detail.includes("field of study") && !detail.includes("no field of study");
-  });
   const backHref = from === "matches" ? "/feed" : "/opportunities";
   const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";
   return <main className="page-shell animate-in mx-auto max-w-3xl">
@@ -45,7 +40,6 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
     </section>
     {!match ? <p className="mt-3 rounded-2xl bg-ink/[.04] p-4 text-sm text-navy">This opportunity is not in your matches, so you may not meet every requirement. Check the details below and the official source before applying.</p> : null}
     <OpportunityActions opportunityId={id} sourceUrl={sourceHref} />
-    {relevantWhyItFits.length > 0 && <section className="mt-8"><h2 className="text-lg font-extrabold text-ink">Why it fits</h2><ul className="mt-3 space-y-3">{relevantWhyItFits.map((factor) => <li key={`${factor.label}-${factor.detail}`} className="text-sm"><strong className="flex items-center gap-1.5 text-leaf"><CheckIcon /> {factor.label}</strong><span className="text-navy">{factor.detail}</span></li>)}</ul></section>}
     {opportunity.description && <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">About this opportunity</h2><p className="mt-2 leading-7 text-ink">{opportunity.description}</p></section>}
   </main>;
 }
