@@ -6,6 +6,8 @@ import { MemoryRepository, DEMO_USER_ID } from "@/lib/repository/memory";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { evaluateHardGates } from "@/services/matching/rule-based/hard-gates";
 import { RuleBasedMatchEngine } from "@/services/matching/rule-based/engine";
+import { OrbitMatchEngine } from "@/services/matching/orbit/engine";
+import { assessAutomatedTrust } from "@/services/trust/automated-signals";
 
 async function fixtures(): Promise<{ profile: UserProfile; opportunity: Opportunity }> {
   const repository = new MemoryRepository();
@@ -70,5 +72,49 @@ describe("Phase 1 rule matching", () => {
     const result = evaluateHardGates({ ...profile, dateOfBirth: null }, { ...opportunity, eligibility: { minimumAge: 18 } });
     expect(result.eligible).toBe(false);
     expect(result.failed[0]?.detail).toMatch(/date of birth/i);
+  });
+
+  it("does not penalize international, on-site scholarships for location or work-mode preferences", async () => {
+    const repository = new MemoryRepository();
+    const profile = (await repository.getProfile(DEMO_USER_ID))!;
+    const base = (await repository.getOpportunity(PRIMARY_SEED_OPPORTUNITY_ID))!;
+    const international = { ...base, category: "scholarship", location: "Nairobi, Kenya", workMode: "onsite" as const };
+    const localRemote = { ...international, location: "Kampala, Uganda", workMode: "remote" as const };
+
+    for (const engine of [new RuleBasedMatchEngine(), new OrbitMatchEngine()]) {
+      const overseasScore = await engine.score(profile, international);
+      const localScore = await engine.score(profile, localRemote);
+      expect(overseasScore.score).toBe(localScore.score);
+      expect([...overseasScore.matchedFactors, ...overseasScore.missingFactors].map((factor) => factor.label))
+        .not.toContain("Location");
+      expect([...overseasScore.matchedFactors, ...overseasScore.missingFactors].map((factor) => factor.label))
+        .not.toContain("Work mode");
+    }
+  });
+
+  it("requires explicit Ugandan eligibility rather than a Uganda-based venue for flexible categories", async () => {
+    const repository = new MemoryRepository();
+    const base = (await repository.getOpportunity(PRIMARY_SEED_OPPORTUNITY_ID))!;
+    const international = {
+      ...base,
+      category: "fellowship",
+      location: "Nairobi, Kenya",
+      workMode: "onsite" as const,
+      title: "Distinct International Fellowship",
+      description: "An on-site fellowship for Ugandan applicants at a Nairobi-based institute.",
+      deadline: new Date(Date.now() + 30 * 86_400_000),
+      sourceUrl: "https://example.org/international-fellowship",
+    };
+    const assessment = await assessAutomatedTrust(repository, international);
+    expect(assessment.signals.some((signal) => signal.includes("Uganda-based duty station"))).toBe(false);
+    expect(assessment.signals.some((signal) => signal.includes("Eligibility for Ugandan applicants"))).toBe(false);
+
+    const unclear = await assessAutomatedTrust(repository, {
+      ...international,
+      title: "Distinct International Fellowship Without Eligibility",
+      description: "An on-site fellowship at a Nairobi-based institute.",
+      sourceUrl: "https://example.org/international-fellowship-no-eligibility",
+    });
+    expect(unclear.signals.some((signal) => signal.includes("Eligibility for Ugandan applicants"))).toBe(true);
   });
 });

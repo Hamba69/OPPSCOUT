@@ -12,11 +12,14 @@ export interface OpportunityAnalyzer {
   analyze(input: { profileSummary: string; opportunityText: string }): Promise<AiOpportunityAnalysis>;
 }
 
-export interface ExtractedOpportunityData {
-  title: string; category: string; description: string; eligibility: Eligibility;
-  requiredSkills: string[]; preferredSkills: string[]; location: string; workMode: WorkMode;
-  deadline: string | null; applicationMethod: string;
-}
+export type ExtractedOpportunityData =
+  | { isOpportunity: false }
+  | {
+    isOpportunity: true;
+    title: string; category: string; description: string; eligibility: Eligibility;
+    requiredSkills: string[]; preferredSkills: string[]; location: string; workMode: WorkMode;
+    deadline: string | null; applicationMethod: string; applicationUrl: string | null;
+  };
 
 export interface OpportunityTextExtractor {
   extract(sourceUrl: string, text: string): Promise<ExtractedOpportunityData>;

@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export default async function ReviewQueuePage({searchParams}:{searchParams:Promise<Record<string,string>>}): Promise<React.JSX.Element> {
   await requireAdminPortal();
   const repository = await getRepository();
-  const params=new URLSearchParams(await searchParams);if(!params.has("verificationStatus"))params.set("verificationStatus","pending");
+  const params=new URLSearchParams(await searchParams);if(!params.has("verificationStatus"))params.set("verificationStatus","pending");params.set("status","open");
   const [listings,orgs]=await Promise.all([repository.adminPage("opportunities",parseAdminQuery("opportunities",params)),repository.adminPage("organizations",parseAdminQuery("organizations",params))]);
   const queue=listings.rows as unknown as Opportunity[],organizations=orgs.rows as unknown as Organization[];
   const dashboardUsers = [...new Set(organizations.flatMap((item) => item.dashboardUsers))];

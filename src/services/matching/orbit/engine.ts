@@ -165,8 +165,16 @@ export class OrbitMatchEngine implements MatchEngine {
     // Anchor: competence signals (skills, field) gate the free dimensions so that a perfect commute cannot carry an unqualified match.
     const anchorRatio = (w.skills * dims.skills.ratio + w.fieldRelevance * dims.field.ratio) / (w.skills + w.fieldRelevance);
     const gated = (raw / max) * ((1 - this.o.anchor) + this.o.anchor * anchorRatio);
-    const all = Object.values(dims);
-    const matched = all.flatMap((d) => d.matched), missing = all.flatMap((d) => d.missing);
+    const all = [
+      ["fieldRelevance", dims.field],
+      ["skills", dims.skills],
+      ["experience", dims.experience],
+      ["location", dims.location],
+      ["workMode", dims.workMode],
+      ["careerInterest", dims.interest],
+    ] as const;
+    const activeDimensions = all.filter(([dimension]) => w[dimension] > 0).map(([, dimension]) => dimension);
+    const matched = activeDimensions.flatMap((d) => d.matched), missing = activeDimensions.flatMap((d) => d.missing);
     return { score: Math.max(0, Math.min(100, Math.round(gated * 100))), matchedFactors: matched, missingFactors: missing, generatedBy: "rules" };
   }
 }

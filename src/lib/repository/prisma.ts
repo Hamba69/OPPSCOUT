@@ -312,7 +312,7 @@ export class PrismaRepository extends AdminDataRepository implements Repository 
 
   public async listReviewQueue(): Promise<Opportunity[]> {
     const values = await prisma.opportunity.findMany({
-      where: { verificationStatus: { in: ["pending", "flagged"] } },
+      where: { verificationStatus: { in: ["pending", "flagged"] }, status: "open" },
       include: { organization: true },
       orderBy: { publicationDate: "asc" },
     });

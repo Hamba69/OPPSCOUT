@@ -1,3 +1,5 @@
+import { isFlexibleGeographyCategory } from "@/config/opportunity-categories";
+
 export interface MatchingWeights {
   fieldRelevance: number;
   skills: number;
@@ -36,8 +38,10 @@ export const CATEGORY_MATCHING_WEIGHTS: Readonly<Record<string, MatchingWeights>
   },
 };
 
-export const MAX_WEIGHTED_SCORE = 85;
-
 export function matchingWeightsFor(category: string): MatchingWeights {
-  return CATEGORY_MATCHING_WEIGHTS[category.toLowerCase()] ?? DEFAULT_MATCHING_WEIGHTS;
+  const normalizedCategory = category.trim().toLowerCase().replace(/s$/, "");
+  const weights = CATEGORY_MATCHING_WEIGHTS[normalizedCategory] ?? DEFAULT_MATCHING_WEIGHTS;
+  return isFlexibleGeographyCategory(category)
+    ? { ...weights, location: 0, workMode: 0 }
+    : weights;
 }

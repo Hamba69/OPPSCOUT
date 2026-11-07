@@ -414,6 +414,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     const { data, error } = await this.client.from("Opportunity")
       .select("*")
       .in("verificationStatus", ["pending", "flagged"])
+      .eq("status", "open")
       .order("publicationDate", { ascending: true });
     const rows = checked(data, error, "Could not list opportunity review queue");
     return this.opportunitiesWithOrganizations(rows);

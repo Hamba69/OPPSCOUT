@@ -1,0 +1,28 @@
+name: Weekly opportunity sweep and discovery
+on:
+  schedule:
+    - cron: "15 2 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: weekly-opportunities
+  cancel-in-progress: false
+jobs:
+  weekly-opportunities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run worker:weekly-opportunities
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPPSCOUT_AUTOMATED_SCRAPING_ENABLED: ${{ vars.OPPSCOUT_AUTOMATED_SCRAPING_ENABLED }}
+          OPPSCOUT_SCRAPER_ALLOWED_HOSTS: ${{ vars.OPPSCOUT_SCRAPER_ALLOWED_HOSTS }}

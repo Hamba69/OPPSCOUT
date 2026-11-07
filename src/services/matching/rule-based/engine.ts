@@ -1,7 +1,7 @@
 export const RULES_ENGINE_VERSION = "1.0.0";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { MatchEngine, MatchResult } from "@/core/interfaces/match-engine";
-import { matchingWeightsFor, MAX_WEIGHTED_SCORE } from "@/config/matching-weights";
+import { matchingWeightsFor } from "@/config/matching-weights";
 import { scoreCareerInterest } from "@/services/matching/rule-based/career-interest";
 import { scoreExperience } from "@/services/matching/rule-based/experience";
 import { scoreFieldRelevance } from "@/services/matching/rule-based/field-relevance";
@@ -19,12 +19,13 @@ export class RuleBasedMatchEngine implements MatchEngine {
       { weight: weights.location, value: scoreLocation(profile, opportunity) },
       { weight: weights.workMode, value: scoreWorkMode(profile, opportunity) },
       { weight: weights.careerInterest, value: scoreCareerInterest(profile, opportunity) },
-    ];
+    ].filter((item) => item.weight > 0);
     const raw = dimensions.reduce((sum, item) => sum + item.weight * item.value.ratio, 0);
     const matchedFactors = dimensions.flatMap((item) => item.value.matched);
     const missingFactors = dimensions.flatMap((item) => item.value.missing);
+    const maximumWeight = dimensions.reduce((sum, item) => sum + item.weight, 0);
     return {
-      score: Math.max(0, Math.min(100, Math.round((raw / MAX_WEIGHTED_SCORE) * 100))),
+      score: Math.max(0, Math.min(100, Math.round((raw / maximumWeight) * 100))),
       matchedFactors,
       missingFactors,
       generatedBy: "rules",

@@ -169,6 +169,7 @@ describe("every Phase 1 /api/v1 route", () => {
     expect((await data<{ metrics: unknown[] }>(kpis)).metrics).toHaveLength(10);
     expect((await scrapingShadowRoute.GET(request("/api/v1/ingestion/scraping/shadow", "GET", undefined, adminHeaders))).status).toBe(200);
     expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "http://unsafe.example", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(422);
+    expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "https://jobadverts.co.ke/", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(503);
     expect((await ussdCredentialsRoute.POST(request("/api/v1/ussd/credentials", "POST", { userId: "11111111-1111-4111-8111-111111111111", pin: "1234" }, adminHeaders))).status).toBe(201);
     const ussdBody = new URLSearchParams({ sessionId: "contract-session", phoneNumber: "+256700000001", text: "" });
     const ussdResponse = await ussdSessionRoute.POST(new Request("http://localhost/api/v1/ussd/session", { method: "POST", body: ussdBody }));

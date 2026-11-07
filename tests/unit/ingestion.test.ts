@@ -51,12 +51,32 @@ describe("ingestion quality", () => {
     expect((await repository.listOpportunities({ organizationId: DEMO_ORG_ID })).filter((item) => item.id === first.id)).toHaveLength(1);
   });
 
-  it("automatically closes deadline-passed listings", async () => {
+  it("removes deadline-passed listings from active feeds and review", async () => {
     const repository = new MemoryRepository();
     const opportunities = await repository.listOpportunities();
     const afterLatestDeadline = new Date(Math.max(...opportunities.map((item) => item.deadline?.getTime() ?? Number.NEGATIVE_INFINITY)) + 1);
     const result = await refreshOpportunityLifecycle(repository, afterLatestDeadline);
-    expect(result.closed).toBeGreaterThan(0);
-    expect((await repository.listOpportunities()).every((item) => item.status === "closed")).toBe(true);
+    expect(result.expired).toBeGreaterThan(0);
+    expect(result.removed).toBeGreaterThan(0);
+    expect((await repository.listOpportunities()).every((item) => item.status === "removed")).toBe(true);
+    expect(await repository.listOpportunities({ statuses: ["open", "closing_soon"] })).toHaveLength(0);
+    expect(await repository.listReviewQueue()).toHaveLength(0);
+  });
+
+  it("removes stale listings and does not change them again on later sweeps", async () => {
+    const repository = new MemoryRepository();
+    const opportunity = (await repository.listOpportunities())[0];
+    await repository.updateOpportunity(opportunity.id, {
+      deadline: new Date(Date.now() + 60 * 86_400_000),
+      checkedAt: new Date(Date.now() - 31 * 86_400_000),
+    });
+
+    const first = await refreshOpportunityLifecycle(repository);
+    const second = await refreshOpportunityLifecycle(repository);
+
+    expect(first.stale).toBeGreaterThan(0);
+    expect(first.removed).toBeGreaterThan(0);
+    expect(second.changed).toBe(0);
+    expect((await repository.getOpportunity(opportunity.id))?.status).toBe("removed");
   });
 });

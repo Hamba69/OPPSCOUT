@@ -52,7 +52,7 @@ describe('catalog trust and eligibility safety', () => {
 
   it('preserves age, programme rules and unsupported profile requirements during AI extraction', async () => {
     const eligibility = { minimumAge: 20, maximumAge: 32, programmeRules: [{ field: 'language', allowedValues: ['French'], label: 'Working language' }], additionalRequirements: ['Must have work authorization in the host country.'] };
-    const fetcher = vi.fn(async () => Response.json({ content: [{ type: 'tool_use', name: 'record_opportunity', input: { title: 'Research internship', category: 'internship', description: 'A research internship with explicit eligibility requirements.', eligibility, requiredSkills: [], preferredSkills: [], location: 'Kampala', workMode: 'onsite', deadline: null, applicationMethod: 'Apply through the official portal.' } }] }));
+    const fetcher = vi.fn(async () => Response.json({ content: [{ type: 'tool_use', name: 'record_opportunity', input: { isOpportunity: true, title: 'Research internship', category: 'internship', description: 'A research internship with explicit eligibility requirements.', eligibility, requiredSkills: [], preferredSkills: [], location: 'Kampala', workMode: 'onsite', deadline: null, applicationMethod: 'Apply through the official portal.', applicationUrl: null } }] }));
     const result = await new AnthropicOpportunityExtractor('test-only-key', fetcher).extract('https://official.example/opportunity', 'Source content');
     expect(result.eligibility).toEqual(eligibility);
   });

@@ -19,7 +19,7 @@ Open `http://127.0.0.1:3000/login`. Runtime data and authentication always use P
 2. Run `npm run prisma:generate`.
 3. Apply the committed migration with `npm run db:migrate`.
 4. Seed development data with `npm run db:seed`.
-5. Schedule `npm run worker:freshness` and `npm run worker:notifications` in the chosen worker runtime.
+5. Schedule `npm run worker:weekly-opportunities` and `npm run worker:notifications` in the chosen worker runtime. The weekly workflow sweeps expired/stale listings and runs permission-gated shadow discovery.
 
 Run `npm run validate:env` in the production-equivalent environment to confirm that required variable names are present without printing their values. When run locally, the command also loads `.env.local` if it exists; explicitly provided environment variables still take precedence. The complete deployment checklist and phase-by-phase evidence boundary are in [`docs/production-readiness.md`](docs/production-readiness.md).
 
@@ -28,7 +28,8 @@ For Vercel, configure both database variables separately in **Production, Previe
 Later-phase integrations are deliberately gated:
 
 - AI matching needs `ANTHROPIC_API_KEY` plus a passing `npm run validate:ai` result recorded through `OPPSCOUT_AI_COMPARISON_APPROVED=true` before `OPPSCOUT_AI_DEFAULT=true` is permitted.
-- Scraping writes only to the private Supabase Storage shadow bucket until measured duplicate and freshness targets pass.
+- The weekly GitHub Actions workflow removes expired/stale listings from active feeds and review queues, prunes old shadow candidates, and scans only explicitly approved hosts. Findings with a future deadline, explicit application link, and application domain matching a verified publisher enter the admin queue as pending; incomplete findings stay in private shadow storage. Nothing is auto-verified or published.
+- Scholarships, grants, fellowships, trainings, and internships may be on-site abroad. Matching does not penalize their location or work mode; admin review still must confirm Ugandans are eligible before publication.
 - USSD uses the Africa's Talking callback at `/api/v1/ussd/session`, Redis-compatible session/credential persistence, `USSD_TOKEN_SECRET`, and a gateway webhook secret. Public rollout remains blocked until the real sandbox completion SLO passes.
 - Monetization is read-only readiness infrastructure. Payment handling is intentionally absent until the legal and real-metric evidence in `docs/phase-5-legal-gate.md` is supplied.
 

@@ -13,6 +13,7 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
   const opportunities = await (await getRepository()).listOpportunities({
     organizationId: auth.organizationId ?? undefined,
     origin: "organization",
+    statuses: ["open", "closing_soon"],
   });
   const publishedCount = opportunities.filter((item) => isUserVisibleOpportunity(item)).length;
   const reviewCount = opportunities.filter((item) => item.verificationStatus === "pending").length;
@@ -22,8 +23,8 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
       <header className="page-header">
         <div>
           <p className="eyebrow">Publisher workspace</p>
-          <h1 className="!text-left !font-extrabold">Your opportunities</h1>
-          <p>Manage your postings from submission through review and closing date.</p>
+          <h1 className="!text-left !font-extrabold">Your active opportunities</h1>
+          <p>Manage current postings through review and their closing date.</p>
         </div>
         <span className="pill">{opportunities.length} total</span>
       </header>
@@ -69,7 +70,7 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
       ) : (
         <EmptyState
           title="Your first opportunity starts here"
-          description="Share what the opportunity offers, who can apply, and where to find the official details. We will review it before it reaches people’s feeds."
+          description="There are no active postings right now. Past-deadline and stale listings are removed automatically. Post a current opportunity for review."
           href="/dashboard/opportunities/new"
           action="Post your first opportunity"
           background="white"

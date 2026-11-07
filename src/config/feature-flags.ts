@@ -6,7 +6,7 @@ export const FEATURE_FLAGS = {
   providerTools: true,
   kpiDashboard: true,
   aiMatching: false,
-  automatedScraping: false,
+  automatedScraping: process.env.OPPSCOUT_AUTOMATED_SCRAPING_ENABLED === "true",
   aiComparison: true,
   scrapingShadowMode: true,
   ussd: true,

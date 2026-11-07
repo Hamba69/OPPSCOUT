@@ -347,7 +347,9 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   }
 
   public async listReviewQueue(): Promise<Opportunity[]> {
-    return copy([...this.opportunities.values()].filter((item) => item.verificationStatus === "pending" || item.verificationStatus === "flagged"));
+    return copy([...this.opportunities.values()].filter((item) =>
+      item.status === "open" && (item.verificationStatus === "pending" || item.verificationStatus === "flagged")
+    ));
   }
 
   public async reviewOpportunity(id: string, input: { checklist: TrustChecklist; approved: boolean; reviewerId: string; notes?: string }): Promise<Opportunity> {

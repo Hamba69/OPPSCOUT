@@ -6,4 +6,17 @@ export class SupabaseShadowOpportunityStore implements ShadowOpportunityStore {
   private headers(contentType = "application/json"): Record<string, string> { if (!this.url || !this.serviceKey) throw new AppError("Shadow storage is not configured.", 503, "SHADOW_STORE_NOT_CONFIGURED"); return { authorization: `Bearer ${this.serviceKey}`, apikey: this.serviceKey, "content-type": contentType }; }
   public async put(candidate: ShadowCandidate): Promise<void> { const response = await this.fetcher(`${this.url}/storage/v1/object/${SCRAPING_RULES.shadowBucket}/${candidate.id}.json`, { method: "POST", headers: { ...this.headers(), "x-upsert": "true" }, body: JSON.stringify(candidate) }); if (!response.ok) throw new AppError(`Shadow storage write failed with ${response.status}.`, 502, "SHADOW_STORE_ERROR"); }
   public async list(): Promise<ShadowCandidate[]> { const listing = await this.fetcher(`${this.url}/storage/v1/object/list/${SCRAPING_RULES.shadowBucket}`, { method: "POST", headers: this.headers(), body: JSON.stringify({ prefix: "", limit: 1000, sortBy: { column: "created_at", order: "desc" } }) }); if (!listing.ok) throw new AppError(`Shadow storage listing failed with ${listing.status}.`, 502, "SHADOW_STORE_ERROR"); const objects = await listing.json() as Array<{ name: string }>; return Promise.all(objects.filter((item) => item.name.endsWith(".json")).map(async (item) => { const response = await this.fetcher(`${this.url}/storage/v1/object/authenticated/${SCRAPING_RULES.shadowBucket}/${item.name}`, { headers: this.headers() }); if (!response.ok) throw new AppError("Shadow artifact could not be read.", 502, "SHADOW_STORE_ERROR"); return response.json() as Promise<ShadowCandidate>; })); }
+  public async prune(now = new Date()): Promise<number> {
+    const candidates = await this.list();
+    const expired = candidates.filter((candidate) => {
+      const deadline = candidate.input.deadline ? new Date(candidate.input.deadline) : null;
+      const tooOld = now.getTime() - new Date(candidate.capturedAt).getTime() > SCRAPING_RULES.shadowCandidateRetentionDays * 86_400_000;
+      return (deadline !== null && deadline <= now) || tooOld;
+    });
+    for (const candidate of expired) {
+      const response = await this.fetcher(`${this.url}/storage/v1/object/${SCRAPING_RULES.shadowBucket}/${candidate.id}.json`, { method: "DELETE", headers: this.headers() });
+      if (!response.ok) throw new AppError(`Expired shadow candidate removal failed with ${response.status}.`, 502, "SHADOW_STORE_ERROR");
+    }
+    return expired.length;
+  }
 }
