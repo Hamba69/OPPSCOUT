@@ -74,8 +74,7 @@ async function buildObservedFeed(
     result.matchedFactors.unshift(...gates.passed);
     return { opportunity, result };
   }));
-  const relevant = scored.filter(({ result }) => result.score >= AI_RULES.relevanceThreshold);
-  const matches = await Promise.all(relevant.map(async ({ opportunity, result }) => {
+  const matches = await Promise.all(scored.map(async ({ opportunity, result }) => {
     const stored = options.persist === false
       ? {
           id: persistedMatches?.get(opportunity.id)?.id ?? randomUUID(),

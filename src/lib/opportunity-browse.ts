@@ -8,7 +8,7 @@ import { isUserVisibleOpportunity } from "@/services/trust/user-publication-poli
 
 export interface BrowseResult { items: OpportunityListItem[]; categories: string[]; counts: Record<string, number> }
 
-/** Only verified opportunities that pass hard eligibility and relevance checks are shown. */
+/** Show all trusted, current opportunities and rank personal matches within that safe set. */
 export async function browseOpportunities(userId: string, filters: { type?: string; query?: string }, now = new Date()): Promise<BrowseResult> {
   const repository = await getRepository();
   const [all, profile] = await Promise.all([
@@ -16,7 +16,10 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
     repository.getProfile(userId),
   ]);
   const open = all.filter((item) => isUserVisibleOpportunity(item, now));
-  const matches = open.length
+  const categories = allOpportunityTypes(open.map((item) => item.category));
+  const counts: Record<string, number> = {};
+  for (const item of open) counts[item.category] = (counts[item.category] ?? 0) + 1;
+  const matches = open.length && profile
     ? await buildRankedFeed(repository, userId, now, undefined, {
         persist: false,
         telemetry: false,
@@ -24,14 +27,9 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
         opportunities: open,
       })
     : [];
-  const relevantIds = new Set(matches.map((match) => match.opportunityId));
-  const relevant = open.filter((item) => relevantIds.has(item.id));
-  const categories = allOpportunityTypes(relevant.map((item) => item.category));
-  const counts: Record<string, number> = {};
-  for (const item of relevant) counts[item.category] = (counts[item.category] ?? 0) + 1;
   const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
   const needle = filters.query?.trim().toLowerCase() ?? "";
-  const visible = relevant
+  const visible = open
     .filter((item) => !filters.type || item.category === filters.type)
     .filter((item) => !needle || [item.title, item.organization?.name ?? "", item.location, item.category, item.description, ...item.requiredSkills].join(" ").toLowerCase().includes(needle));
   const items = visible

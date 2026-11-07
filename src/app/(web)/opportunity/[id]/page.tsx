@@ -27,7 +27,6 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
       .then((matches) => matches.find((item) => item.opportunityId === id)),
     repository.listSaved(userId),
   ]);
-  if (!match) notFound();
   const savedId = saved.find((item) => item.opportunityId === id)?.id;
   const sourceHref = opportunity.sourceUrl;
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
