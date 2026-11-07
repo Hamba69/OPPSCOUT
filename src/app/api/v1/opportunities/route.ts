@@ -2,9 +2,11 @@ import { apiHandler, success } from "@/lib/api";
 import { requireAuth, requireRole } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import type { OpportunityFilters, OpportunityInput } from "@/lib/repository/types";
+import { ForbiddenError, NotFoundError } from "@/core/errors/app-error";
 import { submitOrganizationOpportunity } from "@/services/ingestion/org-submission";
 import { ingestManualOpportunity } from "@/services/ingestion/manual";
 import { opportunitySchema, parseJson } from "@/lib/validation";
+import { publisherCanPost } from "@/lib/publisher-verification";
 
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
@@ -34,6 +36,14 @@ export async function POST(request: Request): Promise<Response> {
     requireRole(auth, ["organization", "admin"]);
     const input = await parseJson(request, opportunitySchema) as OpportunityInput;
     const repository = await getRepository();
+    if (auth.role === "organization") {
+      if (!auth.organizationId) throw new ForbiddenError();
+      const organization = await repository.getOrganization(auth.organizationId);
+      if (!organization) throw new NotFoundError("Organization");
+      if (!await publisherCanPost(organization)) {
+        throw new ForbiddenError("Publisher verification, including official contact details and URSB proof, is required before posting opportunities.");
+      }
+    }
     const opportunity = auth.role === "organization"
       ? await submitOrganizationOpportunity(repository, auth.userId, input)
       : await ingestManualOpportunity(repository, input);

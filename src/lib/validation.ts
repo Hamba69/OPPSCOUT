@@ -10,14 +10,15 @@ const experience = z.object({ title: z.string().trim().min(1).max(160), organiza
 const plainText = (max: number, min = 0) => z.string().trim().max(max)
   .transform((value) => value.replace(/[\u0000-\u001f\u007f]/g, ""))
   .refine((value) => value.trim().length >= min, `Must be at least ${min} characters.`);
-const publicHttpsUrl = z.string().trim().max(300).url().refine((value) => {
+export function isPublicHttpsUrl(value: string): boolean {
   try {
     const parsed = new URL(value);
-    return parsed.protocol === "https:" && !parsed.username && !parsed.password && !["javascript:", "data:"].includes(parsed.protocol);
+    return parsed.protocol === "https:" && !parsed.username && !parsed.password;
   } catch {
     return false;
   }
-}, "Use a public HTTPS URL without login credentials.");
+}
+const publicHttpsUrl = z.string().trim().max(300).url().refine(isPublicHttpsUrl, "Use a public HTTPS URL without login credentials.");
 const isGithubProfile = (value: string): boolean => {
   const parsed = new URL(value);
   const host = parsed.hostname.toLowerCase();
@@ -111,7 +112,7 @@ export const opportunitySchema = z.object({
 const organizationFields = {
   name: z.string().trim().min(2).max(180),
   sector: z.string().trim().min(2).max(120),
-  officialLinks: z.array(z.string().url()).min(1).max(10),
+  officialLinks: z.array(publicHttpsUrl).min(1).max(10),
   officialEmail: z.string().email().nullable(),
   registrationProof: z.string().trim().min(3).max(500).nullable(),
   accountableContacts: z.array(z.object({
@@ -119,7 +120,38 @@ const organizationFields = {
     phone: z.string().trim().max(32).regex(/^\+?[0-9\s().-]{7,32}$/, "Enter a valid phone number."),
   }).strict()).min(1).max(10),
 };
-export const organizationSchema = z.object(organizationFields).strict();
+export function organizationEmailMatchesWebsite(officialEmail: string | null | undefined, officialLinks: string[] | undefined): boolean {
+  if (!officialEmail || !officialLinks?.length) return false;
+  const emailDomain = officialEmail.trim().toLowerCase().split("@").pop();
+  if (!emailDomain) return false;
+  return officialLinks.some((link) => {
+    try {
+      if (!isPublicHttpsUrl(link)) return false;
+      const websiteDomain = new URL(link).hostname.toLowerCase().replace(/^www\./, "");
+      const normalizedEmailDomain = emailDomain.replace(/^www\./, "");
+      return normalizedEmailDomain === websiteDomain ||
+        normalizedEmailDomain.endsWith(`.${websiteDomain}`) ||
+        websiteDomain.endsWith(`.${normalizedEmailDomain}`);
+    } catch {
+      return false;
+    }
+  });
+}
+const organizationObjectSchema = z.object(organizationFields).strict();
+export const organizationSchema = organizationObjectSchema.refine(
+  (value) => organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
+  { message: "Use an official email address that matches the organization's website domain.", path: ["officialEmail"] },
+).refine(
+  (value) => Boolean(value.registrationProof?.trim()),
+  { message: "Enter the organization's URSB registration number.", path: ["registrationProof"] },
+);
+export const organizationSubmissionSchema = z.object({ ...organizationFields, registrationProofDocumentId: z.string().uuid() }).strict().refine(
+  (value) => organizationEmailMatchesWebsite(value.officialEmail, value.officialLinks),
+  { message: "Use an official email address that matches the organization's website domain.", path: ["officialEmail"] },
+).refine(
+  (value) => Boolean(value.registrationProof?.trim()),
+  { message: "Enter the organization's URSB registration number.", path: ["registrationProof"] },
+);
 export const organizationPatchSchema = z.object(organizationFields).partial().strict();
 
 export const profileDocumentSchema = z.object({
@@ -128,6 +160,7 @@ export const profileDocumentSchema = z.object({
   fileName: z.string().trim().min(1).max(120),
   mimeType: z.string().trim().min(1).max(160),
   sizeBytes: z.number().int().positive(),
+  purpose: z.enum(["research_paper", "registration_proof"]).default("research_paper"),
 }).strict();
 
 export const reportSchema = z.object({
