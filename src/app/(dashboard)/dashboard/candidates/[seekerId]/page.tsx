@@ -47,6 +47,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
   await db.from("SeekerAccessLog").insert({ organizationId: auth.organizationId!, seekerId, action: "view_profile" });
   const matchedFactors = getFactors(match.matchedFactors);
   const missingFactors = getFactors(match.missingFactors);
+  const opportunity = Array.isArray(match.Opportunity) ? match.Opportunity[0] : null;
   const links = [
     ...(profile.githubUrl ? [{ label: "GitHub", url: profile.githubUrl }] : []),
     ...(profile.portfolioUrl ? [{ label: "Portfolio", url: profile.portfolioUrl }] : []),
@@ -79,7 +80,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
           <div className="border-b border-ink/[.08] px-5 py-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">Opportunity</p>
             <h2 id="match-breakdown-heading" className="mt-1 text-lg font-extrabold text-ink">
-              {Array.isArray(match.Opportunity) ? match.Opportunity[0]?.title : match.Opportunity?.title}
+              {opportunity?.title ?? "Open opportunity"}
             </h2>
           </div>
           <div className="grid gap-5 p-5 sm:grid-cols-2">
