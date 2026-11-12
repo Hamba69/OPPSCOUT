@@ -21,7 +21,7 @@ export async function reviewOpportunity(
     const organization = opportunity.organizationId
       ? await repository.getOrganization(opportunity.organizationId)
       : null;
-    if (!organization || organization.verificationStatus !== "verified") {
+    if (opportunity.origin === "organization" && (!organization || organization.verificationStatus !== "verified")) {
       throw new ValidationError("The publisher must pass organization verification before an opportunity can be approved.");
     }
     if (!opportunity.deadline || opportunity.deadline <= new Date()) {

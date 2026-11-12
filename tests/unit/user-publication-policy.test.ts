@@ -91,4 +91,14 @@ describe("isUserVisibleOpportunity", () => {
     expect(isUserVisibleOpportunity(base({ reviewedAt: null }), now)).toBe(false);
     expect(isUserVisibleOpportunity(base({ status: "closed" }), now)).toBe(false);
   });
+
+  it("publishes fully reviewed standalone catalog entries but not unlinked publisher submissions", () => {
+    const standalone = base({ organizationId: null, organization: undefined, organizationName: "Official provider" });
+    expect(isUserVisibleOpportunity(standalone, now)).toBe(true);
+    expect(isUserVisibleOpportunity({ ...standalone, origin: "organization" }, now)).toBe(false);
+    expect(isUserVisibleOpportunity({ ...standalone, verificationStatus: "pending" }, now)).toBe(false);
+    expect(isUserVisibleOpportunity({ ...standalone, reviewChecklist: { ...checklist, officialApplicationLink: false } }, now)).toBe(false);
+    expect(isUserVisibleOpportunity({ ...standalone, deadline: null }, now)).toBe(false);
+    expect(isUserVisibleOpportunity({ ...standalone, deadline: new Date("2026-11-01") }, now)).toBe(false);
+  });
 });

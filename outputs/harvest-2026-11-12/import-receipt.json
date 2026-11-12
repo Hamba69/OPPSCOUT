@@ -1,0 +1,182 @@
+{
+  "at": "2026-11-12T07:48:17.541Z",
+  "target": "tureuhmiymkqlxldineq.supabase.co",
+  "inputHash": "d637040a5feab6d314b72c64e786eb19d379105920b6f2fb78fb882f8a43e8b9",
+  "inserted": [
+    {
+      "id": "51d40ae8-d62c-4cc3-8fe9-ced8e18935d6",
+      "title": "Office Cleaner",
+      "organizationId": null,
+      "organizationName": "Wildlife Conservation Society",
+      "verificationStatus": "verified",
+      "status": "closed",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://uganda.wcs.org/Portals/141/Opportunities/Opportunities2026/Advert%20for%20Office%20Cleaner%20%20Kampala.pdf?ver=aEpbawDIta7SgJ5kQKWzSw%3D%3D",
+      "deadline": "2026-11-12T00:00:00"
+    },
+    {
+      "id": "6a60dcc9-ef0a-4bb0-b13d-1888dee51809",
+      "title": "Administration Officer - Kampala Office",
+      "organizationId": null,
+      "organizationName": "We Effect",
+      "verificationStatus": "verified",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://www.weeffect.org/jobs-announcements/administration-officer-kampala-uganda/",
+      "deadline": "2026-11-20T00:00:00"
+    },
+    {
+      "id": "7b05ba2a-82fa-4466-ab05-510b0d0e17c0",
+      "title": "Actuarial Officer",
+      "organizationId": null,
+      "organizationName": "NIC Holdings Limited",
+      "verificationStatus": "verified",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://nic.co.ug/jobs/actuarial-officer/",
+      "deadline": "2026-11-20T00:00:00"
+    },
+    {
+      "id": "23a1435d-2e73-46fd-8f70-aa1fdb312d34",
+      "title": "Administrative, Human Resources and Procurement Assistant",
+      "organizationId": null,
+      "organizationName": "United Nations African Institute for the Prevention of Crime and the Treatment of Offenders",
+      "verificationStatus": "verified",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://www.unafri.or.ug/unafri-job-vacancies",
+      "deadline": "2026-11-18T20:59:00"
+    },
+    {
+      "id": "5ead4b3f-36c9-42b8-ba79-379b137fbe1c",
+      "title": "Plumber",
+      "organizationId": null,
+      "organizationName": "Mandela National Stadium Limited",
+      "verificationStatus": "verified",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://se.holdings/careers/",
+      "deadline": "2026-11-15T00:00:00"
+    },
+    {
+      "id": "a958e2ce-a41d-441d-b66e-0bd667aa58b8",
+      "title": "Graduate Fellowship 2026/2027 Academic Year",
+      "organizationId": null,
+      "organizationName": "Makerere University",
+      "verificationStatus": "verified",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://law.mak.ac.ug/advertisement-graduate-fellowship-2026-2027-academic-year/",
+      "deadline": "2026-11-16T00:00:00"
+    },
+    {
+      "id": "953053ef-89d8-43ba-824e-f21b18786da7",
+      "title": "Mastercard Foundation EdTech Fellowship Uganda Cohort 2",
+      "organizationId": null,
+      "organizationName": "Hive Colab",
+      "verificationStatus": "verified",
+      "status": "open",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://ims.hivecolab.com/submit-application?opportunity_id=5",
+      "deadline": "2026-11-26T00:00:00"
+    },
+    {
+      "id": "132b43e9-345b-4ba2-9cb7-ec6dc2195c86",
+      "title": "Consultancy Services for Implementation of the National Digital Skills Training Programme",
+      "organizationId": null,
+      "organizationName": "National Information Technology Authority - Uganda",
+      "verificationStatus": "verified",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://www.nita.go.ug/sites/default/files/2026-10/Expression%20of%20Interest%20for_National_Digital_Skills_Training_Programme%2028%20Oct%2026.pdf",
+      "deadline": "2026-11-18T00:00:00"
+    },
+    {
+      "id": "3a175a7c-49b1-4378-8f50-091508f4ae56",
+      "title": "Trainers and Mentors for the AGILE Africa Resilience Incubator",
+      "organizationId": null,
+      "organizationName": "Thomson Media",
+      "verificationStatus": "verified",
+      "status": "closing_soon",
+      "reviewChecklist": {
+        "sourceAuthentic": true,
+        "duplicateChecked": true,
+        "deadlinePlausible": true,
+        "noSensitiveDataAsk": true,
+        "eligibleForUgandans": true,
+        "noInappropriateFees": true,
+        "officialApplicationLink": true
+      },
+      "sourceUrl": "https://www.thomsonfoundation.org/media/kiyosyg3/agile-africa-call-for-trainers-and-mentors.pdf",
+      "deadline": "2026-11-18T20:59:00"
+    }
+  ],
+  "totalAfter": 349,
+  "readBack": "passed",
+  "organizationsCreated": 0,
+  "existingRowsUpdated": 0
+}

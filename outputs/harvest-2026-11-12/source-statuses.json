@@ -1,0 +1,178 @@
+{
+  "uganda.wcs.org": [
+    "fetched_ok",
+    "Official index and cleaner PDF read and rechecked; three other roles capped."
+  ],
+  "www.weeffect.org": [
+    "fetched_ok",
+    "Official vacancy and application route read."
+  ],
+  "fsduganda.or.ug": [
+    "fetched_ok",
+    "Official index and audit PDF read; application form inaccessible."
+  ],
+  "forms.gle": [
+    "blocked",
+    "Official FSD form redirect could not be fetched."
+  ],
+  "docs.google.com": [
+    "blocked",
+    "FSD application form target inaccessible."
+  ],
+  "www.impactpool.org": [
+    "fetched_ok",
+    "We Effect-authorised application listing read."
+  ],
+  "www.tourism.go.ug": [
+    "fetched_ok",
+    "Official apprenticeship notice requires national ID attachment."
+  ],
+  "www.uhi.go.ug": [
+    "partial",
+    "Careers text read; signed PDF largely unreadable in fetch/screenshot output."
+  ],
+  "eoin.fa.em3.oraclecloud.com": [
+    "partial",
+    "KCB portal returned no readable lines."
+  ],
+  "www.oag.go.ug": [
+    "fetched_ok",
+    "Recurring internship months but no complete current application procedure."
+  ],
+  "www.icwea.org": [
+    "fetched_ok",
+    "Complete PDF read; expired."
+  ],
+  "nic.co.ug": [
+    "fetched_ok",
+    "Official actuarial role and application instructions read."
+  ],
+  "www.unafri.or.ug": [
+    "fetched_ok",
+    "Full vacancy read and deadline reconfirmed."
+  ],
+  "law.mak.ac.ug": [
+    "fetched_ok",
+    "Full graduate fellowship notice read and deadline reconfirmed."
+  ],
+  "jobs.renu.ac.ug": [
+    "blocked",
+    "Fetch timed out; no login attempted."
+  ],
+  "barefootlaw.org": [
+    "blocked",
+    "Provider vacancy inaccessible through fetch tool."
+  ],
+  "a4huganda.org": [
+    "fetched_ok",
+    "Careers index read; specific consultancy deadlines expired."
+  ],
+  "www.thomsonfoundation.org": [
+    "fetched_ok",
+    "Complete trainers/mentors PDF read and rechecked."
+  ],
+  "www.nita.go.ug": [
+    "fetched_ok",
+    "Complete EOI read and rechecked."
+  ],
+  "ims.hivecolab.com": [
+    "fetched_ok",
+    "All displayed application sections reviewed; no form submitted."
+  ],
+  "www.edtech.hivecolab.com": [
+    "fetched_ok",
+    "Programme site confirms official application link."
+  ],
+  "ehi.ac.ug": [
+    "partial",
+    "Programme discovery and fetch attempted; contradictory intake timing unresolved."
+  ],
+  "www.ruralsmiles.org": [
+    "fetched_ok",
+    "Current article read; applications closed in October."
+  ],
+  "pelumuganda.org": [
+    "fetched_ok",
+    "Careers page lacks discovered November officer role."
+  ],
+  "kml.pelumuganda.org": [
+    "blocked",
+    "Role-detail click failed; no further access attempted."
+  ],
+  "se.holdings": [
+    "partial",
+    "Careers page and Plumber PDF read; final PDF refetch errored; careers deadline reconfirmed."
+  ],
+  "www.mandelastadium.ug": [
+    "fetched_ok",
+    "Employer website read; recruitment via named agency."
+  ],
+  "www.monitor.co.ug": [
+    "partial",
+    "Independent partnership/job reports indexed; article returned 403 and scanned job PDF unreadable."
+  ],
+  "use.or.ug": [
+    "fetched_ok",
+    "Independent NIC listing read."
+  ],
+  "cdn.sida.se": [
+    "fetched_ok",
+    "Independent We Effect evaluation read."
+  ],
+  "www.education.go.ug": [
+    "fetched_ok",
+    "Independent recognised-institution list read; scholarship leads search-only."
+  ],
+  "documents1.worldbank.org": [
+    "fetched_ok",
+    "NITA-U project corroboration document read; WCS footprint indexed."
+  ],
+  "thedocs.worldbank.org": [
+    "blocked",
+    "WCS corroboration PDF exceeded tool content-length limit; other indexed World Bank footprint used."
+  ],
+  "www.unodc.org": [
+    "blocked",
+    "Indexed corroboration PDF returned 404; replaced with UN-hosted transcript."
+  ],
+  "transcripts.un.org": [
+    "fetched_ok",
+    "Independent UNAFRI institutional footprint read."
+  ],
+  "archived.internews.org": [
+    "fetched_ok",
+    "Independent Thomson Media consortium footprint read."
+  ],
+  "www.life-global.org": [
+    "partial",
+    "Programme/about pages read; course and registration details unreadable; help fetch failed."
+  ],
+  "www.unido.org": [
+    "fetched_ok",
+    "Independent HP LIFE programme footprint read."
+  ],
+  "www.disasterready.org": [
+    "fetched_ok",
+    "Course and global-access FAQ read; registration not readable."
+  ],
+  "ready.csod.com": [
+    "partial",
+    "Registration redirected to SAML with no readable fields."
+  ],
+  "www.saylor.org": [
+    "partial",
+    "Provider getting-started pages returned no readable lines."
+  ],
+  "learn.saylor.org": [
+    "fetched_ok",
+    "Full Word Processing syllabus read."
+  ],
+  "connect.unevoc.unesco.org": [
+    "blocked",
+    "Independent Saylor reference indexed; fetch cache miss."
+  ],
+  "www.unhcr.org": [
+    "blocked",
+    "Independent DisasterReady reference indexed; fetch returned 429; no repeated rate-limit request."
+  ]
+}

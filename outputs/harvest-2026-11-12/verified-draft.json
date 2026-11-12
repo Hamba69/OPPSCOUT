@@ -1,0 +1,407 @@
+[
+  {
+    "applicant_type": "individual",
+    "compensation_status": "unknown",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "not_remote",
+    "candidate_id": "wcs-cleaner",
+    "record_key": "wcs-office-cleaner-2026-11",
+    "title": "Office Cleaner",
+    "organization_name": "Wildlife Conservation Society",
+    "organization_official_url": "https://uganda.wcs.org/",
+    "category": "job",
+    "description": "Maintain clean office facilities and support basic office services in Kampala.",
+    "eligibility_json": {
+      "educationLevels": [
+        "secondary"
+      ],
+      "additionalRequirements": [
+        "UCE/UACE or relevant recognised training; local council recommendation; valid national ID possession; NSSF and PAYE numbers; physical fitness and clean criminal record."
+      ]
+    },
+    "required_skills_json": [
+      "English and relevant local languages",
+      "Basic office equipment"
+    ],
+    "preferred_skills_json": [
+      "NGO experience"
+    ],
+    "location": "Kampala, Uganda",
+    "work_mode": "onsite",
+    "work_mode_evidence": "Cleaning and maintaining Kampala office premises",
+    "deadline_date": "2026-11-12",
+    "deadline_original_text": "12 November 2026",
+    "application_method": "Email a single PDF containing a cover letter, CV and three referees to wcsuganda@wcs.org with the job title as subject.",
+    "application_url": "",
+    "source_url": "https://uganda.wcs.org/Portals/141/Opportunities/Opportunities2026/Advert%20for%20Office%20Cleaner%20%20Kampala.pdf?ver=aEpbawDIta7SgJ5kQKWzSw%3D%3D",
+    "additional_source_urls_json": [
+      "https://uganda.wcs.org/Opportunities.aspx"
+    ],
+    "review_notes": "Closes today; closing time unspecified. ID possession is required, but the listed application attachments do not include an ID scan. Nationality limits are not stated.",
+    "auth_url": "https://documents1.worldbank.org/curated/en/131671521451683536/pdf/124379-WP-P157432-PUBLIC-WildlifeLawEnforcement.pdf",
+    "auth_note": "Official WCS notice; independently named in the World Bank wildlife-law-enforcement publication indexed during this run.",
+    "fee_note": "Notice explicitly states recruitment is free.",
+    "data_note": "Application list requests CV, cover letter and referees; it does not request an ID scan.",
+    "deadline_note": "Notice and careers index agree on 12 November; no closing time stated."
+  },
+  {
+    "applicant_type": "individual",
+    "compensation_status": "unknown",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "uganda_residents",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "weeffect-admin",
+    "record_key": "we-effect-administration-officer-2026-11",
+    "title": "Administration Officer - Kampala Office",
+    "organization_name": "We Effect",
+    "organization_official_url": "https://www.weeffect.org/",
+    "category": "job",
+    "description": "Support Uganda office administration, purchasing and compliance on a programme-linked fixed-term contract.",
+    "eligibility_json": {
+      "educationLevels": [
+        "bachelors",
+        "diploma"
+      ],
+      "minimumExperienceMonths": 36,
+      "additionalRequirements": [
+        "Relevant bachelor's degree or diploma with five years' experience; permission to live and work in Uganda."
+      ]
+    },
+    "required_skills_json": [
+      "Procurement",
+      "Microsoft Office",
+      "Records management"
+    ],
+    "location": "Kampala, Uganda",
+    "deadline_date": "2026-11-20",
+    "deadline_original_text": "20 November 2026",
+    "application_method": "Upload an English CV and cover letter through the Impactpool route linked by We Effect.",
+    "application_url": "https://www.impactpool.org/jobs/1246017",
+    "source_url": "https://www.weeffect.org/jobs-announcements/administration-officer-kampala-uganda/",
+    "additional_source_urls_json": [
+      "https://www.impactpool.org/jobs/1246017"
+    ],
+    "review_notes": "Work permission required; diploma applicants need five years' experience. Closing time and salary are not stated.",
+    "auth_url": "https://cdn.sida.se/publications/files/sida61911en-evaluation-of-the-strategy-for-support-via-swedish-civil-society-organisations-2010-2014-final-country-report---uganda.pdf",
+    "auth_note": "Provider careers page; Sida's Uganda evaluation independently names We Effect.",
+    "fee_note": "Published application instructions contain no payment request.",
+    "data_note": "Instructions specify an English CV and cover letter, without sensitive credential or identity-scan requests.",
+    "deadline_note": "Provider and linked Impactpool listing agree on 20 November."
+  },
+  {
+    "applicant_type": "individual",
+    "compensation_status": "unknown",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "nic-actuarial",
+    "record_key": "nic-actuarial-officer-2026-11",
+    "title": "Actuarial Officer",
+    "organization_name": "NIC Holdings Limited",
+    "organization_official_url": "https://nic.co.ug/",
+    "category": "job",
+    "description": "Provide insurance pricing, reserving and analytical support at NIC's head office.",
+    "eligibility_json": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "fieldsOfStudy": [
+        "Actuarial Science",
+        "Statistics",
+        "Mathematics",
+        "Applied Mathematics",
+        "Economics"
+      ],
+      "additionalRequirements": [
+        "Relevant quantitative degree; at least four professional actuarial papers; two to three years of relevant experience."
+      ]
+    },
+    "required_skills_json": [
+      "Statistical analysis",
+      "Financial modelling",
+      "Excel"
+    ],
+    "location": "Head Office, Kampala, Uganda",
+    "deadline_date": "2026-11-20",
+    "deadline_original_text": "20 November 2026, 5 PM; timezone unstated",
+    "application_method": "Email a resume to vacancy@nic.co.ug with the Actuarial Officer job title in the subject.",
+    "source_url": "https://nic.co.ug/jobs/actuarial-officer/",
+    "review_notes": "Timezone and nationality restrictions are not stated; no UTC instant inferred.",
+    "auth_url": "https://use.or.ug/securities/NIC",
+    "auth_note": "NIC's careers page matches its Uganda Securities Exchange listing.",
+    "fee_note": "Resume-by-email instructions show no payment request.",
+    "data_note": "Application instructions request a resume, without identity scans or financial credentials.",
+    "deadline_note": "Provider specifies 20 November at 5 PM, without a timezone."
+  },
+  {
+    "applicant_type": "individual",
+    "compensation_status": "paid",
+    "deadline_timezone": "EAT (UTC+3)",
+    "deadline_precision": "datetime",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "unafri-admin",
+    "record_key": "unafri-administrative-hr-procurement-assistant-2026-11",
+    "title": "Administrative, Human Resources and Procurement Assistant",
+    "organization_name": "United Nations African Institute for the Prevention of Crime and the Treatment of Offenders",
+    "organization_official_url": "https://www.unafri.or.ug/",
+    "category": "job",
+    "description": "Provide administrative, personnel and purchasing support to the institute's Kampala secretariat.",
+    "eligibility_json": {
+      "educationLevels": [
+        "bachelors"
+      ],
+      "minimumExperienceMonths": 48,
+      "additionalRequirements": [
+        "Relevant administration, HR, procurement or related degree and cross-functional experience."
+      ]
+    },
+    "required_skills_json": [
+      "English",
+      "Microsoft Office"
+    ],
+    "preferred_skills_json": [
+      "French"
+    ],
+    "location": "Naguru, Kampala, Uganda",
+    "deadline_date": "2026-11-18",
+    "deadline_utc": "2026-11-18T20:59:00Z",
+    "deadline_original_text": "18 November 2026 at 11:59 PM EAT",
+    "application_method": "Email a signed cover letter, CV, academic documents and three professional referees to jobs@unafri.or.ug with the position title as subject.",
+    "source_url": "https://www.unafri.or.ug/unafri-job-vacancies",
+    "compensation_details": "Remuneration determined under institutional staffing arrangements; amount unstated.",
+    "review_notes": "Nationality restrictions are not stated.",
+    "auth_url": "https://transcripts.un.org/en/asset/k1c/k1cptx0b8k",
+    "auth_note": "Official institute vacancy; UN-hosted Crime Congress transcript independently identifies UNAFRI.",
+    "fee_note": "Full published application procedure has no payment request.",
+    "data_note": "Specified attachments are professional and academic documents and referee contacts; no identity scans or financial credentials.",
+    "deadline_note": "The notice consistently states 18 November at 23:59 EAT."
+  },
+  {
+    "applicant_type": "individual",
+    "compensation_status": "paid",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "not_remote",
+    "candidate_id": "stadium-plumber",
+    "record_key": "mandela-stadium-plumber-2026-11",
+    "title": "Plumber",
+    "organization_name": "Mandela National Stadium Limited",
+    "organization_official_url": "https://www.mandelastadium.ug/",
+    "category": "job",
+    "description": "Maintain and repair stadium water, drainage and sanitation installations. Strategic Engagement handles recruitment.",
+    "eligibility_json": {
+      "educationLevels": [
+        "diploma"
+      ],
+      "fieldsOfStudy": [
+        "Plumbing",
+        "Water Systems Maintenance"
+      ],
+      "minimumExperienceMonths": 24
+    },
+    "required_skills_json": [
+      "Plumbing maintenance",
+      "Blueprint interpretation"
+    ],
+    "location": "Mandela National Stadium, Uganda",
+    "work_mode": "onsite",
+    "work_mode_evidence": "Install and maintain plumbing systems at the stadium",
+    "compensation_details": "Salary scale MNSL 5; monetary amount unstated.",
+    "deadline_date": "2026-11-15",
+    "deadline_original_text": "15 November 2026",
+    "application_method": "Submit application documents as PDFs to Careers@se.holdings, identifying the Plumber position.",
+    "source_url": "https://se.holdings/wp-content/uploads/2026/11/06_SE_JD_Plumber.pdf",
+    "additional_source_urls_json": [
+      "https://se.holdings/careers/"
+    ],
+    "review_notes": "Recruitment agency route; closing time and nationality restrictions unstated.",
+    "auth_url": "https://www.monitor.co.ug/resource/blob/5658984/3707e8869591c5aed59ae8eb59f4e59c/mandela-national-stadium-limited-job-opportunities-data.pdf",
+    "auth_note": "Recruiter's official role profile and careers page; Monitor's indexed vacancy advert identifies the stadium as its client.",
+    "fee_note": "Recruiter application instructions show no payment request.",
+    "data_note": "Careers page and role profile show no sensitive credential or identity-scan request.",
+    "deadline_note": "Recruiter's current careers page states 15 November for Plumber."
+  },
+  {
+    "applicant_type": "individual",
+    "compensation_status": "unknown",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "mak-law-fellow",
+    "record_key": "makerere-law-graduate-fellowship-2026-11",
+    "title": "Graduate Fellowship 2026/2027 Academic Year",
+    "organization_name": "Makerere University",
+    "organization_official_url": "https://www.mak.ac.ug/",
+    "category": "fellowship",
+    "description": "Support law teaching and research while pursuing doctoral study; four new fellowships and six renewal places are advertised.",
+    "eligibility_json": {
+      "additionalRequirements": [
+        "Currently admitted to Makerere's Doctor of Laws programme; renewals require reassessment."
+      ]
+    },
+    "location": "School of Law, Makerere University, Kampala, Uganda",
+    "deadline_date": "2026-11-16",
+    "deadline_original_text": "16 November 2026",
+    "source_publication_date": "2026-10-16",
+    "application_method": "Submit a CV, cover letter, academic documents, enrolment proof, recommendation and achievement statement to the School of Law Registrar's Office.",
+    "source_url": "https://law.mak.ac.ug/advertisement-graduate-fellowship-2026-2027-academic-year/",
+    "application_url": "https://law.mak.ac.ug/advertisement-graduate-fellowship-2026-2027-academic-year/",
+    "review_notes": "Restricted to admitted LLD students or eligible existing fellows; remuneration unspecified.",
+    "auth_url": "https://www.education.go.ug/wp-content/uploads/2019/08/List-of-Recognized-Universities-Other-Tertiary-Institutions-2016.pdf",
+    "auth_note": "School's official notice; Uganda's education ministry independently lists Makerere.",
+    "fee_note": "Fellowship application instructions show no payment request.",
+    "data_note": "Listed professional and academic attachments do not include identity scans or financial credentials.",
+    "deadline_note": "Official notice states 16 November without a closing time."
+  },
+  {
+    "applicant_type": "organization",
+    "compensation_status": "funded",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "uganda_residents",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "hive-edtech",
+    "record_key": "hive-colab-edtech-fellowship-cohort-2-2026-11",
+    "title": "Mastercard Foundation EdTech Fellowship Uganda Cohort 2",
+    "organization_name": "Hive Colab",
+    "organization_official_url": "https://www.edtech.hivecolab.com/",
+    "category": "fellowship",
+    "description": "A twelve-month growth programme for Ugandan EdTech ventures, combining mentoring, business support and milestone-linked equity-free funding.",
+    "eligibility_json": {
+      "additionalRequirements": [
+        "Locally founded and led venture operating in Uganda; early-revenue, growth or scaling stage; active inclusive EdTech platform and registration documentation."
+      ]
+    },
+    "location": "Uganda",
+    "eligible_countries_json": [
+      "Uganda"
+    ],
+    "compensation_details": "Milestone-based equity-free grant; amount not stated.",
+    "deadline_date": "2026-11-26",
+    "deadline_original_text": "26 November 2026",
+    "application_method": "Complete the official Hive Colab application form with venture details and the listed supporting documents.",
+    "application_url": "https://ims.hivecolab.com/submit-application?opportunity_id=5",
+    "source_url": "https://ims.hivecolab.com/submit-application?opportunity_id=5",
+    "additional_source_urls_json": [
+      "https://www.edtech.hivecolab.com/"
+    ],
+    "review_notes": "For qualifying ventures, not individual student scholarships. Form collects confidential business and inclusion information.",
+    "auth_url": "https://www.monitor.co.ug/uganda/news/education/why-uganda-s-edtech-ambitions-risk-leaving-rural-learners-behind-5647304",
+    "auth_note": "Official programme links to this form; independently corroborated by Monitor's indexed partnership report (article fetch blocked).",
+    "fee_note": "Public application form contains no payment request.",
+    "data_note": "All displayed form sections reviewed; no bank credentials, identity scans or mobile-money details requested.",
+    "deadline_note": "Form consistently states 26 November."
+  },
+  {
+    "applicant_type": "organization",
+    "compensation_status": "unknown",
+    "deadline_timezone": "unknown",
+    "deadline_precision": "date",
+    "deadline_type": "fixed",
+    "audience_label": "other",
+    "region_tier": "uganda",
+    "relocation_required": "unknown",
+    "remote_accepts_ugandans": "unknown",
+    "candidate_id": "nita-training",
+    "record_key": "nita-national-digital-skills-consultancy-2026-11",
+    "title": "Consultancy Services for Implementation of the National Digital Skills Training Programme",
+    "organization_name": "National Information Technology Authority - Uganda",
+    "organization_official_url": "https://www.nita.go.ug/",
+    "organization_reference": "NITA-UDAP/CONS/26-27/00027",
+    "category": "consultancy",
+    "description": "Deliver a five-month national digital-skills programme for 6,000 beneficiaries.",
+    "eligibility_json": {
+      "additionalRequirements": [
+        "Consulting firm with eight years' relevant experience; evidence of comparable assignments and required staff capabilities."
+      ]
+    },
+    "location": "Uganda",
+    "deadline_date": "2026-11-18",
+    "deadline_original_text": "18 November 2026 at 11:00 AM; timezone unstated",
+    "application_method": "Deliver one original and two copies of the EOI to NITA-U, Palm Courts, Plot 7A Rotary Avenue, first floor, Kampala, marked with the assignment title.",
+    "application_url": "https://www.nita.go.ug/sites/default/files/2026-10/Expression%20of%20Interest%20for_National_Digital_Skills_Training_Programme%2028%20Oct%2026.pdf",
+    "source_url": "https://www.nita.go.ug/sites/default/files/2026-10/Expression%20of%20Interest%20for_National_Digital_Skills_Training_Programme%2028%20Oct%2026.pdf",
+    "review_notes": "EOI stage for firms. Physical submission route retained to avoid storing a named person's email. Nationality limits unstated.",
+    "auth_url": "https://documents1.worldbank.org/curated/en/099011426115014438/pdf/P171305-54cc2b73-03db-4b26-aa7e-6aea552998da.pdf",
+    "auth_note": "NITA-U's official EOI; World Bank project document identifies NITA-U as responsible agency.",
+    "fee_note": "EOI submission instructions request no payment.",
+    "data_note": "Business qualification evidence requested; notice explicitly says not to submit individual CVs or biodata at this stage.",
+    "deadline_note": "Official EOI specifies 18 November at 11 AM without a timezone."
+  },
+  {
+    "applicant_type": "mixed",
+    "compensation_status": "paid",
+    "deadline_timezone": "EAT (UTC+3)",
+    "deadline_precision": "datetime",
+    "deadline_type": "fixed",
+    "audience_label": "everyone",
+    "region_tier": "east_africa",
+    "relocation_required": "no",
+    "remote_accepts_ugandans": "yes",
+    "candidate_id": "thomson-agile",
+    "record_key": "thomson-media-agile-trainers-mentors-2026-11",
+    "title": "Trainers and Mentors for the AGILE Africa Resilience Incubator",
+    "organization_name": "Thomson Media",
+    "organization_official_url": "https://www.thomsonfoundation.org/",
+    "category": "consultancy",
+    "description": "Provide remote training and mentoring for independent media organisations in Kenya, Tanzania and Uganda.",
+    "eligibility_json": {
+      "additionalRequirements": [
+        "Extensive thematic expertise and East African experience; record of media training or mentoring; experts may be based anywhere."
+      ]
+    },
+    "required_skills_json": [
+      "English facilitation",
+      "Online training"
+    ],
+    "preferred_skills_json": [
+      "Relevant local languages"
+    ],
+    "location": "Remote; Kenya, Tanzania and Uganda programme",
+    "eligible_countries_json": [
+      "All countries"
+    ],
+    "work_mode": "remote",
+    "work_mode_evidence": "Remote programme; experts may be based anywhere",
+    "compensation_details": "Applicants propose a daily EUR rate; award amount unstated.",
+    "deadline_date": "2026-11-18",
+    "deadline_utc": "2026-11-18T20:59:00Z",
+    "deadline_original_text": "18 November 2026, 23:59 EAT",
+    "application_method": "Email a CV, thematic statements, daily rates and work examples to mea.recruitment@thomsonfoundation.org using the specified AGILE subject format.",
+    "source_url": "https://www.thomsonfoundation.org/media/kiyosyg3/agile-africa-call-for-trainers-and-mentors.pdf",
+    "review_notes": "Experts and organisations may apply; East African experience is essential.",
+    "auth_url": "https://archived.internews.org/terms-of-reference-learning-and-visibility-events-in-brussels-belgium/",
+    "auth_note": "Provider's call; consortium lead Internews independently names Thomson Media in AGILE.",
+    "fee_note": "Application asks for proposed consultancy rates, with no applicant payment.",
+    "data_note": "CV, statements and work samples requested; no identity scans or financial credentials.",
+    "deadline_note": "Official call states 18 November at 23:59 EAT."
+  }
+]

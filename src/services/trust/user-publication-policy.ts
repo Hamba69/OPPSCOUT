@@ -19,11 +19,11 @@ import { checklistIsComplete } from "@/services/trust/checklist";
 export function isUserVisibleOpportunity(opportunity: Opportunity, now = new Date()): boolean {
   const origin = opportunity.origin ?? "catalog";
   const publisherOrgVerified =
-    origin !== "organization" || opportunity.organization?.verificationStatus === "verified";
+    origin !== "organization" ||
+    (opportunity.organizationId !== null && opportunity.organization?.verificationStatus === "verified");
 
   return (
     opportunity.verificationStatus === "verified" &&
-    opportunity.organizationId !== null &&
     publisherOrgVerified &&
     opportunity.reviewedAt !== null &&
     (opportunity.status === "open" || opportunity.status === "closing_soon") &&
