@@ -10,7 +10,7 @@
  * the lead came from. Leads are kept for provenance only.
  */
 export type SourceTier = "A" | "B" | "C";
-export type TierBasis = "known-official-suffix" | "declared-official-domain" | null;
+export type TierBasis = "known-official-suffix" | "declared-official-domain" | "employer-ats-board" | null;
 
 export interface SourceClassification {
   tier: SourceTier;
@@ -33,6 +33,32 @@ const AGGREGATOR_HOSTS = [
   "opportunitydesk.org", "opportunitiesforafricans.com", "scholarshipdb.net", "scholars4dev.com",
   "afterschoolafrica.com", "scholarshipsads.com", "youthop.com", "devex.com", "impactpool.org", "unjobs.org",
 ];
+
+/**
+ * Hiring systems employers use to host their own job boards. The host alone proves nothing (anyone can
+ * open a board), so a page here counts as official only when the URL names the organisation.
+ */
+const ATS_HOSTS = [
+  "greenhouse.io", "lever.co", "workable.com", "ashbyhq.com", "smartrecruiters.com", "myworkdayjobs.com", "icims.com",
+  "bamboohr.com", "recruitee.com", "breezy.hr", "teamtailor.com", "pinpointhq.com", "jobvite.com", "taleo.net",
+];
+const GENERIC_NAME_WORDS = new Set(["the", "and", "for", "foundation", "international", "organisation", "organization", "africa", "african", "uganda", "united", "global", "fund", "trust", "programme", "program", "commission", "secretariat", "centre", "center", "institute", "university"]);
+
+const compact = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** True when the URL's host or path carries the organisation's name (full name, or its first distinctive word). */
+export function urlNamesOrganization(url: string, organizationName: string): boolean {
+  let haystack: string;
+  try {
+    const parsed = new URL(url);
+    haystack = compact(`${parsed.hostname}${parsed.pathname}`);
+  } catch {
+    return false;
+  }
+  if (compact(organizationName).length >= 4 && haystack.includes(compact(organizationName))) return true;
+  const word = organizationName.toLowerCase().split(/[^a-z0-9]+/).find((part) => part.length >= 4 && !GENERIC_NAME_WORDS.has(part));
+  return word !== undefined && haystack.includes(word);
+}
 
 /** Hosts whose registry restricts who can hold them, so a match is trusted without a declared domain. */
 const KNOWN_OFFICIAL_SUFFIXES = [".gov", ".go.ug", ".gov.ug", ".ac.ug", ".edu", ".ac.uk", ".gov.uk", ".edu.au", ".int", ".un.org"];
@@ -64,7 +90,7 @@ function isHomepageOnly(url: string): boolean {
   }
 }
 
-export function classifySource(url: string, declaredOfficialDomain?: string | null): SourceClassification {
+export function classifySource(url: string, declaredOfficialDomain?: string | null, organizationName?: string | null): SourceClassification {
   const host = hostOf(url);
   if (!host) return { tier: "C", host: null, basis: null, homepageOnly: false, reason: "Not a public HTTPS URL." };
   const homepageOnly = isHomepageOnly(url);
@@ -74,6 +100,9 @@ export function classifySource(url: string, declaredOfficialDomain?: string | nu
   const declaredIsUsable = declared !== null && !matchesAny(declared, SOCIAL_HOSTS) && !matchesAny(declared, AGGREGATOR_HOSTS);
   if (declaredIsUsable && hostMatches(host, declared)) {
     return { tier: "A", host, basis: hasOfficialSuffix(host) ? "known-official-suffix" : "declared-official-domain", homepageOnly, reason: "Host matches the organisation's official domain." };
+  }
+  if (matchesAny(host, ATS_HOSTS) && organizationName && urlNamesOrganization(url, organizationName)) {
+    return { tier: "A", host, basis: "employer-ats-board", homepageOnly, reason: "Employer's own board on a hiring system." };
   }
   if (hasOfficialSuffix(host)) {
     return { tier: "A", host, basis: "known-official-suffix", homepageOnly, reason: "Institutional domain." };

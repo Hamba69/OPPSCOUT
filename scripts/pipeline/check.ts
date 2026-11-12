@@ -51,7 +51,7 @@ async function main(): Promise<void> {
   for (const row of coverage) console.log(`  ${row.meetsTarget ? "ok  " : "LOW "} ${row.label.padEnd(32)} ${String(row.matchedWithRunway).padStart(3)} with runway, ${String(row.matched).padStart(3)} matched, ${String(row.eligible).padStart(3)} eligible`);
 
   const queue = live
-    .filter((opportunity) => (opportunity.verificationStatus === "verified" || visibilityFailures(opportunity, now).length === 0) && ["open", "closing_soon"].includes(opportunity.status))
+    .filter((opportunity) => (opportunity.verificationStatus === "verified" || visibilityFailures(opportunity, now).length === 0) && ["open", "closing_soon"].includes(opportunity.status) && (opportunity.deadline === null || opportunity.deadline > now))
     .map((opportunity) => ({ opportunity, ageDays: (now.getTime() - opportunity.checkedAt.getTime()) / DAY }))
     .filter(({ opportunity, ageDays }) => ageDays > recheckIntervalDays(opportunity.category))
     .sort((a, b) => b.ageDays - a.ageDays)

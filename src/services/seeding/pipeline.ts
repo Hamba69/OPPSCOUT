@@ -14,6 +14,8 @@ export interface ExistingRecord {
   deadline: Date | null;
   status: Opportunity["status"];
   verificationStatus: Opportunity["verificationStatus"];
+  /** False for records approved with a partial checklist: they are invisible and need a full re-verification. */
+  checklistComplete?: boolean;
 }
 
 export interface PipelineOptions {
@@ -95,7 +97,7 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
   items = stage("source", items, (work) => {
     const candidate = work.candidate!;
     const reasons: string[] = [];
-    const classification = classifySource(candidate.sourceUrl, candidate.organizationOfficialDomain);
+    const classification = classifySource(candidate.sourceUrl, candidate.organizationOfficialDomain, candidate.organizationName);
     work.classification = classification;
     if (classification.tier !== "A") reasons.push(`source is Tier ${classification.tier} (${classification.host ?? "invalid URL"}): ${classification.reason}`);
     if (classification.homepageOnly) reasons.push("source URL is a homepage; it must be the page for this specific listing");
@@ -104,6 +106,7 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     else if (isSocialHost(applicationHost)) reasons.push(`application link points at social media (${applicationHost})`);
     else if (isAggregatorHost(applicationHost)) reasons.push(`application link goes through an aggregator (${applicationHost}); use the provider's own application page`);
     if (classification.basis === "declared-official-domain") work.warnings.push(`official domain ${candidate.organizationOfficialDomain} is self-declared; confirm it at approval`);
+    if (classification.basis === "employer-ats-board") work.warnings.push(`hosted on ${classification.host}; confirm it is ${candidate.organizationName}'s own board`);
     return reasons;
   });
 
@@ -151,7 +154,10 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     const sameTitle = byTitle.get(titleKey);
     const live = (record: ExistingRecord) => ["open", "closing_soon"].includes(record.status) && (record.deadline === null || record.deadline > now);
     if (sameUrl) {
-      const unchanged = sameUrl.deadline?.getTime() === (candidate.deadline ? Date.parse(candidate.deadline) : undefined) && live(sameUrl);
+      // A timestamp refresh is only right for a record that is already approved and fully checked.
+      // An approved-but-incomplete record (the old catalogue) must come back through approval.
+      const unchanged = sameUrl.deadline?.getTime() === (candidate.deadline ? Date.parse(candidate.deadline) : undefined)
+        && live(sameUrl) && sameUrl.verificationStatus === "verified" && sameUrl.checklistComplete !== false;
       work.action = unchanged ? "recheck" : "update-changed";
       work.existingId = sameUrl.id;
     } else if (sameTitle) {

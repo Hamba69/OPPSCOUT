@@ -5,6 +5,7 @@ import { join } from "node:path";
 
 import type { Opportunity } from "../../src/core/entities/domain";
 import { parseDatabaseDate } from "../../src/lib/database-date";
+import { checklistIsComplete } from "../../src/services/trust/checklist";
 import type { ExistingRecord } from "../../src/services/seeding/pipeline";
 
 loadEnvConfig(process.cwd());
@@ -84,6 +85,7 @@ export async function loadCatalogue(client: SupabaseClient): Promise<{ opportuni
   const existing: ExistingRecord[] = opportunities.map((opportunity) => ({
     id: opportunity.id, title: opportunity.title, organizationId: opportunity.organizationId, organizationName: opportunity.organizationName ?? null,
     sourceUrl: opportunity.sourceUrl, deadline: opportunity.deadline, status: opportunity.status, verificationStatus: opportunity.verificationStatus,
+    checklistComplete: checklistIsComplete(opportunity.reviewChecklist),
   }));
   return { opportunities, existing, orgNames, orgIdsByName };
 }

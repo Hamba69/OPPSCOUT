@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Chevening Scholarship 2027/2028 (Uganda)",
+    "organizationName": "Chevening Secretariat",
+    "organizationOfficialDomain": "chevening.org",
+    "category": "scholarship",
+    "description": "Fully funded one-year master's scholarships in the United Kingdom for future leaders from Uganda with at least two years of work experience and an unconditional UK university offer by the stated date.",
+    "location": "United Kingdom",
+    "workMode": "onsite",
+    "requiredSkills": ["leadership"],
+    "preferredSkills": ["research", "communication"],
+    "eligibility": {
+      "minimumEducation": "bachelors",
+      "minimumExperienceMonths": 24,
+      "additionalRequirements": ["Return to Uganda for at least two years after the award."]
+    },
+    "sourceUrl": "https://www.chevening.org/scholarships/eligibility/",
+    "applicationUrl": "https://www.chevening.org/scholarships/apply/",
+    "applicationInstructions": "Apply online through the official Chevening portal. The application is free.",
+    "leads": ["https://www.opportunitydesk.org/chevening-scholarships"],
+    "retrievedAt": "2026-11-11T08:30:00+03:00",
+    "deadlineType": "fixed",
+    "deadline": "2027-01-12T12:00:00Z",
+    "deadlineQuote": "Applications close at 12:00 GMT on 12 January 2027.",
+    "ugandanEligibility": "explicit",
+    "ugandanEligibilityQuote": "Uganda is one of the countries and territories eligible to apply for a Chevening scholarship.",
+    "feeAssessment": "none",
+    "asksSensitiveDataOffPlatform": false,
+    "unresolved": []
+  }
+]

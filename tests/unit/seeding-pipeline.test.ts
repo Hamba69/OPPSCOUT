@@ -63,6 +63,12 @@ describe("source tiers", () => {
     expect(classifySource("https://t.me/ugandajobs/42", "t.me").tier).toBe("C");
     expect(classifySource("http://www.chevening.org/apply", "chevening.org").tier).toBe("C");
   });
+  it("accepts an employer's own board on a hiring system only when the URL names the employer", () => {
+    expect(classifySource("https://job-boards.greenhouse.io/oneacrefund/jobs/123", "oneacrefund.org", "One Acre Fund")).toMatchObject({ tier: "A", basis: "employer-ats-board" });
+    expect(classifySource("https://oneacrefund.wd1.myworkdayjobs.com/en-US/careers/job/x", "oneacrefund.org", "One Acre Fund").tier).toBe("A");
+    expect(classifySource("https://job-boards.greenhouse.io/someotherco/jobs/123", "oneacrefund.org", "One Acre Fund").tier).toBe("B");
+    expect(classifySource("https://job-boards.greenhouse.io/oneacrefund/jobs/123", "oneacrefund.org").tier).toBe("B");
+  });
   it("does not trust an unknown host that is not the declared domain", () => {
     expect(classifySource("https://random-scholarships.example/chevening", "chevening.org").tier).toBe("B");
   });
@@ -89,6 +95,12 @@ describe("seeding pipeline", () => {
     expect(result.accepted).toHaveLength(0);
     expect(result.held[0]).toMatchObject({ stage: "source" });
     expect(result.held[0].reasons.join(" ")).toMatch(/Tier B/);
+  });
+
+  it("accepts a listing verified on the employer's board on a hiring system, with a warning", () => {
+    const result = run([candidate({ title: "Uganda Regional Data Coordinator", organizationName: "One Acre Fund", organizationOfficialDomain: "oneacrefund.org", category: "job", sourceUrl: "https://job-boards.greenhouse.io/oneacrefund/jobs/4001", applicationUrl: "https://job-boards.greenhouse.io/oneacrefund/jobs/4001" })]);
+    expect(result.accepted).toHaveLength(1);
+    expect(result.accepted[0].warnings.join(" ")).toMatch(/own board/);
   });
 
   it("holds social-media sources, homepages and aggregator application links", () => {
@@ -128,6 +140,9 @@ describe("seeding pipeline", () => {
     const existing: ExistingRecord = { id: "e1", title: "Other title", organizationId: "o", organizationName: "x", sourceUrl: "https://chevening.org/scholarships/uganda", deadline: new Date(days(60)), status: "open", verificationStatus: "verified" };
     expect(run([candidate()], [existing]).accepted[0]).toMatchObject({ action: "recheck", existingId: "e1" });
     expect(run([candidate({ deadline: days(90) })], [existing]).accepted[0]).toMatchObject({ action: "update-changed", existingId: "e1" });
+    // An approved record with a partial checklist is invisible; a re-check must send it back through approval.
+    expect(run([candidate()], [{ ...existing, checklistComplete: false }]).accepted[0]).toMatchObject({ action: "update-changed", existingId: "e1" });
+    expect(run([candidate()], [{ ...existing, verificationStatus: "pending" }]).accepted[0]).toMatchObject({ action: "update-changed" });
     const sameTitle: ExistingRecord = { ...existing, id: "e2", title: "Chevening Scholarship 2027/2028 (Uganda)", organizationName: "Chevening Secretariat", sourceUrl: "https://other.example/x" };
     expect(run([candidate()], [sameTitle]).held[0].reasons.join(" ")).toMatch(/already live/);
     const expired: ExistingRecord = { ...sameTitle, status: "closed", deadline: new Date(days(-30)) };
