@@ -71,6 +71,7 @@ async function buildObservedFeed(
   const scored = await Promise.all(eligible.map(async ({ opportunity, gates }) => {
     const result = await engine.score(profile, opportunity);
     result.missingFactors.unshift(...(opportunity.eligibility.additionalRequirements ?? []).map(detail => ({ label: "Confirm eligibility with provider", detail })));
+    result.missingFactors.unshift(...gates.unverified);
     result.matchedFactors.unshift(...gates.passed);
     return { opportunity, result };
   }));

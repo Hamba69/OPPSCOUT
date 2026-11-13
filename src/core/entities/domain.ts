@@ -5,6 +5,8 @@ export type VerificationStatus = "unverified" | "pending" | "verified" | "flagge
 export type OpportunitySource = "org_submitted" | "scraped" | "partner_feed";
 /** How the listing entered OppScout; separate from the source of its information. */
 export type OpportunityOrigin = "catalog" | "organization";
+/** `fixed` closes on `deadline`; `rolling` has no closing date but must be re-checked regularly. Absent means `fixed`. */
+export type DeadlineType = "fixed" | "rolling";
 export type OpportunityStatus = "open" | "closing_soon" | "closed" | "stale" | "removed";
 export type SavedStatus = "saved" | "applied" | "expired";
 export type SubscriptionTier = "free" | "growth" | "partner";
@@ -134,6 +136,7 @@ export interface Opportunity {
   location: string;
   workMode: WorkMode | "unknown";
   deadline: Date | null;
+  deadlineType?: DeadlineType;
   applicationMethod: string;
   sourceUrl: string;
   verificationStatus: VerificationStatus;

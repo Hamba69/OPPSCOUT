@@ -6,7 +6,11 @@ export interface GateResult {
   eligible: boolean;
   passed: MatchFactor[];
   failed: MatchFactor[];
+  /** Provider rules the engine cannot evaluate from a profile. Shown as "confirm with provider"; never exclude. */
+  unverified: MatchFactor[];
 }
+
+const EVALUABLE_RULE_FIELDS = new Set(["language", "graduationStatus", "location"]);
 
 export const HARD_GATE_DESCRIPTIONS = [
   ["Education eligibility", "Requires a recorded education level accepted by the provider."],
@@ -27,6 +31,7 @@ function ageOn(dateOfBirth: Date, at: Date): number {
 export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity): GateResult {
   const passed: MatchFactor[] = [];
   const failed: MatchFactor[] = [];
+  const unverified: MatchFactor[] = [];
   const eligibility = opportunity.eligibility;
 
   if (eligibility.educationLevels?.length) {
@@ -71,6 +76,12 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
   }
 
   for (const rule of eligibility.programmeRules ?? []) {
+    // A rule on a field the profile does not hold (e.g. "audience") can never be matched, so it
+    // must not act as a gate: it would silently exclude every seeker from the listing.
+    if (!EVALUABLE_RULE_FIELDS.has(rule.field)) {
+      unverified.push({ label: "Confirm eligibility with provider", detail: rule.label });
+      continue;
+    }
     const values =
       rule.field === "language"
         ? profile.languages
@@ -86,5 +97,5 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
     });
   }
 
-  return { eligible: failed.length === 0, passed, failed };
+  return { eligible: failed.length === 0, passed, failed, unverified };
 }

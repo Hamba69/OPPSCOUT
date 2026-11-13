@@ -3,6 +3,8 @@ export const INGESTION_RULES = {
   duplicateTitleSimilarity: 0.85,
   organizationStaleAfterDays: 30,
   scrapedStaleAfterDays: 14,
+  /** A rolling (no-deadline) listing is shown only while it has been re-checked within this many days. */
+  rollingFreshnessDays: 14,
 } as const;
 
 export const SOURCE_AUTHORITY = {
