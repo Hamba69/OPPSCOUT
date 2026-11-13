@@ -3,7 +3,7 @@ import { visibilityFailures } from "@/services/trust/user-publication-policy";
 import {
   candidateSchema, candidateToOpportunity, normalizedTitleKey, normalizeUrl, type SeedCandidate,
 } from "@/services/seeding/candidate";
-import { classifySource, hostOf, isAggregatorHost, isSocialHost, type SourceClassification } from "@/services/seeding/source-tiers";
+import { classifySource, hostOf, isAggregatorHost, isOfficialApplicationLink, isSocialHost, type SourceClassification } from "@/services/seeding/source-tiers";
 
 export interface ExistingRecord {
   id: string;
@@ -21,6 +21,10 @@ export interface ExistingRecord {
 export interface PipelineOptions {
   now: Date;
   existing: ExistingRecord[];
+  /** Stage Tier B sources for human review, never as publication-ready records. */
+  allowAggregatorLinksForReview?: boolean;
+  /** Stage evidence-held records for human review, never as publication-ready records. */
+  includeEvidenceHoldsForReview?: boolean;
   /** Hold anything closing sooner than this; users cannot act on it. */
   minLeadDays?: number;
   /** Evidence older than this was not gathered in this run. */
@@ -37,6 +41,7 @@ export interface AcceptedRecord {
   classification: SourceClassification;
   action: PipelineAction;
   existingId: string | null;
+  reviewOnly: boolean;
   warnings: string[];
 }
 
@@ -62,7 +67,7 @@ export interface PipelineResult {
 const DAY_MS = 86_400_000;
 const PAYMENT_REQUEST = /(send|pay|transfer|deposit)\b.{0,40}\b(money|fee|payment|funds)|mobile money|bank (account|pin)|western union|password/i;
 
-interface Work { index: number; raw: unknown; candidate?: SeedCandidate; classification?: SourceClassification; action?: PipelineAction; existingId?: string | null; warnings: string[] }
+interface Work { index: number; raw: unknown; candidate?: SeedCandidate; classification?: SourceClassification; action?: PipelineAction; existingId?: string | null; reviewOnly?: boolean; aggregatorSourceOverride?: boolean; warnings: string[] }
 
 export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOptions): PipelineResult {
   const { now, existing } = options;
@@ -99,12 +104,26 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     const reasons: string[] = [];
     const classification = classifySource(candidate.sourceUrl, candidate.organizationOfficialDomain, candidate.organizationName);
     work.classification = classification;
-    if (classification.tier !== "A") reasons.push(`source is Tier ${classification.tier} (${classification.host ?? "invalid URL"}): ${classification.reason}`);
-    if (classification.homepageOnly) reasons.push("source URL is a homepage; it must be the page for this specific listing");
     const applicationHost = hostOf(candidate.applicationUrl);
+    const validOfficialApplication = isOfficialApplicationLink(candidate.applicationUrl, candidate.organizationOfficialDomain, candidate.organizationName);
+    const validMiddlemanSource = classification.tier === "B" && !classification.homepageOnly && validOfficialApplication && applicationHost !== null && !isSocialHost(applicationHost) && !isAggregatorHost(applicationHost);
+    const aggregatorForReview = options.allowAggregatorLinksForReview === true && classification.tier === "B" && !classification.homepageOnly;
+
+    if (classification.tier !== "A" && !validMiddlemanSource && !aggregatorForReview) {
+      reasons.push(`source is Tier ${classification.tier} (${classification.host ?? "invalid URL"}): ${classification.reason}`);
+    }
+    if (classification.homepageOnly) reasons.push("source URL is a homepage; it must be the page for this specific listing");
     if (!applicationHost) reasons.push("application URL is not public HTTPS");
     else if (isSocialHost(applicationHost)) reasons.push(`application link points at social media (${applicationHost})`);
-    else if (isAggregatorHost(applicationHost)) reasons.push(`application link goes through an aggregator (${applicationHost}); use the provider's own application page`);
+    else if (isAggregatorHost(applicationHost) && !aggregatorForReview) reasons.push(`application link goes through an aggregator (${applicationHost}); use the provider's own application page`);
+    if (validMiddlemanSource) {
+      work.warnings.push("source is a middleman or aggregator, but the application page resolves to the provider's own domain and is still not a phishing or scam vector");
+    }
+    if (aggregatorForReview) {
+      work.reviewOnly = true;
+      work.warnings.push("Tier B aggregator source accepted for manual review only; verify the original listing and application route");
+      if (!validMiddlemanSource) work.aggregatorSourceOverride = true;
+    }
     if (classification.basis === "declared-official-domain") work.warnings.push(`official domain ${candidate.organizationOfficialDomain} is self-declared; confirm it at approval`);
     if (classification.basis === "employer-ats-board") work.warnings.push(`hosted on ${classification.host}; confirm it is ${candidate.organizationName}'s own board`);
     return reasons;
@@ -122,6 +141,11 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     const retrieved = Date.parse(candidate.retrievedAt);
     if (now.getTime() - retrieved > maxEvidenceAge * DAY_MS) reasons.push(`evidence retrieved more than ${maxEvidenceAge} days ago`);
     if (retrieved - now.getTime() > 3_600_000) reasons.push("evidence retrieval time is in the future");
+    if (reasons.length && options.includeEvidenceHoldsForReview && !work.aggregatorSourceOverride) {
+      work.reviewOnly = true;
+      work.warnings.push(`manual review required: ${reasons.join("; ")}`);
+      return [];
+    }
     return reasons;
   });
 
@@ -158,10 +182,17 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
       // An approved-but-incomplete record (the old catalogue) must come back through approval.
       const unchanged = sameUrl.deadline?.getTime() === (candidate.deadline ? Date.parse(candidate.deadline) : undefined)
         && live(sameUrl) && sameUrl.verificationStatus === "verified" && sameUrl.checklistComplete !== false;
-      work.action = unchanged ? "recheck" : "update-changed";
+      work.action = unchanged && !work.reviewOnly ? "recheck" : "update-changed";
       work.existingId = sameUrl.id;
     } else if (sameTitle) {
-      if (live(sameTitle)) return [`same organisation and title already live as ${sameTitle.id} under a different URL`];
+      if (live(sameTitle)) {
+        if (sameTitle.verificationStatus !== "verified" || sameTitle.checklistComplete === false) {
+          work.action = "update-changed";
+          work.existingId = sameTitle.id;
+          return [];
+        }
+        return [`same organisation and title already live as ${sameTitle.id} under a different URL`];
+      }
       work.action = "update-changed";
       work.existingId = sameTitle.id;
     } else {
@@ -172,6 +203,10 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
   });
 
   items = stage("visibility", items, (work) => {
+    if (work.reviewOnly) {
+      work.warnings.push("manual review required: the publication checklist must be completed before approval");
+      return [];
+    }
     const probe = candidateToOpportunity(work.candidate!, {
       id: "00000000-0000-4000-8000-000000000000", organizationId: "00000000-0000-4000-8000-000000000001",
       now, reviewerId: "pipeline-visibility-probe", verificationStatus: "verified",
@@ -180,7 +215,7 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
   });
 
   const accepted: AcceptedRecord[] = items.map((work) => ({
-    index: work.index, candidate: work.candidate!, classification: work.classification!, action: work.action!, existingId: work.existingId ?? null, warnings: work.warnings,
+    index: work.index, candidate: work.candidate!, classification: work.classification!, action: work.action!, existingId: work.existingId ?? null, reviewOnly: work.reviewOnly ?? false, warnings: work.warnings,
   }));
   return { accepted, held, funnel };
 }

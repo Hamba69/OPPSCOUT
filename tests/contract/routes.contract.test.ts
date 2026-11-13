@@ -33,6 +33,7 @@ import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
 import * as sloRoute from "@/app/api/v1/monitoring/slo/route";
 import { getRepository, setRepositoryForTests } from "@/lib/repository";
 import { DEMO_ADMIN_ID, DEMO_ORG_ID, DEMO_ORG_USER_ID, DEMO_USER_ID, MemoryRepository } from "@/lib/repository/memory";
+import { publisherCanPost } from "@/lib/publisher-verification";
 
 // These contracts use injected test identity/data, never a live auth provider.
 // Keep the real role authorization checks while replacing authentication only.
@@ -151,6 +152,52 @@ describe("every Phase 1 /api/v1 route", () => {
     const readiness = await monetizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
     expect(readiness.status).toBe(200); expect(JSON.stringify(await readiness.json())).not.toMatch(/userId|email|phone/i);
     expect((await monetizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "PATCH", { subscriptionTier: "growth", monetizationEnabled: true }, adminHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(409);
+  });
+
+  it("requires explicit admin confirmation to verify an organization without URSB proof", async () => {
+    const repository = await getRepository();
+    const organization = await repository.createOrganization({
+      name: "Manual Review Foundation",
+      sector: "Education",
+      officialLinks: ["https://manual-review.example"],
+      officialEmail: "review@manual-review.example",
+      registrationProof: null,
+      accountableContact: "Accountable contact",
+      accountableContacts: [{ name: "Accountable contact", phone: "+256700000000" }],
+      dashboardUsers: [DEMO_ORG_USER_ID],
+    });
+    const params = { params: Promise.resolve({ id: organization.id }) };
+    const withoutOverride = await organizationReviewItemRoute.PATCH(
+      request(`/api/v1/organizations/review/${organization.id}`, "PATCH", { approved: true }, adminHeaders),
+      params,
+    );
+    expect(withoutOverride.status).toBe(403);
+
+    const withOverride = await organizationReviewItemRoute.PATCH(
+      request(`/api/v1/organizations/review/${organization.id}`, "PATCH", { approved: true, overrideMissingRegistrationProof: true }, adminHeaders),
+      params,
+    );
+    expect(withOverride.status).toBe(200);
+    const verified = await repository.getOrganization(organization.id);
+    if (!verified) throw new Error("Verified organization was not persisted.");
+    expect(verified.verificationStatus).toBe("verified");
+    expect(await publisherCanPost(verified)).toBe(true);
+
+    const invalidContact = await repository.createOrganization({
+      name: "Unmatched Domain Foundation",
+      sector: "Education",
+      officialLinks: ["https://manual-review.example"],
+      officialEmail: "review@unrelated.example",
+      registrationProof: null,
+      accountableContact: null,
+      accountableContacts: [],
+      dashboardUsers: [DEMO_ORG_USER_ID],
+    });
+    const invalidContactOverride = await organizationReviewItemRoute.PATCH(
+      request(`/api/v1/organizations/review/${invalidContact.id}`, "PATCH", { approved: true, overrideMissingRegistrationProof: true }, adminHeaders),
+      { params: Promise.resolve({ id: invalidContact.id }) },
+    );
+    expect(invalidContactOverride.status).toBe(403);
   });
 
   it("routes suspicious reports into the admin review queue and records decisions", async () => {

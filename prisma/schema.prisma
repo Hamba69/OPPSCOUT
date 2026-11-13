@@ -40,6 +40,11 @@ enum OpportunityOrigin {
   organization
 }
 
+enum DeadlineType {
+  fixed
+  rolling
+}
+
 enum OpportunityStatus {
   open
   closing_soon
@@ -184,6 +189,7 @@ model Opportunity {
   location           String
   workMode           WorkMode
   deadline           DateTime?
+  deadlineType       DeadlineType       @default(fixed)
   applicationMethod  String
   sourceUrl          String
   verificationStatus VerificationStatus @default(pending)

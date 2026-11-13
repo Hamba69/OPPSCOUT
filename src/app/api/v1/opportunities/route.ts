@@ -43,7 +43,7 @@ export async function POST(request: Request): Promise<Response> {
       const organization = await repository.getOrganization(auth.organizationId);
       if (!organization) throw new NotFoundError("Organization");
       if (!await publisherCanPost(organization)) {
-        throw new ForbiddenError("Publisher verification, including official contact details and URSB proof, is required before posting opportunities.");
+        throw new ForbiddenError("Publisher verification and valid official contact details are required before posting opportunities.");
       }
     }
     const opportunity = auth.role === "organization"

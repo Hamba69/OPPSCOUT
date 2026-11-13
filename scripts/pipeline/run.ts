@@ -3,8 +3,10 @@
  * quality gate, report what survives each stage, and (with --apply) stage the survivors as PENDING.
  * Nothing is shown to users until `npm run seed:publish` approves them.
  *
- *   npm run seed:run -- <candidates.json|folder> [--apply] [--offline] [--out dir]
+ *   npm run seed:run [-- <candidates.json|folder>] [--apply] [--offline] [--out dir]
+ *        [--allow-aggregators-for-review] [--include-evidence-held-for-review]
  *        [--min-lead-days 14] [--min-matches 3] [--require-coverage] [--now ISO]
+ *   Without an input path, all JSON files in imports/seeding-runs/inbox are processed.
  */
 import { randomUUID } from "node:crypto";
 import { existsSync } from "node:fs";
@@ -14,6 +16,7 @@ import type { Opportunity } from "../../src/core/entities/domain";
 import { candidateToOpportunity } from "../../src/services/seeding/candidate";
 import { computeCoverage, type PersonaCoverage } from "../../src/services/seeding/personas";
 import { runSeedingPipeline, type AcceptedRecord, type HeldRecord } from "../../src/services/seeding/pipeline";
+import { buildReviewChecklist } from "../../src/services/trust/checklist";
 import { visibilityFailures } from "../../src/services/trust/user-publication-policy";
 import { bar, ensureDir, getClient, hasDeadlineTypeColumn, journal, loadCatalogue, numberFlag, parseArgs, parseNow, readCandidates, runIdFor, writeJson, type Row } from "./lib";
 
@@ -28,8 +31,7 @@ function coverageLines(coverage: PersonaCoverage[]): string {
 }
 
 async function main(): Promise<void> {
-  const input = positional[0];
-  if (!input) throw new Error("Usage: npm run seed:run -- <candidates.json|folder> [--apply] [--offline]");
+  const input = positional[0] ?? join("imports", "seeding-runs", "inbox");
   const now = parseNow(flags);
   const apply = flags.has("apply");
   const offline = flags.has("offline");
@@ -41,10 +43,16 @@ async function main(): Promise<void> {
   const client = offline ? null : getClient();
   const catalogue = client ? await loadCatalogue(client) : { opportunities: [] as Opportunity[], existing: [], orgNames: new Map<string, string>(), orgIdsByName: new Map<string, string>() };
   const raw = readCandidates(input);
-  const result = runSeedingPipeline(raw, { now, existing: catalogue.existing, minLeadDays: numberFlag(flags, "min-lead-days", 14) });
+  const result = runSeedingPipeline(raw, {
+    now,
+    existing: catalogue.existing,
+    minLeadDays: numberFlag(flags, "min-lead-days", 14),
+    allowAggregatorLinksForReview: flags.has("allow-aggregators-for-review"),
+    includeEvidenceHoldsForReview: flags.has("include-evidence-held-for-review"),
+  });
 
   // Coverage the catalogue would have if every accepted record were approved today.
-  const projected = result.accepted.map((accepted) => candidateToOpportunity(accepted.candidate, { id: randomUUID(), organizationId: "projected", now, reviewerId: "projected", verificationStatus: "verified" }));
+  const projected = result.accepted.filter((accepted) => !accepted.reviewOnly).map((accepted) => candidateToOpportunity(accepted.candidate, { id: randomUUID(), organizationId: "projected", now, reviewerId: "projected", verificationStatus: "verified" }));
   const liveVisible = catalogue.opportunities.filter((opportunity) => visibilityFailures(opportunity, now).length === 0);
   const before = await computeCoverage(liveVisible, { now, minMatches });
   const after = await computeCoverage([...liveVisible, ...projected], { now, minMatches });
@@ -52,7 +60,7 @@ async function main(): Promise<void> {
   ensureDir(outDir);
   writeJson(join(outDir, "accepted.json"), result.accepted);
   writeJson(join(outDir, "held.json"), result.held);
-  writeJson(join(outDir, "report.json"), { runId, now: now.toISOString(), mode: apply ? "apply" : "dry-run", funnel: result.funnel, liveVisibleBefore: liveVisible.length, projectedVisibleAfter: liveVisible.length + projected.length, coverageBefore: before, coverageAfter: after });
+  writeJson(join(outDir, "report.json"), { runId, now: now.toISOString(), mode: apply ? "apply" : "dry-run", funnel: result.funnel, reviewOnly: result.accepted.filter((record) => record.reviewOnly).length, liveVisibleBefore: liveVisible.length, projectedVisibleAfter: liveVisible.length + projected.length, coverageBefore: before, coverageAfter: after });
 
   console.log(`${bar("=")}\nSeeding ${runId} (${apply ? "APPLY: staging as pending" : "dry run"})\n${bar("=")}`);
   console.log("Funnel (records remaining after each stage)");
@@ -66,7 +74,7 @@ async function main(): Promise<void> {
   }
   const warned = result.accepted.filter((record) => record.warnings.length);
   if (warned.length) {
-    console.log("\nAccepted with warnings (look at these when approving)");
+    console.log("\nAccepted for review with warnings (these records remain hidden)");
     for (const record of warned) console.log(`  - ${record.candidate.title}: ${record.warnings.join("; ")}`);
   }
   console.log(offline
@@ -115,6 +123,18 @@ async function stage(client: ReturnType<typeof getClient>, runId: string, outDir
     const built = candidateToOpportunity(candidate, { id, organizationId, now, reviewerId: `pipeline:${runId}`, verificationStatus: "pending" });
     const { organization: _organization, ...base } = built;
     void _organization;
+    if (record.reviewOnly) {
+      base.reviewChecklist = buildReviewChecklist({
+        sourceAuthentic: false,
+        officialApplicationLink: false,
+        eligibleForUgandans: false,
+        noInappropriateFees: false,
+        noSensitiveDataAsk: false,
+        deadlinePlausible: false,
+        duplicateChecked: false,
+      });
+      base.reviewNotes = `${base.reviewNotes}\nStaged for manual review only. Complete verification and the review checklist before approval.`;
+    }
     const row: Row = { ...base, deadline: built.deadline?.toISOString() ?? null, publicationDate: built.publicationDate.toISOString(), checkedAt: now.toISOString(), reviewedAt: null };
     if (!columnReady) delete row.deadlineType; else if (row.deadlineType === "fixed") delete row.deadlineType;
 

@@ -40,7 +40,8 @@ function candidate(overrides: Record<string, unknown> = {}) {
   };
 }
 
-const run = (records: unknown[], existing: ExistingRecord[] = []) => runSeedingPipeline(records, { now, existing });
+const run = (records: unknown[], existing: ExistingRecord[] = [], options: { allowAggregatorLinksForReview?: boolean; includeEvidenceHoldsForReview?: boolean } = {}) =>
+  runSeedingPipeline(records, { now, existing, ...options });
 
 describe("shared checklist", () => {
   it("builds a complete checklist only when every key is established", () => {
@@ -91,10 +92,57 @@ describe("seeding pipeline", () => {
   });
 
   it("holds a listing verified only against an aggregator, with the reason", () => {
-    const result = run([candidate({ sourceUrl: "https://www.opportunitydesk.org/chevening-2027" })]);
+    const result = run([
+      candidate({
+        sourceUrl: "https://www.opportunitydesk.org/chevening-2027",
+        applicationUrl: "https://www.opportunitydesk.org/apply/chevening-2027",
+      }),
+    ]);
     expect(result.accepted).toHaveLength(0);
     expect(result.held[0]).toMatchObject({ stage: "source" });
     expect(result.held[0].reasons.join(" ")).toMatch(/Tier B/);
+  });
+
+  it("accepts a valid aggregator or middleman listing when the application page is official and not suspicious", () => {
+    const result = run([
+      candidate({
+        sourceUrl: "https://www.opportunitydesk.org/chevening-2027",
+        applicationUrl: "https://www.chevening.org/apply/",
+        organizationOfficialDomain: "chevening.org",
+        organizationName: "Chevening Secretariat",
+      }),
+    ]);
+    expect(result.accepted).toHaveLength(1);
+    expect(result.accepted[0]).toMatchObject({ action: "insert" });
+    expect(result.accepted[0].warnings.join(" ")).toMatch(/middleman|aggregator/i);
+  });
+
+  it("only lets aggregator links through for manual review when explicitly requested", () => {
+    const raw = candidate({
+      sourceUrl: "https://www.fuzu.com/uganda/job/123",
+      applicationUrl: "https://www.fuzu.com/uganda/job/123",
+      unresolved: [],
+    });
+
+    expect(run([raw]).held[0].stage).toBe("source");
+    const accepted = run([raw], [], { allowAggregatorLinksForReview: true }).accepted[0];
+    expect(accepted).toMatchObject({ reviewOnly: true });
+    expect(accepted.warnings.join(" ")).toMatch(/manual review only/);
+  });
+
+  it("keeps the evidence gate for aggregator overrides while allowing explicitly requested evidence review for other sources", () => {
+    const uncertainAggregator = candidate({
+      sourceUrl: "https://www.fuzu.com/uganda/job/123",
+      applicationUrl: "https://www.fuzu.com/uganda/job/123",
+      unresolved: ["Confirm the official application route"],
+    });
+    expect(run([uncertainAggregator], [], {
+      allowAggregatorLinksForReview: true,
+      includeEvidenceHoldsForReview: true,
+    }).held[0].stage).toBe("evidence");
+
+    const uncertainOfficial = candidate({ unresolved: ["Confirm one eligibility detail"] });
+    expect(run([uncertainOfficial], [], { includeEvidenceHoldsForReview: true }).accepted[0]).toMatchObject({ reviewOnly: true });
   });
 
   it("accepts a listing verified on the employer's board on a hiring system, with a warning", () => {
@@ -145,6 +193,8 @@ describe("seeding pipeline", () => {
     expect(run([candidate()], [{ ...existing, verificationStatus: "pending" }]).accepted[0]).toMatchObject({ action: "update-changed" });
     const sameTitle: ExistingRecord = { ...existing, id: "e2", title: "Chevening Scholarship 2027/2028 (Uganda)", organizationName: "Chevening Secretariat", sourceUrl: "https://other.example/x" };
     expect(run([candidate()], [sameTitle]).held[0].reasons.join(" ")).toMatch(/already live/);
+    expect(run([candidate()], [{ ...sameTitle, verificationStatus: "pending", checklistComplete: false }]).accepted[0])
+      .toMatchObject({ action: "update-changed", existingId: "e2" });
     const expired: ExistingRecord = { ...sameTitle, status: "closed", deadline: new Date(days(-30)) };
     expect(run([candidate()], [expired]).accepted[0]).toMatchObject({ action: "update-changed", existingId: "e2" });
   });

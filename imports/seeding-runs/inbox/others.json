@@ -1,0 +1,2021 @@
+[
+ {
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "retrievedAt": "2026-11-13T12:00:00+03:00",
+  "title": "Commonwealth Shared Scholarships 2027/28 (Master's, UK)",
+  "organizationName": "Commonwealth Scholarship Commission in the UK",
+  "organizationOfficialDomain": "cscuk.fcdo.gov.uk",
+  "category": "scholarship",
+  "description": "Fully funded one-year master's scholarships in the UK for high-quality postgraduate students from Least Developed and middle-income Commonwealth countries who could not otherwise afford to study in the UK. Covers approved return airfare, full tuition fees and a monthly living allowance (£1,712, or £2,000 at London-area universities), with extra grants where applicable. Applicants apply through the CSC's online portal; the closing time is 16:00 GMT on 8 December 2026.",
+  "location": "United Kingdom",
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Citizen of, or refugee in, an eligible Commonwealth country.",
+    "Applicant's country must be on the CSC's eligible-country list."
+   ]
+  },
+  "sourceUrl": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-shared-scholarships-applications/",
+  "applicationUrl": "https://portal.csccentralonline.org.uk/application",
+  "applicationInstructions": "Apply online through CSC Central. The CSC does not charge an application fee.",
+  "leads": [
+   "https://www.opportunitiesforafricans.com/commonwealth-shared-scholarships-2027-2028/"
+  ],
+  "deadlineType": "fixed",
+  "deadline": "2026-12-08T16:00:00Z",
+  "deadlineQuote": "16:00 GMT on Tuesday 8 December 2026.",
+  "ugandanEligibility": "region_includes_uganda",
+  "ugandanEligibilityQuote": "Be a citizen of or have been granted refugee status by an eligible Commonwealth country.",
+  "unresolved": [
+   "Confirm Uganda is on the CSC eligible-country list for 2027/28 (Uganda is a Commonwealth member; the list itself was not read)",
+   "Education level inferred as a first degree for master's study"
+  ]
+ },
+ {
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "retrievedAt": "2026-11-13T12:00:00+03:00",
+  "title": "Mastercard Foundation EdTech Fellowship Uganda – Cohort 2",
+  "organizationName": "Hive Colab",
+  "organizationOfficialDomain": "hivecolab.org",
+  "category": "grant",
+  "description": "A 12-month fellowship run by Hive Colab with the Mastercard Foundation for growth-stage EdTech ventures in Uganda. Fellows receive a milestone-based, equity-free grant (up to USD 70,000 according to Hive Colab), weekly mentorship and coaching, learning-science and inclusive-design guidance, investment-readiness support and up to 24 months of follow-on support. Ventures must be locally founded and led and operating mainly in Uganda.",
+  "location": "Uganda",
+  "eligibility": {
+   "additionalRequirements": [
+    "Applicant must be a locally founded and led EdTech venture operating in Uganda, at early-revenue, growth or scaling stage; idea-stage ventures are not eligible."
+   ]
+  },
+  "sourceUrl": "https://opportunitydesk.org/2026/11/03/mastercard-foundation-edtech-fellowship-uganda-cohort-2/",
+  "applicationUrl": "https://ims.hivecolab.com/submit-application?opportunity_id=5",
+  "applicationInstructions": "Submit the application through the Hive Colab application portal.",
+  "leads": [
+   "https://hivecolab.org/node/294"
+  ],
+  "deadlineType": "fixed",
+  "deadline": "2026-11-26T00:00:00+03:00",
+  "deadlineQuote": "Deadline: November 26, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Be operating in Uganda, with the majority of learners/users based in Uganda",
+  "unresolved": [
+   "Applicant must be an organisation (a venture), not an individual",
+   "Deadline read from the Opportunity Desk post; Hive Colab's own page did not state the Cohort 2 date",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "WASH Graduate Trainee/Volunteer - Kasese",
+  "organizationName": "Action Against Hunger",
+  "organizationOfficialDomain": "actionagainsthunger.org",
+  "category": "training",
+  "description": "WASH Graduate Trainee/Volunteer - Kasese at Action Against Hunger, location: Kasese. Open vacancy listed on Fuzu for Uganda; minimum education diploma, about 1 year(s) of experience. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Kasese",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 12,
+   "additionalRequirements": [],
+   "minimumEducation": "diploma"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056069",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056069",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-18T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-11-18",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Kasese • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "WASH Graduate Trainee/Volunteer - Ntoroko",
+  "organizationName": "Action Against Hunger",
+  "organizationOfficialDomain": "actionagainsthunger.org",
+  "category": "training",
+  "description": "WASH Graduate Trainee/Volunteer - Ntoroko at Action Against Hunger, location: Ntoroko. Open vacancy listed on Fuzu for Uganda; minimum education diploma, about 1 year(s) of experience. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Ntoroko",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 12,
+   "additionalRequirements": [],
+   "minimumEducation": "diploma"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056103",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056103",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-18T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-11-18",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Ntoroko • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "WASH Graduate Trainee/Volunteer - Bundibugyo",
+  "organizationName": "Action Against Hunger",
+  "organizationOfficialDomain": "actionagainsthunger.org",
+  "category": "training",
+  "description": "WASH Graduate Trainee/Volunteer - Bundibugyo at Action Against Hunger, location: Bundibugyo. Open vacancy listed on Fuzu for Uganda; minimum education diploma, about 1 year(s) of experience. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Bundibugyo",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 12,
+   "additionalRequirements": [],
+   "minimumEducation": "diploma"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056104",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056104",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-18T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-11-18",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Bundibugyo • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "WASH Graduate Trainee/Volunteer - Isingiro",
+  "organizationName": "Action Against Hunger",
+  "organizationOfficialDomain": "actionagainsthunger.org",
+  "category": "training",
+  "description": "WASH Graduate Trainee/Volunteer - Isingiro at Action Against Hunger, location: Isingiro. Open vacancy listed on Fuzu for Uganda; minimum education diploma, about 1 year(s) of experience. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Isingiro",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 12,
+   "additionalRequirements": [],
+   "minimumEducation": "diploma"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056105",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056105",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-18T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-11-18",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Isingiro • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "WASH Graduate Trainee/Volunteer - Kisoro",
+  "organizationName": "Action Against Hunger",
+  "organizationOfficialDomain": "actionagainsthunger.org",
+  "category": "training",
+  "description": "WASH Graduate Trainee/Volunteer - Kisoro at Action Against Hunger, location: Kisoro. Open vacancy listed on Fuzu for Uganda; minimum education diploma, about 1 year(s) of experience. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Kisoro",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 12,
+   "additionalRequirements": [],
+   "minimumEducation": "diploma"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056106",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1056106",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-18T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-11-18",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Kisoro • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "Post Doc Fellows - Financial Governance",
+  "organizationName": "World Agroforestry Centre (ICRAF)",
+  "organizationOfficialDomain": "worldagroforestry.org",
+  "category": "fellowship",
+  "description": "Post Doc Fellows - Financial Governance at World Agroforestry Centre (ICRAF), location: Kampala. Open vacancy listed on Fuzu for Uganda; minimum education masters, no minimum experience listed. Closing time not published. Check the employer posting for full duties and requirements.",
+  "location": "Kampala",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": [],
+   "minimumEducation": "masters"
+  },
+  "sourceUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1048877",
+  "applicationUrl": "https://www.fuzu.com/uganda/job?filters[job_id]=1048877",
+  "applicationInstructions": "Apply through the Fuzu job page (Apply button).",
+  "leads": [
+   "https://www.fuzu.com/uganda/job"
+  ],
+  "retrievedAt": "2026-11-13T11:00:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-02T00:00:00+03:00",
+  "deadlineQuote": "Apply by: 2026-12-02",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Kampala • Uganda",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is Fuzu, not the employer's own page",
+   "Closing time not published",
+   "Uganda eligibility inferred from the listing's job location line"
+  ]
+ },
+ {
+  "title": "Administration and Office Intern",
+  "organizationName": "IPRAA",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Administration and Office Intern at IPRAA. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 26, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/administration-and-office-intern/",
+  "applicationUrl": "https://jobadverts.co.ke/job/administration-and-office-intern/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/administration-and-office-intern/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-26T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 26, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Intern Graphic Design",
+  "organizationName": "IPRAA",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Intern Graphic Design at IPRAA. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 26, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/intern-graphic-design/",
+  "applicationUrl": "https://jobadverts.co.ke/job/intern-graphic-design/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/intern-graphic-design/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-26T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 26, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Finance Intern",
+  "organizationName": "Home Harvest",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Finance Intern at Home Harvest. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 27, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/finance-intern-15/",
+  "applicationUrl": "https://jobadverts.co.ke/job/finance-intern-15/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/finance-intern-15/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-27T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 27, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Trainee Production Assistant 5 Positions",
+  "organizationName": "Bidco Uganda",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Trainee Production Assistant 5 Positions at Bidco Uganda. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 30, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/trainee-production-assistant-5-positions/",
+  "applicationUrl": "https://jobadverts.co.ke/job/trainee-production-assistant-5-positions/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/trainee-production-assistant-5-positions/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-30T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 30, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "UN Volunteers Communications and Partnership Assistant UNDP",
+  "organizationName": "UNDP",
+  "organizationOfficialDomain": "undp.org",
+  "category": "volunteering",
+  "description": "UN Volunteers Communications and Partnership Assistant UNDP at UNDP. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 25, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/un-volunteers-communications-and-partnership-assistant-undp/",
+  "applicationUrl": "https://jobadverts.co.ke/job/un-volunteers-communications-and-partnership-assistant-undp/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/un-volunteers-communications-and-partnership-assistant-undp/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-25T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 25, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Finance Graduate Intern",
+  "organizationName": "Medical Teams International Uganda",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Finance Graduate Intern at Medical Teams International Uganda. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 10, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/finance-graduate-intern-2/",
+  "applicationUrl": "https://jobadverts.co.ke/job/finance-graduate-intern-2/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/finance-graduate-intern-2/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-10T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 10, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Sales and Marketing",
+  "organizationName": "WASSHA Africa",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Sales and Marketing at WASSHA Africa. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 10, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-sales-and-marketing/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-sales-and-marketing/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-sales-and-marketing/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-10T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 10, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Digital Marketing Trainees",
+  "organizationName": "Pahappa Limited",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Digital Marketing Trainees at Pahappa Limited. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 10, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/digital-marketing-trainees/",
+  "applicationUrl": "https://jobadverts.co.ke/job/digital-marketing-trainees/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/digital-marketing-trainees/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-10T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 10, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Assistant Stores Coordinator",
+  "organizationName": "Sprinktech",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Assistant Stores Coordinator at Sprinktech. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 10, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-assistant-stores-coordinator/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-assistant-stores-coordinator/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-assistant-stores-coordinator/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-10T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 10, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Communications",
+  "organizationName": "RENU",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Communications at RENU. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 10, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-communications-2/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-communications-2/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-communications-2/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-10T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 10, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Cashier 2 Positions",
+  "organizationName": "Backbone Uganda",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Cashier 2 Positions at Backbone Uganda. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 5, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-cashier-2-positions/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-cashier-2-positions/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-cashier-2-positions/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-05T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 5, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "ICT Graduate Trainee",
+  "organizationName": "Mazurimazuri Technologies Limited",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "ICT Graduate Trainee at Mazurimazuri Technologies Limited. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 5, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/ict-graduate-trainee-2/",
+  "applicationUrl": "https://jobadverts.co.ke/job/ict-graduate-trainee-2/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/ict-graduate-trainee-2/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-05T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 5, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Digital Communications Intern",
+  "organizationName": "CorpsAfrica",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Digital Communications Intern at CorpsAfrica. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 17, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/digital-communications-intern/",
+  "applicationUrl": "https://jobadverts.co.ke/job/digital-communications-intern/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/digital-communications-intern/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-17T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 17, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee",
+  "organizationName": "AquaVita",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee at AquaVita. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on December 3, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-03T00:00:00+03:00",
+  "deadlineQuote": "Closing on December 3, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Audit Accounting Trainees",
+  "organizationName": "Kisaka & Company Certified Public Accountants",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Audit Accounting Trainees at Kisaka & Company Certified Public Accountants. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 29, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/audit-accounting-trainees/",
+  "applicationUrl": "https://jobadverts.co.ke/job/audit-accounting-trainees/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/audit-accounting-trainees/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-29T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 29, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Solar Installation Quality Assurance Engineer 8 UN Volunteers",
+  "organizationName": "UNICEF Uganda",
+  "organizationOfficialDomain": "unicef.org",
+  "category": "volunteering",
+  "description": "Solar Installation Quality Assurance Engineer 8 UN Volunteers at UNICEF Uganda. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/solar-installation-quality-assurance-engineer-8-un-volunteers/",
+  "applicationUrl": "https://jobadverts.co.ke/job/solar-installation-quality-assurance-engineer-8-un-volunteers/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/solar-installation-quality-assurance-engineer-8-un-volunteers/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Organisation domain assumed, not confirmed",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Victoria Motors Graduate Development Programme",
+  "organizationName": "Victoria Motors",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Victoria Motors Graduate Development Programme at Victoria Motors. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/victoria-motors-graduate-development-programme-2026-2027/",
+  "applicationUrl": "https://jobadverts.co.ke/job/victoria-motors-graduate-development-programme-2026-2027/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/victoria-motors-graduate-development-programme-2026-2027/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Business Development Sales",
+  "organizationName": "RENU",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Business Development Sales at RENU. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-business-development-sales/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-business-development-sales/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-business-development-sales/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Trainee Sales Engineer",
+  "organizationName": "RENU",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Trainee Sales Engineer at RENU. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-trainee-sales-engineer/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-trainee-sales-engineer/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-trainee-sales-engineer/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Graduate Quantity Surveyor",
+  "organizationName": "Horasi Uganda",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "training",
+  "description": "Graduate Quantity Surveyor at Horasi Uganda. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/graduate-quantity-surveyor/",
+  "applicationUrl": "https://jobadverts.co.ke/job/graduate-quantity-surveyor/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/graduate-quantity-surveyor/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Marketing Intern",
+  "organizationName": "Great Lakes Safaris",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Marketing Intern at Great Lakes Safaris. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 28, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/marketing-intern-4/",
+  "applicationUrl": "https://jobadverts.co.ke/job/marketing-intern-4/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/marketing-intern-4/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-28T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 28, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Sales and Collections Interns",
+  "organizationName": "4G Capital",
+  "organizationOfficialDomain": "unknown.invalid",
+  "category": "internship",
+  "description": "Sales and Collections Interns at 4G Capital. Vacancy listed on jobadverts.co.ke as open to applicants in Uganda, closing on November 25, 2026 (closing time not published). The board listing carries the full duties, qualifications and the way to apply, which is usually an email address or an online link given in the advert.",
+  "location": "Uganda",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumExperienceMonths": 0,
+   "additionalRequirements": []
+  },
+  "sourceUrl": "https://jobadverts.co.ke/job/sales-and-collections-interns/",
+  "applicationUrl": "https://jobadverts.co.ke/job/sales-and-collections-interns/",
+  "applicationInstructions": "Follow the application instructions on the listing page (email or online link given in the advert).",
+  "leads": [
+   "https://jobadverts.co.ke/job/sales-and-collections-interns/"
+  ],
+  "retrievedAt": "2026-11-13T11:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-25T00:00:00+03:00",
+  "deadlineQuote": "Closing on November 25, 2026",
+  "ugandanEligibility": "explicit",
+  "ugandanEligibilityQuote": "Uganda’s trusted source for jobs that matter.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Employer website not found",
+   "Source is the jobadverts.co.ke job board, not the employer's own page",
+   "Job title taken from the listing URL; open the source for the exact wording, education and experience requirements",
+   "Uganda eligibility inferred from the board's Uganda location tag",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "ETH Zurich Excellence Scholarship & Opportunity Programme (Master's)",
+  "organizationName": "ETH Zurich",
+  "organizationOfficialDomain": "ethz.ch",
+  "category": "scholarship",
+  "description": "Merit scholarship for master's study at ETH Zurich: a grant of CHF 13,500 per semester for living and study costs from autumn 2027, plus a full tuition waiver. Open to students of any nationality admitted or applying to an ETH master's programme. Closing time not published.",
+  "location": "Switzerland",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://ethz.ch/en/studies/financial/scholarships/excellencescholarship.html",
+  "applicationUrl": "https://ethz.ch/en/studies/financial/scholarships/excellencescholarship.html",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-30T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-11-30",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Students of any nationality",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Singapore International Graduate Award (SINGA, PhD)",
+  "organizationName": "A*STAR Graduate Academy",
+  "organizationOfficialDomain": "a-star.edu.sg",
+  "category": "scholarship",
+  "description": "Fully funded PhD scholarship for international students to study at partner Singapore universities with research hosted at A*STAR institutes. Closing time not published.",
+  "location": "Singapore",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "masters",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.a-star.edu.sg/Scholarships/for-graduate-studies/singapore-international-graduate-award-singa",
+  "applicationUrl": "https://www.a-star.edu.sg/Scholarships/for-graduate-studies/singapore-international-graduate-award-singa",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-01",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Bristol University Think Big Scholarships (Undergraduate)",
+  "organizationName": "University of Bristol",
+  "organizationOfficialDomain": "bristol.ac.uk",
+  "category": "scholarship",
+  "description": "Think Big is the University of Bristol's flagship scholarship scheme for international undergraduate students, providing financial support towards tuition at Bristol. Closing time not published.",
+  "location": "United Kingdom",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.bristol.ac.uk/students/support/finances/scholarships/think-big-scholarships/",
+  "applicationUrl": "https://www.bristol.ac.uk/students/support/finances/scholarships/think-big-scholarships/",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-03-19T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-03-19",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students with overseas fee status",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Danish State Tuition Fee Waivers and Scholarships at Roskilde University (Master's)",
+  "organizationName": "Roskilde University",
+  "organizationOfficialDomain": "ruc.dk",
+  "category": "scholarship",
+  "description": "Tuition fee waivers and scholarships of DKK 7,800 a month for living expenses for fee-paying non-EU/EEA master's students at Roskilde University. A EUR 165 application fee applies to non-EU applicants (disclosed by the source). Closing time not published.",
+  "location": "Denmark",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://ruc.dk/en/master/media-and-communication",
+  "applicationUrl": "https://ruc.dk/en/master/media-and-communication",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Citizens of countries outside the EU/EEA who have to pay tuition fees",
+  "feeAssessment": "disclosed_official",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ],
+  "feeNote": "EUR 165 application fee for non-EU applicants (as stated by the source)"
+ },
+ {
+  "title": "Science@Leuven Scholarships for International Students (Master's)",
+  "organizationName": "KU Leuven",
+  "organizationOfficialDomain": "kuleuven.be",
+  "category": "scholarship",
+  "description": "Scholarships for international students entering science master's programmes at KU Leuven's Faculty of Science. Closing time not published.",
+  "location": "Belgium",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://wet.kuleuven.be/english/scienceatleuvenscholarship",
+  "applicationUrl": "https://wet.kuleuven.be/english/scienceatleuvenscholarship",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-02-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-02-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "VU Amsterdam Fellowship Programme for International Students (Master's)",
+  "organizationName": "Vrije Universiteit Amsterdam",
+  "organizationOfficialDomain": "vu.nl",
+  "category": "scholarship",
+  "description": "The VU Fellowship Programme covers tuition fees for selected non-EU/EEA students starting a master's programme at VU Amsterdam. Closing time not published.",
+  "location": "Netherlands",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://vu.nl/en/education/more-about/incoming-master-scholarships",
+  "applicationUrl": "https://vu.nl/en/education/more-about/incoming-master-scholarships",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-01",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Non- EU/ EEA Students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Bocconi Graduate Merit Awards (Master of Science)",
+  "organizationName": "Bocconi University",
+  "organizationOfficialDomain": "unibocconi.it",
+  "category": "scholarship",
+  "description": "Merit awards that waive 100% of Bocconi's ordinary tuition and fees for admitted international master's students; selection rounds run in January, March and April 2027 (first round shown). Closing time not published.",
+  "location": "Italy",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/funding/bocconi-graduate-merit-aw",
+  "applicationUrl": "https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/funding/bocconi-graduate-merit-aw",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-26T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-26",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "The 2027/28 selection rounds for international applicants are:",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "American University Emerging Global Leader Scholarship (Undergraduate)",
+  "organizationName": "American University",
+  "organizationOfficialDomain": "american.edu",
+  "category": "scholarship",
+  "description": "Full scholarship for international undergraduate students covering all billable AU expenses including full tuition, room and board. Closing time not published.",
+  "location": "United States",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.american.edu/admissions/international/au-egls-apply.cfm",
+  "applicationUrl": "https://www.american.edu/admissions/international/au-egls-apply.cfm",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students who need a non-immigrant (F-1 or J-1) visa to study in the US",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Eric Bleumink Fellowship (Master's) at University of Groningen",
+  "organizationName": "University of Groningen",
+  "organizationOfficialDomain": "rug.nl",
+  "category": "scholarship",
+  "description": "Full master's scholarships for talented students from the least developed countries, covering tuition fees, international travel, living costs, books and health insurance for the length of the master's programme. Closing time not published.",
+  "location": "Netherlands",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.rug.nl/education/scholarships/eric-bleumink-fellowship?lang=en",
+  "applicationUrl": "https://www.rug.nl/education/scholarships/eric-bleumink-fellowship?lang=en",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-01",
+  "ugandanEligibility": "region_includes_uganda",
+  "ugandanEligibilityQuote": "Nationals of the least developed countries listed in Appendix 1 of the EBF rules",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published",
+   "Confirm Uganda is on the eligible-country list"
+  ]
+ },
+ {
+  "title": "KU Leuven PhD Scholarships for Developing Countries (formerly IRO)",
+  "organizationName": "KU Leuven",
+  "organizationOfficialDomain": "kuleuven.be",
+  "category": "scholarship",
+  "description": "Doctoral scholarships at KU Leuven for researchers from the South; the 'Researchers from the South' track is open to nationals of countries classed by the OECD as Least Developed, Low Income or Lower Middle Income. Closing time not published.",
+  "location": "Belgium",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "masters",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.kuleuven.be/onderzoek/portaal/#/?hl=en&lang=en",
+  "applicationUrl": "https://www.kuleuven.be/onderzoek/portaal/#/?hl=en&lang=en",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-02-04T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-02-04",
+  "ugandanEligibility": "region_includes_uganda",
+  "ugandanEligibilityQuote": "nationals of the 86 countries on the OECD DAC list classed as Least Developed, Low Income or Lower Middle Income Countries.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published",
+   "Confirm Uganda is on the eligible-country list"
+  ]
+ },
+ {
+  "title": "Eiffel Excellence Scholarships (France, Master's and PhD)",
+  "organizationName": "Campus France",
+  "organizationOfficialDomain": "campusfrance.org",
+  "category": "scholarship",
+  "description": "French government scholarship for international students at master's and PhD level, with a monthly allowance of €1,200 at master's level for 12–36 months. The application is submitted by the French higher-education institution, not directly by the student. Closing time not published.",
+  "location": "France",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.campusfrance.org/system/files/medias/documents/2026-10/reglementation_bourse_eiffel_2027_EN.pdf",
+  "applicationUrl": "https://www.campusfrance.org/system/files/medias/documents/2026-10/reglementation_bourse_eiffel_2027_EN.pdf",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-06T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-06",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Emile Boutmy Scholarships for Non-EU Students (Sciences Po)",
+  "organizationName": "Sciences Po",
+  "organizationOfficialDomain": "sciencespo.fr",
+  "category": "scholarship",
+  "description": "Merit and need-based scholarships for non-EU international students entering Sciences Po at undergraduate or master's level. Closing time not published.",
+  "location": "France",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/emile-boutmy-scholarship/",
+  "applicationUrl": "https://www.sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/emile-boutmy-scholarship/",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-11-29T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-11-29",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Non-EU international students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Uppsala University Global Scholarships (Master's)",
+  "organizationName": "Uppsala University",
+  "organizationOfficialDomain": "uu.se",
+  "category": "scholarship",
+  "description": "Scholarships that cover the cost of tuition (not living expenses) for fee-paying non-EU/EEA master's students at Uppsala University. Closing time not published.",
+  "location": "Sweden",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.uu.se/en/study/masters-studies/scholarships/uppsala-university-scholarships",
+  "applicationUrl": "https://www.uu.se/en/study/masters-studies/scholarships/uppsala-university-scholarships",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "You must be a citizen of a country outside the EU/EEA and Switzerland.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Warwick Chancellor's International Scholarships (PhD)",
+  "organizationName": "University of Warwick",
+  "organizationOfficialDomain": "warwick.ac.uk",
+  "category": "scholarship",
+  "description": "Full-fee PhD awards for postgraduate research students starting at Warwick in October 2027; applicants must apply for a research course at Warwick. Closing time not published.",
+  "location": "United Kingdom",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "masters",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://warwick.ac.uk/study/postgraduate/courses/?filters=Postgraduate%20Research",
+  "applicationUrl": "https://warwick.ac.uk/study/postgraduate/courses/?filters=Postgraduate%20Research",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-07T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-07",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Unless otherwise stated, be of any nationality or fee status.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Leiden University Excellence Scholarship (LExS, Master's)",
+  "organizationName": "Leiden University",
+  "organizationOfficialDomain": "universiteitleiden.nl",
+  "category": "scholarship",
+  "description": "A tuition-fee reduction for outstanding non-EEA students on a full-time Leiden master's programme, for the nominal duration of the programme. Closing time not published.",
+  "location": "Netherlands",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.universiteitleiden.nl/en/scholarships/sea/leiden-university-excellence-scholarship-lexs",
+  "applicationUrl": "https://www.universiteitleiden.nl/en/scholarships/sea/leiden-university-excellence-scholarship-lexs",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-01",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "The Leiden University Excellence Scholarship (LExS) helps outstanding students from outside the European Economic Area pay for a full-time Master’s programme at Leiden University.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Joint Japan/World Bank Graduate Scholarship Program (Master's)",
+  "organizationName": "World Bank Group",
+  "organizationOfficialDomain": "worldbank.org",
+  "category": "scholarship",
+  "description": "Funds mid-career professionals from developing countries to study a development-related master's degree; the scholarship pays tuition, basic medical insurance and a monthly living stipend. Closing time not published.",
+  "location": "Various",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://thedocs.worldbank.org/en/doc/fb18adc82a2cc6746503a520fe18a3f9-0050052026/original/2027-Application-Gui",
+  "applicationUrl": "https://thedocs.worldbank.org/en/doc/fb18adc82a2cc6746503a520fe18a3f9-0050052026/original/2027-Application-Gui",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-02-26T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-02-26",
+  "ugandanEligibility": "region_includes_uganda",
+  "ugandanEligibilityQuote": "Nationals of developing countries on the World Bank’s list of eligible countries",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published",
+   "Confirm Uganda is on the eligible-country list"
+  ]
+ },
+ {
+  "title": "Gates Cambridge Scholarships (International, Postgraduate)",
+  "organizationName": "Gates Cambridge Trust",
+  "organizationOfficialDomain": "gatescambridge.org",
+  "category": "scholarship",
+  "description": "Full-cost scholarships for outstanding applicants from outside the UK to pursue a full-time postgraduate degree in any subject at the University of Cambridge. The 8 Dec 2026 date is the round for most non-US applicants per the source; confirm on the official timeline. Closing time not published.",
+  "location": "United Kingdom",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.gatescambridge.org/apply/how-to-apply/",
+  "applicationUrl": "https://www.gatescambridge.org/apply/how-to-apply/",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-08T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-08",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "You can apply for a Gates Cambridge Scholarship if you are: • a citizen of any country outside the United Kingdom",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Kyoto University International Undergraduate Program (Kyoto iUP)",
+  "organizationName": "Kyoto University",
+  "organizationOfficialDomain": "kyoto-u.ac.jp",
+  "category": "scholarship",
+  "description": "English-taught undergraduate programme at Kyoto University for international students; all students receive a full waiver of admission fees and a full or partial tuition waiver, with further scholarships available. Closing time not published.",
+  "location": "Japan",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.iup.kyoto-u.ac.jp/Application_Guidelines_for_October_2027_Enrollment.pdf",
+  "applicationUrl": "https://www.iup.kyoto-u.ac.jp/Application_Guidelines_for_October_2027_Enrollment.pdf",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-03T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-03",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Non-Japanese citizens from any country.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "La Trobe Vice Chancellor Scholarship for International Students",
+  "organizationName": "La Trobe University",
+  "organizationOfficialDomain": "latrobe.edu.au",
+  "category": "scholarship",
+  "description": "La Trobe's most prestigious award for international students: 50% or 100% off the total course tuition fee. Closing time not published.",
+  "location": "Australia",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.latrobe.edu.au/study/scholarships/advice/courses-offering-international-scholarships",
+  "applicationUrl": "https://www.latrobe.edu.au/study/scholarships/advice/courses-offering-international-scholarships",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-14T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-14",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students from any country except Australia and New Zealand",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "International Scholars Program at University of British Columbia (Undergraduate)",
+  "organizationName": "University of British Columbia",
+  "organizationOfficialDomain": "ubc.ca",
+  "category": "scholarship",
+  "description": "For international undergraduates with outstanding grades, leadership and community commitment who need significant financial support; award value depends on financial need. Closing time not published.",
+  "location": "Canada",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://you.ubc.ca/financial-planning/scholarships-awards-international-students/international-scholars/",
+  "applicationUrl": "https://you.ubc.ca/financial-planning/scholarships-awards-international-students/international-scholars/",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-02T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-02",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students who will study in Canada on a study permit",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "ICSP Tuition Scholarships at University of Oregon (Undergraduate)",
+  "organizationName": "University of Oregon",
+  "organizationOfficialDomain": "uoregon.edu",
+  "category": "scholarship",
+  "description": "International Cultural Service Program: a partial tuition waiver worth about half of tuition for international students with financial need; applies to tuition only. Closing time not published.",
+  "location": "United States",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "secondary",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://admissions.uoregon.edu/apply",
+  "applicationUrl": "https://admissions.uoregon.edu/apply",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-02-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-02-01",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "New and continuing international students with financial need and a strong academic record",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Radboud Scholarship Programme for International Students (Master's)",
+  "organizationName": "Radboud University",
+  "organizationOfficialDomain": "ru.nl",
+  "category": "scholarship",
+  "description": "Partial scholarship reducing tuition for non-EU/EEA students on selected master's programmes, to €2,771. Closing time not published.",
+  "location": "Netherlands",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.ru.nl/english/education/masters-programmes/application-procedure-master-pre-master/",
+  "applicationUrl": "https://www.ru.nl/english/education/masters-programmes/application-procedure-master-pre-master/",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-31T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-31",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Non-EU/EEA International Students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "University of Sydney International Stipend Scholarship (Research Master's / PhD)",
+  "organizationName": "University of Sydney",
+  "organizationOfficialDomain": "sydney.edu.au",
+  "category": "scholarship",
+  "description": "Stipend scholarship for high-quality international research master's and PhD students; the same application also considers applicants for Australian Government RTP scholarships. Closing time not published.",
+  "location": "Australia",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "masters",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.sydney.edu.au/scholarships/australian-government-research-training-program/rtp-international.html",
+  "applicationUrl": "https://www.sydney.edu.au/scholarships/australian-government-research-training-program/rtp-international.html",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-18T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-18",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "The University of Sydney International Stipend Scholarship (USYDIS) is funded by the University of Sydney for high-quality international students doing a research Master’s or PhD.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "Justus & Louise van Effen Excellence Scholarships (TU Delft, Master's)",
+  "organizationName": "Delft University of Technology",
+  "organizationOfficialDomain": "tudelft.nl",
+  "category": "scholarship",
+  "description": "Excellence scholarships for international students admitted to two-year MSc programmes at TU Delft. Closing time not published.",
+  "location": "Netherlands",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.tudelft.nl/onderwijs/studievoorlichting/praktische-zaken/scholarships/justus-louise-van-effen-exce",
+  "applicationUrl": "https://www.tudelft.nl/onderwijs/studievoorlichting/praktische-zaken/scholarships/justus-louise-van-effen-exce",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-01T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-01",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "The Delft University of Technology offers a number of excellence scholarship programs for international students.",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "KTH Scholarships (Master's, tuition fee waivers)",
+  "organizationName": "KTH Royal Institute of Technology",
+  "organizationOfficialDomain": "kth.se",
+  "category": "scholarship",
+  "description": "KTH scholarships cover tuition fees for fee-paying non-EU/EEA/EFTA master's students for the first and second year, provided study results are satisfactory. Closing time not published.",
+  "location": "Sweden",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "https://www.kth.se/en/studies/master/general/scholarships/kth-one-year-scholarship-1.290744",
+  "applicationUrl": "https://www.kth.se/en/studies/master/general/scholarships/kth-one-year-scholarship-1.290744",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2027-01-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2027-01-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "Citizens from non-EU/EEA/EFTA countries",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ },
+ {
+  "title": "ENS International Selection Scholarships (Paris)",
+  "organizationName": "École normale supérieure",
+  "organizationOfficialDomain": "ens.psl.eu",
+  "category": "scholarship",
+  "description": "Monthly grant of 1,000 euros for 3 years and a room on one of the ENS campuses for selected international students. Closing time not published.",
+  "location": "France",
+  "workMode": "onsite",
+  "requiredSkills": [],
+  "preferredSkills": [],
+  "eligibility": {
+   "minimumEducation": "bachelors",
+   "additionalRequirements": [
+    "Admission to, or an application to, the host programme is usually required."
+   ]
+  },
+  "sourceUrl": "http://www.ens.fr/en/academics/admissions/international-selection",
+  "applicationUrl": "http://www.ens.fr/en/academics/admissions/international-selection",
+  "applicationInstructions": "Follow the application steps on the official programme page.",
+  "leads": [
+   "https://www.scholars4dev.com/tag/scholarships-for-ugandans/"
+  ],
+  "retrievedAt": "2026-11-13T12:30:00+03:00",
+  "deadlineType": "fixed",
+  "deadline": "2026-12-15T00:00:00+03:00",
+  "deadlineQuote": "Deadline listed on scholars4dev: 2026-12-15",
+  "ugandanEligibility": "open_to_all_nationalities",
+  "ugandanEligibilityQuote": "International students",
+  "feeAssessment": "none",
+  "asksSensitiveDataOffPlatform": false,
+  "unresolved": [
+   "Deadline and eligibility read from the scholars4dev listing; the official page was not re-read",
+   "Deadline is the next listed round and may be annual; confirm on the official page",
+   "Closing time not published"
+  ]
+ }
+]

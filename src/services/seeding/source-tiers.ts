@@ -122,3 +122,13 @@ export function isAggregatorHost(host: string): boolean {
 export function isSocialHost(host: string): boolean {
   return matchesAny(host, SOCIAL_HOSTS);
 }
+
+export function isOfficialApplicationLink(url: string, declaredOfficialDomain?: string | null, organizationName?: string | null): boolean {
+  const host = hostOf(url);
+  if (!host) return false;
+  if (matchesAny(host, SOCIAL_HOSTS) || matchesAny(host, AGGREGATOR_HOSTS)) return false;
+  const declared = declaredOfficialDomain ? declaredOfficialDomain.toLowerCase().replace(/^www\./, "") : null;
+  if (declared && hostMatches(host, declared)) return true;
+  if (organizationName && urlNamesOrganization(url, organizationName)) return true;
+  return hasOfficialSuffix(host);
+}

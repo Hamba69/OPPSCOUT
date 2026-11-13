@@ -100,6 +100,7 @@ export async function hasDeadlineTypeColumn(client: SupabaseClient): Promise<boo
 export function readCandidates(path: string): unknown[] {
   if (!existsSync(path)) throw new Error(`Input not found: ${path}`);
   const files = statSync(path).isDirectory() ? readdirSync(path).filter((name) => name.endsWith(".json")).sort().map((name) => join(path, name)) : [path];
+  if (files.length === 0) throw new Error(`No JSON candidate files found in ${path}.`);
   const records: unknown[] = [];
   for (const file of files) {
     const parsed = JSON.parse(readFileSync(file, "utf8").replace(/^\uFEFF/, "")) as unknown;

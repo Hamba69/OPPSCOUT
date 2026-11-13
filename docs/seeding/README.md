@@ -7,7 +7,7 @@ why the rest were held, so an empty catalogue can never be a surprise.
 Find        research agent, using the tiered sources (AGENT_INSTRUCTIONS.md)
   v         candidate JSON with quoted evidence
 Verify +    npm run seed:run -- <file|folder>            dry run, writes a report
-gate        npm run seed:run -- <file|folder> --apply    stages survivors as PENDING
+gate        npm run seed:run [-- <file|folder>] --apply  stages survivors as PENDING
   v
 Publish     npm run seed:publish -- <run> --reviewer "Name" [--apply]   a person approves
   v
@@ -24,15 +24,34 @@ Seekers     the app's own visibility gate, plus a weekly refresh
 ## A normal run
 
 1. Give the agent `AGENT_INSTRUCTIONS.md`. It saves JSON in `imports/seeding-runs/inbox/`.
-2. `npm run seed:run -- imports/seeding-runs/inbox/2026-11-12-batch1.json`
-   Read the funnel, the held reasons and the coverage table. Fix the instructions or the data, not the gate.
-3. `npm run seed:run -- <same file> --apply`. Survivors are written as `pending` with the full checklist and
+2. `npm run seed:run` scans every top-level `.json` file in `imports/seeding-runs/inbox/`. To test one
+   batch alone, pass its file path instead. Read the funnel, held reasons and coverage table. Fix the
+   instructions or data, not the gate.
+3. `npm run seed:run -- --apply` stages survivors from the inbox as `pending` with the full checklist and
    quoted evidence in `reviewNotes`. Nothing is visible yet. The run folder (`imports/seeding-runs/run-...`)
    holds `accepted.json`, `held.json`, `report.json`, `staged.json` and an append-only `applied.jsonl`.
 4. Open each source link (the publish dry run lists them, with anything to double-check) and run
    `npm run seed:publish -- imports/seeding-runs/run-... --reviewer "Your Name"`.
    Add `--apply` to approve. Records that would still be invisible are refused, with the reason.
-5. `npm run seed:check` confirms what seekers can now see.
+5. The viewer reads published records from the database and applies the same visibility gate;
+   `npm run seed:check` confirms what seekers can now see. JSON files are never displayed directly.
+
+## Manual-review intake exceptions
+
+For an explicitly supervised review run, you can stage Tier B source/application links and records with
+evidence concerns without making them publishable:
+
+1. Dry run: `npm run seed:run -- --allow-aggregators-for-review --include-evidence-held-for-review`
+2. Inspect `held.json`, `accepted.json`, and warnings. Schema failures remain held. The deadline and
+   duplicate checks still apply. The evidence exception does **not** apply to records admitted only by
+   the aggregator override; those still need to pass evidence.
+3. If the run is correct, add `--apply` to stage the review-only records in the database.
+4. These rows have every publication checklist item marked false and remain hidden. After checking a
+   record, correct its source/evidence in the inbox and rerun the pipeline; an incomplete pending row
+   can be updated by matching organisation and title. The normal publish command still refuses any
+   row whose checklist is incomplete.
+
+The exception flags are opt-in. The 23 schema-invalid records are never admitted by them.
 
 ## What each stage rejects
 

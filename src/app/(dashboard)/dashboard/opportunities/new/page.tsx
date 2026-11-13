@@ -19,7 +19,7 @@ export default async function NewOpportunityPage(): Promise<React.JSX.Element> {
       <main className="page-shell animate-in">
         <section className="card mx-auto max-w-2xl text-center">
           <h1 className="text-2xl font-extrabold text-ink">Publisher verification required</h1>
-          <p className="mt-3 text-navy">Opportunity posting unlocks after our team verifies your official website, matching organization email and URSB registration proof.</p>
+          <p className="mt-3 text-navy">Opportunity posting unlocks after our team verifies your organization and official contact details.</p>
           <Link className="button-secondary mt-5" href="/dashboard/organization">Review publisher profile</Link>
         </section>
       </main>

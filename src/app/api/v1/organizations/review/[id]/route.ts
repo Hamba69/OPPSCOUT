@@ -7,13 +7,20 @@ import { getRepository } from "@/lib/repository";
 import { isPublicHttpsUrl, organizationEmailMatchesWebsite, parseJson } from "@/lib/validation";
 
 type Context = { params: Promise<{ id: string }> };
-const reviewSchema = z.object({ approved: z.boolean() }).strict();
+const reviewSchema = z.object({
+  approved: z.boolean(),
+  overrideMissingRegistrationProof: z.boolean().optional(),
+}).strict().superRefine((value, context) => {
+  if (!value.approved && value.overrideMissingRegistrationProof) {
+    context.addIssue({ code: "custom", path: ["overrideMissingRegistrationProof"], message: "Registration proof override only applies to verification." });
+  }
+});
 
 export async function PATCH(request: Request, context: Context): Promise<Response> {
   return apiHandler(request, async () => {
     requireAdminPortalApi(request);
     const { id } = await context.params;
-    const { approved } = await parseJson(request, reviewSchema);
+    const { approved, overrideMissingRegistrationProof } = await parseJson(request, reviewSchema);
     const repository = await getRepository();
     const organization = await repository.getOrganization(id);
     if (!organization) throw new NotFoundError("Organization");
@@ -21,9 +28,11 @@ export async function PATCH(request: Request, context: Context): Promise<Respons
       if (!organization.officialLinks.every(isPublicHttpsUrl) ||
         !organization.officialEmail ||
         !z.string().email().safeParse(organization.officialEmail).success ||
-        (organization.officialLinks.length > 0 && !organizationEmailMatchesWebsite(organization.officialEmail, organization.officialLinks)) ||
-        !organization.registrationProof?.trim()) {
-        throw new ForbiddenError("The publisher must have a valid official email, a valid optional website, and a URSB registration number before verification.");
+        (organization.officialLinks.length > 0 && !organizationEmailMatchesWebsite(organization.officialEmail, organization.officialLinks))) {
+        throw new ForbiddenError("The publisher must have a valid official email and, if provided, a matching public HTTPS website before verification.");
+      }
+      if (!organization.registrationProof?.trim() && !overrideMissingRegistrationProof) {
+        throw new ForbiddenError("A URSB registration number is required unless you explicitly confirm manual verification.");
       }
     }
     return success(await repository.reviewOrganization(id, approved));
