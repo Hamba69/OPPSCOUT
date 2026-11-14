@@ -89,7 +89,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Eleme
       <div className="hidden self-stretch md:flex">{isSeeker && <HeaderTabs />}</div>
       <div className="flex items-center gap-2 justify-self-end">
         {isLanding && <>
-          <Link href="/organizations" className="hidden min-h-11 items-center px-3 text-sm font-semibold text-navy hover:text-ink sm:inline-flex">For organizations</Link>
+          <Link href="/organizations" className="hidden min-h-11 items-center px-3 text-sm font-semibold text-navy hover:text-ink sm:inline-flex">For publishers</Link>
           <Link href="/login" className="button-secondary !min-h-11 !px-3 text-sm sm:!px-5">Log in</Link>
           <Link href="/profile" className="button !min-h-11 !px-3 text-sm sm:!px-5">Get started</Link>
         </>}

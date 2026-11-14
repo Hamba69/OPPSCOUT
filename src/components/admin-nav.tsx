@@ -1,6 +1,6 @@
 "use client";
 
-import { AppSidebar, type IconName } from "@/components/app-shell";
+import { AppSidebar, type IconName, type SideLink } from "@/components/app-shell";
 import { LockPortal } from "@/components/admin-controls";
 
 const icons: Partial<Record<string, IconName>> = {
@@ -8,18 +8,26 @@ const icons: Partial<Record<string, IconName>> = {
   algorithm: "chart", performance: "chart", activity: "clock", notifications: "feedback", feedback: "feedback",
   kpis: "chart", slo: "clock", review: "shield", exports: "saved", "access-log": "shield",
 };
+const names: Partial<Record<string, string>> = { review: "Review queue", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
+// The design's sidebar, in this order. The other portal sections (users, exports, access log…) still work
+// at /admin/<section>; set SHOW_MORE_SECTIONS to true to list them under "More" again.
+const SHOW_MORE_SECTIONS = false;
+const primary = ["overview", "review", "kpis", "organizations", "feedback", "matching", "performance"];
 
 const label = (section: string): string => {
   const words = section.replace(/-/g, " ");
-  return section === "kpis" ? "KPIs" : section === "slo" ? "SLO" : `${words.charAt(0).toUpperCase()}${words.slice(1)}`;
+  return names[section] ?? `${words.charAt(0).toUpperCase()}${words.slice(1)}`;
 };
+const link = (section: string): SideLink => ({ label: label(section), href: `/admin/${section}`, icon: icons[section] ?? "dot" });
 
 export function AdminNav({ sections }: { sections: readonly string[] }): React.JSX.Element {
+  const main = primary.filter((section) => sections.includes(section)).map(link);
+  const more = !SHOW_MORE_SECTIONS ? [] : sections.filter((section) => !primary.includes(section)).map(link);
   return <AppSidebar
     label="Portal sections"
     home="/admin/overview"
     badge={{ text: "ADMIN", dark: true }}
-    groups={[{ title: "PORTAL", links: sections.map((section) => ({ label: label(section), href: `/admin/${section}`, icon: icons[section] ?? "dot" })) }]}
-    footer={<div className="mt-3 px-3.5"><LockPortal /></div>}
+    groups={[{ links: main }, ...(more.length ? [{ title: "MORE", links: more }] : []), { title: "ACCOUNT", links: [] }]}
+    footer={<div className="mt-2 px-3.5 text-[13px]"><LockPortal /></div>}
   />;
 }

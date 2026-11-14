@@ -317,3 +317,6 @@ h1.hero-title {
 .app-frame-main main > div:first-child > h1:first-child { display: inline-block; align-self: flex-start; border-radius: 1.75rem; padding: 1.25rem 1.75rem; background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); font-size: 1.75rem !important; font-weight: 800 !important; line-height: 1.2 !important; }
 .greeting h1.hero-title { font-weight: 800 !important; font-size: 2rem !important; line-height: 1.1 !important; letter-spacing: -0.025em; }
 @media (min-width: 640px) { .greeting h1.hero-title { font-size: 3.25rem !important; } }
+
+/* Admin chips: selected state in soft butter instead of the solid primary yellow. */
+.chip.chip-soft[aria-current="page"] { background: #fff3c4; border-color: #f5d76e; color: #1e293b; }

@@ -1,20 +1,75 @@
 import { parseAdminQuery } from "@/lib/admin-data";
 import type { Organization, Opportunity } from "@/core/entities/domain";
 import Link from "next/link";
+import { AdminHeader, ChipLinks } from "@/components/admin-header";
 import { OrganizationReviewCard } from "@/components/organization-review-card";
 import { ReviewCard } from "@/components/review-card";
 import { requireAdminPortal } from "@/lib/admin-portal";
 import { getRepository } from "@/lib/repository";
 import { createServiceRoleClient } from "@/lib/supabase/admin";
+import { choiceLabel } from "@/services/profile/choices";
 
 export const dynamic = "force-dynamic";
+
+type Flag = "new" | "reported" | "link";
+const FLAG_LABEL: Record<Flag, string> = { new: "New submission", reported: "Reported listing", link: "Link mismatch" };
+
+const hostOf = (value: string | null | undefined): string | null => {
+  if (!value) return null;
+  try { return new URL(value.includes("://") ? value : `https://${value}`).hostname.replace(/^www\./, "").toLowerCase(); } catch { return null; }
+};
+
+/** Reported listings are stored as "flagged". A link mismatch is an apply link outside the organization's official website or email domain. */
+function flagFor(item: Opportunity, organization: Organization | null): Flag {
+  if (item.verificationStatus === "flagged") return "reported";
+  const source = hostOf(item.sourceUrl);
+  const official = [...(organization?.officialLinks ?? []).map(hostOf), organization?.officialEmail?.split("@")[1]?.toLowerCase() ?? null].filter((host): host is string => Boolean(host));
+  if (source && official.length && !official.some((host) => source === host || source.endsWith(`.${host}`))) return "link";
+  return "new";
+}
+
+const day = (value: Date | string | null | undefined): string => value ? new Date(value).toLocaleDateString("en-UG", { day: "numeric", month: "short" }) : "—";
+
+function FlagPill({ flag }: { flag: Flag }): React.JSX.Element {
+  const tone = flag === "new" ? "text-[#6B4E00] bg-[#FFF3C4]" : "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]";
+  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold ${tone}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{FLAG_LABEL[flag]}</span>;
+}
+
+function StatusPill({ status }: { status: string }): React.JSX.Element {
+  const flagged = status === "flagged";
+  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold capitalize ${flagged ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]"}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{flagged ? "Flagged" : status}</span>;
+}
+
+const th = "px-4 pb-3 text-left text-[11px] font-bold uppercase tracking-[.06em] text-[#5B6A80]";
+const td = "border-t border-ink/[.07] px-4 py-3.5 align-middle text-[13px] text-ink";
 
 export default async function ReviewQueuePage({searchParams}:{searchParams:Promise<Record<string,string>>}): Promise<React.JSX.Element> {
   await requireAdminPortal();
   const repository = await getRepository();
-  const params=new URLSearchParams(await searchParams);if(!params.has("verificationStatus"))params.set("verificationStatus","pending");params.set("status","open");
-  const [listings,orgs]=await Promise.all([repository.adminPage("opportunities",parseAdminQuery("opportunities",params)),repository.adminPage("organizations",parseAdminQuery("organizations",params))]);
-  const queue=listings.rows as unknown as Opportunity[],organizations=orgs.rows as unknown as Organization[];
+  const raw = await searchParams;
+  const tab = raw.tab === "organizations" ? "organizations" : "opportunities";
+  const flagFilter = (["new", "reported", "link"] as const).find((value) => value === raw.flag) ?? "all";
+  const page = Math.max(1, Number(raw.page ?? 1) || 1);
+  const reviewing = raw.review ?? null;
+
+  // Everything that still needs a decision: new submissions (pending) and reported listings (flagged).
+  const query = (status: string): URLSearchParams => new URLSearchParams({ verificationStatus: status, status: "open", page: String(page) });
+  const [pendingListings, flaggedListings, pendingOrgs, flaggedOrgs] = await Promise.all([
+    repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending"))),
+    repository.adminPage("opportunities", parseAdminQuery("opportunities", query("flagged"))),
+    repository.adminPage("organizations", parseAdminQuery("organizations", query("pending"))),
+    repository.adminPage("organizations", parseAdminQuery("organizations", query("flagged"))),
+  ]);
+  const listings = [...pendingListings.rows, ...flaggedListings.rows] as unknown as Opportunity[];
+  const organizations = [...pendingOrgs.rows, ...flaggedOrgs.rows] as unknown as Organization[];
+  const listingTotal = pendingListings.total + flaggedListings.total;
+  const organizationTotal = pendingOrgs.total + flaggedOrgs.total;
+
+  const publishers = new Map<string, Organization | null>();
+  await Promise.all([...new Set(listings.map((item) => item.organizationId).filter((id): id is string => Boolean(id)))].map(async (id) => { publishers.set(id, await repository.getOrganization(id)); }));
+  const rows = listings.map((item) => ({ item, flag: flagFor(item, item.organizationId ? publishers.get(item.organizationId) ?? null : null) }));
+  const visibleRows = flagFilter === "all" ? rows : rows.filter((row) => row.flag === flagFilter);
+
   const dashboardUsers = [...new Set(organizations.flatMap((item) => item.dashboardUsers))];
   const proofQuery = dashboardUsers.length
     ? await createServiceRoleClient().from("StoredDocument").select("id,ownerId,createdAt").eq("ownerType","user").eq("purpose","registration_proof").eq("status","ready").in("ownerId",dashboardUsers).order("createdAt",{ascending:false})
@@ -22,78 +77,82 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
   if (proofQuery.error) throw new Error(`Could not load URSB registration proof documents: ${proofQuery.error.message}`);
   const proofByUser = new Map<string,string>();
   for (const proof of proofQuery.data ?? []) if (!proofByUser.has(proof.ownerId)) proofByUser.set(proof.ownerId,proof.id);
-  const page=Number(params.get("page")??1);
 
-  return (
-    <main className="min-w-0 flex-1 animate-in">
-      <header className="title-card !w-full">
-        <h1>Review queue</h1>
-      </header>
-      <form className="surface flex flex-wrap items-end gap-3">
-        <label className="text-sm font-semibold text-navy">
-          Status
-          <select name="verificationStatus" className="field" defaultValue={params.get("verificationStatus") ?? "pending"}>
-            {["pending", "flagged", "unverified", "verified"].map((status) => <option key={status}>{status}</option>)}
-          </select>
-        </label>
-        <button className="button-secondary">Filter</button>
-      </form>
+  const href = (changes: Record<string, string | null>): string => {
+    const next = new URLSearchParams({ tab, flag: flagFilter, page: String(page) });
+    for (const [key, value] of Object.entries(changes)) { if (value === null) next.delete(key); else next.set(key, value); }
+    if (next.get("flag") === "all") next.delete("flag");
+    if (next.get("page") === "1") next.delete("page");
+    return `?${next.toString()}`;
+  };
+  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, flaggedListings.total, pendingOrgs.total, flaggedOrgs.total) / 25));
+  const openListing = tab === "opportunities" && reviewing ? listings.find((item) => item.id === reviewing) : undefined;
+  const openOrganization = tab === "organizations" && reviewing ? organizations.find((item) => item.id === reviewing) : undefined;
 
-      <div className="mt-5 grid min-w-0 gap-5 xl:grid-cols-2">
-        <section className="surface min-w-0" aria-labelledby="organizations-review-heading">
-          <div className="flex items-center justify-between gap-3">
-            <h2 id="organizations-review-heading" className="text-xl font-bold text-ink">Organizations</h2>
-            <span className="pill">{orgs.total.toLocaleString()}</span>
-          </div>
-          <div className="mt-4 grid gap-4">
-            {organizations.length ? organizations.map((item) => (
-              <OrganizationReviewCard
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                sector={item.sector}
-                officialLinks={item.officialLinks}
-                officialEmail={item.officialEmail}
-                registrationProof={item.registrationProof}
-                registrationProofDocumentId={item.dashboardUsers.map((userId) => proofByUser.get(userId)).find(Boolean) ?? null}
-                accountableContact={item.accountableContact}
-                accountableContacts={item.accountableContacts}
-                additionalAccountableContact={item.additionalAccountableContact}
-                additionalAccountableContactPhone={item.additionalAccountableContactPhone}
-                status={item.verificationStatus}
-              />
-            )) : <p className="rounded-xl bg-white/70 p-4 text-sm text-navy">No organizations in this status.</p>}
-          </div>
-        </section>
+  return <main className="animate-in flex min-w-0 flex-col gap-6">
+    <AdminHeader title="Review queue" subtitle="Organizations and listings both need a verified decision before trust is shown.">
+      <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Organizations · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
+    </AdminHeader>
 
-        <section className="surface min-w-0" aria-labelledby="opportunities-review-heading">
-          <div className="flex items-center justify-between gap-3">
-            <h2 id="opportunities-review-heading" className="text-xl font-bold text-ink">Opportunities</h2>
-            <span className="pill">{listings.total.toLocaleString()}</span>
-          </div>
-          <div className="mt-4 grid gap-4">
-            {queue.length ? queue.map((item) => (
-              <ReviewCard
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                organization={item.organization?.name ?? item.organizationName ?? "Unknown organization"}
-                sourceUrl={item.sourceUrl}
-                status={item.verificationStatus}
-                description={item.description}
-                reviewNotes={item.reviewNotes}
-              />
-            )) : <p className="rounded-xl bg-white/70 p-4 text-sm text-navy">No opportunities in this status.</p>}
-          </div>
-        </section>
+    {listingTotal > 0 && <p role="alert" className="flex items-center gap-3 rounded-[1.25rem] border border-[rgba(220,38,38,.18)] bg-[rgba(220,38,38,.06)] px-[18px] py-3.5 text-[13px] font-semibold text-[#7F1D1D]">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B1C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0"><path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 8v5M12 16h.01" /></svg>
+      Review alert: these listings are withheld from seekers until every trust check is complete.
+    </p>}
+
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
+      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["reported", "Reported"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
+    </div>
+
+    {(openListing || openOrganization) && <section aria-label="Review details" className="surface flex flex-col gap-4">
+      <div className="flex items-center justify-between gap-3"><h2 className="surface-title">Reviewing {openListing?.title ?? openOrganization?.name}</h2><Link href={href({ review: null })} className="button-secondary">Close</Link></div>
+      {openListing && <ReviewCard id={openListing.id} title={openListing.title} organization={openListing.organization?.name ?? openListing.organizationName ?? "Unknown organization"} sourceUrl={openListing.sourceUrl} status={openListing.verificationStatus} description={openListing.description} reviewNotes={openListing.reviewNotes} />}
+      {openOrganization && <OrganizationReviewCard id={openOrganization.id} name={openOrganization.name} sector={openOrganization.sector} officialLinks={openOrganization.officialLinks} officialEmail={openOrganization.officialEmail} registrationProof={openOrganization.registrationProof} registrationProofDocumentId={openOrganization.dashboardUsers.map((userId) => proofByUser.get(userId)).find(Boolean) ?? null} accountableContact={openOrganization.accountableContact} accountableContacts={openOrganization.accountableContacts} additionalAccountableContact={openOrganization.additionalAccountableContact} additionalAccountableContactPhone={openOrganization.additionalAccountableContactPhone} status={openOrganization.verificationStatus} />}
+    </section>}
+
+    {tab === "opportunities" ? <section aria-labelledby="review-opportunities" className="surface">
+      <h2 id="review-opportunities" className="surface-title mb-4">Opportunities</h2>
+      {visibleRows.length ? <div className="overflow-x-auto"><table className="w-full min-w-[720px] table-fixed border-collapse">
+        <colgroup><col className="w-[30%]" /><col className="w-[16%]" /><col className="w-[20%]" /><col className="w-[18%]" /><col className="w-[16%]" /></colgroup>
+        <thead><tr><th scope="col" className={th}>Listing</th><th scope="col" className={th}>Type</th><th scope="col" className={th}>Flag</th><th scope="col" className={th}>Submitted</th><th scope="col" className={th}><span className="sr-only">Action</span></th></tr></thead>
+        <tbody>{visibleRows.map(({ item, flag }) => <tr key={item.id}>
+          <td className={td}><strong className="block truncate font-bold">{item.title}</strong><span className="block truncate text-xs text-navy">{item.organization?.name ?? item.organizationName ?? "Unknown organization"}</span></td>
+          <td className={td}><span className="cat-pill">{choiceLabel(item.category)}</span></td>
+          <td className={td}><FlagPill flag={flag} /></td>
+          <td className={td}>Submitted {day(item.publicationDate)}</td>
+          <td className={td}><Link href={href({ review: item.id })} className="button !min-h-10 !px-5" aria-label={`Review ${item.title}`}>Review</Link></td>
+        </tr>)}</tbody>
+      </table></div> : <QueueClear title="Opportunity queue clear" text="Every current listing has a decision. New submissions and reported listings will appear here for your next review." />}
+    </section> : <section aria-labelledby="review-organizations" className="surface">
+      <h2 id="review-organizations" className="surface-title mb-4">Organizations</h2>
+      {organizations.length ? <div className="overflow-x-auto"><table className="w-full min-w-[720px] table-fixed border-collapse">
+        <colgroup><col className="w-[34%]" /><col className="w-[18%]" /><col className="w-[16%]" /><col className="w-[16%]" /><col className="w-[16%]" /></colgroup>
+        <thead><tr><th scope="col" className={th}>Organization</th><th scope="col" className={th}>Sector</th><th scope="col" className={th}>Status</th><th scope="col" className={th}>Submitted</th><th scope="col" className={th}><span className="sr-only">Action</span></th></tr></thead>
+        <tbody>{organizations.map((item) => <tr key={item.id}>
+          <td className={td}><strong className="block truncate font-bold">{item.name}</strong><span className="block truncate text-xs text-navy">{item.officialEmail ?? item.officialLinks[0] ?? "No official contact yet"}</span></td>
+          <td className={td}><span className="cat-pill">{item.sector || "—"}</span></td>
+          <td className={td}><StatusPill status={item.verificationStatus} /></td>
+          <td className={td}>Submitted {day(item.createdAt)}</td>
+          <td className={td}><Link href={href({ review: item.id })} className="button !min-h-10 !px-5" aria-label={`Review ${item.name}`}>Review</Link></td>
+        </tr>)}</tbody>
+      </table></div> : <QueueClear title="Organization queue clear" text="Every organization has a decision. New publisher sign-ups will appear here for your next review." />}
+    </section>}
+
+    <nav className="flex flex-wrap items-center justify-between gap-3" aria-label="Review pages">
+      <span className="text-[13px] text-navy">Page {page} of {pages}</span>
+      <div className="flex gap-2">
+        {page > 1 ? <Link className="button-secondary" href={href({ page: String(page - 1), review: null })}>Previous</Link> : <span className="button-secondary opacity-50" aria-disabled="true">Previous</span>}
+        {page < pages ? <Link className="button-secondary" href={href({ page: String(page + 1), review: null })}>Next</Link> : <span className="button-secondary opacity-50" aria-disabled="true">Next</span>}
       </div>
+    </nav>
+  </main>;
+}
 
-      <nav className="mt-5 flex justify-between" aria-label="Review pages">
-        {page > 1 ? <Link className="button-secondary" href={`?verificationStatus=${params.get("verificationStatus")}&page=${page - 1}`}>Previous</Link> : <span />}
-        {page * 25 < Math.max(listings.total, orgs.total)
-          ? <Link className="button-secondary" href={`?verificationStatus=${params.get("verificationStatus")}&page=${page + 1}`}>Next</Link>
-          : <span />}
-      </nav>
-    </main>
-  );
+function QueueClear({ title, text }: { title: string; text: string }): React.JSX.Element {
+  return <div className="py-8 text-center">
+    <div className="flex justify-center"><span className="orb block size-14" aria-hidden="true" /></div>
+    <h3 className="mt-4 text-xl font-extrabold text-ink">{title}</h3>
+    <p className="mx-auto mt-2 max-w-lg text-sm text-navy">{text}</p>
+    <Link href="/admin/slo" className="button mt-5">Check system health</Link>
+  </div>;
 }
