@@ -18,7 +18,7 @@ export function PublisherSidebar(): React.JSX.Element {
     badge={{ text: "PUBLISHER" }}
     groups={[
       { title: "WORKSPACE", links: workspace },
-      { links: [{ label: "Publisher profile", href: "/dashboard/organization", icon: "organization" }] },
+      { title: "ORGANIZATION", ariaLabel: "Publisher dashboard", links: [{ label: "Publisher profile", href: "/dashboard/organization", icon: "organization" }] },
     ]}
   />;
 }

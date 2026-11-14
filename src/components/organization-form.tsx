@@ -71,18 +71,26 @@ export function OrganizationForm(props: OrganizationFormProps): React.JSX.Elemen
   }
 
   return (
-    <form onSubmit={submit} className="card mt-6 grid gap-4 md:grid-cols-2">
-      <label><span className="label">Organization name</span><input className="field" name="name" defaultValue={props.name} required /></label>
-      <label><span className="label">Sector</span><input className="field" name="sector" defaultValue={props.sector} required /></label>
-      <label className="md:col-span-2"><span className="label">Official website links</span><input className="field" name="officialLinks" defaultValue={props.officialLinks.join(", ")} /><span className="mt-1 block text-xs text-navy">Optional. If supplied, each link must be public HTTPS and the email must match one of the domains.</span></label>
-      <label className="md:col-span-2"><span className="label">Official email</span><input className="field" type="email" name="officialEmail" defaultValue={props.officialEmail ?? ""} required /><span className="mt-1 block text-xs text-navy">Required. If you have provided a website, this email must match its domain.</span></label>
-      <AccountableContactsFields contacts={contacts} onChange={setContacts} />
-      <label className="md:col-span-2"><span className="label">URSB registration number</span><input className="field" name="registrationProof" defaultValue={props.registrationProof ?? ""} required /></label>
-      <label className="md:col-span-2"><span className="label">URSB supporting document</span><input className="field" type="file" name="registrationProofFile" accept=".pdf,.docx,.odt,.jpg,.jpeg,.png" /><span className="mt-1 block text-xs text-navy">Optional supporting certificate or official URSB document (PDF, DOCX, ODT, JPG or PNG; maximum 5 MB).</span></label>
-      <div className="md:col-span-2 flex flex-wrap items-center gap-4">
-        <button className="button">Save organization</button>
-        {message && <p role="status" aria-live="polite" className="text-sm font-medium text-[#D4A900]">{message}</p>}
-      </div>
+    <form onSubmit={submit} className="space-y-5">
+      <section className="surface grid gap-4 md:grid-cols-2" aria-labelledby="organization-details-heading">
+        <h2 id="organization-details-heading" className="text-[17px] font-bold text-ink md:col-span-2">Organization details</h2>
+        <label><span className="label">Organization name</span><input className="field" name="name" defaultValue={props.name} required /></label>
+        <label><span className="label">Sector</span><input className="field" name="sector" defaultValue={props.sector} required /></label>
+        <label className="md:col-span-2"><span className="label">Official website links</span><input className="field" name="officialLinks" defaultValue={props.officialLinks.join(", ")} /><span className="mt-1 block text-xs text-navy">Optional. If supplied, each link must be public HTTPS and the email must match one of the domains.</span></label>
+        <label className="md:col-span-2"><span className="label">Official email</span><input className="field" type="email" name="officialEmail" defaultValue={props.officialEmail ?? ""} required /><span className="mt-1 block text-xs text-navy">Required. If you have provided a website, this email must match its domain.</span></label>
+      </section>
+      <section className="surface">
+        <AccountableContactsFields contacts={contacts} onChange={setContacts} />
+      </section>
+      <section className="surface grid gap-4 md:grid-cols-2" aria-labelledby="organization-verification-heading">
+        <h2 id="organization-verification-heading" className="text-[17px] font-bold text-ink md:col-span-2">Verification information</h2>
+        <label className="md:col-span-2"><span className="label">URSB registration number</span><input className="field" name="registrationProof" defaultValue={props.registrationProof ?? ""} required /></label>
+        <label className="md:col-span-2"><span className="label">URSB supporting document</span><input className="field" type="file" name="registrationProofFile" accept=".pdf,.docx,.odt,.jpg,.jpeg,.png" /><span className="mt-1 block text-xs text-navy">Optional supporting certificate or official URSB document (PDF, DOCX, ODT, JPG or PNG; maximum 5 MB).</span></label>
+        <div className="md:col-span-2 flex flex-wrap items-center justify-end gap-4">
+          <button className="button">Save organization</button>
+          {message && <p role="status" aria-live="polite" className="text-sm font-medium text-[#D4A900]">{message}</p>}
+        </div>
+      </section>
     </form>
   );
 }

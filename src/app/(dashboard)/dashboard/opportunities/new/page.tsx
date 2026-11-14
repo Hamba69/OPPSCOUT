@@ -26,5 +26,16 @@ export default async function NewOpportunityPage(): Promise<React.JSX.Element> {
     );
   }
   const choices = await getProfileChoices();
-  return <main className="page-shell animate-in"><header className="page-header"><div><p className="eyebrow">Publisher workspace · Opportunity setup</p><h1 className="!text-left !font-extrabold">Post an opportunity</h1><p>Share the official details and explain how people can apply. Every submission is reviewed before publication.</p></div></header><OpportunityForm organizationId={auth.organizationId!} choices={choices} /></main>;
+  return (
+    <main className="animate-in flex flex-col gap-5">
+      <Link className="inline-flex min-h-11 items-center gap-1 text-[13px] font-bold text-navy" href="/dashboard/opportunities">
+        <span aria-hidden="true">←</span>Back to opportunities
+      </Link>
+      <header className="title-card">
+        <h1>Post an opportunity</h1>
+        <p>Every listing is reviewed by the OppScout team before it is published.</p>
+      </header>
+      <OpportunityForm organizationId={auth.organizationId!} choices={choices} />
+    </main>
+  );
 }

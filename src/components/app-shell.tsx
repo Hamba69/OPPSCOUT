@@ -39,7 +39,7 @@ export function Icon({ name, size = 16, className, strokeWidth = 2 }: { name: Ic
 }
 
 export type SideLink = { label: string; href: string; icon: IconName; match?: string[] };
-export type SideGroup = { title?: string; links: SideLink[] };
+export type SideGroup = { title?: string; ariaLabel?: string; links: SideLink[] };
 
 function isActive(pathname: string, link: SideLink): boolean {
   const paths = [link.href, ...(link.match ?? [])];
@@ -57,7 +57,7 @@ export function AppSidebar({ label, home, badge, groups, signOut = true, phone =
     {badge && <span className={`app-badge ${badge.dark ? "app-badge-dark" : ""}`}>{badge.text}</span>}
     {groups.map((group, index) => <div key={group.title ?? index} className="contents">
       {group.title && <p className={`app-group ${index === 0 ? "!mt-0" : ""}`} aria-hidden="true">{group.title}</p>}
-      <nav aria-label={group.title ? `${group.title.charAt(0)}${group.title.slice(1).toLowerCase()}` : label} className="flex flex-col gap-0.5">
+      <nav aria-label={group.ariaLabel ?? (group.title ? `${group.title.charAt(0)}${group.title.slice(1).toLowerCase()}` : label)} className="flex flex-col gap-0.5">
         {group.links.map((link) => <Link key={link.href} href={link.href} prefetch aria-current={isActive(pathname, link) ? "page" : undefined} className="side-link">
           <Icon name={link.icon} />{link.label}
         </Link>)}

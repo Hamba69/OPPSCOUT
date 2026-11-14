@@ -4,14 +4,43 @@
   inset: 0;
   display: grid;
   place-items: center;
-  background: #fafaf6;
+  background:
+    radial-gradient(55% 45% at 85% 0%, rgb(255 215 0 / .22), transparent 70%),
+    radial-gradient(45% 40% at 0% 35%, rgb(255 236 170 / .6), transparent 70%),
+    radial-gradient(50% 45% at 100% 100%, rgb(255 214 170 / .35), transparent 70%),
+    linear-gradient(170deg, #fffcf4 0%, #fff8e4 55%, #fff3e6 100%);
 }
 
 .stage {
   display: flex;
+  width: min(22rem, calc(100% - 2rem));
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding: 2.5rem 2rem;
+  border: 1px solid rgb(255 255 255 / .9);
+  border-radius: 1.75rem;
+  background: rgb(255 255 255 / .85);
+  box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 10px 30px rgb(146 98 0 / .06);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  text-align: center;
+}
+
+.orb {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fffbe0 0%, #ffe14d 30%, #ffb800 62%, #ff8a3d 100%);
+  box-shadow: 0 1px 2px rgb(255 255 255 / .8) inset, 0 10px 30px rgb(255 170 0 / .4);
+  animation: orb-breathe 2.4s ease-in-out infinite;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .wordmark {
@@ -21,15 +50,21 @@
   color: #1e293b;
 }
 
+.message {
+  margin: 0;
+  color: #3f4d62;
+  font-size: 13px;
+}
+
 /* One quiet motion: a short gold bar slides along a thin track. */
 .track {
   position: relative;
-  width: 8rem;
-  height: 3px;
-  margin-top: 0.5rem;
+  width: 9rem;
+  height: 4px;
   overflow: hidden;
   border-radius: 9999px;
-  background: rgb(30 41 59 / 10%);
+  border: 1px solid #fbe7a1;
+  background: #fff3c4;
 }
 
 .bar {
@@ -37,7 +72,7 @@
   inset: 0 auto 0 0;
   width: 40%;
   border-radius: inherit;
-  background: #ffd700;
+  background: #ffd43b;
   animation: bar-slide 1.2s ease-in-out infinite;
 }
 
@@ -56,7 +91,22 @@
   to { transform: translateX(250%); }
 }
 
+@keyframes orb-breathe {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgb(255 255 255 / .8) inset, 0 10px 30px rgb(255 170 0 / .4);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 1px 2px rgb(255 255 255 / .8) inset, 0 12px 34px rgb(255 170 0 / .5);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none;
+  }
+
   .bar {
     animation: none;
     width: 100%;

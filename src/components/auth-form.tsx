@@ -202,10 +202,9 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
             )}
           </div>
 
-          {/* Submit — goldish yellow button */}
           <button
             type="submit"
-            className="mt-2 flex min-h-[3.125rem] w-full items-center justify-center gap-2 rounded-full bg-[#FDE742] px-4 text-[15px] font-bold text-ink shadow-[0_6px_16px_rgba(230,170,0,0.25)] transition hover:brightness-105 active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-2 flex min-h-[3.125rem] w-full items-center justify-center gap-2 rounded-full bg-[#FFD43B] px-4 text-[15px] font-bold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_6px_16px_rgba(230,170,0,0.25)] transition hover:brightness-105 active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={busy}
           >
             {busy ? "Please wait…" : isSignin ? "Log in" : "Create account"}

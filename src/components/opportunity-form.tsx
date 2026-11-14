@@ -4,11 +4,21 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { ProfileMultiChoice, ProfileSelect } from "@/components/profile-choice";
+import { Icon } from "@/components/app-shell";
 import type { Opportunity } from "@/core/entities/domain";
 import { useTransientMessage } from "@/hooks/use-transient-message";
 import type { ProfileChoices } from "@/services/profile/choices";
 
 const EDUCATION_ORDER = ["no formal education", "secondary", "certificate", "diploma", "bachelors", "masters", "phd"];
+const OPPORTUNITY_TYPES = [
+  ["job", "Job"],
+  ["internship", "Internship"],
+  ["scholarship", "Scholarship"],
+  ["fellowship", "Fellowship"],
+  ["grant", "Grant"],
+  ["training", "Training"],
+  ["consultancy", "Consultancy"],
+] as const;
 
 export function OpportunityForm({ organizationId, choices, initial }: { organizationId: string; choices: ProfileChoices; initial?: Opportunity }): React.JSX.Element {
   const router = useRouter();
@@ -20,6 +30,7 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
   const [location, setLocation] = useState(initial?.location ?? "");
   const education = useMemo(() => [...choices.educationLevel].sort((a, b) => EDUCATION_ORDER.indexOf(a.value) - EDUCATION_ORDER.indexOf(b.value)), [choices.educationLevel]);
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const selectedType = OPPORTUNITY_TYPES.find(([value]) => value === initial?.category)?.[0] ?? "job";
 
   async function submit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -50,28 +61,38 @@ export function OpportunityForm({ organizationId, choices, initial }: { organiza
     finally { setSubmitting(false); }
   }
 
-  return <form onSubmit={submit} className="mt-6 space-y-5">
-    <section className="card grid gap-4 md:grid-cols-2" aria-labelledby="op-basics">
-      <h2 id="op-basics" className="text-lg font-extrabold text-ink md:col-span-2">Opportunity details</h2>
+  return <form onSubmit={submit} className="space-y-5">
+    <section className="surface grid gap-4 md:grid-cols-2" aria-labelledby="op-basics">
+      <h2 id="op-basics" className="text-[17px] font-bold text-ink md:col-span-2">Opportunity details</h2>
       <label className="md:col-span-2"><span className="label">Title</span><input className="field" name="title" required maxLength={160} defaultValue={initial?.title} placeholder="e.g. Programme Officer, Monitoring and Evaluation" /></label>
-      <label><span className="label">Type</span><select className="field" name="category" defaultValue={initial?.category ?? "job"}><option value="job">Job</option><option value="internship">Internship</option><option value="scholarship">Scholarship</option><option value="fellowship">Fellowship</option><option value="grant">Grant</option><option value="training">Training</option><option value="consultancy">Consultancy</option></select></label>
-      <label><span className="label">Work arrangement</span><select className="field" name="workMode" defaultValue={initial?.workMode ?? "onsite"}><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote</option></select></label>
+      <fieldset className="md:col-span-2">
+        <legend className="label">Type</legend>
+        <div className="flex flex-wrap gap-2">
+          {OPPORTUNITY_TYPES.map(([value, label]) => (
+            <label key={value} className="chip cursor-pointer">
+              <input className="sr-only" type="radio" name="category" value={value} defaultChecked={selectedType === value} />
+              {label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <ProfileSelect name="location" label="Location" options={choices.location} value={location} onChange={setLocation} allowCustom />
-      <label><span className="label">Closing date <span className="font-normal text-navy">(optional)</span></span><input className="field" type="date" name="deadline" min={initial?.deadline && initial.deadline.toISOString().slice(0, 10) < today ? undefined : today} defaultValue={initial?.deadline?.toISOString().slice(0, 10) ?? ""} /><span className="mt-1 block text-xs text-navy">Leave blank if applications are accepted until filled.</span></label>
+      <label><span className="label">Work arrangement</span><select className="field" name="workMode" defaultValue={initial?.workMode ?? "onsite"}><option value="onsite">On-site</option><option value="hybrid">Hybrid</option><option value="remote">Remote</option></select></label>
       <label className="md:col-span-2"><span className="label">Description</span><textarea className="field min-h-32" name="description" required defaultValue={initial?.description} placeholder="Describe the role or programme, responsibilities and benefits." /></label>
     </section>
-    <section className="card space-y-5" aria-labelledby="op-elig">
-      <div><h2 id="op-elig" className="text-lg font-extrabold text-ink">Who can apply</h2><p className="mt-1 text-sm text-navy">Applicants who do not meet these requirements will not see the listing. Leave a section empty if it does not apply.</p></div>
+    <section className="surface space-y-5" aria-labelledby="op-elig">
+      <div><h2 id="op-elig" className="text-[17px] font-bold text-ink">Who can apply</h2><p className="mt-1 text-sm text-navy">Applicants who do not meet these requirements will not see the listing. Leave a section empty if it does not apply.</p></div>
       <ProfileMultiChoice name="educationLevels" label="Accepted education levels" hint="Select all levels you accept." options={education} values={educationLevels} onChange={setEducationLevels} />
       <ProfileMultiChoice name="fieldsOfStudy" label="Accepted fields of study" hint="Select all fields you accept." options={choices.fieldOfStudy} values={fieldsOfStudy} onChange={setFieldsOfStudy} />
       <ProfileMultiChoice name="requiredSkills" label="Required skills" hint="Skills an applicant must have." options={choices.skills} values={requiredSkills} onChange={setRequiredSkills} />
     </section>
-    <section className="card grid gap-4" aria-labelledby="op-apply">
-      <h2 id="op-apply" className="text-lg font-extrabold text-ink">How to apply</h2>
-      <label><span className="label">Application instructions</span><input className="field" name="applicationMethod" required defaultValue={initial?.applicationMethod} placeholder="e.g. Submit your CV and cover letter on the careers page" /></label>
+    <section className="surface grid gap-4 md:grid-cols-2" aria-labelledby="op-apply">
+      <h2 id="op-apply" className="text-[17px] font-bold text-ink md:col-span-2">How to apply</h2>
       <label><span className="label">Official application link</span><input className="field" type="url" name="sourceUrl" required defaultValue={initial?.sourceUrl} placeholder="https://www.example.org/careers/role" /><span className="mt-1 block text-xs text-navy">Must be on your publisher’s official website and start with https://. Applicants are never charged to apply.</span></label>
+      <label><span className="label">Closing date <span className="font-normal text-navy">(optional)</span></span><input className="field" type="date" name="deadline" min={initial?.deadline && initial.deadline.toISOString().slice(0, 10) < today ? undefined : today} defaultValue={initial?.deadline?.toISOString().slice(0, 10) ?? ""} /><span className="mt-1 block text-xs text-navy">Leave blank if applications are accepted until filled.</span></label>
+      <label className="md:col-span-2"><span className="label">Application instructions</span><input className="field" name="applicationMethod" required defaultValue={initial?.applicationMethod} placeholder="e.g. Submit your CV and cover letter on the careers page" /></label>
     </section>
-    <div className="flex flex-wrap items-center gap-4"><button className="button" disabled={submitting}>{submitting ? "Please wait…" : initial ? "Save changes" : "Submit for review"}</button>
+    <div className="flex flex-wrap items-center justify-end gap-4"><button className="button" disabled={submitting}><Icon name="check" size={16} />{submitting ? "Please wait…" : initial ? "Save changes" : "Submit for review"}</button>
       {message && <p className="text-sm font-medium text-[#D4A900]" role="status" aria-live="polite">{message.text}</p>}</div>
   </form>;
 }
