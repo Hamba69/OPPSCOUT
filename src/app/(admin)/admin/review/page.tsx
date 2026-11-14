@@ -8,6 +8,7 @@ import { requireAdminPortal } from "@/lib/admin-portal";
 import { getRepository } from "@/lib/repository";
 import { createServiceRoleClient } from "@/lib/supabase/admin";
 import { choiceLabel } from "@/services/profile/choices";
+import { formatDate } from "@/lib/dates";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ function flagFor(item: Opportunity, organization: Organization | null): Flag {
   return "new";
 }
 
-const day = (value: Date | string | null | undefined): string => value ? new Date(value).toLocaleDateString("en-UG", { day: "numeric", month: "short" }) : "—";
+const day = (value: Date | string | null | undefined): string => value ? formatDate(value, { day: "numeric", month: "short" }) : "—";
 
 function FlagPill({ flag }: { flag: Flag }): React.JSX.Element {
   const tone = flag === "new" ? "text-[#6B4E00] bg-[#FFF3C4]" : "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]";

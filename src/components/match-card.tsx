@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { OpportunityOrigin } from "@/core/entities/domain";
 import { SaveButton } from "@/components/save-button";
+import { formatDate } from "@/lib/dates";
 
 export interface MatchCardProps {
   id: string;
@@ -34,7 +35,7 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
   const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
   const workMode = props.workMode && props.workMode !== "unknown" && props.workMode.toLowerCase() !== props.location.toLowerCase() ? props.workMode : null;
   const deadlineLabel = props.deadline
-    ? `Closes ${new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" })}`
+    ? `Closes ${formatDate(props.deadline, { day: "numeric", month: "short" })}`
     : "Deadline not published";
   return (
     <article className={`opp-card ${reason ? "with-reason" : ""}`}>

@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { Icon } from "@/components/app-shell";
 import type { Opportunity } from "@/core/entities/domain";
+import { formatDate } from "@/lib/dates";
 
 type ListingFilter = "All" | "Published" | "In review" | "Changes requested" | "Closed";
 
@@ -96,7 +97,7 @@ export function PublisherOpportunityTable({
                     <td className="px-3 py-3.5"><StatusPill status={listingStatus(item)} /></td>
                     <td className="whitespace-nowrap px-3 py-3.5 text-navy">
                       {item.deadline
-                        ? item.deadline.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })
+                        ? formatDate(item.deadline, { day: "2-digit", month: "short", year: "numeric" })
                         : "-"}
                     </td>
                     <td className="px-3 py-3.5">

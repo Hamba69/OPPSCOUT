@@ -8,6 +8,7 @@ import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { formatDate } from "@/lib/dates";
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ from?: string }> };
 export const dynamic = "force-dynamic";
@@ -30,7 +31,7 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   const savedId = saved.find((item) => item.opportunityId === id)?.id;
   const sourceHref = opportunity.sourceUrl;
   const days = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - new Date().getTime()) / 86_400_000) : null;
-  const deadlineText = opportunity.deadline ? opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" }) : "Deadline not published";
+  const deadlineText = opportunity.deadline ? formatDate(opportunity.deadline, { dateStyle: "medium" }) : "Deadline not published";
   const workMode = opportunity.workMode && opportunity.workMode !== "unknown" ? opportunity.workMode : null;
   const backHref = from === "matches" ? "/feed" : "/opportunities";
   const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";

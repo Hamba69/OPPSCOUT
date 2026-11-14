@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import type { OpportunityOrigin, VerificationStatus } from "@/core/entities/domain";
 import { choiceLabel } from "@/services/profile/choices";
+import { formatDate } from "@/lib/dates";
 
 export interface OpportunityListItem {
   id: string; title: string; organization: string; category: string; location: string; workMode: string;
@@ -14,7 +15,7 @@ export function OpportunityListCard({ item, now }: { item: OpportunityListItem; 
   const days = item.deadline ? Math.ceil((item.deadline.getTime() - now.getTime()) / 86_400_000) : null;
   const urgent = days !== null && days > 0 && days <= 3;
   const workMode = item.workMode && item.workMode !== "unknown" && item.workMode.toLowerCase() !== item.location.toLowerCase() ? item.workMode : null;
-  const deadline = item.deadline ? `Closes ${item.deadline.toLocaleDateString("en-UG", { day: "numeric", month: "short", year: "numeric" })}` : "Deadline not published";
+  const deadline = item.deadline ? `Closes ${formatDate(item.deadline, { day: "numeric", month: "short", year: "numeric" })}` : "Deadline not published";
 
   return <article className="opp-card">
     <div className="flex items-center justify-between gap-2">

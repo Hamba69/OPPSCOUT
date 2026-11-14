@@ -6,6 +6,7 @@ import { choiceLabel } from "@/services/profile/choices";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { formatDate } from "@/lib/dates";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +47,7 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
           const countdown = opportunity.deadline
             ? daysLeft !== null && daysLeft > 0
               ? urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : `${daysLeft} days left`
-              : `Closed ${opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" })}`
+              : `Closed ${formatDate(opportunity.deadline, { dateStyle: "medium" })}`
             : "Deadline not published";
 
           return (
