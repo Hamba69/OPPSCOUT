@@ -35,6 +35,7 @@ export interface RankedFeedOptions {
   opportunityIds?: ReadonlySet<string>;
   profile?: UserProfile | null;
   opportunities?: Opportunity[];
+  includePersistedMatches?: boolean;
 }
 
 export function recomputeRankedFeed(
@@ -57,7 +58,7 @@ async function buildObservedFeed(
   const [profile, listedOpportunities, matchRows] = await Promise.all([
     options.profile !== undefined ? Promise.resolve(options.profile) : repository.getProfile(userId),
     options.opportunities ? Promise.resolve(options.opportunities) : repository.listOpportunities({ verificationStatus: "verified", statuses: ["open", "closing_soon"] }),
-    options.persist === false ? repository.listMatches(userId) : Promise.resolve(undefined),
+    options.persist === false && options.includePersistedMatches !== false ? repository.listMatches(userId) : Promise.resolve(undefined),
   ]);
   if (!profile) return [];
   const persistedMatches = options.persist === false

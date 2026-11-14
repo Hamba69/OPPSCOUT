@@ -2,8 +2,9 @@
   position: fixed;
   z-index: 1000;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background:
     radial-gradient(55% 45% at 85% 0%, rgb(255 215 0 / .22), transparent 70%),
     radial-gradient(45% 40% at 0% 35%, rgb(255 236 170 / .6), transparent 70%),
@@ -12,6 +13,9 @@
 }
 
 .stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: flex;
   width: min(42rem, calc(100% - 2rem));
   flex-direction: column;
@@ -19,6 +23,7 @@
   justify-content: center;
   gap: 2rem;
   text-align: center;
+  transform: translate(-50%, -50%);
 }
 
 .orb {

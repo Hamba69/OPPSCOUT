@@ -1,5 +1,6 @@
 import { WebVitals } from "@/components/web-vitals";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
@@ -22,12 +23,17 @@ export const metadata: Metadata = {
   description: "Meet your opportunities. Verified jobs, scholarships, grants and internships matched to you.",
 };
 
+async function SessionAwareHeader(): Promise<React.JSX.Element> {
+  return <SiteHeader signedIn={await hasPageSession()} />;
+}
+
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>): Promise<React.JSX.Element> {
-  const signedIn = await hasPageSession();
   return (
     <html lang="en" className={sans.variable}>
       <body>
-        <SiteHeader signedIn={signedIn} />
+        <Suspense fallback={<SiteHeader signedIn={false} />}>
+          <SessionAwareHeader />
+        </Suspense>
         <SeekerFrame>{children}</SeekerFrame>
         <BottomTabs />
         <WebVitals />

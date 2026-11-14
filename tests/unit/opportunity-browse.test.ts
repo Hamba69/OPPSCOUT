@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { browseOpportunities } from "@/lib/opportunity-browse";
 import { MemoryRepository, DEMO_USER_ID } from "@/lib/repository/memory";
@@ -7,6 +7,16 @@ import { setRepositoryForTests } from "@/lib/repository";
 afterEach(() => setRepositoryForTests(undefined));
 
 describe("opportunity browsing", () => {
+  it("does not fetch persisted match rows just to rank opportunities", async () => {
+    const repository = new MemoryRepository();
+    const listMatches = vi.spyOn(repository, "listMatches");
+    setRepositoryForTests(repository);
+
+    await browseOpportunities(DEMO_USER_ID, {}, new Date());
+
+    expect(listMatches).not.toHaveBeenCalled();
+  });
+
   it("shows open catalog entries awaiting review without exposing flagged or organization submissions", async () => {
     const repository = new MemoryRepository();
     setRepositoryForTests(repository);

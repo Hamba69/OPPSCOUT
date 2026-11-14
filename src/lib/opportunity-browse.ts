@@ -29,6 +29,7 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
         telemetry: false,
         profile,
         opportunities: visible,
+        includePersistedMatches: false,
       })
     : [];
   const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
