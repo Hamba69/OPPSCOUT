@@ -53,7 +53,13 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
   const reviewing = raw.review ?? null;
 
   // Everything that still needs a decision: new submissions (pending) and reported listings (flagged).
-  const query = (status: string): URLSearchParams => new URLSearchParams({ verificationStatus: status, status: "open", page: String(page) });
+  const search = (raw.search ?? "").trim();
+  const query = (status: string): URLSearchParams => new URLSearchParams({
+    verificationStatus: status,
+    status: "open",
+    page: String(page),
+    ...(search ? { search } : {}),
+  });
   const [pendingListings, flaggedListings, pendingOrgs, flaggedOrgs] = await Promise.all([
     repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending"))),
     repository.adminPage("opportunities", parseAdminQuery("opportunities", query("flagged"))),
@@ -80,6 +86,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
 
   const href = (changes: Record<string, string | null>): string => {
     const next = new URLSearchParams({ tab, flag: flagFilter, page: String(page) });
+    if (search) next.set("search", search);
     for (const [key, value] of Object.entries(changes)) { if (value === null) next.delete(key); else next.set(key, value); }
     if (next.get("flag") === "all") next.delete("flag");
     if (next.get("page") === "1") next.delete("page");
@@ -94,10 +101,23 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
       <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Organizations · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
     </AdminHeader>
 
-    {listingTotal > 0 && <p role="alert" className="flex items-center gap-3 rounded-[1.25rem] border border-[rgba(220,38,38,.18)] bg-[rgba(220,38,38,.06)] px-[18px] py-3.5 text-[13px] font-semibold text-[#7F1D1D]">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B1C1C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0"><path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 8v5M12 16h.01" /></svg>
-      Review alert: these listings are withheld from seekers until every trust check is complete.
-    </p>}
+    <form action="/admin/review" method="get" role="search" className="surface flex flex-wrap items-end gap-3">
+      <input type="hidden" name="tab" value={tab} />
+      <input type="hidden" name="flag" value={flagFilter} />
+      <label className="min-w-[220px] flex-1 text-sm font-semibold text-navy">
+        Search review queue
+        <input
+          className="field mt-1"
+          type="search"
+          name="search"
+          defaultValue={raw.search ?? ""}
+          maxLength={200}
+          placeholder="Organization or opportunity name"
+        />
+      </label>
+      <button className="button">Search</button>
+      {search && <Link className="button-secondary" href={href({ search: null, page: null, review: null })}>Clear search</Link>}
+    </form>
 
     <div className="flex flex-wrap items-center justify-between gap-3">
       <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
@@ -106,7 +126,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
 
     {(openListing || openOrganization) && <section aria-label="Review details" className="surface flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3"><h2 className="surface-title">Reviewing {openListing?.title ?? openOrganization?.name}</h2><Link href={href({ review: null })} className="button-secondary">Close</Link></div>
-      {openListing && <ReviewCard id={openListing.id} title={openListing.title} organization={openListing.organization?.name ?? openListing.organizationName ?? "Unknown organization"} sourceUrl={openListing.sourceUrl} status={openListing.verificationStatus} description={openListing.description} reviewNotes={openListing.reviewNotes} />}
+      {openListing && <ReviewCard id={openListing.id} title={openListing.title} organization={openListing.organization?.name ?? openListing.organizationName ?? "Unknown organization"} sourceUrl={openListing.sourceUrl} status={openListing.verificationStatus} description={openListing.description} />}
       {openOrganization && <OrganizationReviewCard id={openOrganization.id} name={openOrganization.name} sector={openOrganization.sector} officialLinks={openOrganization.officialLinks} officialEmail={openOrganization.officialEmail} registrationProof={openOrganization.registrationProof} registrationProofDocumentId={openOrganization.dashboardUsers.map((userId) => proofByUser.get(userId)).find(Boolean) ?? null} accountableContact={openOrganization.accountableContact} accountableContacts={openOrganization.accountableContacts} additionalAccountableContact={openOrganization.additionalAccountableContact} additionalAccountableContactPhone={openOrganization.additionalAccountableContactPhone} status={openOrganization.verificationStatus} />}
     </section>}
 

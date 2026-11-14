@@ -19,19 +19,19 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
   const categories = allOpportunityTypes(open.map((item) => item.category));
   const counts: Record<string, number> = {};
   for (const item of open) counts[item.category] = (counts[item.category] ?? 0) + 1;
-  const matches = open.length && profile
-    ? await buildRankedFeed(repository, userId, now, undefined, {
-        persist: false,
-        telemetry: false,
-        profile,
-        opportunities: open,
-      })
-    : [];
-  const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
   const needle = filters.query?.trim().toLowerCase() ?? "";
   const visible = open
     .filter((item) => !filters.type || item.category === filters.type)
     .filter((item) => !needle || [item.title, item.organization?.name ?? "", item.location, item.category, item.description, ...item.requiredSkills].join(" ").toLowerCase().includes(needle));
+  const matches = visible.length && profile
+    ? await buildRankedFeed(repository, userId, now, undefined, {
+        persist: false,
+        telemetry: false,
+        profile,
+        opportunities: visible,
+      })
+    : [];
+  const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
   const items = visible
     .sort((a, b) => (scores.get(b.id) ?? -1) - (scores.get(a.id) ?? -1) ||
       (a.deadline?.getTime() ?? Infinity) - (b.deadline?.getTime() ?? Infinity))

@@ -6,23 +6,24 @@ import { ExternalIcon } from "@/components/icons";
 import { StatusBadge } from "@/components/status-badge";
 
 const checks = [
-  ["sourceAuthentic", "Listing is published by the named organization or an authorized partner"],
-  ["officialApplicationLink", "Apply link is official or linked from the organization's official site"],
-  ["eligibleForUgandans", "Opportunity is based in Uganda or remote and explicitly open to Ugandan applicants"],
-  ["noInappropriateFees", "No inappropriate application fee"],
-  ["noSensitiveDataAsk", "No unnecessary sensitive-data request"],
-  ["deadlinePlausible", "A stated future closing date is shown on the official source"],
-  ["duplicateChecked", "Duplicate check completed"],
+  "sourceAuthentic",
+  "officialApplicationLink",
+  "eligibleForUgandans",
+  "noInappropriateFees",
+  "noSensitiveDataAsk",
+  "deadlinePlausible",
+  "duplicateChecked",
 ] as const;
 
-export function ReviewCard({ id, title, organization, sourceUrl, status, description, reviewNotes }: { id: string; title: string; organization: string; sourceUrl: string; status: string; description: string; reviewNotes: string | null }): React.JSX.Element {
+export function ReviewCard({ id, title, organization, sourceUrl, status, description }: { id: string; title: string; organization: string; sourceUrl: string; status: string; description: string }): React.JSX.Element {
   const formRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState("");
   const [done, setDone] = useState(false);
   async function review(approved: boolean): Promise<void> {
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
-    const checklist = Object.fromEntries(checks.map(([name]) => [name, data.get(name) === "on"]));
+    const requirementsChecked = data.get("requirementsChecked") === "on";
+    const checklist = Object.fromEntries(checks.map((name) => [name, requirementsChecked]));
     const response = await fetch(`/api/v1/reports/review/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checklist, approved, notes: String(data.get("notes") ?? "") }) });
     setMessage(response.ok ? (approved ? "Approved and ready for matching." : "Kept out of feeds for follow-up.") : "Review could not be saved. Approval requires every check, including a stated deadline, safe application link and Uganda eligibility.");
     if (response.ok) setDone(true);
@@ -42,16 +43,10 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
           <summary className="min-h-11 cursor-pointer py-3 text-sm font-bold text-navy">Listing details and checks</summary>
           <div className="space-y-3 border-t border-ink/10 py-3">
             <p className="text-sm leading-6 text-navy">{description}</p>
-            {reviewNotes && <aside className="rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="alert">{reviewNotes}</aside>}
-            <fieldset className="space-y-2">
-              <legend className="label">Review checks</legend>
-              {checks.map(([name, label]) => (
-                <label key={name} className="flex items-start gap-3 rounded-xl bg-butter p-3 text-sm font-medium text-ink">
-                  <input type="checkbox" className="mt-0.5 size-4 shrink-0 accent-leaf" name={name} />
-                  {label}
-                </label>
-              ))}
-            </fieldset>
+            <label className="flex items-start gap-3 rounded-xl bg-butter p-3 text-sm font-medium text-ink">
+              <input type="checkbox" className="mt-0.5 size-4 shrink-0 accent-leaf" name="requirementsChecked" />
+              I confirm all review requirements are met
+            </label>
             <label><span className="label">Review note</span><textarea name="notes" className="field min-h-20" /></label>
           </div>
         </details>

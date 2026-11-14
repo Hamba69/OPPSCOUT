@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Form from "next/form";
 
 import { Icon } from "@/components/app-shell";
 import { OpportunitiesBrowser } from "@/components/opportunities-browser";
@@ -41,7 +42,7 @@ export default async function OpportunitiesPage({
         <h1>Opportunities</h1>
       </header>
 
-      <form action="/opportunities" method="get" role="search" className="w-full">
+      <Form action="/opportunities" prefetch={false} role="search" className="w-full">
         {type && <input type="hidden" name="type" value={type} />}
         <label className="search-pill !max-w-[26.25rem]">
           <Icon name="search" className="shrink-0 text-navy" />
@@ -49,19 +50,19 @@ export default async function OpportunitiesPage({
           <input type="search" name="q" defaultValue={q} placeholder="Institution, skill, title, or place" />
           <button className="button !min-h-9 !px-4 shrink-0" type="submit">Search</button>
         </label>
-      </form>
+      </Form>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <nav aria-label="Filter by category" className="flex flex-wrap gap-1.5">
-          <Link href={typeHref()} className="chip" aria-current={!type ? "page" : undefined}>All</Link>
+          <Link href={typeHref()} prefetch={false} className="chip" aria-current={!type ? "page" : undefined}>All</Link>
           {categories.map((name) => (
-            <Link key={name} href={typeHref(name)} className="chip" aria-current={type === name ? "page" : undefined}>
+            <Link key={name} href={typeHref(name)} prefetch={false} className="chip" aria-current={type === name ? "page" : undefined}>
               {choiceLabel(name)}
             </Link>
           ))}
         </nav>
         {(query || type) && (
-          <Link href="/opportunities" className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4">
+          <Link href="/opportunities" prefetch={false} className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4">
             Clear filters
           </Link>
         )}
