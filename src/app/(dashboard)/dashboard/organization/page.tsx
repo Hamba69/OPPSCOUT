@@ -13,7 +13,6 @@ export default async function OrganizationPage(): Promise<React.JSX.Element> {
     <main className="animate-in flex flex-col gap-5">
       <header className="title-card">
         <h1>Publisher profile</h1>
-        <p>Keep the organization details used to verify your publisher account current.</p>
       </header>
       <OrganizationForm
         id={organization.id}

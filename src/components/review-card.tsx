@@ -27,5 +27,40 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
     setMessage(response.ok ? (approved ? "Approved and ready for matching." : "Kept out of feeds for follow-up.") : "Review could not be saved. Approval requires every check, including a stated deadline, safe application link and Uganda eligibility.");
     if (response.ok) setDone(true);
   }
-  return <article className={`card ${done ? "opacity-60" : ""}`}><div className="flex flex-wrap items-start justify-between gap-3"><div><StatusBadge value={status} /><h2 className="mt-2 text-lg font-extrabold text-ink">{title}</h2><p className="text-sm font-bold text-navy">{organization}</p></div><a className="button-secondary" href={sourceUrl} target="_blank" rel="noreferrer">Check source <ExternalIcon /></a></div><p className="mt-4 text-sm leading-6 text-navy">{description}</p>{reviewNotes && <aside className="mt-4 rounded-2xl border-2 border-honey bg-butter p-3 text-sm font-bold text-ink" role="alert">Review alert: {reviewNotes}</aside>}<form ref={formRef} className="mt-5 space-y-3" onSubmit={(event) => { event.preventDefault(); void review(true); }}>{checks.map(([name, label]) => <label key={name} className="flex items-center gap-3 rounded-2xl bg-butter p-3 text-sm font-bold text-ink"><input type="checkbox" className="size-5 accent-leaf" name={name} />{label}</label>)}<label><span className="label">Review note</span><textarea name="notes" className="field min-h-20" /></label><div className="flex flex-wrap gap-2"><button className="button" disabled={done}>Approve</button><button type="button" className="button-secondary" disabled={done} onClick={() => void review(false)}>Keep flagged</button></div>{message && <p className="rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</form></article>;
+  return (
+    <article className={`surface ${done ? "opacity-60" : ""}`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <StatusBadge value={status} />
+          <h3 className="mt-2 text-lg font-extrabold text-ink">{title}</h3>
+          <p className="text-sm text-navy">{organization}</p>
+        </div>
+        <a className="button-secondary shrink-0" href={sourceUrl} target="_blank" rel="noreferrer">Check site <ExternalIcon /></a>
+      </div>
+      <form ref={formRef} className="mt-4 space-y-3" onSubmit={(event) => { event.preventDefault(); void review(true); }}>
+        <details className="rounded-xl border border-ink/10 bg-white/70 px-4">
+          <summary className="min-h-11 cursor-pointer py-3 text-sm font-bold text-navy">Listing details and checks</summary>
+          <div className="space-y-3 border-t border-ink/10 py-3">
+            <p className="text-sm leading-6 text-navy">{description}</p>
+            {reviewNotes && <aside className="rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="alert">{reviewNotes}</aside>}
+            <fieldset className="space-y-2">
+              <legend className="label">Review checks</legend>
+              {checks.map(([name, label]) => (
+                <label key={name} className="flex items-start gap-3 rounded-xl bg-butter p-3 text-sm font-medium text-ink">
+                  <input type="checkbox" className="mt-0.5 size-4 shrink-0 accent-leaf" name={name} />
+                  {label}
+                </label>
+              ))}
+            </fieldset>
+            <label><span className="label">Review note</span><textarea name="notes" className="field min-h-20" /></label>
+          </div>
+        </details>
+        <div className="flex flex-wrap gap-2">
+          <button className="button" disabled={done}>Verify</button>
+          <button type="button" className="button-secondary" disabled={done} onClick={() => void review(false)}>Flag</button>
+        </div>
+        {message && <p className="rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+      </form>
+    </article>
+  );
 }

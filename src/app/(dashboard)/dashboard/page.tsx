@@ -1,7 +1,5 @@
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
-import Link from "next/link";
-
 import { Icon } from "@/components/app-shell";
 import { PublisherOpportunityTable } from "@/components/publisher-opportunity-table";
 import { StatusBadge } from "@/components/status-badge";
@@ -49,7 +47,6 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
             {statusSentence}
           </p>
         </div>
-        <Link className="button !min-h-11" href="/dashboard/opportunities/new"><Icon name="plus" size={15} strokeWidth={2.2} />Post an opportunity</Link>
       </section>
 
       <section aria-label="Publisher overview metrics" className="grid gap-3.5 sm:grid-cols-3">

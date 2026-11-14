@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { Icon } from "@/components/app-shell";
 import { EmptyState } from "@/components/empty-state";
 import { PublisherOpportunityTable } from "@/components/publisher-opportunity-table";
 import { requirePageAuth } from "@/lib/auth";
@@ -17,12 +16,8 @@ export default async function ProviderOpportunitiesPage(): Promise<React.JSX.Ele
   });
   return (
     <main className="animate-in flex flex-col gap-6">
-      <header className="title-card !w-full !flex-row !flex-wrap !items-center !justify-between gap-4">
-        <div>
-          <h1>Your opportunities</h1>
-          <p>Manage current postings through review and their closing date.</p>
-        </div>
-        <Link className="button !min-h-11" href="/dashboard/opportunities/new"><Icon name="plus" size={15} strokeWidth={2.2} />Post an opportunity</Link>
+      <header className="title-card">
+        <h1>Your opportunities</h1>
       </header>
       {opportunities.length ? (
         <PublisherOpportunityTable opportunities={opportunities} title="Opportunity listings" filterable />

@@ -61,5 +61,53 @@ export function OrganizationReviewCard(props: OrganizationReviewCardProps): Reac
     }
   }
 
-  return <article className={`card ${done ? "opacity-60" : ""}`}><div className="flex items-start justify-between gap-3"><div><StatusBadge value={props.status} /><h2 className="mt-2 text-lg font-extrabold text-ink">{props.name}</h2><p className="text-sm font-bold text-navy">{props.sector}</p></div>{props.officialLinks[0] && <a className="button-secondary" href={props.officialLinks[0]} target="_blank" rel="noreferrer">Check site <ExternalIcon /></a>}</div><dl className="mt-5 grid gap-2 text-sm"><div><dt className="font-bold text-navy">Official email</dt><dd className="text-ink">{props.officialEmail ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">URSB registration number</dt><dd className="text-ink">{props.registrationProof ?? "Not supplied"}</dd></div><div><dt className="font-bold text-navy">Supporting document (optional)</dt><dd className="text-ink">{props.registrationProofDocumentId ? <a className="font-bold underline" href={`/api/v1/admin/registration-proof/${props.registrationProofDocumentId}`} target="_blank" rel="noreferrer">Review uploaded proof</a> : "Not provided"}</dd></div><div><dt className="font-bold text-navy">Accountable contacts</dt><dd className="text-ink">{contacts.length ? <ul>{contacts.map((contact, index) => <li key={`${contact.name}-${index}`}>{contact.name || "Name not supplied"} · {contact.phone || "Phone not supplied"}</li>)}</ul> : "Not supplied"}</dd></div></dl><p className="mt-4 text-xs leading-5 text-navy">The website is optional; validate it and the matching email domain if provided. Verify the URSB registration number when supplied. Without one, verification requires your explicit confirmation that you independently checked the organization&apos;s identity and legitimacy.</p><div className="mt-5 flex flex-wrap gap-2"><button className="button" disabled={done || busy} onClick={() => void decide(true)}>{busy ? "Saving…" : "Verify organization"}</button><button className="button-secondary" disabled={done || busy} onClick={() => void decide(false)}>Keep flagged</button></div>{message && <p className="mt-3 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}</article>;
+  return (
+    <article className={`surface ${done ? "opacity-60" : ""}`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <StatusBadge value={props.status} />
+          <h3 className="mt-2 truncate text-lg font-extrabold text-ink">{props.name}</h3>
+          <p className="text-sm text-navy">{props.sector}</p>
+        </div>
+        {props.officialLinks[0] && (
+          <a className="button-secondary shrink-0" href={props.officialLinks[0]} target="_blank" rel="noreferrer">
+            Check site <ExternalIcon />
+          </a>
+        )}
+      </div>
+      <details className="mt-4 rounded-xl border border-ink/10 bg-white/70 px-4">
+        <summary className="min-h-11 cursor-pointer py-3 text-sm font-bold text-navy">Organization details</summary>
+        <dl className="grid gap-3 border-t border-ink/10 py-3 text-sm">
+          <div><dt className="font-bold text-navy">Official email</dt><dd className="break-words text-ink">{props.officialEmail ?? "Not supplied"}</dd></div>
+          <div><dt className="font-bold text-navy">URSB registration number</dt><dd className="text-ink">{props.registrationProof ?? "Not supplied"}</dd></div>
+          <div>
+            <dt className="font-bold text-navy">Supporting document</dt>
+            <dd className="text-ink">
+              {props.registrationProofDocumentId
+                ? <a className="font-bold underline" href={`/api/v1/admin/registration-proof/${props.registrationProofDocumentId}`} target="_blank" rel="noreferrer">Review uploaded proof</a>
+                : "Not provided"}
+            </dd>
+          </div>
+          <div>
+            <dt className="font-bold text-navy">Accountable contacts</dt>
+            <dd className="text-ink">
+              {contacts.length
+                ? <ul>{contacts.map((contact, index) => <li key={`${contact.name}-${index}`}>{contact.name || "Name not supplied"} · {contact.phone || "Phone not supplied"}</li>)}</ul>
+                : "Not supplied"}
+            </dd>
+          </div>
+        </dl>
+        <p className="border-t border-ink/10 py-3 text-xs leading-5 text-navy">
+          Verify the registration number when supplied. Without one, confirmation requires an independent check of the organization&apos;s identity and legitimacy.
+        </p>
+      </details>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button type="button" className="button" disabled={done || busy} onClick={() => void decide(true)}>
+          {busy ? "Saving…" : "Verify"}
+        </button>
+        <button type="button" className="button-secondary" disabled={done || busy} onClick={() => void decide(false)}>Flag</button>
+      </div>
+      {message && <p className="mt-3 rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+    </article>
+  );
 }

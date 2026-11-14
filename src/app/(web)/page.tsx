@@ -30,7 +30,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       <section className="greeting !rounded-[2rem] !px-6 !py-14 sm:!px-10 sm:!py-16">
         <div className="orb size-[4.75rem]" aria-hidden="true" />
         <h1 className="hero-title !m-0 !max-w-3xl !font-extrabold !tracking-tight">The right opportunity is already out there.</h1>
-        <p className="max-w-xl text-base leading-7 text-navy sm:text-[17px]">Verified jobs, scholarships, grants and internships in Uganda, matched to you. Find them before they close.</p>
       </section>
 
       <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">

@@ -33,7 +33,6 @@ export default async function NewOpportunityPage(): Promise<React.JSX.Element> {
       </Link>
       <header className="title-card">
         <h1>Post an opportunity</h1>
-        <p>Every listing is reviewed by the OppScout team before it is published.</p>
       </header>
       <OpportunityForm organizationId={auth.organizationId!} choices={choices} />
     </main>
