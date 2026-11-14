@@ -6,6 +6,8 @@ import { choiceLabel } from "@/services/profile/choices";
 export interface OpportunityListItem {
   id: string; title: string; organization: string; category: string; location: string; workMode: string;
   deadline: Date | null; matchScore: number | null; origin: OpportunityOrigin; verificationStatus: VerificationStatus;
+  /** Lower-case text used for in-browser search. */
+  search?: string;
 }
 
 export function OpportunityListCard({ item, now }: { item: OpportunityListItem; now: Date }): React.JSX.Element {

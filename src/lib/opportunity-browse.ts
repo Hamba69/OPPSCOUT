@@ -36,6 +36,12 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
   const items = visible
     .sort((a, b) => (scores.get(b.id) ?? -1) - (scores.get(a.id) ?? -1) ||
       (a.deadline?.getTime() ?? Infinity) - (b.deadline?.getTime() ?? Infinity))
-    .map((item) => ({ id: item.id, title: item.title, organization: item.organization?.name ?? item.organizationName ?? "Source organization", origin: item.origin ?? "catalog", verificationStatus: item.verificationStatus, category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: scores.get(item.id) ?? null }));
+    .map((item) => {
+      const organization = item.organization?.name ?? item.organizationName ?? "Source organization";
+      // Lower-case text the page filters on in the browser, so search and category changes need no server round trip.
+      // The description is trimmed to keep the page payload small.
+      const search = [item.title, organization, item.location, item.category, ...item.requiredSkills, item.description.slice(0, 300)].join(" ").toLowerCase();
+      return { id: item.id, title: item.title, organization, origin: item.origin ?? "catalog", verificationStatus: item.verificationStatus, category: item.category, location: item.location, workMode: item.workMode, deadline: item.deadline, matchScore: scores.get(item.id) ?? null, search };
+    });
   return { items, categories, counts };
 }
