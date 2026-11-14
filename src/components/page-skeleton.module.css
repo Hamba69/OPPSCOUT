@@ -47,12 +47,6 @@
   color: #1e293b;
 }
 
-.message {
-  margin: 0;
-  font-size: .8125rem;
-  color: #3f4d62;
-}
-
 /* One quiet motion: a short yellow bar slides along a butter track. */
 .track {
   position: relative;

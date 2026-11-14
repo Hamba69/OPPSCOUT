@@ -25,7 +25,8 @@ export default async function OpportunitiesPage({
       <header className="title-card">
         <h1>Opportunities</h1>
       </header>
-      <OpportunitiesBrowser items={items} categories={categories} now={now} initialType={type} initialQuery={q.trim()} />
+      {/* Keyed by the URL filters so opening /opportunities from another link starts fresh instead of keeping the old filter. */}
+      <OpportunitiesBrowser key={`${type}|${q.trim()}`} items={items} categories={categories} now={now} initialType={type} initialQuery={q.trim()} />
     </main>
   );
 }
