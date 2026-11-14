@@ -11,6 +11,8 @@ OrbitMatch is the offline non-AI default; `OPPSCOUT_MATCH_ENGINE=rules` selects 
 | `notifications` | on | Trigger logic, safeguards, worker, and provider adapters are implemented. Provider credentials remain environment-owned. |
 | `trustReview` | on | Reports and pre-publication checks share the admin queue. |
 | `providerTools` | on | Self-serve publishing, organization details, and aggregate-only analytics are complete. |
+| `publisherAnalytics` | off | Publisher analytics page and its sidebar link are hidden from publishers until further notice. The page, API and aggregation logic remain; `/dashboard/analytics` redirects to `/dashboard`. |
+| `publisherMatches` | off | Publisher Matches (candidates) pages and sidebar link are hidden from publishers until further notice. The pages, profile-sharing logic and APIs remain; `/dashboard/candidates` redirects to `/dashboard`. |
 | `kpiDashboard` | on | All ten master-plan KPIs are computed from canonical records. |
 | `aiMatching` | off | Implemented, but cannot become default before a real-provider held-out comparison passes. |
 | `aiComparison` | on | Side-by-side rule/AI precision harness is available. |

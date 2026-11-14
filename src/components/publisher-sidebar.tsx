@@ -1,36 +1,24 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { AppSidebar, type SideLink } from "@/components/app-shell";
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 
-const links = [
-  ["Overview", "/dashboard"],
-  ["Opportunities", "/dashboard/opportunities"],
-  ["Matches", "/dashboard/candidates"],
-  ["Publisher profile", "/dashboard/organization"],
-] as const;
+// Matches and Analytics stay in the code but are hidden from publishers until their flags are turned on.
+const workspace: SideLink[] = [
+  { label: "Overview", href: "/dashboard", icon: "overview" },
+  { label: "Opportunities", href: "/dashboard/opportunities", icon: "opportunities" },
+  ...(FEATURE_FLAGS.publisherMatches ? [{ label: "Matches", href: "/dashboard/candidates", icon: "people" } as const] : []),
+  ...(FEATURE_FLAGS.publisherAnalytics ? [{ label: "Analytics", href: "/dashboard/analytics", icon: "chart" } as const] : []),
+];
 
 export function PublisherSidebar(): React.JSX.Element {
-  const pathname = usePathname();
-
-  return (
-    <aside className="shrink-0 md:w-56 md:pt-6">
-      <nav aria-label="Publisher dashboard" className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:flex-col md:overflow-visible md:px-0">
-        {links.map(([label, href]) => {
-          const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(`${href}/`));
-          return (
-            <Link
-              key={href}
-              href={href}
-              prefetch
-              aria-current={active ? "page" : undefined}
-              className="rail-link"
-            >
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
-  );
+  return <AppSidebar
+    label="Publisher dashboard"
+    home="/dashboard"
+    badge={{ text: "PUBLISHER" }}
+    groups={[
+      { title: "WORKSPACE", links: workspace },
+      { links: [{ label: "Publisher profile", href: "/dashboard/organization", icon: "organization" }] },
+    ]}
+  />;
 }

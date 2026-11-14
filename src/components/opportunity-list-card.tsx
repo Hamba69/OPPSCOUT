@@ -11,19 +11,21 @@ export interface OpportunityListItem {
 export function OpportunityListCard({ item, now }: { item: OpportunityListItem; now: Date }): React.JSX.Element {
   const days = item.deadline ? Math.ceil((item.deadline.getTime() - now.getTime()) / 86_400_000) : null;
   const urgent = days !== null && days > 0 && days <= 3;
-  const workMode = item.workMode && item.workMode !== "unknown" ? item.workMode : null;
+  const workMode = item.workMode && item.workMode !== "unknown" && item.workMode.toLowerCase() !== item.location.toLowerCase() ? item.workMode : null;
   const deadline = item.deadline ? `Closes ${item.deadline.toLocaleDateString("en-UG", { day: "numeric", month: "short", year: "numeric" })}` : "Deadline not published";
 
-  return <article className="card match-lift flex h-full flex-col !rounded-2xl !shadow-none">
-    <div className="flex items-start justify-between gap-3">
-      <span className="pill capitalize">{choiceLabel(item.category)}</span>
-      {item.matchScore !== null && <span className="match-score shrink-0">{item.matchScore}% match</span>}
+  return <article className="opp-card">
+    <div className="flex items-center justify-between gap-2">
+      <span className="cat-pill">{choiceLabel(item.category)}</span>
+      {item.matchScore !== null && <span className="match-score shrink-0 !text-xs">{item.matchScore}% match</span>}
     </div>
-    <h2 className="mt-3 text-lg font-bold leading-snug text-ink">{item.title}</h2>
-    <p className="mt-0.5 text-sm font-medium text-navy">{item.organization}</p>
-    <p className="mt-3 text-sm text-navy"><span className="capitalize">{item.location}{workMode ? ` · ${workMode}` : ""}</span> · {urgent ? <strong className="text-[#B3261E]">Closes in {days} {days === 1 ? "day" : "days"}</strong> : deadline}</p>
-    <div className="mt-auto pt-4">
-      <Link href={`/opportunity/${item.id}`} className="text-link">View details</Link>
+    <div className="min-h-0 flex-1">
+      <p className="clamp-1 text-xs font-semibold text-navy"><span>{item.organization}</span><span className="capitalize"> · {item.location}{workMode ? ` · ${workMode}` : ""}</span></p>
+      <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink"><Link href={`/opportunity/${item.id}`} className="stretch focus-visible:underline">{item.title}</Link></h2>
+    </div>
+    <div className="opp-card-foot">
+      {urgent ? <strong className="text-[#9B1C1C]">Closes in {days} {days === 1 ? "day" : "days"}</strong> : <span>{deadline}</span>}
+      <span aria-hidden="true" className="font-semibold">View details</span>
     </div>
   </article>;
 }

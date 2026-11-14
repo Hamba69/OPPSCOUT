@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getOptionalAuth } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
@@ -14,16 +15,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps): Promi
 
   return (
     <main className="relative min-h-[100dvh] overflow-hidden">
-      {/* Soft gold wash behind the card (matches mockups) */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% -10%, #FFF6C8 0%, #FAFAF6 55%, #FAFAF6 100%)",
-        }}
-        aria-hidden="true"
-      />
-
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-lg flex-col px-4 pb-10 pt-8 sm:px-6">
         {error === "callback" && (
           <p
@@ -37,6 +28,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps): Promi
 
         <div className="flex flex-1 flex-col justify-center">
           <AuthForm nextPath={nextPath} initialMode={mode === "signup" ? "signup" : "signin"} />
+          <p className="mt-5 text-center text-[13px] text-navy">Publishing for an organization? <Link href="/organizations/login" className="font-bold text-ink underline underline-offset-2">Publisher log in</Link></p>
         </div>
       </div>
     </main>

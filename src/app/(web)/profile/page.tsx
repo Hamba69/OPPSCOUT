@@ -24,9 +24,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     otherLinks: profile?.otherLinks ?? [], projects: (profile?.projects ?? []).map((item) => ({ ...item, url: item.url ?? "", role: item.role ?? "" })),
     shareWithOrganizations: profile?.shareWithOrganizations ?? false, shareContactDetails: profile?.shareContactDetails ?? false,
   };
-  return <main className="page-shell animate-in">
-    <ProfileArea active="profile">
-      <h1 className="text-2xl font-extrabold text-ink sm:text-4xl">Edit profile</h1>
+  return <main className="animate-in flex flex-col gap-6">
+    <ProfileArea active="profile" title="My profile">
       <ProfileForm initial={initial} choices={choices} isNew={!profile} nextPath={nextPath} />
     </ProfileArea>
   </main>;

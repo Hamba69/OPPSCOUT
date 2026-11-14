@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 import { refreshSession } from "@/lib/supabase/proxy";
 
 export default async function proxy(request: NextRequest): Promise<NextResponse> {
@@ -12,7 +13,11 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
     login.searchParams.set("next", `${request.nextUrl.pathname}${request.nextUrl.search}`);
     return NextResponse.redirect(login);
   }
-  if (request.nextUrl.pathname === "/dashboard/analytics" || request.nextUrl.pathname === "/dashboard/monetization") {
+  const path = request.nextUrl.pathname;
+  const hiddenFromPublishers = path === "/dashboard/monetization"
+    || (!FEATURE_FLAGS.publisherAnalytics && path === "/dashboard/analytics")
+    || (!FEATURE_FLAGS.publisherMatches && (path === "/dashboard/candidates" || path.startsWith("/dashboard/candidates/")));
+  if (hiddenFromPublishers) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
   return session.response;

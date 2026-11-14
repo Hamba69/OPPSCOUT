@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Icon } from "@/components/app-shell";
 import { OpportunitiesBrowser } from "@/components/opportunities-browser";
 import { requirePageAuth } from "@/lib/auth";
 import { browseOpportunities } from "@/lib/opportunity-browse";
@@ -35,77 +36,48 @@ export default async function OpportunitiesPage({
   };
 
   return (
-    <main className="page-shell animate-in sm:!py-10">
-      <header className="text-center">
-        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">The Opportunities</h1>
-        <p className="mt-1 text-sm text-navy">Verified, open opportunities that meet your profile and eligibility</p>
+    <main className="animate-in flex flex-col gap-6">
+      <header className="title-card">
+        <h1>Opportunities</h1>
       </header>
 
-      <div className="mt-8 flex flex-col gap-6 md:flex-row md:gap-10">
-        <nav
-          aria-label="Filter by category"
-          className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 md:mx-0 md:w-56 md:shrink-0 md:flex-col md:overflow-visible md:px-0"
-        >
-          <Link href={typeHref()} className="rail-link" aria-current={!type ? "page" : undefined}>
-            All
-          </Link>
+      <form action="/opportunities" method="get" role="search" className="w-full">
+        {type && <input type="hidden" name="type" value={type} />}
+        <label className="search-pill !max-w-[26.25rem]">
+          <Icon name="search" className="shrink-0 text-navy" />
+          <span className="sr-only">Search</span>
+          <input type="search" name="q" defaultValue={q} placeholder="Institution, skill, title, or place" />
+          <button className="button !min-h-9 !px-4 shrink-0" type="submit">Search</button>
+        </label>
+      </form>
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <nav aria-label="Filter by category" className="flex flex-wrap gap-1.5">
+          <Link href={typeHref()} className="chip" aria-current={!type ? "page" : undefined}>All</Link>
           {categories.map((name) => (
-            <Link
-              key={name}
-              href={typeHref(name)}
-              className="rail-link"
-              aria-current={type === name ? "page" : undefined}
-            >
+            <Link key={name} href={typeHref(name)} className="chip" aria-current={type === name ? "page" : undefined}>
               {choiceLabel(name)}
             </Link>
           ))}
         </nav>
-
-        <section aria-label="Opportunities" className="min-w-0 flex-1">
-          <form action="/opportunities" method="get" role="search">
-            {type && <input type="hidden" name="type" value={type} />}
-            <label>
-              <span className="sr-only">Search</span>
-              <span className="flex gap-2">
-                <input
-                  className="field"
-                  type="search"
-                  name="q"
-                  defaultValue={q}
-                  placeholder="Institution, skill, title, or place"
-                />
-                <button className="button shrink-0" type="submit">
-                  Search
-                </button>
-              </span>
-            </label>
-          </form>
-
-          {(query || type) && (
-            <div className="mt-3 flex justify-end">
-              <Link
-                href="/opportunities"
-                className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4"
-              >
-                Clear filters
-              </Link>
-            </div>
-          )}
-          {items.length ? (
-            <OpportunitiesBrowser items={items} now={now} />
-          ) : (
-            <section className="card mt-4 bg-butter text-center">
-              <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
-              <p className="mt-2 text-sm text-navy">
-                Try different words, another category, or clear your filters.
-              </p>
-              <Link href="/opportunities" className="button mt-4">
-                Show all
-              </Link>
-            </section>
-          )}
-        </section>
+        {(query || type) && (
+          <Link href="/opportunities" className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4">
+            Clear filters
+          </Link>
+        )}
       </div>
+
+      <section aria-label="Opportunities">
+        {items.length ? (
+          <OpportunitiesBrowser items={items} now={now} />
+        ) : (
+          <section className="surface text-center">
+            <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
+            <p className="mt-2 text-sm text-navy">Try different words, another category, or clear your filters.</p>
+            <Link href="/opportunities" className="button mt-4">Show all</Link>
+          </section>
+        )}
+      </section>
     </main>
   );
 }

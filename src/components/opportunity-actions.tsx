@@ -72,14 +72,19 @@ export function OpportunityActions({
     void fetch(`/api/v1/opportunities/${opportunityId}/events`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ eventType: "click" }), keepalive: true }).catch(() => { /* The official source remains available without tracking. */ });
   }
 
-  return <div className="mt-5">
-    <a className="button w-full sm:w-auto" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}>Apply on official site <ExternalIcon /></a>
-    <div className="mt-3 flex flex-wrap gap-2">
-      <button type="button" className="button-secondary" disabled={busy} onClick={currentSavedId ? unsave : save}>{busy ? "Working…" : currentSavedId ? "Unsave" : "Save for later"}</button>
-      <button type="button" className="min-h-12 rounded-2xl px-4 text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>Report a problem</button>
+  return <div className="mt-6">
+    <div className="flex flex-wrap items-center gap-2.5">
+      <a className="button !min-h-11" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}><ExternalIcon />Apply on official site</a>
+      <button type="button" className="button-secondary !min-h-11" disabled={busy} onClick={currentSavedId ? unsave : save}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill={currentSavedId ? "var(--primary)" : "none"} stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" /></svg>
+        {busy ? "Working…" : currentSavedId ? "Unsave" : "Save for later"}
+      </button>
+      <button type="button" className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold text-navy hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 21V4h11l-1.5 4L16 12H5" /></svg>Report a problem
+      </button>
     </div>
-    {reporting && <form onSubmit={report} className="card mt-4 space-y-3"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
+    {reporting && <form onSubmit={report} className="mt-4 space-y-3 rounded-2xl border border-ink/[.08] bg-white/70 p-5"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
       <div className="flex gap-2"><button className="button" disabled={busy || !reason.trim()}>{busy ? "Sending…" : "Submit report"}</button><button type="button" className="button-secondary" onClick={() => setReporting(false)} disabled={busy}>Cancel</button></div></form>}
-    {message && <p className="mt-3 text-sm font-medium text-[#D4A900]" role="status" aria-live="polite">{message}</p>}
+    {message && <p className="mt-3 text-sm font-semibold text-[#6B4E00]" role="status" aria-live="polite">{message}</p>}
   </div>;
 }

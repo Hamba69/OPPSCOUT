@@ -1,67 +1,63 @@
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getOptionalAuth, homePathForRole } from "@/lib/auth";
 
 import { AdminPortalTrigger } from "@/components/admin-portal-trigger";
+import { Icon } from "@/components/app-shell";
 
 export const dynamic = "force-dynamic";
 
-const wrap = "mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8";
-
 const steps = [
-  ["You tell us what you're looking for", "Share your study field, skills and opportunity preferences. A few minutes is enough."],
-  ["We check the gate first", "Eligibility comes before ranking. If the opportunity doesn't meet your criteria, it never reaches your feed, so you never waste time."],
-  ["Meet your matches", "Every match explains why it fits and what to prepare, and links to the official source so you can apply safely."],
+  ["search", "Build your profile", "Add your studies, skills and the opportunity types you want."],
+  ["check", "Get verified matches", "Every listing is checked before it reaches you, and ranked by fit."],
+  ["clock", "Apply before it closes", "Save what fits and get reminded before deadlines."],
 ] as const;
 
-// Soft gold glow in the top-right corner and a faint green wash on the left. Static, no animation.
-const glow = "radial-gradient(ellipse 45% 55% at 88% 0%, rgba(255,215,0,0.30), transparent 70%), radial-gradient(ellipse 40% 40% at 8% 60%, rgba(31,126,110,0.07), transparent 70%)";
+const tiles = [
+  ["job", "Jobs", "job"],
+  ["scholarship", "Scholarships", "scholarship"],
+  ["internship", "Internships", "internship"],
+  ["grant", "Grants", "grant"],
+] as const;
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ unlock?: string }> }): Promise<React.JSX.Element> {
   const unlock = (await searchParams).unlock === "1";
   const auth = await getOptionalAuth();
   if (auth && !unlock) redirect(homePathForRole(auth.role));
   return (
-    <main className="relative overflow-x-clip">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-20 h-[760px]" style={{ backgroundImage: glow }} />
-      <div className="relative">
-        <section className="mx-auto max-w-3xl px-4 pt-10 text-center sm:px-6 sm:pt-16">
-          <span className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-3.5 py-1.5 text-[13px] font-semibold tracking-[0.08em] text-ink">
-            <span className="size-1.5 rounded-full bg-amber" aria-hidden="true" />MEET YOUR OPPORTUNITIES
-          </span>
-          <h1 className="hero-title mx-auto mt-7 max-w-3xl tracking-tight text-ink">The right opportunity is already out there.</h1>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-navy sm:text-[17px]">Find the opportunities before they close.</p>
-        </section>
+    <main className="mx-auto flex w-full max-w-[74rem] flex-col gap-7 px-4 pb-10 pt-4 sm:px-6">
+      <section className="greeting !rounded-[2rem] !px-6 !py-14 sm:!px-10 sm:!py-16">
+        <div className="orb size-[4.75rem]" aria-hidden="true" />
+        <h1 className="hero-title !m-0 !max-w-3xl !font-extrabold !tracking-tight">The right opportunity is already out there.</h1>
+        <p className="max-w-xl text-base leading-7 text-navy sm:text-[17px]">Verified jobs, scholarships, grants and internships in Uganda, matched to you. Find them before they close.</p>
+      </section>
 
-        <section aria-hidden="true" className="flex justify-center pt-12 sm:pt-16">
-          <div className="grid size-[132px] place-items-center rounded-[36px] border border-ink/[.08] bg-white shadow-[0_16px_48px_rgba(30,41,59,0.12),0_0_90px_rgba(255,215,0,0.38)]">
-            <Image src="/logo.png" alt="" width={88} height={88} priority />
-          </div>
-        </section>
+      <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
+        {tiles.map(([type, label, icon]) => <Link key={type} href={`/opportunities?type=${type}`} className="tile !h-[6.875rem]">
+          <span className="icon-chip"><Icon name={icon} size={18} /></span>{label}
+        </Link>)}
+      </nav>
 
-        <section aria-labelledby="how-it-works" className={`${wrap} pt-20 sm:pt-24`}>
-          <h2 id="how-it-works" className="text-center text-3xl font-bold text-ink">How OppScout works</h2>
-          
-          <ol className="mt-10 grid gap-5 md:grid-cols-3">
-            {steps.map(([title, text], index) => <li key={title} className="rounded-[18px] border border-ink/10 bg-white p-6">
-              <span className="grid size-8 place-items-center rounded-full bg-amber font-bold text-ink" aria-hidden="true">{index + 1}</span>
-              <h3 className="mt-4 text-lg font-bold text-ink">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-navy">{text}</p>
-            </li>)}
-          </ol>
-        </section>
+      <section aria-labelledby="how-it-works" className="flex flex-col gap-5">
+        <h2 id="how-it-works" className="mt-3 text-center text-2xl font-extrabold text-ink">How OppScout works</h2>
+        <ol className="grid gap-4 md:grid-cols-3">
+          {steps.map(([icon, title, text]) => <li key={title} className="surface flex flex-col gap-3 !p-[1.375rem]">
+            <span className="icon-chip !size-11 !rounded-[14px]"><Icon name={icon} size={20} /></span>
+            <h3 className="text-[17px] font-bold text-ink">{title}</h3>
+            <p className="text-sm leading-6 text-navy">{text}</p>
+          </li>)}
+        </ol>
+      </section>
 
-      
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-white/85 bg-white/60 px-8 py-7 shadow-[0_10px_30px_rgba(146,98,0,0.06)] backdrop-blur-xl">
+        <div><h2 className="text-xl font-extrabold text-ink">Have an opportunity to share?</h2><p className="mt-1.5 text-sm text-navy">Verified organizations publish free and reach people who fit.</p></div>
+        <Link href="/organizations" className="button-dark">Post an opportunity</Link>
+      </section>
 
-        <footer className={`${wrap} mt-16 pb-10 text-sm text-navy`}>
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6">
-            <AdminPortalTrigger initiallyOpen={unlock} />
-            <Link href="/organizations" className="inline-flex min-h-11 items-center font-semibold text-ink underline">Post an opportunity</Link>
-          </div>
-        </footer>
-      </div>
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm text-navy">
+        <AdminPortalTrigger initiallyOpen={unlock} />
+      </footer>
     </main>
   );
 }

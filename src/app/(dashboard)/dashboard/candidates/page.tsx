@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 
 import { requirePageAuth } from "@/lib/auth";
 import { createServiceRoleClient } from "@/lib/supabase/admin";
@@ -6,6 +9,8 @@ import { createServiceRoleClient } from "@/lib/supabase/admin";
 export const dynamic = "force-dynamic";
 
 export default async function CandidatesPage(): Promise<React.JSX.Element> {
+  // Hidden from publishers until further notice (see FLAGS.md). The page logic below is unchanged.
+  if (!FEATURE_FLAGS.publisherMatches) redirect("/dashboard");
   const auth = await requirePageAuth(["organization"]);
   const db = createServiceRoleClient();
   const { data: rows } = await db

@@ -5,7 +5,6 @@ import { getUserProfile } from "@/lib/profile-store";
 import { getRepository } from "@/lib/repository";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
 import { buildRankedFeed } from "@/services/matching/feed";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { choiceLabel } from "@/services/profile/choices";
 
@@ -25,16 +24,21 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
     const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - now.getTime()) / 86_400_000) : null;
     return { daysLeft, id: match.id, opportunityId: opportunity.id, category: opportunity.category, categoryLabel: choiceLabel(opportunity.category), title: opportunity.title, organization: opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization", origin: opportunity.origin ?? "catalog", score: match.score, deadline: opportunity.deadline?.toISOString() ?? null, location: opportunity.location, workMode: opportunity.workMode === "unknown" ? "" : opportunity.workMode, matched: match.matchedFactors, missing: match.missingFactors, sourceUrl: opportunity.sourceUrl, checkedAt: opportunity.checkedAt.toISOString(), publicationDate: opportunity.publicationDate.toISOString() };
   });
+  const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "Africa/Kampala" }).format(now));
+  const salutation = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const firstName = profile.name?.trim().split(/\s+/)[0] || undefined;
   return (
-    <main className="page-shell animate-in sm:!py-10">
-      <header className="relative mb-8 text-center">
-        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Your matches</h1>
-        <p className="mt-1 text-sm text-navy">Opportunities that fit your profile.</p>
-        <Link href="/profile" className="button-secondary mx-auto mt-4 !min-h-11 !px-5 md:absolute md:right-0 md:top-0 md:mt-0">Edit profile</Link>
-      </header>
-      {matches.length ? <FeedBrowser items={items} /> : <div>{isProfileCompleteForMatching(profile)
-        ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
-        : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}</div>}
+    <main className="animate-in flex flex-col gap-6">
+      {matches.length ? <FeedBrowser items={items} salutation={salutation} firstName={firstName} /> : <>
+        <section className="greeting">
+          <div className="orb orb-lg" aria-hidden="true" />
+          <h1>{salutation}{firstName ? <> <strong>{firstName}</strong></> : null}, let&apos;s find what fits you.</h1>
+        </section>
+        {isProfileCompleteForMatching(profile)
+          ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
+          : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}
+      </>}
     </main>
-  );    
+  );
+    
 }

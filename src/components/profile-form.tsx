@@ -68,7 +68,7 @@ function TagInput({ label, hint, values, onChange, placeholder }: { label: strin
       <button type="button" className="button-secondary shrink-0" onClick={add} disabled={!draft.trim()}>Add</button></div>
     <p className="mt-1 text-xs text-navy">{hint}</p>
     {values.length > 0 && <ul className="mt-3 flex flex-wrap gap-2">{values.map((value) => <li key={value}><button type="button" onClick={() => onChange(values.filter((item) => item !== value))} aria-label={`Remove ${value}`}
-      className="inline-flex min-h-9 items-center gap-2 rounded-full bg-ink px-3 py-1 text-sm font-semibold text-white">{value}<span aria-hidden="true">×</span></button></li>)}</ul>}
+      className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E]">{value}<span aria-hidden="true">×</span></button></li>)}</ul>}
   </div>;
 }
 
@@ -190,7 +190,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
         </div>
       </div>
       <p id="profile-completeness-details" className="sr-only">{remainingLabel}</p>
-      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-[#ffd700]" style={{ width: `${completeness}%` }} /></div>
+      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-gradient-to-r from-[#FFE27A] to-[#FFC700]" style={{ width: `${completeness}%` }} /></div>
     </div>
 
     <form onSubmit={submit} noValidate className="space-y-5">
@@ -256,8 +256,8 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
       <div className="sticky bottom-24 z-10 flex flex-wrap items-center gap-3 rounded-3xl border border-ink/10 bg-white/95 p-3 shadow-soft backdrop-blur md:bottom-4">
         <button className="button" disabled={status === "saving"}>{status === "saving" ? "Saving…" : isNew ? "Save and see my matches" : "Save changes"}</button>
         <p className="min-w-0 flex-1 text-sm" role="status" aria-live="polite">
-          {status === "saved" && <span className="font-medium text-[#D4A900]">Profile saved. <Link href="/feed" className="underline">View my matches</Link></span>}
-          {status === "error" && <span className="font-medium text-[#D4A900]">{Object.keys(errors).length ? "Please correct the highlighted fields." : "We could not save your profile. Please try again."}</span>}
+          {status === "saved" && <span className="font-medium text-[#6B4E00]">Profile saved. <Link href="/feed" className="underline">View my matches</Link></span>}
+          {status === "error" && <span className="font-medium text-[#6B4E00]">{Object.keys(errors).length ? "Please correct the highlighted fields." : "We could not save your profile. Please try again."}</span>}
           {status === "idle" && dirty && <span className="text-navy">You have unsaved changes.</span>}
         </p>
       </div>

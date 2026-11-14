@@ -8,6 +8,7 @@ export interface MatchCardProps {
   title: string;
   organization: string;
   origin?: OpportunityOrigin;
+  categoryLabel?: string;
   score: number;
   deadline: string | null;
   location: string;
@@ -22,8 +23,6 @@ export interface MatchCardProps {
 
 const preferredLabels = new Set(["Skills", "Field of study", "Career direction", "Experience", "Education eligibility", "Location"]);
 
-const iconProps = { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
-
 export function MatchCard(props: MatchCardProps): React.JSX.Element {
   const { daysLeft } = props;
   const relevantMatched = props.matched.filter((factor) => {
@@ -33,36 +32,26 @@ export function MatchCard(props: MatchCardProps): React.JSX.Element {
   });
   const reason = relevantMatched.find((factor) => preferredLabels.has(factor.label)) ?? relevantMatched[0];
   const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
-  const workMode = props.workMode && props.workMode !== "unknown" ? props.workMode : null;
+  const workMode = props.workMode && props.workMode !== "unknown" && props.workMode.toLowerCase() !== props.location.toLowerCase() ? props.workMode : null;
   const deadlineLabel = props.deadline
     ? `Closes ${new Date(props.deadline).toLocaleDateString("en-UG", { day: "numeric", month: "short" })}`
     : "Deadline not published";
   return (
-    <article className="card match-lift flex flex-col !rounded-2xl !shadow-none">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-[13px] font-semibold text-navy">{props.organization}</p>
-          <h2 className="mt-0.5 text-lg font-bold leading-snug text-ink">{props.title}</h2>
-        </div>
-        <span className="shrink-0 rounded-full bg-leaf/10 px-3 py-1 text-[13px] font-bold text-[#145347]">{props.score}% match</span>
+    <article className={`opp-card ${reason ? "with-reason" : ""}`}>
+      <div className="flex items-center justify-between gap-2">
+        <span className="cat-pill">{props.categoryLabel ?? "Match"}</span>
+        <SaveButton opportunityId={props.opportunityId} />
       </div>
-      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-navy">
-        <span className="inline-flex items-center gap-1.5 capitalize">
-          <svg {...iconProps}><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z" /><circle cx="12" cy="9" r="2.5" /></svg>
-          {props.location}{workMode ? ` · ${workMode}` : ""}
-        </span>
-        <span className={`inline-flex items-center gap-1.5 ${urgent ? "font-bold text-[#B3261E]" : ""}`}>
-          <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
-          {urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : deadlineLabel}
-        </span>
+      <div className="min-h-0 flex-1">
+        <p className="clamp-1 text-xs font-semibold text-navy"><span>{props.organization}</span><span className="capitalize"> · {props.location}{workMode ? ` · ${workMode}` : ""}</span></p>
+        <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink">
+          <Link className="stretch focus-visible:underline" href={`/opportunity/${props.opportunityId}?from=matches`} aria-label={`View match: ${props.title}`}>{props.title}</Link>
+        </h2>
+        {reason && <p className="clamp-1 mt-1.5 text-xs text-navy"><strong className="font-semibold text-ink">Why it fits:</strong> {reason.detail}</p>}
       </div>
-      {reason && <p className="mt-3.5 text-sm leading-6 text-ink"><strong className="font-bold text-[#145347]">Why it fits:</strong> {reason.detail}</p>}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.08] pt-3.5">
-        <span />
-        <div className="flex gap-2">
-          <SaveButton opportunityId={props.opportunityId} />
-          <Link className="button !min-h-11 !px-4" href={`/opportunity/${props.opportunityId}?from=matches`}>View details</Link>
-        </div>
+      <div className="opp-card-foot">
+        <span className={urgent ? "font-bold text-[#9B1C1C]" : undefined}>{urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : deadlineLabel}</span>
+        <span className="match-score !text-xs">{props.score}% match</span>
       </div>
     </article>
   );

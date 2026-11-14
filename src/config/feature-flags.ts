@@ -4,6 +4,9 @@ export const FEATURE_FLAGS = {
   notifications: true,
   trustReview: true,
   providerTools: true,
+  // Hidden from publishers until further notice. Pages, APIs and logic stay in place; turn on to show them again.
+  publisherAnalytics: false,
+  publisherMatches: false,
   kpiDashboard: true,
   aiMatching: false,
   automatedScraping: process.env.OPPSCOUT_AUTOMATED_SCRAPING_ENABLED === "true",

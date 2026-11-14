@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { Logo } from "@/components/logo";
+import { Icon } from "@/components/app-shell";
+import { choiceLabel } from "@/services/profile/choices";
 
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
@@ -17,44 +18,64 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
     const opportunity = opportunities.get(item.opportunityId);
     return opportunity && isUserVisibleOpportunity(opportunity) ? [{ item, opportunity }] : [];
   });
+  const now = new Date().getTime();
+  const daysUntil = (deadline: Date | null | undefined): number | null => deadline ? Math.ceil((deadline.getTime() - now) / 86_400_000) : null;
+  const next = items
+    .filter(({ opportunity }) => { const days = daysUntil(opportunity.deadline); return days !== null && days > 0; })
+    .sort((a, b) => a.opportunity.deadline!.getTime() - b.opportunity.deadline!.getTime())[0];
+  const nextDays = next ? daysUntil(next.opportunity.deadline)! : null;
   return (
-    <main className="page-shell animate-in sm:!py-10">
-      <header className="text-center">
-        <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Saved Opportunities</h1>
-        <p className="mt-1 text-sm text-navy">Your shortlist with the next deadline clearly in view.</p>
+    <main className="animate-in flex flex-col gap-6">
+      <header className="title-card">
+        <h1>Saved Opportunities</h1>
       </header>
-      <div className="mt-8 space-y-4">
-        {items.length ? items.map(({ item, opportunity }) => {
-          const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - Date.now()) / 86_400_000) : null;
+      {next && nextDays !== null && (
+        <section aria-label="Next deadline" className="surface flex flex-wrap items-center gap-4 !rounded-3xl !border-[1.5px] !border-[#F5D76E] !px-5 !py-4">
+          <span className="icon-chip !size-11 !rounded-[14px]"><Icon name="clock" size={20} /></span>
+          <div className="min-w-[200px] flex-1">
+            <p className="text-xs font-bold text-[#9B1C1C]">{nextDays} {nextDays === 1 ? "day" : "days"} left</p>
+            <p className="mt-0.5 text-base font-bold text-ink">{next.opportunity.title} · {next.opportunity.organization?.name ?? next.opportunity.organizationName ?? "Source organization"}</p>
+          </div>
+          <Link className="button !min-h-11" href={`/opportunity/${next.opportunity.id}`}><Icon name="chevron" size={15} strokeWidth={2.2} />View details</Link>
+        </section>
+      )}
+      {items.length ? <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
+        {items.map(({ item, opportunity }) => {
+          const daysLeft = daysUntil(opportunity.deadline);
+          const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
           const countdown = opportunity.deadline
             ? daysLeft !== null && daysLeft > 0
-              ? `${daysLeft} ${daysLeft === 1 ? "day" : "days"} left`
+              ? urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : `${daysLeft} days left`
               : `Closed ${opportunity.deadline.toLocaleDateString("en-UG", { dateStyle: "medium" })}`
             : "Deadline not published";
 
           return (
-            <article key={item.id} className="card match-lift !rounded-2xl !shadow-none">
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <span className={`pill capitalize ${item.status === "applied" ? "!border-leaf/40 !bg-leaf/10 !text-leaf" : ""}`}>{item.status}</span>
-                <span className="rounded-full bg-butter px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-navy">{countdown}</span>
+            <article key={item.id} className="opp-card">
+              <div className="flex items-center justify-between gap-2">
+                <span className="cat-pill">{choiceLabel(opportunity.category)}</span>
+                <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold capitalize ${item.status === "applied" ? "text-[#145347]" : "text-[#6B4E00]"}`}>
+                  <Icon name={item.status === "applied" ? "check" : "saved"} size={13} strokeWidth={2.4} />{item.status}
+                </span>
               </div>
-              <h2 className="mt-3 text-xl font-extrabold text-ink">{opportunity.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-navy">{opportunity.description?.trim() || "Official opportunity details are available on the listing page."}</p>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/[.08] pt-3">
-                <p className="text-sm font-medium text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
-                <Link className="button-secondary" href={`/opportunity/${opportunity.id}`}>View details</Link>
+              <div className="min-h-0 flex-1">
+                <p className="clamp-1 text-xs font-semibold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
+                <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink"><Link className="stretch focus-visible:underline" href={`/opportunity/${opportunity.id}`}>{opportunity.title}</Link></h2>
+              </div>
+              <div className="opp-card-foot">
+                <span className={urgent ? "font-bold text-[#9B1C1C]" : undefined}>{countdown}</span>
+                <span aria-hidden="true" className="font-semibold">View details</span>
               </div>
             </article>
           );
-        }) : (
-          <section className="card bg-butter text-center">
-            <div className="flex justify-center"><Logo size={56} /></div>
-            <h2 className="mt-3 text-xl font-extrabold text-ink">Your shortlist is empty</h2>
-            <p className="mt-2 text-navy">Found something promising? Save a match to keep its deadline and next steps together here.</p>
-            <Link href="/feed" className="button mt-5">Browse matches</Link>
-          </section>
-        )}
-      </div>
+        })}
+      </div> : (
+        <section className="surface py-10 text-center">
+          <div className="flex justify-center"><span className="orb block size-14" aria-hidden="true" /></div>
+          <h2 className="mt-4 text-xl font-extrabold text-ink">Your shortlist is empty</h2>
+          <p className="mt-2 text-navy">Found something promising? Save a match to keep its deadline and next steps together here.</p>
+          <Link href="/feed" className="button mt-5">Browse matches</Link>
+        </section>
+      )}
     </main>
   );
 }

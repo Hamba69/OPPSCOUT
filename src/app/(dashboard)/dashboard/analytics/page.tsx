@@ -1,10 +1,15 @@
+import { redirect } from "next/navigation";
+
 import { InterestFunnel } from "@/components/dashboard-charts";
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProviderAnalyticsPage(): Promise<React.JSX.Element> {
+  // Hidden from publishers until further notice (see FLAGS.md). The page logic below is unchanged.
+  if (!FEATURE_FLAGS.publisherAnalytics) redirect("/dashboard");
   const auth = await requirePageAuth(["organization"]);
   const repository = await getRepository();
   const ids = new Set((await repository.listOpportunities({

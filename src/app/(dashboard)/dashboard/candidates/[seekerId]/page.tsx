@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 
 import { requirePageAuth } from "@/lib/auth";
 import { createServiceRoleClient } from "@/lib/supabase/admin";
@@ -21,6 +23,8 @@ function getFactors(value: unknown): MatchFactorView[] {
 export const dynamic = "force-dynamic";
 
 export default async function CandidatePage({ params }: { params: Promise<{ seekerId: string }> }): Promise<React.JSX.Element> {
+  // Hidden from publishers until further notice (see FLAGS.md). The page logic below is unchanged.
+  if (!FEATURE_FLAGS.publisherMatches) redirect("/dashboard");
   const auth = await requirePageAuth(["organization"]);
   const { seekerId } = await params;
   const db = createServiceRoleClient();

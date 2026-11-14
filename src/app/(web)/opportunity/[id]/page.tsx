@@ -34,16 +34,23 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   const workMode = opportunity.workMode && opportunity.workMode !== "unknown" ? opportunity.workMode : null;
   const backHref = from === "matches" ? "/feed" : "/opportunities";
   const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";
-  return <main className="page-shell animate-in mx-auto max-w-3xl">
-    <Link href={backHref} aria-label={backLabel} title={backLabel} className="mb-2 inline-flex size-11 items-center justify-center rounded-full text-navy transition hover:bg-butter hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon /></Link>
-    <h1 className="mt-3 text-2xl font-extrabold text-ink sm:text-4xl">{opportunity.title}</h1>
-    <p className="mt-1 font-bold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
-    <section className="card mt-5 flex items-center justify-between gap-4 border-2 border-honey bg-butter">
-      {match ? <div><p className="text-xs font-semibold text-navy">Your match</p><p className="text-4xl font-extrabold text-leaf">{match.score}%</p></div> : <div><p className="text-xs font-semibold text-navy">Type</p><p className="font-extrabold capitalize text-ink">{opportunity.category}</p></div>}
-      <div className="text-right"><p className="text-xs font-semibold text-navy">Deadline</p><p className="font-extrabold text-ink">{days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText}</p><p className="text-xs capitalize text-navy">{opportunity.location}{workMode ? ` · ${workMode}` : ""}</p></div>
+  const factBox = (label: string, value: React.ReactNode, accent = false): React.JSX.Element => <div className={`fact ${accent ? "fact-accent" : ""}`}><p className="text-xs font-semibold text-navy">{label}</p><div className="mt-1.5 text-lg font-extrabold capitalize text-ink">{value}</div></div>;
+  return <main className="animate-in flex flex-col gap-6">
+    <Link href={backHref} className="inline-flex min-h-11 items-center gap-1.5 self-start text-[13px] font-bold text-navy transition hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon />{backLabel}</Link>
+    <section className="surface !rounded-[1.75rem] !px-6 !py-7 sm:!px-8">
+      <h1 className="!m-0 !text-left !text-2xl !font-extrabold !leading-tight text-ink sm:!text-[2rem]">{opportunity.title}</h1>
+      <p className="mt-1.5 text-[15px] font-semibold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
+      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {match
+          ? <div className="fact fact-accent"><h2 className="text-xs font-semibold text-navy">Your match</h2><p className="mt-1.5 text-[1.625rem] font-extrabold leading-tight" style={{ color: "var(--match)" }}>{match.score}%</p></div>
+          : factBox("Type", opportunity.category, true)}
+        {factBox("Deadline", days !== null && days > 0 && days <= 14 ? `${days} ${days === 1 ? "day" : "days"} left` : deadlineText)}
+        {factBox("Location", opportunity.location)}
+        {factBox("Work mode", workMode ?? "Not stated")}
+      </div>
+      {!match ? <p className="mt-4 rounded-2xl bg-ink/[.04] p-4 text-sm text-navy">This opportunity is not in your matches, so you may not meet every requirement. Check the details below and the official source before applying.</p> : null}
+      <OpportunityActions opportunityId={id} sourceUrl={sourceHref} savedId={savedId} />
     </section>
-    {!match ? <p className="mt-3 rounded-2xl bg-ink/[.04] p-4 text-sm text-navy">This opportunity is not in your matches, so you may not meet every requirement. Check the details below and the official source before applying.</p> : null}
-    <OpportunityActions opportunityId={id} sourceUrl={sourceHref} savedId={savedId} />
-    {opportunity.description && <section className="mt-6"><h2 className="text-lg font-extrabold text-ink">About this opportunity</h2><p className="mt-2 leading-7 text-ink">{opportunity.description}</p></section>}
+    {opportunity.description && <section className="surface"><h2 className="surface-title">About this opportunity</h2><p className="mt-3 whitespace-pre-line text-[15px] leading-7 text-ink">{opportunity.description}</p></section>}
   </main>;
 }

@@ -25,11 +25,11 @@ export function OpportunitiesBrowser({
 
   return (
     <>
-      <div className="mt-3 flex justify-end">
+      <div className="-mt-2 mb-3 flex justify-end">
         <label>
           <span className="sr-only">Sort opportunities</span>
           <select
-            className="field !min-h-11 !w-auto !rounded-xl !border-ink/20 !py-2"
+            className="chip cursor-pointer appearance-none !pr-4"
             value={sort}
             onChange={(event) => setSort(event.target.value as Sort)}
           >
@@ -38,7 +38,7 @@ export function OpportunitiesBrowser({
           </select>
         </label>
       </div>
-      <div className="mt-4 grid gap-5 md:grid-cols-2">
+      <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
         {visible.map((item) => (
           <OpportunityListCard key={item.id} item={item} now={now} />
         ))}

@@ -27,6 +27,7 @@ const seekerPaths = [
   "/profile",
   "/settings",
   "/opportunity",
+  "/feedback",
 ];
 
 export function BottomTabs(): React.JSX.Element | null {
@@ -40,10 +41,10 @@ export function BottomTabs(): React.JSX.Element | null {
       <div className="h-24 md:hidden" aria-hidden="true" />
       <nav
         aria-label="Seeker tabs"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-white px-2 pt-2 md:hidden"
-        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))" }}
+        className="fixed inset-x-3 z-40 rounded-full p-1.5 md:hidden glass-strong"
+        style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))" }}
       >
-        <ul className="mx-auto flex max-w-md justify-around">
+        <ul className="mx-auto flex max-w-md justify-between gap-1">
           {tabs.map(([name, href]) => {
             const active =
               pathname === href ||
@@ -51,13 +52,13 @@ export function BottomTabs(): React.JSX.Element | null {
               (href === "/feed" && pathname.startsWith("/opportunity/"));
 
             return (
-              <li key={href}>
+              <li key={href} className="flex-1">
                 <Link
                   href={href}
                   prefetch
                   aria-current={active ? "page" : undefined}
-                  className={`flex min-h-12 min-w-[4.5rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
-                    active ? "bg-amber/50 text-ink" : "text-navy"
+                  className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full px-2 text-[11px] font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
+                    active ? "border border-[#F5D76E] bg-[#FFF3C4] text-ink" : "text-navy"
                   }`}
                 >
                   <svg

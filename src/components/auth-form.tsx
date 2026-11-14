@@ -125,18 +125,14 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
   const isSignin = mode === "signin";
 
   return (
-    <section className="mx-auto w-full max-w-[400px]">
-      <div className="rounded-[1.5rem] border border-ink/[0.06] bg-white p-6 shadow-[0_12px_40px_rgba(30,41,59,0.08)] sm:p-8">
-        {/* Mode badge */}
-        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-ink/[0.08] bg-cream px-3 py-1.5 text-xs font-semibold tracking-wide text-navy">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber" aria-hidden="true" />
-          {isSignin ? "WELCOME BACK" : "GET STARTED"}
+    <section className="mx-auto w-full max-w-[440px]">
+      <div className="surface !rounded-[1.75rem] !p-7 sm:!p-9">
+        <div className="text-center">
+          <div className="orb mx-auto mb-3.5 size-12" aria-hidden="true" />
+          <h1 className="!text-[1.625rem] !font-extrabold !leading-tight tracking-tight text-ink">
+            {isSignin ? "Welcome back" : "Create your account"}
+          </h1>
         </div>
-
-        {/* Heading */}
-        <h1 className="text-[1.75rem] font-extrabold leading-tight tracking-tight text-ink">
-          {isSignin ? "Log in" : "Create your account"}
-        </h1>
 
         <form className="mt-6 space-y-4" onSubmit={submit}>
           {/* Email */}
@@ -209,7 +205,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
           {/* Submit — goldish yellow button */}
           <button
             type="submit"
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-amber px-4 py-3.5 text-base font-bold text-ink shadow-sm transition hover:brightness-105 active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-2 flex min-h-[3.125rem] w-full items-center justify-center gap-2 rounded-full bg-[#FDE742] px-4 text-[15px] font-bold text-ink shadow-[0_6px_16px_rgba(230,170,0,0.25)] transition hover:brightness-105 active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={busy}
           >
             {busy ? "Please wait…" : isSignin ? "Log in" : "Create account"}

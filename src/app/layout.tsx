@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SeekerFrame } from "@/components/app-shell";
 import { BottomTabs } from "@/components/bottom-tabs";
 import { SiteHeader } from "@/components/site-header";
 import { hasPageSession } from "@/lib/auth";
@@ -27,7 +28,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en" className={sans.variable}>
       <body>
         <SiteHeader signedIn={signedIn} />
-        {children}
+        <SeekerFrame>{children}</SeekerFrame>
         <BottomTabs />
         <WebVitals />
         <Analytics />

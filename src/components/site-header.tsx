@@ -10,7 +10,7 @@ const seekerLinks = [["Matches", "/feed"], ["Saved", "/saved"], ["Opportunities"
 const seekerPaths = ["/feed", "/saved", "/opportunities", "/profile", "/settings", "/feedback", "/opportunity"];
 const bareHeaderPaths = ["/login", "/reset-password"];
 
-const menuItem = "flex min-h-11 w-full items-center rounded-xl px-3 text-sm font-semibold text-ink hover:bg-butter focus-visible:bg-butter";
+const menuItem = "flex min-h-11 w-full items-center rounded-full px-4 text-sm font-semibold text-ink hover:bg-white focus-visible:bg-white";
 
 // The menu opens while the pointer is over the icon or the menu and closes as soon as it leaves,
 // so there is nothing to tap a second time. Touch and keyboard users toggle it with a tap/Enter
@@ -36,7 +36,7 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
   if (seeker && !admin) {
     const active = ["/profile", "/feedback", "/settings"].some((path) => pathname === path || pathname.startsWith(`${path}/`));
     return <Link href="/profile" aria-label="Profile" title="Profile" aria-current={active ? "page" : undefined}
-      className={`flex size-11 items-center justify-center rounded-full border-2 bg-white text-ink transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${active ? "border-[#ffd700]" : "border-ink/15 hover:bg-cream"}`}>
+      className={`glass-strong flex size-11 items-center justify-center rounded-full text-ink transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${active ? "!border-[#ffd700] !border-2" : "hover:bg-white"}`}>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
     </Link>;
   }
@@ -47,11 +47,11 @@ function AccountMenu({ seeker, admin }: { seeker: boolean; admin: boolean }): Re
     <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={admin ? "Account" : seeker ? "Profile and settings" : "Account"}
       onPointerDown={(event) => { pointerType.current = event.pointerType; }}
       onClick={(event) => { if (event.detail > 0 && pointerType.current === "mouse") { setOpen(true); return; } setOpen((value) => !value); }}
-      className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-ink/15 bg-white text-ink transition hover:bg-cream">
+      className="glass-strong flex size-11 cursor-pointer items-center justify-center rounded-full text-ink transition hover:bg-white">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-5 15-5 16 0" /></svg>
     </button>
     {open && <div className="absolute right-0 top-full z-50 pt-2">
-      <div role="menu" className="w-48 rounded-2xl border border-ink/10 bg-white p-2 shadow-soft">
+      <div role="menu" className="glass-strong w-52 rounded-3xl p-2">
         {!admin && <Link role="menuitem" href="/feedback" className={menuItem}>Feedback</Link>}
         {seeker && !admin ? <>
           <Link role="menuitem" href="/profile" className={menuItem}>My profile</Link>
@@ -81,12 +81,15 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }): React.JSX.Eleme
   const bare = bareHeaderPaths.includes(pathname);
   const home = isSeeker ? "/feed" : isAdmin ? "/admin/overview" : isStaff ? "/dashboard" : "/";
 
-  return <header className={isLanding ? "relative z-30" : "sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur"}>
+  // Seeker, publisher and admin pages carry their own sidebar on desktop, so this bar only shows on phones there.
+  const appArea = isSeeker || isStaff;
+  return <header className={isLanding ? "relative z-30" : `sticky top-0 z-30 ${appArea ? "md:hidden" : ""} border-b border-white/70 bg-white/45 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] backdrop-blur-xl backdrop-saturate-150`}>
     <div className={`mx-auto grid ${isLanding ? "min-h-20" : "min-h-16"} max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:px-6 md:grid-cols-[1fr_auto_1fr] lg:px-8`}>
       <Link href={home} className="flex shrink-0 items-center gap-2 justify-self-start text-xl font-bold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} /><span className={isLanding ? "max-[380px]:sr-only" : undefined}>oppscout</span></Link>
       <div className="hidden self-stretch md:flex">{isSeeker && <HeaderTabs />}</div>
       <div className="flex items-center gap-2 justify-self-end">
         {isLanding && <>
+          <Link href="/organizations" className="hidden min-h-11 items-center px-3 text-sm font-semibold text-navy hover:text-ink sm:inline-flex">For organizations</Link>
           <Link href="/login" className="button-secondary !min-h-11 !px-3 text-sm sm:!px-5">Log in</Link>
           <Link href="/profile" className="button !min-h-11 !px-3 text-sm sm:!px-5">Get started</Link>
         </>}

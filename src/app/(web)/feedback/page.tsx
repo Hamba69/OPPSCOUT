@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
 import { FeedbackForm } from "@/components/feedback-form";
-import { ProfileArea } from "@/components/profile-area";
 export const metadata:Metadata={title:"Share feedback"};
-export default function FeedbackPage():React.JSX.Element{return <main className="page-shell animate-in"><ProfileArea active="feedback"><h1 className="text-3xl font-extrabold text-ink">Share feedback</h1><p className="mt-3 text-navy">Tell us how to make OppScout better. Share an idea, a problem, or how it felt to use.</p><FeedbackForm/></ProfileArea></main>;}
+export default function FeedbackPage():React.JSX.Element{return <main className="animate-in flex flex-col gap-6"><header className="title-card"><h1>Share feedback</h1><p>Tell us how to make OppScout better. Share an idea, a problem, or how it felt to use.</p></header><FeedbackForm/></main>;}
