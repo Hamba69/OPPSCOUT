@@ -200,10 +200,17 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     if (sameUrl) {
       // A timestamp refresh is only right for a record that is already approved and fully checked.
       // An approved-but-incomplete record (the old catalogue) must come back through approval.
-      const unchanged = sameUrl.deadline?.getTime() === (candidate.deadline ? Date.parse(candidate.deadline) : undefined)
-        && live(sameUrl) && sameUrl.verificationStatus === "verified" && sameUrl.checklistComplete !== false;
-      work.action = unchanged && !work.reviewOnly ? "recheck" : "update-changed";
+      const approvedLive = live(sameUrl) && sameUrl.verificationStatus === "verified" && sameUrl.checklistComplete !== false;
+      const sameDeadline = sameUrl.deadline?.getTime() === (candidate.deadline ? Date.parse(candidate.deadline) : undefined);
       work.existingId = sameUrl.id;
+      if (approvedLive && work.reviewOnly) {
+        // A candidate that is only staged for review must never demote a listing a person already approved:
+        // keep the approved listing live and only record that it was seen again.
+        work.action = "recheck";
+        if (!sameDeadline) work.warnings.push(`approved listing ${sameUrl.id} kept live; this candidate's different deadline was NOT applied - check it by hand`);
+        return [];
+      }
+      work.action = approvedLive && sameDeadline ? "recheck" : "update-changed";
     } else if (sameTitle) {
       if (live(sameTitle)) {
         if (sameTitle.verificationStatus !== "verified" || sameTitle.checklistComplete === false) {
