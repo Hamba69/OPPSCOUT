@@ -11,10 +11,12 @@ const all = (value: boolean): TrustChecklist => ({ sourceAuthentic: value, offic
 describe("daily review flow", () => {
   it("rejecting removes the listing from the queue and keeps the research evidence", async () => {
     const repository = new MemoryRepository();
-    await repository.updateOpportunity(PRIMARY_SEED_OPPORTUNITY_ID, { verificationStatus: "pending", reviewNotes: 'Deadline evidence: "Applications close on 1 March 2027."' });
+    await repository.updateOpportunity(PRIMARY_SEED_OPPORTUNITY_ID, { status: "open", verificationStatus: "pending", reviewNotes: 'Deadline evidence: "Applications close on 1 March 2027."' });
+    expect((await repository.listReviewQueue()).map((item) => item.id)).toContain(PRIMARY_SEED_OPPORTUNITY_ID);
     const result = await reviewOpportunity(repository, PRIMARY_SEED_OPPORTUNITY_ID, "admin", all(false), false, "Looks like a recruiter, not the employer");
     expect(result.verificationStatus).toBe("flagged");
     expect(result.status).toBe("removed");
+    expect((await repository.listReviewQueue()).map((item) => item.id)).not.toContain(PRIMARY_SEED_OPPORTUNITY_ID);
     expect(result.reviewNotes).toContain("Deadline evidence");
     expect(result.reviewNotes).toMatch(/rejected \(Looks like a recruiter/);
   });

@@ -13,17 +13,16 @@ import { isPublisherOrganization } from "@/services/admin/catalogue-summary";
 
 export const dynamic = "force-dynamic";
 
-type Flag = "new" | "reported" | "link";
-const FLAG_LABEL: Record<Flag, string> = { new: "New submission", reported: "Reported listing", link: "Link mismatch" };
+type Flag = "new" | "link";
+const FLAG_LABEL: Record<Flag, string> = { new: "New submission", link: "Link mismatch" };
 
 const hostOf = (value: string | null | undefined): string | null => {
   if (!value) return null;
   try { return new URL(value.includes("://") ? value : `https://${value}`).hostname.replace(/^www\./, "").toLowerCase(); } catch { return null; }
 };
 
-/** Reported listings are stored as "flagged". A link mismatch is an apply link outside the organization's official website or email domain. */
+/** A link mismatch is an apply link outside the organization's official website or email domain. */
 function flagFor(item: Opportunity, organization: Organization | null): Flag {
-  if (item.verificationStatus === "flagged") return "reported";
   const source = hostOf(item.sourceUrl);
   const official = [...(organization?.officialLinks ?? []).map(hostOf), organization?.officialEmail?.split("@")[1]?.toLowerCase() ?? null].filter((host): host is string => Boolean(host));
   if (source && official.length && !official.some((host) => source === host || source.endsWith(`.${host}`))) return "link";
@@ -50,11 +49,11 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
   const repository = await getRepository();
   const raw = await searchParams;
   const tab = raw.tab === "organizations" ? "organizations" : "opportunities";
-  const flagFilter = (["new", "reported", "link"] as const).find((value) => value === raw.flag) ?? "all";
+  const flagFilter = (["new", "link"] as const).find((value) => value === raw.flag) ?? "all";
   const page = Math.max(1, Number(raw.page ?? 1) || 1);
   const reviewing = raw.review ?? null;
 
-  // Everything that still needs a decision: new submissions (pending) and reported listings (flagged).
+  // Flagged records have already been decided and are not part of the active review queue.
   const search = (raw.search ?? "").trim();
   const query = (status: string): URLSearchParams => new URLSearchParams({
     verificationStatus: status,
@@ -62,19 +61,18 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
     page: String(page),
     ...(search ? { search } : {}),
   });
-  const [pendingListings, flaggedListings, organizationQueue] = await Promise.all([
+  const [pendingListings, organizationQueue] = await Promise.all([
     repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending"))),
-    repository.adminPage("opportunities", parseAdminQuery("opportunities", query("flagged"))),
     repository.listOrganizationReviewQueue(),
   ]);
-  const listings = [...pendingListings.rows, ...flaggedListings.rows] as unknown as Opportunity[];
+  const listings = pendingListings.rows as unknown as Opportunity[];
   // Only organisations that signed up in the app need verification. Providers created by seeding
   // are trusted through each listing's own review, so they never wait in this queue.
   const publisherQueue = organizationQueue
     .filter(isPublisherOrganization)
     .filter((organization) => !search || organization.name.toLowerCase().includes(search.toLowerCase()));
   const organizations: Organization[] = publisherQueue.slice((page - 1) * 25, page * 25);
-  const listingTotal = pendingListings.total + flaggedListings.total;
+  const listingTotal = pendingListings.total;
   const organizationTotal = publisherQueue.length;
 
   const publishers = new Map<string, Organization | null>();
@@ -98,7 +96,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
     if (next.get("page") === "1") next.delete("page");
     return `?${next.toString()}`;
   };
-  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, flaggedListings.total, organizationTotal) / 25));
+  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, organizationTotal) / 25));
   const openListing = tab === "opportunities" && reviewing ? listings.find((item) => item.id === reviewing) : undefined;
   const openOrganization = tab === "organizations" && reviewing ? publisherQueue.find((item) => item.id === reviewing) : undefined;
 
@@ -127,7 +125,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
 
     <div className="flex flex-wrap items-center justify-between gap-3">
       <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
-      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["reported", "Reported"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
+      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
     </div>
 
     {(openListing || openOrganization) && <section aria-label="Review details" className="surface flex flex-col gap-4">
@@ -148,7 +146,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
           <td className={td}>Submitted {day(item.publicationDate)}</td>
           <td className={td}><Link href={href({ review: item.id })} className="button !min-h-10 !px-5" aria-label={`Review ${item.title}`}>Review</Link></td>
         </tr>)}</tbody>
-      </table></div> : <QueueClear title="Opportunity queue clear" text="Every current listing has a decision. New submissions and reported listings will appear here for your next review." />}
+      </table></div> : <QueueClear title="Opportunity queue clear" text="Every current listing has a decision. New submissions will appear here for your next review." />}
     </section> : <section aria-labelledby="review-organizations" className="surface">
       <h2 id="review-organizations" className="surface-title mb-4">Publishers</h2>
       {organizations.length ? <div className="overflow-x-auto"><table className="w-full min-w-[720px] table-fixed border-collapse">

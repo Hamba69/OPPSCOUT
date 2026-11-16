@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { ExternalIcon } from "@/components/icons";
 import { StatusBadge } from "@/components/status-badge";
@@ -47,6 +48,7 @@ export function evidenceLines(notes: string | null | undefined): Array<{ label: 
 }
 
 export function ReviewCard({ id, title, organization, sourceUrl, status, description, category, location, deadline, applicationMethod, reviewNotes }: ReviewCardProps): React.JSX.Element {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState("");
   const [done, setDone] = useState(false);
@@ -58,8 +60,11 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
     if (approved && !requirementsChecked) { setMessage("Tick the confirmation box before approving."); return; }
     const checklist = Object.fromEntries(checks.map((name) => [name, approved && requirementsChecked]));
     const response = await fetch(`/api/v1/reports/review/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checklist, approved, notes: String(data.get("notes") ?? "") }) });
-    setMessage(response.ok ? (approved ? "Approved. It is now live for matching." : "Rejected. Removed from the queue and will not be suggested again.") : "Review could not be saved. Approval requires a future closing date (or a rolling listing), a safe application link and every check.");
-    if (response.ok) setDone(true);
+    setMessage(response.ok ? (approved ? "Approved. It is now live for matching." : "Flagged and removed from the queue.") : "Review could not be saved. Approval requires a future closing date (or a rolling listing), a safe application link and every check.");
+    if (response.ok) {
+      setDone(true);
+      router.refresh();
+    }
   }
   return (
     <article className={`surface ${done ? "opacity-60" : ""}`}>
@@ -92,7 +97,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
         </label>
         <div className="flex flex-wrap gap-2">
           <button className="button" disabled={done}>Approve</button>
-          <button type="button" className="button-secondary" disabled={done} onClick={() => void review(false)}>Reject</button>
+          <button type="button" className="button-secondary" disabled={done} onClick={() => void review(false)}>Flag and remove</button>
         </div>
         {message && <p className="rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
       </form>

@@ -228,7 +228,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     const { data, error } = await this.client
       .from("Organization")
       .select("*")
-      .in("verificationStatus", ["pending", "flagged"])
+      .eq("verificationStatus", "pending")
       .order("createdAt", { ascending: true });
     return checked(data, error, "Could not list organization review queue").map(organizationFromRow);
   }
@@ -413,7 +413,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   public async listReviewQueue(): Promise<Opportunity[]> {
     const { data, error } = await this.client.from("Opportunity")
       .select("*")
-      .in("verificationStatus", ["pending", "flagged"])
+      .eq("verificationStatus", "pending")
       .eq("status", "open")
       .order("publicationDate", { ascending: true });
     const rows = checked(data, error, "Could not list opportunity review queue");

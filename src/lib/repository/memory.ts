@@ -227,7 +227,7 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
   }
 
   public async listOrganizationReviewQueue(): Promise<Organization[]> {
-    return copy([...this.organizations.values()].filter((item) => item.verificationStatus === "pending" || item.verificationStatus === "flagged"));
+    return copy([...this.organizations.values()].filter((item) => item.verificationStatus === "pending"));
   }
 
   public async getOrganization(id: string): Promise<Organization | null> {
@@ -348,7 +348,7 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
 
   public async listReviewQueue(): Promise<Opportunity[]> {
     return copy([...this.opportunities.values()].filter((item) =>
-      item.status === "open" && (item.verificationStatus === "pending" || item.verificationStatus === "flagged")
+      item.status === "open" && item.verificationStatus === "pending"
     ));
   }
 
