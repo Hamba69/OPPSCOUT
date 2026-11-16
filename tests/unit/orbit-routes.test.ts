@@ -37,35 +37,35 @@ describe("OrbitMatch route rendering", () => {
     vi.unstubAllEnvs();
   });
 
-  it("renders feed factors and bounded scores, saves a card, and explains its match", async () => {
+  it("shows seekers only a bounded score, saves a card, and keeps the explanation server-side", async () => {
     const matches = await buildRankedFeed(repository, DEMO_USER_ID);
     expect(matches.length).toBeGreaterThan(0);
-    const feed = new JSDOM(renderToStaticMarkup(await FeedPage())).window.document;
+    const feed = new JSDOM(renderToStaticMarkup(await FeedPage({ searchParams: Promise.resolve({}) })), { url: "http://localhost/" }).window.document;
     const cards = [...feed.querySelectorAll("article")];
-    expect(cards).toHaveLength(matches.length);
-    for (const [index, match] of matches.entries()) {
+    // The feed mounts its first page of cards; "Show more" reveals the rest.
+    expect(cards).toHaveLength(Math.min(matches.length, 6));
+    for (const [index, match] of matches.slice(0, cards.length).entries()) {
       expect(match.score).toBeGreaterThanOrEqual(0);
       expect(match.score).toBeLessThanOrEqual(100);
       expect(cards[index].querySelector(".match-score")?.textContent).toContain(`${match.score}%`);
-      const fit = match.matchedFactors.find((factor) => factor.label === "Skills") ?? match.matchedFactors[0];
-      expect(cards[index].textContent).toContain(fit.detail);
-      expect(cards[index].textContent).toContain(match.missingFactors[0].label);
+      expect(cards[index].textContent).not.toContain("Why it fits");
+      for (const factor of [...match.matchedFactors, ...match.missingFactors]) expect(cards[index].textContent).not.toContain(factor.detail);
     }
 
     const match = matches[0];
     await repository.saveOpportunity(DEMO_USER_ID, match.opportunityId);
-    const saved = new JSDOM(renderToStaticMarkup(await SavedPage())).window.document;
+    const saved = new JSDOM(renderToStaticMarkup(await SavedPage()), { url: "http://localhost/" }).window.document;
     expect(saved.querySelector("article h2")?.textContent).toBe(match.opportunity!.title);
     expect(saved.querySelector("article a")?.getAttribute("href")).toBe(`/opportunity/${match.opportunityId}`);
 
-    const detail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({}) }))).window.document;
+    const detail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({}) })), { url: "http://localhost/" }).window.document;
     expect(detail.querySelector("main")?.textContent).toContain(`${match.score}%`);
-    expect(detail.querySelector('a[aria-label="Back to opportunities"]')?.getAttribute("href")).toBe("/opportunities");
+    expect([...detail.querySelectorAll("a")].find((a) => a.textContent?.includes("Back to opportunities"))?.getAttribute("href")).toBe("/opportunities");
     for (const factor of [...match.matchedFactors, ...match.missingFactors]) {
-      expect(detail.querySelector("main")?.textContent).toContain(factor.detail);
+      expect(detail.querySelector("main")?.textContent).not.toContain(factor.detail);
     }
-    const matchDetail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({ from: "matches" }) }))).window.document;
-    expect(matchDetail.querySelector('a[aria-label="Back to matches"]')?.getAttribute("href")).toBe("/feed");
+    const matchDetail = new JSDOM(renderToStaticMarkup(await OpportunityPage({ params: Promise.resolve({ id: match.opportunityId }), searchParams: Promise.resolve({ from: "matches" }) })), { url: "http://localhost/" }).window.document;
+    expect([...matchDetail.querySelectorAll("a")].find((a) => a.textContent?.includes("Back to matches"))?.getAttribute("href")).toBe("/feed");
     const response = await explainMatch(new Request(`http://localhost/api/v1/matches/${match.id}/explanation`), { params: Promise.resolve({ id: match.id }) });
     expect(response.status).toBe(200);
     const { data } = await response.json() as { data: MatchResult };

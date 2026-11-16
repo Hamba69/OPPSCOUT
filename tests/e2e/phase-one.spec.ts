@@ -1,11 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("user sees explained matches, saves one, and updates preferences", async ({ page }) => {
+test("user sees scored matches, saves one, and updates preferences", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
   await page.goto("/feed");
   await expect(page.getByRole("heading", { name: "Matches worth your time." })).toBeVisible();
-  await expect(page.getByText("Why it fits").first()).toBeVisible();
+  await expect(page.locator(".match-score").first()).toHaveText(/\d+% match/);
+  await expect(page.getByText("Why it fits")).toHaveCount(0);
   const savedTitle = await page.locator("article").first().getByRole("heading", { level: 2 }).textContent();
   expect(savedTitle).toBeTruthy();
   await Promise.all([

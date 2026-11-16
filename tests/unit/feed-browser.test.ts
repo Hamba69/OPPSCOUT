@@ -16,9 +16,9 @@ vi.mock("@/components/match-card", () => ({
 afterEach(cleanup);
 
 const items: FeedItem[] = [
-  { id: "job-match", opportunityId: "job", category: "job", categoryLabel: "Jobs", title: "Research Officer", organization: "Example", origin: "catalog", score: 90, deadline: null, location: "Kampala", workMode: "", matched: [], missing: [], sourceUrl: "https://example.org/job", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
-  { id: "internship-match", opportunityId: "internship", category: "internship", categoryLabel: "Internships", title: "Data Internship", organization: "Example", origin: "catalog", score: 85, deadline: null, location: "Kampala", workMode: "", matched: [], missing: [], sourceUrl: "https://example.org/internship", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
-  { id: "consultancy-match", opportunityId: "consultancy", category: "consultancy", categoryLabel: "Consultancies", title: "Policy Consultant", organization: "Example", origin: "catalog", score: 80, deadline: null, location: "Remote", workMode: "", matched: [], missing: [], sourceUrl: "https://example.org/consultancy", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
+  { id: "job-match", opportunityId: "job", category: "job", categoryLabel: "Jobs", title: "Research Officer", organization: "Example", origin: "catalog", score: 90, deadline: null, location: "Kampala", workMode: "", sourceUrl: "https://example.org/job", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
+  { id: "internship-match", opportunityId: "internship", category: "internship", categoryLabel: "Internships", title: "Data Internship", organization: "Example", origin: "catalog", score: 85, deadline: null, location: "Kampala", workMode: "", sourceUrl: "https://example.org/internship", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
+  { id: "consultancy-match", opportunityId: "consultancy", category: "consultancy", categoryLabel: "Consultancies", title: "Policy Consultant", organization: "Example", origin: "catalog", score: 80, deadline: null, location: "Remote", workMode: "", sourceUrl: "https://example.org/consultancy", checkedAt: "2026-01-01", publicationDate: "2026-01-01", daysLeft: null },
 ];
 
 describe("seeker feed categories", () => {

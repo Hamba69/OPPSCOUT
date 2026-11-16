@@ -47,7 +47,7 @@ describe("Phase 1 rule matching", () => {
         missingFactors: [],
         generatedBy: "rules" as const,
       }),
-    };
+    });
     const options = {
       persist: false,
       telemetry: false,

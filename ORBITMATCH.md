@@ -1,5 +1,36 @@
 # OrbitMatch: drop-in matching engine (no API, no per-call cost)
 
+## v2.0.0: evidence-weighted scoring (November 2026)
+
+**Problem.** v1 gave a listing 80% credit on skills and field when it listed none, full credit on
+experience when none was stated, and 50% on work mode when the seeker had no preference. Only 7 of
+115 catalogue rows state fields of study, so most listings were scored mainly on these defaults: the
+same listing scored the same (for example 71 or 88) for a nurse, an accountant and an empty profile,
+and the card's one reason was usually "Location: Uganda".
+
+**What changed.**
+- Each dimension now reports `evidence` (how much the listing actually said) next to `ratio` (how well
+  the profile fits). Anything unknown gets a neutral `emptyPrior` of 0.35, never a match.
+- `orbit/infer.ts` reads requirements out of the title and description when tags are missing: skills,
+  fields (directly or implied by skills), minimum education ("diploma or degree", a master's
+  scholarship needs a bachelor's), and experience ("3+ years", or title seniority such as Senior,
+  Manager or Intern). Inferred values carry less evidence than stated ones.
+- Two new dimensions: **Qualification** (education level against what the listing expects) and
+  **Opportunity type** (the categories the seeker chose). Weights are in `ORBIT_CATEGORY_WEIGHTS`.
+- Skills are evidenced by certifications, project tags and job titles too, not only the skills list.
+- Reasons are ordered by how much each moved the score. The card shows the strongest competence
+  reason and never a hard-gate pass. "Location" appears only when nothing better applies.
+- The skills vocabulary grew from 30 to about 70 concepts, adding health, teaching, trades, sales,
+  hospitality, agriculture and finance skills, plus three fields.
+- Run `npx tsx scripts/sim/diagnose-scores.ts` to see the score spread and reasons for six sample
+  profiles against `docs/audits/catalog-snapshot.json`.
+
+**Calibration.** An ideal, fully described match scores about 95, the same listing without tags about
+75, an unrelated job about 20 to 25, and a listing with no detail about 15 to 30. Low top scores for a
+seeker usually mean the catalogue has nothing that fits them yet, not that matching failed.
+
+The v1 notes below are kept for history; their simulation numbers describe v1.
+
 Deterministic, explainable, about 0.5 ms per profile/opportunity pair. Same `MatchEngine` interface, same hard gates, same 0..100 score.
 
 ## Install

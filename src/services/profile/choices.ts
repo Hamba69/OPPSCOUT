@@ -8,7 +8,7 @@ export type ProfileChoices = Record<ProfileChoiceField, ProfileChoice[]>;
 const LABELS: Record<string, string> = {
   bachelors: "Bachelor’s degree", masters: "Master’s degree", phd: "Doctorate / PhD", secondary: "Secondary school",
   certificate: "Certificate", diploma: "Diploma", "no formal education": "No formal education",
-  javascript: "JavaScript", typescript: "TypeScript", sql: "SQL", python: "Python", excel: "Excel", "it support": "IT support",
+  javascript: "JavaScript", typescript: "TypeScript", sql: "SQL", python: "Python", excel: "Excel", "it support": "IT support", gis: "GIS", "human resources": "Human resources", "monitoring and evaluation": "Monitoring and evaluation", "machine learning": "Machine learning",
   job: "Jobs", internship: "Internships", scholarship: "Scholarships", fellowship: "Fellowships", consultancy: "Consultancies", grant: "Grants", training: "Training",
 };
 

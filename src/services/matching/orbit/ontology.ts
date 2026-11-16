@@ -35,6 +35,45 @@ export const SKILL_CONCEPTS: Concept[] = [
   { id: "teamwork", aliases: ["teamwork", "collaboration", "team player", "working in teams"] },
   { id: "organization", aliases: ["organization", "organisation", "organizational skills", "time management", "planning"] },
   { id: "academic excellence", aliases: ["academic excellence", "academic performance", "high gpa", "first class"] },
+  // Uganda labour-market skills beyond office/tech work. Without these, nurses, teachers, artisans and
+  // sales staff could not express what they do, and listings asking for them were invisible to matching.
+  { id: "patient care", aliases: ["patient care", "nursing care", "clinical care", "patient management", "midwifery", "clinical skills", "triage"] },
+  { id: "community health", aliases: ["community health", "health promotion", "health education", "public health outreach", "hiv prevention", "immunization", "maternal health"] },
+  { id: "laboratory", aliases: ["laboratory", "laboratory skills", "lab work", "lab skills", "laboratory testing", "specimen collection"] },
+  { id: "pharmacy", aliases: ["pharmacy", "dispensing", "pharmaceutical", "drug dispensing"] },
+  { id: "teaching", aliases: ["teaching", "lesson planning", "classroom management", "tutoring", "curriculum delivery", "facilitation", "training delivery"] },
+  { id: "customer service", aliases: ["customer service", "customer care", "client service", "front desk", "reception", "customer relations", "call center", "call centre"] },
+  { id: "sales", aliases: ["sales", "selling", "retail", "sales and marketing", "business to business sales", "field sales", "telesales", "cashiering"] },
+  { id: "marketing", aliases: ["marketing", "brand management", "branding", "market strategy", "advertising", "marketing strategy"] },
+  { id: "graphic design", aliases: ["graphic design", "adobe photoshop", "photoshop", "illustrator", "canva", "ui design", "ux design", "ui ux"] },
+  { id: "photography and video", aliases: ["photography", "videography", "video editing", "film production", "multimedia production"] },
+  { id: "journalism", aliases: ["journalism", "news writing", "editing", "broadcasting", "radio presenting"] },
+  { id: "legal research", aliases: ["legal research", "legal drafting", "contract drafting", "litigation", "legal advice", "compliance"] },
+  { id: "human resources", aliases: ["human resources", "hr", "recruitment", "talent acquisition", "payroll", "staff welfare", "hr management"] },
+  { id: "auditing", aliases: ["auditing", "audit", "internal audit", "external audit", "risk management", "internal controls"] },
+  { id: "tax", aliases: ["tax", "taxation", "tax compliance", "ura returns", "tax returns"] },
+  { id: "banking", aliases: ["banking", "credit analysis", "loan officer", "microfinance", "mobile money", "teller"] },
+  { id: "electrical installation", aliases: ["electrical installation", "electrical wiring", "wiring", "electrician", "solar installation", "solar pv"] },
+  { id: "plumbing", aliases: ["plumbing", "pipe fitting", "water systems"] },
+  { id: "construction", aliases: ["construction", "masonry", "building construction", "carpentry", "joinery", "site supervision", "quantity surveying"] },
+  { id: "mechanics", aliases: ["mechanics", "motor vehicle mechanics", "auto mechanics", "vehicle maintenance", "machine maintenance", "welding", "fabrication"] },
+  { id: "driving", aliases: ["driving", "valid driving permit", "motorcycle riding", "boda boda", "fleet management"] },
+  { id: "tailoring", aliases: ["tailoring", "fashion design", "garment making", "sewing", "dressmaking"] },
+  { id: "hospitality", aliases: ["hospitality", "catering", "cooking", "food preparation", "housekeeping", "hotel management", "bartending", "waitressing"] },
+  { id: "hairdressing and beauty", aliases: ["hairdressing", "cosmetology", "beauty therapy", "salon", "barbering"] },
+  { id: "livestock", aliases: ["livestock", "animal husbandry", "poultry", "dairy farming", "veterinary", "piggery", "fish farming", "aquaculture"] },
+  { id: "agribusiness", aliases: ["agribusiness", "value addition", "agro processing", "agricultural marketing", "farm business"] },
+  { id: "gis", aliases: ["gis", "arcgis", "qgis", "remote sensing", "spatial analysis"] },
+  { id: "statistics", aliases: ["statistics", "stata", "spss", "r programming", "econometrics", "biostatistics"] },
+  { id: "machine learning", aliases: ["machine learning", "artificial intelligence", "ai", "deep learning", "data science", "nlp"] },
+  { id: "mobile development", aliases: ["mobile development", "android development", "android", "flutter", "kotlin", "ios development", "mobile apps"] },
+  { id: "networking", aliases: ["networking", "computer networks", "ccna", "network engineering"] },
+  { id: "policy analysis", aliases: ["policy analysis", "policy research", "advocacy", "policy development", "governance"] },
+  { id: "languages", aliases: ["translation", "interpretation", "french", "kiswahili", "swahili", "arabic"] },
+  { id: "security guarding", aliases: ["security guarding", "security guard", "askari", "loss prevention"] },
+  { id: "store management", aliases: ["store management", "stores management", "inventory management", "stock control", "warehousing", "stores keeping"] },
+  { id: "problem solving", aliases: ["problem solving", "critical thinking", "analytical skills", "analytical thinking"] },
+  { id: "innovation", aliases: ["innovation", "creativity", "design thinking", "social innovation", "social enterprise"] },
 ];
 
 // Symmetric soft links between different concepts: the orbit of "nearly the same skill".
@@ -49,6 +88,18 @@ export const SKILL_RELATIONS: Array<[string, string, number]> = [
   ["proposal writing", "report writing", 0.5], ["entrepreneurship", "market research", 0.4], ["procurement", "administration", 0.3],
   ["community engagement", "communication", 0.3], ["social media", "communication", 0.5], ["organization", "administration", 0.4],
   ["teamwork", "leadership", 0.3], ["monitoring and evaluation", "research", 0.4], ["monitoring and evaluation", "data analysis", 0.4],
+  ["patient care", "community health", 0.6], ["patient care", "laboratory", 0.3], ["patient care", "pharmacy", 0.4], ["community health", "community engagement", 0.5],
+  ["teaching", "communication", 0.4], ["teaching", "community engagement", 0.3], ["customer service", "sales", 0.5], ["customer service", "communication", 0.4],
+  ["sales", "marketing", 0.6], ["marketing", "social media", 0.6], ["marketing", "market research", 0.5], ["graphic design", "social media", 0.5],
+  ["graphic design", "photography and video", 0.4], ["journalism", "communication", 0.5], ["journalism", "report writing", 0.5], ["journalism", "photography and video", 0.3],
+  ["human resources", "administration", 0.5], ["auditing", "bookkeeping", 0.6], ["tax", "bookkeeping", 0.6], ["auditing", "tax", 0.4], ["banking", "bookkeeping", 0.4],
+  ["banking", "customer service", 0.3], ["electrical installation", "construction", 0.3], ["plumbing", "construction", 0.4], ["mechanics", "electrical installation", 0.3],
+  ["livestock", "agronomy", 0.5], ["agribusiness", "agronomy", 0.5], ["agribusiness", "entrepreneurship", 0.6], ["agribusiness", "livestock", 0.4],
+  ["gis", "data analysis", 0.4], ["statistics", "data analysis", 0.7], ["statistics", "research", 0.5], ["machine learning", "python", 0.5], ["machine learning", "data analysis", 0.6],
+  ["mobile development", "software development", 0.7], ["mobile development", "javascript", 0.4], ["networking", "it support", 0.7], ["networking", "cybersecurity", 0.4],
+  ["policy analysis", "research", 0.6], ["policy analysis", "report writing", 0.4], ["store management", "procurement", 0.6], ["legal research", "research", 0.4],
+  ["innovation", "entrepreneurship", 0.5], ["problem solving", "data analysis", 0.2], ["hospitality", "customer service", 0.5], ["tailoring", "entrepreneurship", 0.3],
+  ["hairdressing and beauty", "entrepreneurship", 0.3], ["community health", "monitoring and evaluation", 0.3],
 ];
 
 export const FIELD_CONCEPTS: Concept[] = [
@@ -65,6 +116,9 @@ export const FIELD_CONCEPTS: Concept[] = [
   { id: "education", aliases: ["education", "teaching", "education science"] },
   { id: "law", aliases: ["law", "legal studies"] },
   { id: "engineering", aliases: ["engineering", "civil engineering", "electrical engineering", "mechanical engineering"] },
+  { id: "vocational trades", aliases: ["vocational trades", "technical and vocational", "tvet", "electrical installation", "motor vehicle mechanics", "carpentry", "building and construction", "welding and fabrication", "plumbing"] },
+  { id: "hospitality and tourism", aliases: ["hospitality and tourism", "hospitality", "tourism", "hotel management", "catering"] },
+  { id: "arts and design", aliases: ["arts and design", "fine art", "graphic design", "industrial art", "music dance and drama", "fashion design", "film"] },
 ];
 
 export const FIELD_RELATIONS: Array<[string, string, number]> = [
@@ -72,7 +126,20 @@ export const FIELD_RELATIONS: Array<[string, string, number]> = [
   ["economics", "business", 0.5], ["economics", "agriculture", 0.4], ["public health", "social sciences", 0.5], ["social sciences", "communications", 0.4],
   ["social sciences", "education", 0.4], ["social sciences", "economics", 0.4], ["social sciences", "business", 0.3], ["agriculture", "environment", 0.6],
   ["computer science", "engineering", 0.4], ["public health", "data science", 0.3], ["social sciences", "law", 0.3], ["computer science", "business", 0.25],
+  ["vocational trades", "engineering", 0.5], ["hospitality and tourism", "business", 0.4], ["arts and design", "communications", 0.5], ["environment", "public health", 0.25],
 ];
+
+/** Which academic field each skill most plausibly comes from, so a listing that only names skills still reveals its field. */
+export const SKILL_TO_FIELD: Record<string, string> = {
+  javascript: "computer science", python: "computer science", "software development": "computer science", "it support": "computer science", cybersecurity: "computer science",
+  "mobile development": "computer science", networking: "computer science", sql: "computer science", "machine learning": "data science", statistics: "data science",
+  "data analysis": "data science", gis: "environment", bookkeeping: "finance", "financial modelling": "finance", auditing: "finance", tax: "finance", banking: "finance",
+  "patient care": "public health", "community health": "public health", laboratory: "public health", pharmacy: "public health", teaching: "education",
+  agronomy: "agriculture", livestock: "agriculture", agribusiness: "agriculture", journalism: "communications", "social media": "communications", marketing: "business",
+  sales: "business", entrepreneurship: "business", procurement: "business", "human resources": "business", "legal research": "law", "policy analysis": "social sciences",
+  "electrical installation": "vocational trades", plumbing: "vocational trades", construction: "vocational trades", mechanics: "vocational trades", tailoring: "vocational trades",
+  hospitality: "hospitality and tourism", "graphic design": "arts and design", "photography and video": "arts and design",
+};
 
 // Location hierarchy: child -> parent. Siblings inherit partial credit through a shared parent.
 export const LOCATION_PARENT: Record<string, string> = {

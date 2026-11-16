@@ -294,7 +294,6 @@ h1.hero-title {
 .icon-button:disabled { opacity: .5; }
 /* Equal-size opportunity card; the title link stretches over the whole card. */
 .opp-card { position: relative; display: flex; height: 12.25rem; flex-direction: column; gap: .625rem; border-radius: 1.375rem; padding: 1.125rem; background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
-.opp-card.with-reason { height: 14rem; }
 .opp-card .stretch::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .opp-card .stretch:focus-visible { outline: none; }
 .opp-card:focus-within { box-shadow: 0 0 0 3px var(--primary), var(--glass-shadow); }

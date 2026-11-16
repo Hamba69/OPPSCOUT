@@ -16,7 +16,8 @@ export async function GET(request: Request, context: Context): Promise<Response>
       telemetry: false,
     })).find((item) => item.id === id);
     if (!match) throw new NotFoundError("Match");
-    if (!match.matchedFactors.length || !match.missingFactors.length) throw new ValidationError("Stored match explanation is incomplete.");
+    // A strong match can legitimately have nothing missing; only an entirely empty explanation is invalid.
+    if (!match.matchedFactors.length && !match.missingFactors.length) throw new ValidationError("Stored match explanation is incomplete.");
     return success({ score: match.score, matchedFactors: match.matchedFactors, missingFactors: match.missingFactors, generatedBy: match.generatedBy });
   });
 }
