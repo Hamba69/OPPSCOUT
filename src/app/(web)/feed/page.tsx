@@ -10,9 +10,10 @@ import { choiceLabel } from "@/services/profile/choices";
 
 export const dynamic = "force-dynamic";
 
-export default async function FeedPage(): Promise<React.JSX.Element> {
+export default async function FeedPage({ searchParams }: { searchParams: Promise<{ type?: string }> }): Promise<React.JSX.Element> {
   const auth = await requirePageAuth(["user", "organization", "admin"]);
   if (auth.role === "admin") redirect("/admin/kpis");
+  const { type = "" } = await searchParams;
   const { userId } = auth;
   const [profile, repository] = await Promise.all([getUserProfile(userId), getRepository()]);
   if (!profile) redirect("/profile");
@@ -29,7 +30,7 @@ export default async function FeedPage(): Promise<React.JSX.Element> {
   const firstName = profile.name?.trim().split(/\s+/)[0] || undefined;
   return (
     <main className="animate-in flex flex-col gap-6">
-      {matches.length ? <FeedBrowser items={items} salutation={salutation} firstName={firstName} /> : <>
+      {matches.length ? <FeedBrowser key={type.trim().toLowerCase()} items={items} salutation={salutation} firstName={firstName} initialType={type} /> : <>
         <section className="greeting">
           <div className="orb orb-lg" aria-hidden="true" />
           <h1>{salutation}{firstName ? <> <strong>{firstName}</strong></> : null}, let&apos;s find what fits you.</h1>

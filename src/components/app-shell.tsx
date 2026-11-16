@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import { Logo } from "@/components/logo";
 
@@ -30,6 +31,7 @@ export const ICON_PATHS = {
   check: "M5 12l5 5L20 7",
   plus: "M12 5v14M5 12h14",
   edit: "M4 20h4L19 9l-4-4L4 16zM14 6l4 4",
+  menu: "M4 6h16M4 12h16M4 18h16",
 } as const;
 
 export type IconName = keyof typeof ICON_PATHS;
@@ -46,19 +48,27 @@ function isActive(pathname: string, link: SideLink): boolean {
   return paths.some((path) => pathname === path || (path !== "/dashboard" && pathname.startsWith(`${path}/`)));
 }
 
-/** Sidebar used by every signed-in area. On phones it becomes a scrollable strip (or is hidden when bottom tabs take over). */
-export function AppSidebar({ label, home, badge, groups, signOut = true, phone = "strip", footer }: {
+/** Sidebar used by every signed-in area. */
+export function AppSidebar({ id, label, home, badge, groups, signOut = true, phone = "strip", footer, mobileOpen = false, onMobileClose }: {
+  id?: string;
   label: string; home: string; badge?: { text: string; dark?: boolean }; groups: SideGroup[];
-  signOut?: boolean; phone?: "strip" | "hidden"; footer?: React.ReactNode;
+  signOut?: boolean; phone?: "strip" | "hidden" | "drawer"; footer?: React.ReactNode;
+  mobileOpen?: boolean; onMobileClose?: () => void;
 }): React.JSX.Element {
   const pathname = usePathname();
-  return <aside className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : "app-sidebar-scroll"}`}>
+  return <aside
+    id={id}
+    className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : phone === "drawer" ? `seeker-sidebar-drawer ${mobileOpen ? "is-open" : ""}` : "app-sidebar-scroll"}`}
+    role={phone === "drawer" && mobileOpen ? "dialog" : undefined}
+    aria-modal={phone === "drawer" && mobileOpen ? true : undefined}
+    aria-label={phone === "drawer" && mobileOpen ? label : undefined}
+  >
     <Link href={home} className="app-brand" aria-label="OppScout home"><Logo size={32} />oppscout</Link>
     {badge && <span className={`app-badge ${badge.dark ? "app-badge-dark" : ""}`}>{badge.text}</span>}
     {groups.map((group, index) => <div key={group.title ?? index} className="contents">
       {group.title && <p className={`app-group ${index === 0 ? "!mt-0" : ""}`} aria-hidden="true">{group.title}</p>}
       <nav aria-label={group.ariaLabel ?? (group.title ? `${group.title.charAt(0)}${group.title.slice(1).toLowerCase()}` : label)} className="flex flex-col gap-0.5">
-        {group.links.map((link) => <Link key={link.href} href={link.href} prefetch aria-current={isActive(pathname, link) ? "page" : undefined} className="side-link">
+        {group.links.map((link) => <Link key={link.href} href={link.href} prefetch onClick={phone === "drawer" ? onMobileClose : undefined} aria-current={isActive(pathname, link) ? "page" : undefined} className="side-link">
           <Icon name={link.icon} />{link.label}
         </Link>)}
         {signOut && index === groups.length - 1 && <form action="/auth/logout" method="post" className="contents">
@@ -98,6 +108,55 @@ const seekerGroups: SideGroup[] = [
 export function SeekerFrame({ children }: { children: React.ReactNode }): React.JSX.Element {
   const pathname = usePathname();
   const seeker = SEEKER_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const closeOnEscape = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        menuButton.current?.focus();
+        return;
+      }
+      if (event.key === "Tab") {
+        const focusable = Array.from(document.querySelectorAll<HTMLElement>("#seeker-sidebar a[href], #seeker-sidebar button:not([disabled])"));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !focusable.includes(document.activeElement as HTMLElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !focusable.includes(document.activeElement as HTMLElement))) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.querySelector<HTMLElement>("#seeker-sidebar a[href], #seeker-sidebar button:not([disabled])")?.focus();
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [mobileOpen]);
+
   if (!seeker) return <>{children}</>;
-  return <AppFrame sidebar={<AppSidebar label="Main navigation" home="/feed" groups={seekerGroups} phone="hidden" />}>{children}</AppFrame>;
+  const closeMobileNav = (): void => {
+    setMobileOpen(false);
+    menuButton.current?.focus();
+  };
+  return <>
+    <div className="seeker-mobile-nav md:hidden">
+      <button ref={menuButton} type="button" aria-expanded={mobileOpen} aria-controls="seeker-sidebar" onClick={() => setMobileOpen((open) => !open)}
+        className="inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold text-ink glass-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf">
+        <Icon name="menu" size={18} />
+        Menu
+      </button>
+    </div>
+    {mobileOpen && <button type="button" className="seeker-sidebar-backdrop md:hidden" aria-label="Close navigation" onClick={closeMobileNav} />}
+    <AppFrame sidebar={<AppSidebar id="seeker-sidebar" label="Main navigation" home="/feed" groups={seekerGroups} phone="drawer" mobileOpen={mobileOpen} onMobileClose={closeMobileNav} />}>{children}</AppFrame>
+  </>;
 }

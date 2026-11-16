@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       </section>
 
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-white/85 bg-white/60 px-8 py-7 shadow-[0_10px_30px_rgba(146,98,0,0.06)] backdrop-blur-xl">
-        <div><h2 className="text-xl font-extrabold text-ink">Have an opportunity to share?</h2><p className="mt-1.5 text-sm text-navy">Verified organizations publish free and reach people who fit.</p></div>
+        <h2 className="text-xl font-extrabold text-ink">Have an opportunity to share?</h2>
         <Link href="/organizations" className="button-dark">Post an opportunity</Link>
       </section>
 

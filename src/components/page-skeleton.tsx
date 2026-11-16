@@ -11,10 +11,10 @@ export function PageSkeleton({ section }: { section: "matches" | "provider" | "a
     <main className={styles.page} aria-busy="true" data-section={section}>
       <div className={styles.card}>
         <div className={styles.orb} aria-hidden="true" />
-        <div className={styles.brand} aria-hidden="true">
+        {section !== "matches" && <div className={styles.brand} aria-hidden="true">
           <Logo size={28} />
           <span className={styles.wordmark}>oppscout</span>
-        </div>
+        </div>}
         <div className={styles.track} aria-hidden="true"><div className={styles.bar} /></div>
         <p className={styles.screenReaderStatus} role="status">Loading OppScout</p>
       </div>

@@ -17,6 +17,16 @@ describe("opportunity browsing", () => {
     expect(listMatches).not.toHaveBeenCalled();
   });
 
+  it("only lists categories that have visible open opportunities in the database", async () => {
+    const repository = new MemoryRepository();
+    setRepositoryForTests(repository);
+
+    const result = await browseOpportunities(DEMO_USER_ID, {}, new Date());
+    const categoriesInItems = [...new Set(result.items.map((item) => item.category))].sort();
+
+    expect([...result.categories].sort()).toEqual(categoriesInItems);
+  });
+
   it("shows open catalog entries awaiting review without exposing flagged or organization submissions", async () => {
     const repository = new MemoryRepository();
     setRepositoryForTests(repository);

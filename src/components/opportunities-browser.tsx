@@ -69,16 +69,16 @@ export function OpportunitiesBrowser({
         </label>
       </form>
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-1.5">
-          <button type="button" className="chip" aria-pressed={!type} onClick={() => pick("")}>All</button>
+      <div className="flex flex-col gap-3">
+        <div role="group" aria-label="Filter by category" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+          <button type="button" className="chip w-full justify-center text-center" aria-pressed={!type} onClick={() => pick("")}>All</button>
           {categories.map((name) => (
-            <button key={name} type="button" className="chip" aria-pressed={type === name} onClick={() => pick(name)}>
+            <button key={name} type="button" className="chip w-full justify-center text-center" aria-pressed={type === name} onClick={() => pick(name)}>
               {choiceLabel(name)}
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-3">
           {(query || type) && (
             <button type="button" onClick={clear} className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4">
               Clear filters
