@@ -8,7 +8,7 @@ import { OpportunitiesBrowser } from "@/components/opportunities-browser";
 afterEach(cleanup);
 
 describe("opportunity category filters", () => {
-  it("shows only supplied categories in a two-column capsule grid", () => {
+  it("shows supplied categories in a single horizontally scrollable capsule row", () => {
     render(createElement(OpportunitiesBrowser, {
       items: [],
       categories: ["job", "internship"],
@@ -16,7 +16,8 @@ describe("opportunity category filters", () => {
     }));
 
     const categoryGroup = screen.getByRole("group", { name: "Filter by category" });
-    expect(categoryGroup.className).toContain("grid-cols-2");
+    expect(categoryGroup.className).toContain("overflow-x-auto");
+    expect(categoryGroup.className).toContain("category-nav");
     expect(screen.getByRole("button", { name: "Jobs" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Internships" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Grants" })).toBeNull();

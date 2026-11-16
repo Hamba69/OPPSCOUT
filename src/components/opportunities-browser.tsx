@@ -70,10 +70,10 @@ export function OpportunitiesBrowser({
       </form>
 
       <div className="flex flex-col gap-3">
-        <div role="group" aria-label="Filter by category" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-          <button type="button" className="chip w-full justify-center text-center" aria-pressed={!type} onClick={() => pick("")}>All</button>
+        <div role="group" aria-label="Filter by category" className="nav-capsule category-nav w-full max-w-full justify-start gap-0.5 overflow-x-auto">
+          <button type="button" className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${!type ? "bg-white text-ink shadow-sm" : ""}`} aria-pressed={!type} onClick={() => pick("")}>All</button>
           {categories.map((name) => (
-            <button key={name} type="button" className="chip w-full justify-center text-center" aria-pressed={type === name} onClick={() => pick(name)}>
+            <button key={name} type="button" className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${type === name ? "bg-white text-ink shadow-sm" : ""}`} aria-pressed={type === name} onClick={() => pick(name)}>
               {choiceLabel(name)}
             </button>
           ))}
