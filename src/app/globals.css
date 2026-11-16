@@ -250,8 +250,9 @@ h1.hero-title {
 .side-link:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
 .side-link[aria-current="page"] { background: rgb(255 255 255 / .95); color: #1e293b; font-weight: 700; box-shadow: 0 4px 14px rgb(146 98 0 / .07); }
 .side-link[aria-current="page"] svg { color: var(--primary-deep); }
-.category-nav { scrollbar-width: none; }
-.category-nav::-webkit-scrollbar { display: none; }
+.category-nav { scrollbar-width: thin; scrollbar-color: var(--primary-border) transparent; }
+.category-nav::-webkit-scrollbar { height: 6px; }
+.category-nav::-webkit-scrollbar-thumb { border-radius: 9999px; background: var(--primary-border); }
 /* Phone: non-seeker sidebars can become a horizontal strip; seeker navigation uses a drawer. */
 @media (max-width: 767px) {
   .app-sidebar-scroll { flex-direction: row; overflow-x: auto; scrollbar-width: none; margin-inline: -1rem; padding-inline: 1rem; }
