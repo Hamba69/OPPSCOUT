@@ -9,6 +9,7 @@ import { getRepository } from "@/lib/repository";
 import { createServiceRoleClient } from "@/lib/supabase/admin";
 import { choiceLabel } from "@/services/profile/choices";
 import { formatDate } from "@/lib/dates";
+import { isPublisherOrganization } from "@/services/admin/catalogue-summary";
 
 export const dynamic = "force-dynamic";
 
@@ -61,23 +62,27 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
     page: String(page),
     ...(search ? { search } : {}),
   });
-  const [pendingListings, flaggedListings, pendingOrgs, flaggedOrgs] = await Promise.all([
+  const [pendingListings, flaggedListings, organizationQueue] = await Promise.all([
     repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending"))),
     repository.adminPage("opportunities", parseAdminQuery("opportunities", query("flagged"))),
-    repository.adminPage("organizations", parseAdminQuery("organizations", query("pending"))),
-    repository.adminPage("organizations", parseAdminQuery("organizations", query("flagged"))),
+    repository.listOrganizationReviewQueue(),
   ]);
   const listings = [...pendingListings.rows, ...flaggedListings.rows] as unknown as Opportunity[];
-  const organizations = [...pendingOrgs.rows, ...flaggedOrgs.rows] as unknown as Organization[];
+  // Only organisations that signed up in the app need verification. Providers created by seeding
+  // are trusted through each listing's own review, so they never wait in this queue.
+  const publisherQueue = organizationQueue
+    .filter(isPublisherOrganization)
+    .filter((organization) => !search || organization.name.toLowerCase().includes(search.toLowerCase()));
+  const organizations: Organization[] = publisherQueue.slice((page - 1) * 25, page * 25);
   const listingTotal = pendingListings.total + flaggedListings.total;
-  const organizationTotal = pendingOrgs.total + flaggedOrgs.total;
+  const organizationTotal = publisherQueue.length;
 
   const publishers = new Map<string, Organization | null>();
   await Promise.all([...new Set(listings.map((item) => item.organizationId).filter((id): id is string => Boolean(id)))].map(async (id) => { publishers.set(id, await repository.getOrganization(id)); }));
   const rows = listings.map((item) => ({ item, flag: flagFor(item, item.organizationId ? publishers.get(item.organizationId) ?? null : null) }));
   const visibleRows = flagFilter === "all" ? rows : rows.filter((row) => row.flag === flagFilter);
 
-  const dashboardUsers = [...new Set(organizations.flatMap((item) => item.dashboardUsers))];
+  const dashboardUsers = [...new Set([...organizations, ...publisherQueue.filter((item) => item.id === reviewing)].flatMap((item) => item.dashboardUsers))];
   const proofQuery = dashboardUsers.length
     ? await createServiceRoleClient().from("StoredDocument").select("id,ownerId,createdAt").eq("ownerType","user").eq("purpose","registration_proof").eq("status","ready").in("ownerId",dashboardUsers).order("createdAt",{ascending:false})
     : { data: [], error: null };
@@ -93,13 +98,13 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
     if (next.get("page") === "1") next.delete("page");
     return `?${next.toString()}`;
   };
-  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, flaggedListings.total, pendingOrgs.total, flaggedOrgs.total) / 25));
+  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, flaggedListings.total, organizationTotal) / 25));
   const openListing = tab === "opportunities" && reviewing ? listings.find((item) => item.id === reviewing) : undefined;
-  const openOrganization = tab === "organizations" && reviewing ? organizations.find((item) => item.id === reviewing) : undefined;
+  const openOrganization = tab === "organizations" && reviewing ? publisherQueue.find((item) => item.id === reviewing) : undefined;
 
   return <main className="animate-in flex min-w-0 flex-col gap-6">
-    <AdminHeader title="Review queue" subtitle="Organizations and listings both need a verified decision before trust is shown.">
-      <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Organizations · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
+    <AdminHeader title="Review queue" subtitle="Approve or reject listings, and verify organisations that signed up to post.">
+      <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Publishers · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
     </AdminHeader>
 
     <form action="/admin/review" method="get" role="search" className="surface flex flex-wrap items-end gap-3">
@@ -145,7 +150,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
         </tr>)}</tbody>
       </table></div> : <QueueClear title="Opportunity queue clear" text="Every current listing has a decision. New submissions and reported listings will appear here for your next review." />}
     </section> : <section aria-labelledby="review-organizations" className="surface">
-      <h2 id="review-organizations" className="surface-title mb-4">Organizations</h2>
+      <h2 id="review-organizations" className="surface-title mb-4">Publishers</h2>
       {organizations.length ? <div className="overflow-x-auto"><table className="w-full min-w-[720px] table-fixed border-collapse">
         <colgroup><col className="w-[34%]" /><col className="w-[18%]" /><col className="w-[16%]" /><col className="w-[16%]" /><col className="w-[16%]" /></colgroup>
         <thead><tr><th scope="col" className={th}>Organization</th><th scope="col" className={th}>Sector</th><th scope="col" className={th}>Status</th><th scope="col" className={th}>Submitted</th><th scope="col" className={th}><span className="sr-only">Action</span></th></tr></thead>
@@ -156,7 +161,7 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
           <td className={td}>Submitted {day(item.createdAt)}</td>
           <td className={td}><Link href={href({ review: item.id })} className="button !min-h-10 !px-5" aria-label={`Review ${item.name}`}>Review</Link></td>
         </tr>)}</tbody>
-      </table></div> : <QueueClear title="Organization queue clear" text="Every organization has a decision. New publisher sign-ups will appear here for your next review." />}
+      </table></div> : <QueueClear title="Publisher queue clear" text="Every organisation that signed up to post has a decision. Providers added by seeding never need verification here." />}
     </section>}
 
     <nav className="flex flex-wrap items-center justify-between gap-3" aria-label="Review pages">

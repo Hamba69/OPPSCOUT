@@ -8,11 +8,11 @@ const icons: Partial<Record<string, IconName>> = {
   algorithm: "chart", performance: "chart", activity: "clock", notifications: "feedback", feedback: "feedback",
   kpis: "chart", slo: "clock", review: "shield", exports: "saved", "access-log": "shield",
 };
-const names: Partial<Record<string, string>> = { review: "Review queue", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
-// The design's sidebar, in this order. The other portal sections (users, exports, access log…) still work
-// at /admin/<section>; set SHOW_MORE_SECTIONS to true to list them under "More" again.
-const SHOW_MORE_SECTIONS = false;
-const primary = ["overview", "review", "kpis", "organizations", "feedback", "matching", "performance"];
+const names: Partial<Record<string, string>> = { review: "Review queue", opportunities: "Catalogue", organizations: "Publishers", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
+// Day-to-day work first: what needs a decision, what is in the catalogue, who is using it.
+// Analytics and system pages sit under "More"; every section still works at /admin/<section>.
+const SHOW_MORE_SECTIONS = true;
+const primary = ["overview", "review", "opportunities", "organizations", "users", "feedback"];
 
 const label = (section: string): string => {
   const words = section.replace(/-/g, " ");
