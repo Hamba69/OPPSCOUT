@@ -1,22 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Opportunity, TrustChecklist } from "@/core/entities/domain";
-
-function isUserVisibleOpportunity(opportunity: Opportunity, now: Date): boolean {
-  if (
-    opportunity.status !== "open" ||
-    opportunity.verificationStatus !== "verified" ||
-    !opportunity.reviewedAt ||
-    !opportunity.deadline ||
-    opportunity.deadline <= now
-  ) {
-    return false;
-  }
-
-  if (!Object.values(opportunity.reviewChecklist).every(Boolean)) return false;
-
-  return opportunity.origin !== "organization" || opportunity.organization.verificationStatus === "verified";
-}
+import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 const checklist: TrustChecklist = {
   sourceAuthentic: true,

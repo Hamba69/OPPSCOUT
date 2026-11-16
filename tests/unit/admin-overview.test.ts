@@ -2,11 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import AdminSection from "@/app/(admin)/admin/[section]/page";
+import CatalogueFixesPage from "@/app/(admin)/admin/fixes/page";
 import type { Opportunity, Organization } from "@/core/entities/domain";
 import { setRepositoryForTests } from "@/lib/repository";
 import { MemoryRepository } from "@/lib/repository/memory";
 import { isPublisherOrganization, summarizeCatalogue } from "@/services/admin/catalogue-summary";
 
+vi.mock("next/navigation", async (original) => ({ ...(await original<typeof import("next/navigation")>()), useRouter: () => ({ refresh: vi.fn(), push: vi.fn() }) }));
 vi.mock("@/lib/admin-portal", () => ({ requireAdminPortal: vi.fn(async () => undefined), requireAdminPortalApi: vi.fn() }));
 
 const now = new Date("2026-11-16T09:00:00Z");
@@ -32,7 +34,7 @@ describe("catalogue summary", () => {
       listing({ checkedAt: new Date(now.getTime() - 12 * day) }),
       listing({ verificationStatus: "pending", reviewedAt: null }),
       listing({ verificationStatus: "flagged" }),
-      listing({ organizationId: null }),
+      listing({ organizationId: null, organizationName: null }),
       listing({ deadline: new Date(now.getTime() - 2 * day) }),
       listing({ verificationStatus: "pending", reviewedAt: null, deadline: new Date(now.getTime() - day) }),
     ], now);
@@ -74,5 +76,12 @@ describe("admin pages", () => {
     const html = await render("organizations");
     expect(html).toContain(publisher.name);
     expect(html).not.toContain(seeded.name);
+  });
+
+  it("renders the catalogue fixes page and links to it from the overview", async () => {
+    const html = renderToStaticMarkup(await CatalogueFixesPage());
+    expect(html).toContain("Approved but hidden");
+    expect(html).toContain("Re-check due");
+    expect(await render("overview")).toContain("/admin/fixes#recheck");
   });
 });

@@ -1,0 +1,42 @@
+name: Catalogue maintenance
+# Runs every night so the catalogue is tidy before the morning review. No paid services are used.
+#  1. Removes listings whose deadline has passed, or that went 14 days without a re-check.
+#  2. Checks catalogue health: fails (and emails the repository owner) when fewer listings are live
+#     than the current phase's floor, and writes the re-check queue and this week's research plan.
+on:
+  schedule:
+    # 00:00 UTC = 03:00 Kampala time.
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: catalogue-maintenance
+  cancel-in-progress: false
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Remove expired and stale listings
+        run: npm run worker:freshness
+      - name: Catalogue health, re-check queue and research plan
+        # Set the repository variable OPPSCOUT_CATALOGUE_PHASE to build, fill or steady (docs/catalogue/ROUTINE.md).
+        run: npm run seed:check -- --phase ${{ vars.OPPSCOUT_CATALOGUE_PHASE || 'build' }} --out recheck-queue.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalogue-plan
+          path: |
+            recheck-queue.json
+            research-plan.json
+          if-no-files-found: ignore

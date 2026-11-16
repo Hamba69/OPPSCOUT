@@ -36,7 +36,9 @@ describe('catalog trust and eligibility safety', () => {
     expect(isUserVisibleOpportunity({ ...valid, deadline: new Date(Date.now() - 1) })).toBe(false);
     expect(isUserVisibleOpportunity({ ...valid, sourceUrl: 'http://official.example/apply' })).toBe(false);
     expect(isUserVisibleOpportunity({ ...valid, reviewChecklist: { ...valid.reviewChecklist, eligibleForUgandans: false } })).toBe(false);
-    expect(isUserVisibleOpportunity({ ...valid, organization: { ...valid.organization!, verificationStatus: 'pending' } })).toBe(false);
+    // Publisher submissions need a verified publisher; catalogue listings are trusted through their own review.
+    expect(isUserVisibleOpportunity({ ...valid, origin: 'organization', organization: { ...valid.organization!, verificationStatus: 'pending' } })).toBe(false);
+    expect(isUserVisibleOpportunity({ ...valid, origin: 'catalog', organization: { ...valid.organization!, verificationStatus: 'pending' } })).toBe(true);
     expect(isUserVisibleOpportunity({ ...valid, reviewedAt: null })).toBe(false);
   });
   it('requires re-review when an approved listing is replaced by a duplicate submission', async () => {

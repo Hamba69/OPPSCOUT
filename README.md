@@ -1,51 +1,99 @@
 # OppScout
 
-Uganda-first opportunity discovery with deterministic eligibility, explained rule/AI matching, verified manual and shadow-discovered listings, provider analytics, web/USSD access, selective alerts, and fail-closed monetization readiness.
+Uganda-first opportunity discovery. Seekers build a profile and get a ranked feed of jobs, internships,
+scholarships, fellowships, grants and training they are eligible for, on the web or by USSD.
 
-OrbitMatch is the deterministic, offline non-AI default; set `OPPSCOUT_MATCH_ENGINE=rules` to use the legacy engine. See [ORBITMATCH.md](ORBITMATCH.md) for the algorithm and simulation.
+- **A curated catalogue.** Listings are researched and approved by the catalogue owner, and organisations
+  that sign up can post their own. Every listing passes the same review before seekers see it. See
+  [docs/catalogue/ROUTINE.md](docs/catalogue/ROUTINE.md).
+- **Deterministic matching.** Hard eligibility gates (education, certifications, age, programme rules), then
+  OrbitMatch scores fit from skills, field, qualification, experience, interests and opportunity type. Seekers
+  see a match percentage. See [ORBITMATCH.md](ORBITMATCH.md). `OPPSCOUT_MATCH_ENGINE=rules` selects the
+  legacy engine.
+- **Admin portal.** Overview, review queue, catalogue fixes, publishers, users and feedback, with analytics
+  under "More".
+
+## Stack
+
+Next.js 16 (App Router), React 19, Supabase (Auth, Postgres through the Supabase API, Storage), Prisma for the
+schema and migrations, Tailwind, Vitest and Playwright.
 
 ## Local development
 
-```powershell
+```bash
 npm install
+npm run prisma:generate
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000/login`. Runtime data and authentication always use PostgreSQL and Supabase Auth. Configure `.env.local` with real Supabase and database values before starting the app. The in-memory adapter is available only to automated tests.
+Open `http://127.0.0.1:3000/login`. The app always uses Supabase Auth and Postgres; configure `.env.local`
+first. The in-memory repository is used only by automated tests.
 
-## PostgreSQL / Supabase setup
+## Environment and database
 
-1. Copy `.env.example` to `.env.local` and supply the environment-owned values. `DATABASE_URL` must be the Supabase transaction pooler URL (`:6543`, `pgbouncer=true`, and a low `connection_limit`). `DIRECT_URL` must be the Supabase direct database URL (`:5432`) and is reserved for migrations, `db push`, and introspection.
-2. Run `npm run prisma:generate`.
-3. Apply the committed migration with `npm run db:migrate`.
-4. Seed development data with `npm run db:seed`.
-5. Schedule `npm run worker:weekly-opportunities` and `npm run worker:notifications` in the chosen worker runtime. The weekly workflow sweeps expired/stale listings and runs permission-gated shadow discovery.
+1. Copy `.env.example` to `.env.local` and fill it in. `DATABASE_URL` is the Supabase transaction pooler URL
+   (`:6543`, `pgbouncer=true`, low `connection_limit`); `DIRECT_URL` is the direct URL (`:5432`), used only for
+   migrations.
+2. Apply migrations with `npm run db:migrate`.
+3. Seed development data with `npm run db:seed` (development databases only).
+4. Create an admin with `npm run admin:create`.
 
-Run `npm run validate:env` in the production-equivalent environment to confirm that required variable names are present without printing their values. When run locally, the command also loads `.env.local` if it exists; explicitly provided environment variables still take precedence. The complete deployment checklist and phase-by-phase evidence boundary are in [`docs/production-readiness.md`](docs/production-readiness.md).
+`npm run validate:env` confirms required variables are present without printing them. The deployment
+checklist is [docs/production-readiness.md](docs/production-readiness.md).
 
-For Vercel, configure both database variables separately in **Production, Preview, and Development**. Preview must use a separate Supabase project/database, never the production URLs. Apply migrations deliberately with `DIRECT_URL` using `npm run db:migrate`; the Vercel build only runs `prisma generate` and `next build`.
+On Vercel, set both database variables for Production, Preview and Development; Preview must use a separate
+Supabase project. The build runs only `prisma generate` and `next build`; apply migrations deliberately.
 
-Later-phase integrations are deliberately gated:
+Roles: Supabase Auth users default to `user`. Publisher users become organisation-scoped when they create an
+organisation. Admins carry `app_metadata.role=admin`. Secrets never use `NEXT_PUBLIC_` names.
 
-- Publisher onboarding requires an official email and URSB registration number. An official website and supporting URSB document are optional; any website supplied must be public HTTPS and match the email domain. An admin may exceptionally verify a record without the number after an explicit manual identity check; valid official contact details remain required.
-- AI matching needs `ANTHROPIC_API_KEY` plus a passing `npm run validate:ai` result recorded through `OPPSCOUT_AI_COMPARISON_APPROVED=true` before `OPPSCOUT_AI_DEFAULT=true` is permitted.
-- The weekly GitHub Actions workflow removes expired/stale listings from active feeds and review queues, prunes old shadow candidates, and scans only explicitly approved hosts. Findings with a future deadline, explicit application link, and application domain matching a verified publisher enter the admin queue as pending; incomplete findings stay in private shadow storage. Nothing is auto-verified or published.
-- Scholarships, grants, fellowships, trainings, and internships may be on-site abroad. Matching does not penalize their location or work mode; admin review still must confirm Ugandans are eligible before publication.
-- USSD uses the Africa's Talking callback at `/api/v1/ussd/session`, Redis-compatible session/credential persistence, `USSD_TOKEN_SECRET`, and a gateway webhook secret. Public rollout remains blocked until the real sandbox completion SLO passes.
-- Monetization is read-only readiness infrastructure. Payment handling is intentionally absent until the legal and real-metric evidence in `docs/phase-5-legal-gate.md` is supplied.
+## Catalogue
 
-Supabase Auth users default to the `user` role. Provider users become organization-scoped when they create an organization; centrally provisioned staff may instead carry `app_metadata.role=organization` plus `app_metadata.organization_id`. Admins must carry `app_metadata.role=admin`. Secrets never use `NEXT_PUBLIC_` names.
+| Command | What it does |
+|---|---|
+| `npm run seed:run -- <file>` | Checks a file of researched listings and reports what would be held and why |
+| `npm run seed:run -- <file> --apply` | Stages the survivors as pending for review |
+| `npm run seed:check` | Live counts against targets, coverage for typical seekers, re-check queue and research plan |
+| `npm run seed:publish -- <run> --reviewer "Name"` | Approves a staged run from the command line (the review queue does the same) |
+| `npm run worker:freshness` | Removes expired and stale listings (runs nightly) |
+
+Docs: [ROUTINE.md](docs/catalogue/ROUTINE.md) (daily routine and targets),
+[RESEARCH_GUIDE.md](docs/catalogue/RESEARCH_GUIDE.md) (how to research and record a listing),
+[PIPELINE.md](docs/catalogue/PIPELINE.md) (what each check does).
+
+## Scheduled jobs (GitHub Actions)
+
+| Workflow | When | What |
+|---|---|---|
+| Catalogue maintenance | Nightly, 03:00 Kampala | Removes expired and stale listings, checks catalogue health, writes the research plan |
+| Telemetry retention | Scheduled | Trims old request and web-vitals samples |
+
+Secrets: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. Variable: `OPPSCOUT_CATALOGUE_PHASE`.
+
+`npm run worker:notifications` sends alerts and needs a scheduler of your choice once notification providers
+are configured.
+
+## Gated features
+
+Feature flags live in `src/config/feature-flags.ts` and [FLAGS.md](FLAGS.md).
+
+- **Publishers** need an official email and URSB registration number. Any website must be public HTTPS and
+  match the email domain. An admin may verify without the number after a manual identity check.
+- **AI matching** stays off unless `ANTHROPIC_API_KEY` is set and a held-out comparison
+  (`npm run validate:ai`) passes; then `OPPSCOUT_AI_COMPARISON_APPROVED=true` allows `OPPSCOUT_AI_DEFAULT=true`.
+- **Automated scraping** is off. The dormant shadow-discovery code (`worker:weekly-opportunities`) never
+  publishes; nothing is scheduled to run it.
+- **USSD** uses the Africa's Talking callback at `/api/v1/ussd/session`; public rollout stays off until a real
+  sandbox run meets the completion target.
+- **Payments** are intentionally absent until the legal review in
+  [docs/phase-5-legal-gate.md](docs/phase-5-legal-gate.md).
+
+International scholarships, grants, fellowships, training and internships may be on-site abroad; matching
+does not penalise their location, but review must confirm Ugandans are eligible.
 
 ## Verification
 
-```powershell
-$env:DATABASE_URL="postgresql://postgres:postgres@localhost:5432/oppscout"
-npm run prisma:validate
-npm run typecheck
-npm test
-npm run build
-npm run test:e2e
-npm run check:stubs
+```bash
+npm run verify        # prisma validate, typecheck, lint, unit and contract tests, build, stub check
+npm run test:e2e      # browser tests against the real Next.js server in memory mode
 ```
-
-The contract suite covers every `/api/v1` route across all phases. Browser tests run against the real Next.js server in isolated memory mode.

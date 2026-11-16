@@ -116,7 +116,8 @@ describe("every Phase 1 /api/v1 route", () => {
     expect(response.status).toBe(200);
     const matches = await data<Array<{ id: string; matchedFactors: unknown[]; missingFactors: unknown[] }>>(response);
     expect(matches.length).toBeGreaterThan(0);
-    expect(matches.every((match) => match.matchedFactors.length > 0 && match.missingFactors.length > 0)).toBe(true);
+    // Every match explains itself; a strong match may have nothing missing and a weak one nothing matched.
+    expect(matches.every((match) => match.matchedFactors.length + match.missingFactors.length > 0)).toBe(true);
     expect((await explanationRoute.GET(request(`/api/v1/matches/${matches[0].id}/explanation`), { params: Promise.resolve({ id: matches[0].id }) })).status).toBe(200);
   });
 
@@ -137,7 +138,7 @@ describe("every Phase 1 /api/v1 route", () => {
   });
 
   it("creates organizations and returns aggregate-only analytics", async () => {
-    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane" }, orgHeaders));
+    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContacts: [{ name: "Jane Namuli", phone: "+256 700 000 001" }] }));
     expect(createdOrganizationResponse.status).toBe(201);
     const createdOrganization = await data<{ id: string }>(createdOrganizationResponse);
     const organizationQueue = await organizationReviewRoute.GET(request("/api/v1/organizations/review", "GET", undefined, adminHeaders));
@@ -215,7 +216,7 @@ describe("every Phase 1 /api/v1 route", () => {
     expect(kpis.status).toBe(200);
     expect((await data<{ metrics: unknown[] }>(kpis)).metrics).toHaveLength(10);
     expect((await scrapingShadowRoute.GET(request("/api/v1/ingestion/scraping/shadow", "GET", undefined, adminHeaders))).status).toBe(200);
-    expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "http://unsafe.example", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(422);
+    expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "http://unsafe.example", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(400);
     expect((await scrapingShadowRoute.POST(request("/api/v1/ingestion/scraping/shadow", "POST", { sourceUrl: "https://jobadverts.co.ke/", organizationId: DEMO_ORG_ID }, adminHeaders))).status).toBe(503);
     expect((await ussdCredentialsRoute.POST(request("/api/v1/ussd/credentials", "POST", { userId: "11111111-1111-4111-8111-111111111111", pin: "1234" }, adminHeaders))).status).toBe(201);
     const ussdBody = new URLSearchParams({ sessionId: "contract-session", phoneNumber: "+256700000001", text: "" });

@@ -1,6 +1,6 @@
 # Production readiness and phase verification
 
-This file records the code-level verification against `AGENT_BUILD_GUIDE.md` and `docs/master-plan.md`. A code-complete gate means the repository contains the functional path and automated coverage. It does not claim external evidence that can only come from a deployed environment, provider sandbox, production usage, counsel, or configured credentials.
+This file records the code-level verification against `docs/planning/AGENT_BUILD_GUIDE.md` and `docs/master-plan.md`. A code-complete gate means the repository contains the functional path and automated coverage. It does not claim external evidence that can only come from a deployed environment, provider sandbox, production usage, counsel, or configured credentials.
 
 ## Phase status
 

@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthForm } from "@/components/auth-form";
-import ResetPasswordPage from "@/app/(auth)/reset-password/page";
+import { ResetPasswordForm } from "@/components/reset-password-form";
 
 const mocks = vi.hoisted(() => ({
   resetPasswordForEmail: vi.fn(), updateUser: vi.fn(), getUser: vi.fn(),
@@ -23,39 +23,38 @@ afterEach(() => { cleanup(); vi.useRealTimers(); });
 describe("password recovery", () => {
   it("starts in signup mode when requested", () => {
     render(createElement(AuthForm, { nextPath: "/feed", initialMode: "signup" }));
-    const toggleGroup = screen.getByRole("group", { name: "Sign in or create account" });
-    const toggleButtons = toggleGroup.querySelectorAll("button");
-    expect(toggleButtons[0]).toHaveAttribute("aria-pressed", "false");
-    expect(toggleButtons[1]).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("heading", { name: "Create your account" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^Create account/ })).toBeTruthy();
+    expect(screen.queryByText("Forgot password?")).toBeNull();
   });
 
   it("requests recovery using only a valid email, without a password", async () => {
     render(createElement(AuthForm, { nextPath: "/feed" }));
-    fireEvent.click(screen.getByText("Forgot your password?"));
+    fireEvent.click(screen.getByText("Forgot password?"));
     expect(mocks.resetPasswordForEmail).not.toHaveBeenCalled();
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "person@example.com" } });
-    fireEvent.click(screen.getByText("Forgot your password?"));
+    fireEvent.click(screen.getByText("Forgot password?"));
     await screen.findByText("Check your email for a link to reset your password.");
     expect(mocks.resetPasswordForEmail).toHaveBeenCalledWith("person@example.com", {
       redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
     });
-    fireEvent.click(screen.getByRole("button", { name: "Create account" }));
-    expect(screen.queryByText("Forgot your password?")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Create an account" }));
+    expect(screen.queryByText("Forgot password?")).toBeNull();
   });
 
   it("recovers from a request failure and allows retry", async () => {
     mocks.resetPasswordForEmail.mockRejectedValueOnce(new Error("network"));
     render(createElement(AuthForm, { nextPath: "/feed" }));
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "person@example.com" } });
-    fireEvent.click(screen.getByText("Forgot your password?"));
+    fireEvent.click(screen.getByText("Forgot password?"));
     await screen.findByText("Unable to send a reset email. Please try again.");
-    fireEvent.click(screen.getByText("Forgot your password?"));
+    fireEvent.click(screen.getByText("Forgot password?"));
     await screen.findByText("Check your email for a link to reset your password.");
   });
 
   it("blocks password updates without a valid session and offers recovery", async () => {
     mocks.getUser.mockResolvedValue({ data: { user: null }, error: null });
-    render(createElement(ResetPasswordPage));
+    render(createElement(ResetPasswordForm, { returnTo: "/feed" }));
     await screen.findByText(/Your reset session has expired/);
     expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(true);
     expect(screen.getByRole("link").getAttribute("href")).toBe("/login");
@@ -63,7 +62,7 @@ describe("password recovery", () => {
   });
 
   it("shows success before redirecting to the feed", async () => {
-    render(createElement(ResetPasswordPage));
+    render(createElement(ResetPasswordForm, { returnTo: "/feed" }));
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
     vi.useFakeTimers();
     fireEvent.change(screen.getByLabelText("New password"), { target: { value: "Test-password-123!" } });
@@ -80,7 +79,7 @@ describe("password recovery", () => {
 
   it("handles a session expiring during the password update", async () => {
     mocks.updateUser.mockResolvedValue({ error: { status: 401, message: "expired" } });
-    render(createElement(ResetPasswordPage));
+    render(createElement(ResetPasswordForm, { returnTo: "/feed" }));
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
     fireEvent.change(screen.getByLabelText("New password"), { target: { value: "Test-password-123!" } });
     fireEvent.submit(screen.getByRole("button").closest("form")!);
@@ -89,7 +88,7 @@ describe("password recovery", () => {
   });
 
   it("rejects weak new passwords before updating the account", async () => {
-    render(createElement(ResetPasswordPage));
+    render(createElement(ResetPasswordForm, { returnTo: "/feed" }));
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
     fireEvent.change(screen.getByLabelText("New password"), { target: { value: "short!" } });
     fireEvent.submit(screen.getByRole("button").closest("form")!);

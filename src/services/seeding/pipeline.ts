@@ -16,6 +16,8 @@ export interface ExistingRecord {
   verificationStatus: Opportunity["verificationStatus"];
   /** False for records approved with a partial checklist: they are invisible and need a full re-verification. */
   checklistComplete?: boolean;
+  /** Rejected by a reviewer (flagged and removed). Never re-proposed, so the queue does not fill with repeats. */
+  rejected?: boolean;
 }
 
 export interface PipelineOptions {
@@ -65,13 +67,16 @@ export interface PipelineResult {
 }
 
 const DAY_MS = 86_400_000;
+const VACANCY_CATEGORIES = new Set(["job", "internship", "consultancy"]);
 const PAYMENT_REQUEST = /(send|pay|transfer|deposit)\b.{0,40}\b(money|fee|payment|funds)|mobile money|bank (account|pin)|western union|password/i;
 
 interface Work { index: number; raw: unknown; candidate?: SeedCandidate; classification?: SourceClassification; action?: PipelineAction; existingId?: string | null; reviewOnly?: boolean; aggregatorSourceOverride?: boolean; warnings: string[] }
 
 export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOptions): PipelineResult {
   const { now, existing } = options;
-  const minLead = options.minLeadDays ?? 14;
+  // Vacancies in Uganda are commonly advertised for one to two weeks; a 14-day floor rejected most of them.
+  // Scholarships, grants and fellowships keep the longer floor because their applications take longer to prepare.
+  const minLeadFor = (category: string) => options.minLeadDays ?? (VACANCY_CATEGORIES.has(category.trim().toLowerCase().replace(/s$/, "")) ? 7 : 14);
   const maxEvidenceAge = options.maxEvidenceAgeDays ?? 3;
   const maxLead = options.maxLeadDays ?? 540;
   const held: HeldRecord[] = [];
@@ -153,11 +158,24 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
     const candidate = work.candidate!;
     if (candidate.deadlineType === "rolling" || !candidate.deadline) return [];
     const days = (Date.parse(candidate.deadline) - now.getTime()) / DAY_MS;
+    const minLead = minLeadFor(candidate.category);
     if (days < minLead) return [`closes in ${Math.floor(days)} day(s); minimum lead time is ${minLead}`];
     if (days > maxLead) return [`deadline is ${Math.floor(days)} days away; likely a misread`];
-    if (days < 30) work.warnings.push(`closes in ${Math.floor(days)} days; prefer 30 or more`);
+    const preferred = minLead < 14 ? 14 : 30;
+    if (days < preferred) work.warnings.push(`closes in ${Math.floor(days)} days; prefer ${preferred} or more`);
     return [];
   });
+
+  // Not a gate: records still pass, but thin records rank poorly for everyone, so the report says so.
+  for (const work of items) {
+    const candidate = work.candidate!;
+    const gaps: string[] = [];
+    if (!candidate.requiredSkills.length && !candidate.preferredSkills.length) gaps.push("skills");
+    if (!candidate.eligibility.minimumEducation && !candidate.eligibility.educationLevels?.length && candidate.category !== "grant") gaps.push("minimum education");
+    if (VACANCY_CATEGORIES.has(candidate.category) && candidate.eligibility.minimumExperienceMonths === undefined) gaps.push("experience months");
+    if (candidate.workMode === "unknown") gaps.push("work mode");
+    if (gaps.length) work.warnings.push(`matching data missing: ${gaps.join(", ")}; the listing will rank lower and explain itself poorly`);
+  }
 
   const seenUrls = new Map<string, number>();
   const seenTitles = new Map<string, number>();
@@ -176,6 +194,8 @@ export function runSeedingPipeline(rawCandidates: unknown[], options: PipelineOp
 
     const sameUrl = byUrl.get(urlKey);
     const sameTitle = byTitle.get(titleKey);
+    const rejected = [sameUrl, sameTitle].find((record) => record?.rejected);
+    if (rejected) return [`a reviewer already rejected this listing (${rejected.id}); it is not proposed again`];
     const live = (record: ExistingRecord) => ["open", "closing_soon"].includes(record.status) && (record.deadline === null || record.deadline > now);
     if (sameUrl) {
       // A timestamp refresh is only right for a record that is already approved and fully checked.

@@ -2,12 +2,16 @@
  * Catalogue health check against the live database. It answers "can a seeker see anything?" and,
  * when the answer is no, "why not?". Run it weekly (the scheduled workflow does) and after any import.
  *
- *   npm run seed:check -- [--min-visible 10] [--min-matches 3] [--require-coverage] [--out file]
+ *   npm run seed:check -- [--phase build|fill|steady] [--pass-rate 0.6] [--min-visible N] [--min-matches 3] [--require-coverage] [--out file]
+ *
+ * Also writes research-plan.json next to the re-check queue: how many candidates of each category the
+ * catalogue owner should research this week to reach and hold the targets in src/config/catalogue-targets.ts.
  *
  * Exits non-zero if too few records are visible, so a silently empty catalogue pages somebody.
  */
 import { join } from "node:path";
 
+import { CATALOGUE_PHASES, DEFAULT_PASS_RATE, researchPlan, type CataloguePhase } from "../../src/config/catalogue-targets";
 import { INGESTION_RULES } from "../../src/config/ingestion-rules";
 import { computeCoverage } from "../../src/services/seeding/personas";
 import { recheckIntervalDays } from "../../src/services/seeding/source-tiers";
@@ -19,7 +23,11 @@ const DAY = 86_400_000;
 
 async function main(): Promise<void> {
   const now = parseNow(flags);
-  const minVisible = numberFlag(flags, "min-visible", 10);
+  const phaseFlag = String(flags.get("phase") ?? "steady");
+  if (!(phaseFlag in CATALOGUE_PHASES)) throw new Error(`--phase must be one of ${Object.keys(CATALOGUE_PHASES).join(", ")}`);
+  const phase = phaseFlag as CataloguePhase;
+  const minVisible = numberFlag(flags, "min-visible", CATALOGUE_PHASES[phase].minVisible);
+  const passRate = numberFlag(flags, "pass-rate", DEFAULT_PASS_RATE);
   const minMatches = numberFlag(flags, "min-matches", 3);
   const { opportunities } = await loadCatalogue(getClient());
   const live = opportunities.filter((opportunity) => opportunity.status !== "removed");
@@ -38,6 +46,13 @@ async function main(): Promise<void> {
   const categories = new Map<string, number>();
   for (const opportunity of visible) categories.set(opportunity.category, (categories.get(opportunity.category) ?? 0) + 1);
   console.log(`  visible by category        ${[...categories].map(([name, count]) => `${name} ${count}`).join(", ") || "none"}`);
+
+  const plan = researchPlan(categories, phase, passRate);
+  console.log(`\nResearch plan, phase "${phase}" (${CATALOGUE_PHASES[phase].label}), pass rate ${passRate}`);
+  console.log(`  ${"category".padEnd(12)} ${"visible".padStart(7)} ${"target".padStart(6)} ${"replace/wk".padStart(10)} ${"approve/wk".padStart(10)} ${"research/wk".padStart(11)}`);
+  for (const row of plan) console.log(`  ${row.category.padEnd(12)} ${String(row.visible).padStart(7)} ${String(row.target).padStart(6)} ${String(row.weeklyReplacement).padStart(10)} ${String(row.approvalsThisWeek).padStart(10)} ${String(row.candidatesThisWeek).padStart(11)}`);
+  const totalCandidates = plan.reduce((sum, row) => sum + row.candidatesThisWeek, 0);
+  console.log(`  total: research about ${totalCandidates} candidates this week (${Math.ceil(totalCandidates / 25)} batches of 25).`);
 
   if (verifiedButHidden.length) {
     console.log("\nWhy verified records are hidden");
@@ -60,6 +75,7 @@ async function main(): Promise<void> {
   const outFile = typeof flags.get("out") === "string" ? String(flags.get("out")) : join("imports", "seeding-runs", "recheck-queue.json");
   ensureDir(join(outFile, ".."));
   writeJson(outFile, queue);
+  writeJson(join(outFile, "..", "research-plan.json"), { generatedAt: now.toISOString(), phase, passRate, totalCandidates, batchesOf25: Math.ceil(totalCandidates / 25), categories: plan });
   console.log(`\nDue for re-check: ${queue.length} (written to ${outFile}).`);
   if (atRisk.length) console.log(`WARNING: ${atRisk.length} record(s) are within 4 days of being removed automatically as stale (${INGESTION_RULES.scrapedStaleAfterDays} days without a re-check).`);
 

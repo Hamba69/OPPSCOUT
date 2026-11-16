@@ -6,13 +6,13 @@ import { LockPortal } from "@/components/admin-controls";
 const icons: Partial<Record<string, IconName>> = {
   overview: "overview", users: "people", opportunities: "opportunities", organizations: "organization", matching: "people",
   algorithm: "chart", performance: "chart", activity: "clock", notifications: "feedback", feedback: "feedback",
-  kpis: "chart", slo: "clock", review: "shield", exports: "saved", "access-log": "shield",
+  kpis: "chart", slo: "clock", review: "shield", fixes: "shield", exports: "saved", "access-log": "shield",
 };
-const names: Partial<Record<string, string>> = { review: "Review queue", opportunities: "Catalogue", organizations: "Publishers", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
+const names: Partial<Record<string, string>> = { review: "Review queue", fixes: "Catalogue fixes", opportunities: "Catalogue", organizations: "Publishers", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
 // Day-to-day work first: what needs a decision, what is in the catalogue, who is using it.
 // Analytics and system pages sit under "More"; every section still works at /admin/<section>.
 const SHOW_MORE_SECTIONS = true;
-const primary = ["overview", "review", "opportunities", "organizations", "users", "feedback"];
+const primary = ["overview", "review", "fixes", "opportunities", "organizations", "users", "feedback"];
 
 const label = (section: string): string => {
   const words = section.replace(/-/g, " ");

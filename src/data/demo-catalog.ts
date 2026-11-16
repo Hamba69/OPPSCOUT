@@ -60,7 +60,8 @@ export function getDemoCatalog(now = new Date()): { organizations: Organization[
   const template = getSeedOrganizations().find((organization) => organization.id === DEMO_ORG_ID)!;
   const organizations: Organization[] = organizationDetails.map(([id, name, sector], index) => ({
     ...structuredClone(template), id, name, sector, dashboardUsers: index === 0 ? template.dashboardUsers : [],
-    officialLinks: ["https://example.org"], officialEmail: null, registrationProof: "Fictional demo organization",
+    // The first organisation is the demo publisher, so it carries a matching official email like a real verified publisher.
+    officialLinks: ["https://example.org"], officialEmail: index === 0 ? "opportunities@example.org" : null, registrationProof: "Fictional demo organization",
     createdAt: now, updatedAt: now, postingHistory: [],
   }));
   const opportunities: Opportunity[] = listings.map((listing, index) => {

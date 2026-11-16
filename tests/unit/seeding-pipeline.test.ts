@@ -178,6 +178,19 @@ describe("seeding pipeline", () => {
     expect(run([candidate({ deadline: null })]).held[0].stage).toBe("schema");
   });
 
+  it("gives vacancies a 7-day lead-time floor and keeps 14 days for scholarships", () => {
+    const job = { category: "job", title: "Accounts Assistant", location: "Kampala" };
+    expect(run([candidate({ ...job, deadline: days(9) })]).held).toHaveLength(0);
+    expect(run([candidate({ ...job, deadline: days(5) })]).held[0].reasons.join(" ")).toMatch(/minimum lead time is 7/);
+    expect(run([candidate({ deadline: days(9) })]).held[0].reasons.join(" ")).toMatch(/minimum lead time is 14/);
+  });
+
+  it("flags records that lack the data matching needs without holding them", () => {
+    const result = run([candidate({ requiredSkills: [], workMode: "unknown" })]);
+    expect(result.held).toHaveLength(0);
+    expect(result.accepted[0]!.warnings.join(" ")).toMatch(/matching data missing: skills, work mode/);
+  });
+
   it("accepts rolling listings, which have no deadline", () => {
     const rolling = candidate({ deadlineType: "rolling", deadline: null, deadlineQuote: "Applications are accepted on a rolling basis throughout the year." });
     expect(run([rolling]).accepted).toHaveLength(1);
@@ -249,5 +262,28 @@ describe("persona coverage", () => {
     expect(coverage.every((row) => row.visible === 2)).toBe(true);
     expect(coverage.find((row) => row.persona === "s6-leaver")?.eligible).toBe(0);
     expect(coverage.find((row) => row.persona === "mid-career")?.eligible).toBeGreaterThan(0);
+  });
+});
+
+describe("catalogue research plan", () => {
+  it("asks for replacement plus shortfall, scaled by the pass rate", async () => {
+    const { researchPlan } = await import("@/config/catalogue-targets");
+    const empty = researchPlan(new Map(), "steady", 0.5);
+    const full = researchPlan(new Map([["job", 110]]), "steady", 0.5);
+    const emptyJob = empty.find((row) => row.category === "job")!, fullJob = full.find((row) => row.category === "job")!;
+    expect(fullJob.approvalsThisWeek).toBe(fullJob.weeklyReplacement);
+    expect(emptyJob.approvalsThisWeek).toBeGreaterThan(fullJob.approvalsThisWeek);
+    expect(emptyJob.candidatesThisWeek).toBe(Math.ceil(emptyJob.approvalsThisWeek / 0.5));
+    expect(researchPlan(new Map(), "build").find((row) => row.category === "job")!.target).toBeLessThan(110);
+  });
+});
+
+describe("rejected listings", () => {
+  it("never re-proposes a listing a reviewer rejected", () => {
+    const record = candidate();
+    const existing: ExistingRecord[] = [{ id: "r1", title: record.title, organizationId: null, organizationName: record.organizationName, sourceUrl: record.sourceUrl, deadline: new Date(record.deadline as string), status: "removed", verificationStatus: "flagged", rejected: true }];
+    const result = runSeedingPipeline([record], { now, existing });
+    expect(result.accepted).toHaveLength(0);
+    expect(result.held[0]!.reasons.join(" ")).toMatch(/already rejected/);
   });
 });

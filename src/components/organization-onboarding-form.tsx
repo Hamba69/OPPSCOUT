@@ -78,7 +78,7 @@ export function OrganizationOnboardingForm(): React.JSX.Element {
       <label className="md:col-span-2">
         <span className="label">Official website</span>
         <input className="field" type="url" name="officialLink" placeholder="https://www.example.org" />
-        <span className="mt-1 block text-xs text-navy">Optional. If supplied, use the organization's public HTTPS website and an email on the same domain.</span>
+        <span className="mt-1 block text-xs text-navy">Optional. If supplied, use the organization&apos;s public HTTPS website and an email on the same domain.</span>
       </label>
       <label className="md:col-span-2">
         <span className="label">Official email</span>

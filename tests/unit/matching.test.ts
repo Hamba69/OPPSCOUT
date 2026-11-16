@@ -41,7 +41,7 @@ describe("Phase 1 rule matching", () => {
     const opportunity = baseline[0]?.opportunity;
     expect(opportunity).toBeDefined();
     const engineAt = (score: number) => ({
-      score: async (_profile: UserProfile, _opportunity: Opportunity) => ({
+      score: async () => ({
         score,
         matchedFactors: [],
         missingFactors: [],

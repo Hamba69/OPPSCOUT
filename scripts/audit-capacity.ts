@@ -1,6 +1,6 @@
 import { loadEnvConfig } from '@next/env';
 import { randomUUID } from 'node:crypto';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import type { UserProfile } from '../src/core/entities/domain';
 import { buildRankedFeed } from '../src/services/matching/feed';
 import { OrbitMatchEngine } from '../src/services/matching/orbit/engine';
@@ -37,7 +37,8 @@ async function main() {
   }));
   const durations = results.map(r => r.durationMs).sort((a, b) => a - b);
   const report = { capturedAt: new Date().toISOString(), scope: '100 concurrent service feed builds with synthetic profiles and the live shared catalog. No synthetic users/profile rows written. Excludes HTTP, authentication, Redis, browser and production hosting.', elapsedMs: Math.round(performance.now() - start), success: results.filter(r => r.ok).length, p50Ms: durations[49], p95Ms: durations[94], p99Ms: durations[98], zeroPreferredCategory: results.filter(r => r.ok && r.preferredCategoryMatches === 0).length, zeroStrongMatches: results.filter(r => r.ok && r.strongMatches === 0).length, results };
-  writeFileSync('docs/audits/capacity-100.json', JSON.stringify(report, null, 2));
+  mkdirSync('test-results', { recursive: true });
+  writeFileSync('test-results/capacity-100.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ ...report, results: undefined }, null, 2));
   if (report.success !== 100) process.exitCode = 1;
 }

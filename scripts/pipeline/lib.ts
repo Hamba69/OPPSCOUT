@@ -86,6 +86,8 @@ export async function loadCatalogue(client: SupabaseClient): Promise<{ opportuni
     id: opportunity.id, title: opportunity.title, organizationId: opportunity.organizationId, organizationName: opportunity.organizationName ?? null,
     sourceUrl: opportunity.sourceUrl, deadline: opportunity.deadline, status: opportunity.status, verificationStatus: opportunity.verificationStatus,
     checklistComplete: checklistIsComplete(opportunity.reviewChecklist),
+    // The review dashboard's Reject sets flagged + removed.
+    rejected: opportunity.verificationStatus === "flagged" && opportunity.status === "removed",
   }));
   return { opportunities, existing, orgNames, orgIdsByName };
 }

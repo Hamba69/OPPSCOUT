@@ -51,16 +51,16 @@ export function AdminOverview({ catalogue: c, publishersAwaitingVerification, us
     { label: "Listings awaiting review", value: c.awaitingReview, href: "/admin/review", tone: c.awaitingReview ? "warn" : "good", note: c.awaitingReview ? "Approve or reject in the review queue" : "Queue clear" },
     { label: "Reported by users", value: c.reported, href: "/admin/review?flag=reported", tone: c.reported ? "alert" : "good", note: c.reported ? "Check these first" : "Nothing reported" },
     { label: "Publishers to verify", value: publishersAwaitingVerification, href: "/admin/review?tab=organizations", tone: publishersAwaitingVerification ? "warn" : "good", note: "Organisations that signed up in the app" },
-    { label: "Need a re-check soon", value: c.staleSoon, tone: c.staleSoon ? "warn" : "good", note: c.staleSoon ? "Removed within 4 days unless re-confirmed" : "All recently checked" },
+    { label: "Need a re-check soon", value: c.staleSoon, href: "/admin/fixes#recheck", tone: c.staleSoon ? "warn" : "good", note: c.staleSoon ? "Removed within 4 days unless re-confirmed" : "All recently checked" },
   ] as const;
   return <>
     <section aria-labelledby="attention" className="flex flex-col gap-3">
       <h2 id="attention" className="section-title">Needs your attention</h2>
       <div className="grid grid-cols-2 gap-3.5 xl:grid-cols-4">{attention.map((item) => <Stat key={item.label} {...item} />)}</div>
-      {c.approvedButHidden > 0 && <p className="rounded-2xl border border-[rgba(220,38,38,.25)] bg-[rgba(220,38,38,.05)] p-4 text-sm text-ink">
+      {c.approvedButHidden > 0 && <Link href="/admin/fixes#hidden" className="block rounded-2xl border border-[rgba(220,38,38,.25)] bg-[rgba(220,38,38,.05)] p-4 text-sm text-ink transition hover:bg-[rgba(220,38,38,.09)]">
         <strong>{c.approvedButHidden} approved listing{c.approvedButHidden === 1 ? " is" : "s are"} hidden from seekers</strong>
-        {c.approvedButHiddenReason ? `, mostly because: ${c.approvedButHiddenReason}.` : "."} Run <code>npm run seed:check</code> for the full list.
-      </p>}
+        {c.approvedButHiddenReason ? `, mostly because: ${c.approvedButHiddenReason}.` : "."} <span className="font-bold underline">See the list and fix them →</span>
+      </Link>}
     </section>
 
     <section aria-labelledby="catalogue" className="flex flex-col gap-3">

@@ -27,7 +27,7 @@ describe("opportunity browsing", () => {
     expect([...result.categories].sort()).toEqual(categoriesInItems);
   });
 
-  it("shows open catalog entries awaiting review without exposing flagged or organization submissions", async () => {
+  it("shows only approved, open listings: nothing awaiting review, flagged, closed or expired", async () => {
     const repository = new MemoryRepository();
     setRepositoryForTests(repository);
     const listings = await repository.listOpportunities();
@@ -40,8 +40,7 @@ describe("opportunity browsing", () => {
 
     const result = await browseOpportunities(DEMO_USER_ID, {}, new Date());
     const ids = result.items.map((item) => item.id);
-    expect(ids).toContain(pendingCatalog.id);
-    expect(result.items.find((item) => item.id === pendingCatalog.id)).toMatchObject({ verificationStatus: "pending", matchScore: null });
+    expect(ids).not.toContain(pendingCatalog.id);
     expect(ids).not.toContain(pendingOrganization.id);
     expect(ids).not.toContain(flagged.id);
     expect(ids).not.toContain(closed.id);

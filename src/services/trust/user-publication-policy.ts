@@ -40,7 +40,9 @@ export function visibilityFailures(opportunity: Opportunity, now = new Date()): 
   const failures: string[] = [];
   const origin = opportunity.origin ?? "catalog";
   if (opportunity.verificationStatus !== "verified") failures.push(`verification status is ${opportunity.verificationStatus}`);
-  if (opportunity.organizationId === null) failures.push("no linked organisation");
+  // Catalogue listings may stand alone, named by `organizationName` (see the
+  // allow_unlinked_catalog_opportunities migration). Publisher submissions must be linked.
+  if (opportunity.organizationId === null && (origin === "organization" || !opportunity.organizationName?.trim())) failures.push("no linked organisation");
   if (origin === "organization" && opportunity.organization?.verificationStatus !== "verified") failures.push("publisher organisation is not verified");
   if (opportunity.reviewedAt === null) failures.push("not reviewed");
   if (opportunity.status !== "open" && opportunity.status !== "closing_soon") failures.push(`status is ${opportunity.status}`);

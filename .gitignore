@@ -8,3 +8,8 @@ test-results/
 .env.local-db
 *.log
 prisma/dev.db
+tsconfig.tsbuildinfo
+# Catalogue working files: daily research JSON and pipeline run reports stay on the owner's machine.
+imports/seeding-runs/
+recheck-queue.json
+research-plan.json

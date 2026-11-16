@@ -88,7 +88,7 @@ async function main() {
     }));
     const times = samples.map(s => s.ms).sort((a, b) => a - b);
     const result = { capturedAt: new Date().toISOString(), scope: 'Local production Next server, live Supabase Auth/Postgres and configured Redis; two temporary identities; 100 simultaneous HTTP match reads, not 100 distinct signed-in users or production-host load.', browserChecks: checks, pageErrors: errors, distinctMatchCounts: [first.length, second.length], savedIsolation: true, directPrivateDataDenied: true, http: { passed: samples.filter(s => s.ok).length, p95Ms: times[94], elapsedMs: Math.round(performance.now() - started), failures: samples.filter(s => !s.ok) } };
-    writeFileSync('docs/audits/live-user-verification.json', JSON.stringify(result, null, 2));
+    writeFileSync('test-results/launch-audit/live-user-verification.json', JSON.stringify(result, null, 2));
     console.log(JSON.stringify(result, null, 2));
     if (errors.length || result.http.passed !== 100) process.exitCode = 1;
   } finally {

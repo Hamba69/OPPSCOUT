@@ -1,5 +1,5 @@
 /**
- * Seeding pipeline, stages 1-3: validate candidate records the research agent produced, run the
+ * Seeding pipeline, stages 1-3: validate the candidate records the catalogue owner researched, run the
  * quality gate, report what survives each stage, and (with --apply) stage the survivors as PENDING.
  * Nothing is shown to users until `npm run seed:publish` approves them.
  *

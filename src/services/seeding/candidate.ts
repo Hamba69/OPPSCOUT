@@ -49,7 +49,7 @@ export const candidateSchema = z.object({
   sourceUrl: httpsUrl,
   applicationUrl: httpsUrl,
   applicationInstructions: z.string().trim().min(15).max(1500),
-  /** Where the agent first found it. Provenance only; never trusted. */
+  /** Where the listing was first spotted (for example a job board). Provenance only; never trusted. */
   leads: z.array(httpsUrl).default([]),
   retrievedAt: isoWithOffset,
   publicationDate: isoWithOffset.optional(),
@@ -65,7 +65,7 @@ export const candidateSchema = z.object({
   feeNote: z.string().trim().max(400).optional(),
   asksSensitiveDataOffPlatform: z.boolean(),
 
-  /** Anything the agent could not establish. Non-empty means the record is held, never published. */
+  /** Anything the researcher could not establish. Non-empty means the record is held, never published. */
   unresolved: z.array(z.string().trim().min(3)).default([]),
 }).strict().superRefine((value, ctx) => {
   if (value.deadlineType === "fixed" && !value.deadline) {
