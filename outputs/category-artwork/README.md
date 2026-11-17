@@ -14,6 +14,11 @@ Each asset used this prompt, substituting the subject below:
 - Scholarship: a deep ink graduation cap with a curved gold tassel resting on one cream closed book.
 - Internship: a cream notebook with a muted teal spine and a warm gold pencil leaning diagonally against it, representing a first work placement.
 - Grant: two warm gold coins beside a cream funding envelope, a small muted teal leaf emerging from the envelope, no currency signs.
+- Fellowship: a cream rolled certificate scroll tied with a muted teal ribbon, with a round warm gold medallion seal resting against it.
+- Training: a small deep ink presentation board on a warm ochre wooden stand, showing a simple muted teal rising bar chart, with a cream rounded marker resting on the board's ledge.
+- Exhibition: a small cream canvas painting with simple abstract warm gold and muted teal shapes, in a thin ochre frame, standing on a short cream gallery plinth.
+
+Fellowship, training and exhibition (added 17 November 2026) were generated with Figma's image tool (gpt-image-2.5-flare) from the same prompt. The generator painted a checkerboard instead of real transparency, so the background was removed by flood-filling the light neutral pixels connected to the image edge, then the object was cropped, fitted to 168 px and centred on a 192 × 192 transparent WebP. Originals are in `originals/`.
 
 ## Validation
 
