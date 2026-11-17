@@ -10,6 +10,7 @@ const artwork = {
   fellowship: "/images/categories/fellowship.webp",
   training: "/images/categories/training.webp",
   exhibition: "/images/categories/exhibition.webp",
+  consultancy: "/images/categories/consultancy.webp",
 } as const;
 
 /** Decorative category artwork; the adjacent label supplies the accessible name. */

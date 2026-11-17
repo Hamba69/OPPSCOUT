@@ -2,7 +2,7 @@
 
 Generated with the built-in image-generation tool. Four original transparent PNGs are in `originals/`; the app serves 192 × 192 transparent WebP versions in `public/images/categories/` at 48 CSS pixels. Total shipped image size: 30,048 bytes. No logo or branding assets were edited.
 
-Used on the public landing page and category shortcuts in the Matches feed. Other categories retain the existing generic opportunity icon. Utility controls retain their existing icons.
+Used on the public landing page and category shortcuts in the Matches feed. Any category without artwork falls back to the generic opportunity icon. Utility controls retain their existing icons.
 
 ## Prompt set
 
@@ -17,8 +17,9 @@ Each asset used this prompt, substituting the subject below:
 - Fellowship: a cream rolled certificate scroll tied with a muted teal ribbon, with a round warm gold medallion seal resting against it.
 - Training: a small deep ink presentation board on a warm ochre wooden stand, showing a simple muted teal rising bar chart, with a cream rounded marker resting on the board's ledge.
 - Exhibition: a small cream canvas painting with simple abstract warm gold and muted teal shapes, in a thin ochre frame, standing on a short cream gallery plinth.
+- Consultancy: two overlapping rounded speech bubbles, a deep ink one behind and a cream one in front, with a small warm gold lightbulb resting on top of the cream bubble, representing expert advice and consulting (prompt also adds: no dots inside the bubbles).
 
-Fellowship, training and exhibition (added 17 November 2026) were generated with Figma's image tool (gpt-image-2.5-flare) from the same prompt. The generator painted a checkerboard instead of real transparency, so the background was removed by flood-filling the light neutral pixels connected to the image edge, then the object was cropped, fitted to 168 px and centred on a 192 × 192 transparent WebP. Originals are in `originals/`.
+Fellowship, training, exhibition and consultancy (added 17 November 2026) were generated with Figma's image tool (gpt-image-2.5-flare) from the same prompt. The generator painted a checkerboard instead of real transparency, so the background was removed by flood-filling the light neutral pixels connected to the image edge, then the object was cropped, fitted to 168 px and centred on a 192 × 192 transparent WebP. Originals are in `originals/`.
 
 ## Validation
 
