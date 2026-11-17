@@ -36,6 +36,8 @@ export interface RankedFeedOptions {
   profile?: UserProfile | null;
   opportunities?: Opportunity[];
   includePersistedMatches?: boolean;
+  /** Drop matches scoring below this. Leave unset for single-listing lookups (detail page, explanations, saved items). */
+  minimumScore?: number;
 }
 
 export function recomputeRankedFeed(
@@ -99,7 +101,8 @@ async function buildObservedFeed(
     const terms = [...(matchTerms.getStore()?.values() ?? [])];
     deferTelemetry(()=>repository.writeMatchRun(run,terms));
   }
-  return matches.sort((a, b) => {
+  const floor = options.minimumScore;
+  return matches.filter((match) => floor === undefined || match.score >= floor).sort((a, b) => {
     const score = b.score - a.score || b.urgencyRank - a.urgencyRank;
     if (score) return score;
     const left = a.opportunity!.deadline?.getTime() ?? Number.POSITIVE_INFINITY;

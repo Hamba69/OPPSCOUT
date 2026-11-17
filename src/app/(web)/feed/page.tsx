@@ -4,6 +4,7 @@ import { requirePageAuth } from "@/lib/auth";
 import { getUserProfile } from "@/lib/profile-store";
 import { getRepository } from "@/lib/repository";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
+import { AI_RULES } from "@/config/ai-rules";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { redirect } from "next/navigation";
 import { choiceLabel } from "@/services/profile/choices";
@@ -18,7 +19,7 @@ export default async function FeedPage({ searchParams }: { searchParams: Promise
   const [profile, repository] = await Promise.all([getUserProfile(userId), getRepository()]);
   if (!profile) redirect("/profile");
 
-  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, profile });
+  const matches = await buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, profile, minimumScore: AI_RULES.seekerMatchMinimumScore });
   const now = new Date();
   const items: FeedItem[] = matches.map((match) => {
     const opportunity = match.opportunity!;
