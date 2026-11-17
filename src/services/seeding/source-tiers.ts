@@ -32,6 +32,8 @@ const AGGREGATOR_HOSTS = [
   "jobwebuganda.com", "ugandajobline.com", "fuzu.com", "myjobmag.com", "jobinrwanda.com", "reliefweb.int",
   "opportunitydesk.org", "opportunitiesforafricans.com", "scholarshipdb.net", "scholars4dev.com",
   "afterschoolafrica.com", "scholarshipsads.com", "youthop.com", "devex.com", "impactpool.org", "unjobs.org",
+  // Uganda boards and listing sites added November 2026 (see src/config/discovery-sources.ts).
+  "greatugandajobs.com", "peakprojobs.com", "p2p.windleuganda.org", "startupmaphub.com", "skillsforyouths.org",
 ];
 
 /**
