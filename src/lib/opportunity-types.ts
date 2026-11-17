@@ -1,5 +1,5 @@
 /** Opportunity categories available in the supplied database records, in display order. */
-export const OPPORTUNITY_TYPES = ["job", "internship", "scholarship", "fellowship", "grant", "training", "consultancy"] as const;
+export const OPPORTUNITY_TYPES = ["job", "internship", "scholarship", "fellowship", "grant", "training", "consultancy", "exhibition"] as const;
 
 export function allOpportunityTypes(present: string[] = []): string[] {
   const unique = [...new Set(present)];

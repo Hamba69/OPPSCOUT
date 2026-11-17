@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Eligibility, Opportunity, OpportunityStatus, TrustChecklist, WorkMode } from "@/core/entities/domain";
 import { buildReviewChecklist } from "@/services/trust/checklist";
 
-export const SEED_CATEGORIES = ["job", "internship", "scholarship", "fellowship", "grant", "training", "consultancy"] as const;
+export const SEED_CATEGORIES = ["job", "internship", "scholarship", "fellowship", "grant", "training", "consultancy", "exhibition"] as const;
 export const EDUCATION_ORDER = ["secondary", "certificate", "diploma", "bachelors", "masters", "phd"] as const;
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "must be an https URL");

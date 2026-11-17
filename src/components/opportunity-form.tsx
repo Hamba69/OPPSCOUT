@@ -18,6 +18,7 @@ const OPPORTUNITY_TYPES = [
   ["grant", "Grant"],
   ["training", "Training"],
   ["consultancy", "Consultancy"],
+  ["exhibition", "Exhibition"],
 ] as const;
 
 export function OpportunityForm({ organizationId, choices, initial }: { organizationId: string; choices: ProfileChoices; initial?: Opportunity }): React.JSX.Element {

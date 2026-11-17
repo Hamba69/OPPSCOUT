@@ -46,8 +46,8 @@ const INTEREST_EXPANSIONS: Record<string, string[]> = {
   education: ["education", "teaching"], security: ["cybersecurity", "networking"], law: ["law", "legal research"], trades: ["vocational trades", "construction", "electrical installation", "mechanics"],
   creative: ["arts and design", "graphic design", "photography and video"], hospitality: ["hospitality and tourism", "hospitality"],
 };
-const CATEGORY_ALIASES: Record<string, string> = { job: "job", jobs: "job", employment: "job", internship: "internship", internships: "internship", scholarship: "scholarship", scholarships: "scholarship", fellowship: "fellowship", fellowships: "fellowship", consultancy: "consultancy", consultancies: "consultancy", grant: "grant", grants: "grant", training: "training", trainings: "training" };
-const CATEGORY_NOUN: Record<string, string> = { job: "jobs", internship: "internships", scholarship: "scholarships", fellowship: "fellowships", consultancy: "consultancies", grant: "grants", training: "training" };
+const CATEGORY_ALIASES: Record<string, string> = { job: "job", jobs: "job", employment: "job", internship: "internship", internships: "internship", scholarship: "scholarship", scholarships: "scholarship", fellowship: "fellowship", fellowships: "fellowship", consultancy: "consultancy", consultancies: "consultancy", grant: "grant", grants: "grant", training: "training", trainings: "training", exhibition: "exhibition", exhibitions: "exhibition" };
+const CATEGORY_NOUN: Record<string, string> = { job: "jobs", internship: "internships", scholarship: "scholarships", fellowship: "fellowships", consultancy: "consultancies", grant: "grants", training: "training", exhibition: "exhibitions" };
 
 function normCategory(value: string): string { const key = canonicalPhrase(value); return CATEGORY_ALIASES[key] ?? CATEGORY_ALIASES[`${key}s`] ?? key; }
 function list(items: string[], max = 3): string {

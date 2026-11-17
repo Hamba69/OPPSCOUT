@@ -24,6 +24,7 @@ export const CATEGORY_TARGETS: Readonly<Record<string, CategoryTarget>> = {
   scholarship: { target: 30, daysVisible: 45 },
   fellowship: { target: 10, daysVisible: 40 },
   grant: { target: 15, daysVisible: 35 },
+  exhibition: { target: 10, daysVisible: 30 },
 };
 
 export const CATALOGUE_PHASES: Readonly<Record<CataloguePhase, { share: number; minVisible: number; label: string }>> = {

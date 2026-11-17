@@ -9,7 +9,7 @@ const LABELS: Record<string, string> = {
   bachelors: "Bachelor’s degree", masters: "Master’s degree", phd: "Doctorate / PhD", secondary: "Secondary school",
   certificate: "Certificate", diploma: "Diploma", "no formal education": "No formal education",
   javascript: "JavaScript", typescript: "TypeScript", sql: "SQL", python: "Python", excel: "Excel", "it support": "IT support", gis: "GIS", "human resources": "Human resources", "monitoring and evaluation": "Monitoring and evaluation", "machine learning": "Machine learning",
-  job: "Jobs", internship: "Internships", scholarship: "Scholarships", fellowship: "Fellowships", consultancy: "Consultancies", grant: "Grants", training: "Training",
+  job: "Jobs", internship: "Internships", scholarship: "Scholarships", fellowship: "Fellowships", consultancy: "Consultancies", grant: "Grants", training: "Training", exhibition: "Exhibitions",
 };
 
 export function choiceLabel(value: string): string {
@@ -34,7 +34,7 @@ export function buildProfileChoices(opportunities: Opportunity[] = []): ProfileC
     graduationStatus: choices(["studying", "first year", "second year", "third year", "final year", "graduated", "graduate", "graduated within 12 months", "masters student", "phd student", ...rules.filter((rule) => rule.field === "graduationStatus").flatMap((rule) => rule.allowedValues)]),
     location: choices(places), preferredLocations: choices(places), skills,
     careerInterests: choices(["technology", "data", "research", "social impact", "community development", "health", "agriculture", "finance", "business", "policy", "environment", "media", "education", "security"]),
-    opportunityCategories: choices(["job", "internship", "scholarship", "fellowship", "consultancy", "grant", "training", ...opportunities.map((opportunity) => opportunity.category)]),
+    opportunityCategories: choices(["job", "internship", "scholarship", "fellowship", "consultancy", "grant", "training", "exhibition", ...opportunities.map((opportunity) => opportunity.category)]),
     languages: choices(["English", "Luganda", "Swahili", "French", "Arabic", "Runyankore", "Acholi", "Ateso", "Lusoga", "Luo", "Lugbara", ...rules.filter((rule) => rule.field === "language").flatMap((rule) => rule.allowedValues)]),
   };
 }

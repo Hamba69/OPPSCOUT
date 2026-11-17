@@ -60,6 +60,8 @@ export const ORBIT_CATEGORY_WEIGHTS: Readonly<Record<string, OrbitMatchingWeight
   fellowship: { skills: 16, fieldRelevance: 22, education: 16, experience: 12, careerInterest: 22, categoryFit: 12, location: 0, workMode: 0 },
   grant: { skills: 18, fieldRelevance: 16, education: 6, experience: 8, careerInterest: 32, categoryFit: 20, location: 0, workMode: 0 },
   training: { skills: 22, fieldRelevance: 16, education: 14, experience: 4, careerInterest: 28, categoryFit: 16, location: 0, workMode: 0 },
+  // Calls to exhibit (trade fairs, art and innovation shows): what you make and want to show matters most; venue is physical, so location keeps a small weight.
+  exhibition: { skills: 20, fieldRelevance: 20, education: 4, experience: 10, careerInterest: 24, categoryFit: 14, location: 6, workMode: 2 },
 };
 
 export function orbitWeightsFor(category: string): OrbitMatchingWeights {
