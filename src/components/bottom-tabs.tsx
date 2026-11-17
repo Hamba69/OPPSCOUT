@@ -50,7 +50,7 @@ export function BottomTabs(): React.JSX.Element | null {
                   href={href}
                   prefetch
                   aria-current={active ? "page" : undefined}
-                  className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full px-2 text-[11px] font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
+                  className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf ${
                     active ? "border border-[#F5D76E] bg-[#FFF3C4] text-ink" : "text-navy"
                   }`}
                 >

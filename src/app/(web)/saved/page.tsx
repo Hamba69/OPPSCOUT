@@ -54,7 +54,7 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
             <article key={item.id} className="opp-card">
               <div className="flex items-center justify-between gap-2">
                 <span className="cat-pill">{choiceLabel(opportunity.category)}</span>
-                <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold capitalize ${item.status === "applied" ? "text-[#145347]" : "text-[#6B4E00]"}`}>
+                <span className={`inline-flex items-center gap-1.5 text-xs font-bold capitalize ${item.status === "applied" ? "text-[#145347]" : "text-[#6B4E00]"}`}>
                   <Icon name={item.status === "applied" ? "check" : "saved"} size={13} strokeWidth={2.4} />{item.status}
                 </span>
               </div>

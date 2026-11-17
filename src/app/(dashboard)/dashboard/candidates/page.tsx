@@ -54,19 +54,19 @@ export default async function CandidatesPage(): Promise<React.JSX.Element> {
               </div>
               <div className="grid gap-3 px-5 py-4 sm:grid-cols-2">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-navy">Field of study</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-navy">Field of study</p>
                   <p className="mt-1 text-sm font-semibold text-ink">{profile?.fieldOfStudy ?? "Not provided"}</p>
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-navy">Location</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-navy">Location</p>
                   <p className="mt-1 text-sm font-semibold text-ink">{profile?.location ?? "Not provided"}</p>
                 </div>
                 <div className="sm:col-span-2">
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-navy">Matched opportunity</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-navy">Matched opportunity</p>
                   <p className="mt-1 line-clamp-2 text-sm font-semibold text-ink">{opportunity?.title ?? "Open opportunity"}</p>
                 </div>
                 <div className="sm:col-span-2">
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-navy">Skills</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-navy">Skills</p>
                   <p className="mt-1 line-clamp-2 text-sm text-ink">{(profile?.skills ?? []).slice(0, 5).join(" · ") || "No skills listed"}</p>
                 </div>
               </div>

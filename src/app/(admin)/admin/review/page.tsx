@@ -33,15 +33,15 @@ const day = (value: Date | string | null | undefined): string => value ? formatD
 
 function FlagPill({ flag }: { flag: Flag }): React.JSX.Element {
   const tone = flag === "new" ? "text-[#6B4E00] bg-[#FFF3C4]" : "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]";
-  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold ${tone}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{FLAG_LABEL[flag]}</span>;
+  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ${tone}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{FLAG_LABEL[flag]}</span>;
 }
 
 function StatusPill({ status }: { status: string }): React.JSX.Element {
   const flagged = status === "flagged";
-  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold capitalize ${flagged ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]"}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{flagged ? "Flagged" : status}</span>;
+  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold capitalize ${flagged ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]"}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{flagged ? "Flagged" : status}</span>;
 }
 
-const th = "px-4 pb-3 text-left text-[11px] font-bold uppercase tracking-[.06em] text-[#5B6A80]";
+const th = "px-4 pb-3 text-left text-xs font-bold uppercase tracking-[.06em] text-[#5B6A80]";
 const td = "border-t border-ink/[.07] px-4 py-3.5 align-middle text-[13px] text-ink";
 
 export default async function ReviewQueuePage({searchParams}:{searchParams:Promise<Record<string,string>>}): Promise<React.JSX.Element> {

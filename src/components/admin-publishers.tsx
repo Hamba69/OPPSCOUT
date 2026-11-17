@@ -4,7 +4,7 @@ import type { Opportunity, Organization } from "@/core/entities/domain";
 import { formatDate } from "@/lib/dates";
 import { isPublisherOrganization } from "@/services/admin/catalogue-summary";
 
-const th = "px-4 pb-3 text-left text-[11px] font-bold uppercase tracking-[.06em] text-[#5B6A80]";
+const th = "px-4 pb-3 text-left text-xs font-bold uppercase tracking-[.06em] text-[#5B6A80]";
 const td = "border-t border-ink/[.07] px-4 py-3.5 align-middle text-[13px] text-ink";
 const STATUS_TONE: Record<string, string> = {
   verified: "bg-[#EFFAF2] text-[#14532D]",
@@ -48,7 +48,7 @@ export function AdminPublishers({ organizations, opportunities, now = new Date()
           const stats = listings.get(organization.id) ?? { total: 0, live: 0 };
           return <tr key={organization.id}>
             <td className={td}><strong className="block truncate font-bold">{organization.name}</strong><span className="block truncate text-xs text-navy">{organization.officialEmail ?? organization.officialLinks[0] ?? "No official contact"}</span></td>
-            <td className={td}><span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-bold capitalize ${STATUS_TONE[organization.verificationStatus] ?? STATUS_TONE.unverified}`}>{organization.verificationStatus}</span></td>
+            <td className={td}><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold capitalize ${STATUS_TONE[organization.verificationStatus] ?? STATUS_TONE.unverified}`}>{organization.verificationStatus}</span></td>
             <td className={td}>{stats.live} / {stats.total}</td>
             <td className={td}>{formatDate(organization.createdAt, { day: "numeric", month: "short", year: "numeric" })}</td>
             <td className={td}>{organization.verificationStatus !== "verified" && <Link href={`/admin/review?tab=organizations&review=${organization.id}`} className="button-secondary !min-h-10 !px-4">Review</Link>}</td>

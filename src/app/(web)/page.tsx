@@ -33,11 +33,11 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <h1 className="hero-title !m-0 !max-w-3xl !font-extrabold !tracking-tight">The right opportunity is already out there.</h1>
       </section>
 
-      <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
-        {tiles.map(([type, label, icon]) => <Link key={type} href={`/opportunities?type=${type}`} className="tile !h-[6.875rem]">
+      <div className="tile-grid-wrap"><nav aria-label="Browse by type" className="tile-grid">
+        {tiles.map(([type, label, icon]) => <Link key={type} href={`/opportunities?type=${type}`} className="tile !min-h-[6.875rem]">
           <CategoryArtwork category={icon} />{label}
         </Link>)}
-      </nav>
+      </nav></div>
 
       <section aria-labelledby="how-it-works" className="flex flex-col gap-5">
         <h2 id="how-it-works" className="mt-3 text-center text-2xl font-extrabold text-ink">How OppScout works</h2>

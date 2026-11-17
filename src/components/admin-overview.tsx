@@ -92,7 +92,7 @@ export function AdminOverview({ catalogue: c, publishersAwaitingVerification, us
               <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="block truncate text-[13px] font-bold text-ink hover:underline">{item.title}</a>
               <span className="block truncate text-xs text-navy">{item.organization} · {choiceLabel(item.category)}</span>
             </div>
-            <span className={`shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold ${item.daysLeft <= 3 ? "bg-[rgba(220,38,38,.08)] text-[#9B1C1C]" : "bg-[#FFF3C4] text-[#6B4E00]"}`}>
+            <span className={`shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ${item.daysLeft <= 3 ? "bg-[rgba(220,38,38,.08)] text-[#9B1C1C]" : "bg-[#FFF3C4] text-[#6B4E00]"}`}>
               {item.daysLeft <= 1 ? "Closes today" : `${item.daysLeft} days`} · {formatDate(item.deadline, { day: "numeric", month: "short" })}
             </span>
           </li>)}</ul> : <p className="mt-3 text-sm text-navy">No fixed deadlines in the live catalogue.</p>}

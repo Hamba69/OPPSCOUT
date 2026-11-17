@@ -63,12 +63,12 @@ export function FeedBrowser({ items, salutation, firstName, initialType = "" }: 
         onChange={(event) => { setQuery(event.target.value); setLimit(PAGE); }} />
     </label>
 
-    <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="tile-grid-wrap"><nav aria-label="Browse by type" className="tile-grid">
       {categories.map((tile) => <Link key={tile.type} href={`/feed?type=${encodeURIComponent(tile.type)}`} aria-current={selectedType === tile.type ? "page" : undefined} className="tile">
         <CategoryArtwork category={tile.type} />
-        <span className="flex items-center justify-between">{tile.label}<Icon name="chevron" size={14} strokeWidth={2.5} className="text-[#8A6400]" /></span>
+        <span className="flex items-center justify-between gap-2">{tile.label}<Icon name="chevron" size={14} strokeWidth={2.5} className="text-[#8A6400]" /></span>
       </Link>)}
-    </nav>
+    </nav></div>
 
     <section aria-label="Matches" className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">

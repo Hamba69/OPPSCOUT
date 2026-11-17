@@ -8,7 +8,7 @@ import { choiceLabel } from "@/services/profile/choices";
 
 export const dynamic = "force-dynamic";
 
-const th = "px-4 pb-3 text-left text-[11px] font-bold uppercase tracking-[.06em] text-[#5B6A80]";
+const th = "px-4 pb-3 text-left text-xs font-bold uppercase tracking-[.06em] text-[#5B6A80]";
 const td = "border-t border-ink/[.07] px-4 py-3 align-top text-[13px] text-ink";
 
 function Rows({ items, showReasons }: { items: FixableListing[]; showReasons: boolean }): React.JSX.Element {

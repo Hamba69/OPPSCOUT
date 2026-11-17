@@ -81,7 +81,7 @@ export function PublisherOpportunityTable({
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>
-                <tr className="border-y border-ink/[.07] text-[11px] font-bold uppercase tracking-[.06em] text-[#5B6A80]">
+                <tr className="border-y border-ink/[.07] text-xs font-bold uppercase tracking-[.06em] text-[#5B6A80]">
                   <th scope="col" className="px-3 py-3">Opportunity</th>
                   <th scope="col" className="px-3 py-3">Type</th>
                   <th scope="col" className="px-3 py-3">Status</th>
