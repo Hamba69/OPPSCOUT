@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 
-import { AI_RULES } from "@/config/ai-rules";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import { PRIMARY_SEED_OPPORTUNITY_ID } from "@/data/seed-catalog";
 import { MemoryRepository, DEMO_USER_ID } from "@/lib/repository/memory";
@@ -57,22 +56,6 @@ describe("Phase 1 rule matching", () => {
     const lowScoringMatch = await buildRankedFeed(repository, DEMO_USER_ID, new Date(), engineAt(20), options);
     expect(lowScoringMatch).toHaveLength(1);
     expect(lowScoringMatch[0]?.score).toBe(20);
-  });
-
-  it("hides matches below the seeker floor when a minimum score is set", async () => {
-    const repository = new MemoryRepository();
-    const baseline = await buildRankedFeed(repository, DEMO_USER_ID);
-    const opportunity = baseline[0]?.opportunity;
-    expect(opportunity).toBeDefined();
-    const engineAt = (score: number) => ({
-      score: async () => ({ score, matchedFactors: [], missingFactors: [], generatedBy: "rules" as const }),
-    });
-    const options = { persist: false, telemetry: false, opportunities: [opportunity!], minimumScore: AI_RULES.seekerMatchMinimumScore };
-    expect(AI_RULES.seekerMatchMinimumScore).toBe(50);
-    expect(await buildRankedFeed(repository, DEMO_USER_ID, new Date(), engineAt(49), options)).toHaveLength(0);
-    const atFloor = await buildRankedFeed(repository, DEMO_USER_ID, new Date(), engineAt(50), options);
-    expect(atFloor).toHaveLength(1);
-    expect(atFloor[0]?.score).toBe(50);
   });
 
   it("passes a verified age and fails a missing mandatory certification", async () => {

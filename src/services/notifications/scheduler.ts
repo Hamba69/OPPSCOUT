@@ -3,7 +3,6 @@ import { appUrl } from "@/config/app";
 import type { PreferredChannel, UserProfile } from "@/core/entities/domain";
 import type { NotificationChannel, NotificationPriority } from "@/core/interfaces/notification-channel";
 import type { Repository, StoredMatchResult, StoredNotification } from "@/lib/repository/types";
-import { AI_RULES } from "@/config/ai-rules";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
@@ -87,8 +86,6 @@ export async function runNotificationScheduler(repository: Repository, channels:
       attempts.push(...await deliverToSelected(repository, channels, profile, match, changeKey, "high", `${opportunity.title} changed after you saved it. Recheck the deadline and eligibility: ${publicUrl}/opportunity/${opportunity.id} · Preferences: ${publicUrl}/settings`));
       continue;
     }
-    // Saved listings keep their change and deadline alerts at any score; anything else must be a real match.
-    if (match.score < AI_RULES.seekerMatchMinimumScore && !savedIds.has(opportunity.id)) continue;
     if (profile.notificationFrequency !== "instant") continue;
     const alreadySent = recent.some((item) => item.triggerKey.startsWith(`${opportunity.id}:`) && item.status !== "failed");
     if (alreadySent) { attempts.push({ userId, opportunityId: opportunity.id, triggerKey: `${opportunity.id}:deduplicated`, status: "skipped", reason: "48-hour-deduplication" }); continue; }
@@ -106,7 +103,7 @@ export async function runNotificationScheduler(repository: Repository, channels:
   }
 
   if (!attempts.some((item) => item.status === "sent" || item.status === "delivered") && matches.length > 0 && digestDue(profile, recent, now)) {
-    const top = matches.filter((item) => item.score >= AI_RULES.seekerMatchMinimumScore).slice(0, 3);
+    const top = matches.slice(0, 3);
     const first = top[0];
     if (first) {
       const message = `Your OppScout digest: ${top.map((item) => item.opportunity?.title ?? "Opportunity").join("; ")}. Open your ranked feed: ${publicUrl}/feed · Preferences: ${publicUrl}/settings`;
