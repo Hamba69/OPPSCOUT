@@ -1,3 +1,4 @@
+import { Icon } from "@/components/custom-icon";
 import Link from "next/link";
 
 import type { AdminSnapshot } from "@/lib/admin-data";
@@ -59,14 +60,14 @@ export function AdminOverview({ catalogue: c, publishersAwaitingVerification, us
       <div className="grid grid-cols-2 gap-3.5 xl:grid-cols-4">{attention.map((item) => <Stat key={item.label} {...item} />)}</div>
       {c.approvedButHidden > 0 && <Link href="/admin/fixes#hidden" className="block rounded-2xl border border-[rgba(220,38,38,.25)] bg-[rgba(220,38,38,.05)] p-4 text-sm text-ink transition hover:bg-[rgba(220,38,38,.09)]">
         <strong>{c.approvedButHidden} approved listing{c.approvedButHidden === 1 ? " is" : "s are"} hidden from seekers</strong>
-        {c.approvedButHiddenReason ? `, mostly because: ${c.approvedButHiddenReason}.` : "."} <span className="font-bold underline">See the list and fix them →</span>
+        {c.approvedButHiddenReason ? `, mostly because: ${c.approvedButHiddenReason}.` : "."} <span className="font-bold underline">See the list and fix them <Icon name="arrow" size={18} /></span>
       </Link>}
     </section>
 
     <section aria-labelledby="catalogue" className="flex flex-col gap-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="catalogue" className="section-title">Catalogue</h2>
-        <Link href="/admin/opportunities" className="text-[13px] font-bold text-navy hover:text-ink">All listings →</Link>
+        <Link href="/admin/opportunities" className="text-[13px] font-bold text-navy hover:text-ink">All listings <Icon name="arrow" size={18} /></Link>
       </div>
       <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-5">
         <Stat label="Live for seekers" value={c.live} note={c.rolling ? `${c.rolling} rolling, no closing date` : "Visible in feeds now"} tone={c.live ? "neutral" : "alert"} />
@@ -102,7 +103,7 @@ export function AdminOverview({ catalogue: c, publishersAwaitingVerification, us
     <section aria-labelledby="people" className="flex flex-col gap-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="people" className="section-title">People, last {periodDays} days</h2>
-        <Link href="/admin/users" className="text-[13px] font-bold text-navy hover:text-ink">Users →</Link>
+        <Link href="/admin/users" className="text-[13px] font-bold text-navy hover:text-ink">Users <Icon name="arrow" size={18} /></Link>
       </div>
       <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-5">
         <Stat label="Total users" value={Number(h.users ?? 0)} note={change(h.users, p?.users)} />

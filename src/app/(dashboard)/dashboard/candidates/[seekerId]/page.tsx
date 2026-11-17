@@ -1,3 +1,4 @@
+import { Icon } from "@/components/custom-icon";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -63,7 +64,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
   return (
     <main className="page-shell animate-in">
       <Link href="/dashboard/candidates" className="mb-5 inline-flex text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink">
-        ← Back to matches
+        <Icon name="back" size={18} /> Back to matches
       </Link>
       <header className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-ink/[.08] bg-white p-5 shadow-soft">
         <div>

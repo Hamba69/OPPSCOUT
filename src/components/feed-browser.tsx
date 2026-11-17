@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Icon, type IconName } from "@/components/app-shell";
+import { CategoryArtwork } from "@/components/category-artwork";
 import { MatchCard, type MatchCardProps } from "@/components/match-card";
 
 export type FeedItem = MatchCardProps & { category: string; categoryLabel: string };
@@ -64,7 +65,7 @@ export function FeedBrowser({ items, salutation, firstName, initialType = "" }: 
 
     <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {categories.map((tile) => <Link key={tile.type} href={`/feed?type=${encodeURIComponent(tile.type)}`} aria-current={selectedType === tile.type ? "page" : undefined} className="tile">
-        <span className="icon-chip"><Icon name={tile.icon} size={18} /></span>
+        <CategoryArtwork category={tile.type} />
         <span className="flex items-center justify-between">{tile.label}<Icon name="chevron" size={14} strokeWidth={2.5} className="text-[#8A6400]" /></span>
       </Link>)}
     </nav>

@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "@/components/custom-icon";
+
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -8,17 +10,11 @@ import { createClient } from "@/lib/supabase/client";
 
 type Mode = "login" | "signup";
 
-function MailIcon(): React.JSX.Element {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 text-navy"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>;
-}
+function MailIcon(): React.JSX.Element { return <Icon name="mail" size={20} />; }
 
-function LockIcon(): React.JSX.Element {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 text-navy"><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>;
-}
+function LockIcon(): React.JSX.Element { return <Icon name="lock" size={20} />; }
 
-function ArrowIcon(): React.JSX.Element {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
-}
+function ArrowIcon(): React.JSX.Element { return <Icon name="arrow" size={20} />; }
 
 export function PublisherAuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }): React.JSX.Element {
   const router = useRouter();

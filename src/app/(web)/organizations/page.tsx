@@ -1,3 +1,4 @@
+import { Icon } from "@/components/custom-icon";
 import Link from "next/link";
 
 const steps = [
@@ -14,7 +15,7 @@ export default function OrganizationsPage(): React.JSX.Element {
       <span className="publisher-pill">For publishers</span>
       <h1 className="hero-title mt-6">Share opportunities with people who fit.</h1>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-        <Link href="/organizations/signup" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-sm font-bold text-white shadow-[0_8px_20px_rgb(30_41_59/.25)] transition hover:brightness-125 focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/60">Create a publisher account <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Link>
+        <Link href="/organizations/signup" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-sm font-bold text-white shadow-[0_8px_20px_rgb(30_41_59/.25)] transition hover:brightness-125 focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/60">Create a publisher account <Icon name="arrow" size={20} /></Link>
         <Link href="/organizations/login" className="text-sm font-bold text-ink underline underline-offset-2">I already have an account</Link>
       </div>
     </section>

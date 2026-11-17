@@ -3,16 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const icons: Record<string, React.JSX.Element> = {
-  Matches: <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />,
-  Saved: <path d="M6 3h12v18l-6-4-6 4z" />,
-  Opportunities: (
-    <>
-      <rect x="3" y="7" width="18" height="13" rx="2" />
-      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
-    </>
-  ),
-};
+import { Icon, type IconName } from "@/components/custom-icon";
+
+const icons: Record<string, IconName> = { Matches: "matches", Saved: "saved", Opportunities: "opportunities" };
 
 const tabs = [
   ["Matches", "/feed"],
@@ -61,19 +54,7 @@ export function BottomTabs(): React.JSX.Element | null {
                     active ? "border border-[#F5D76E] bg-[#FFF3C4] text-ink" : "text-navy"
                   }`}
                 >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    {icons[name]}
-                  </svg>
+                  <Icon name={icons[name]} size={24} />
                   {name}
                 </Link>
               </li>

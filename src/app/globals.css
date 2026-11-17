@@ -249,7 +249,6 @@ h1.hero-title {
 .side-link:hover { background: rgb(255 255 255 / .6); color: #1e293b; }
 .side-link:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
 .side-link[aria-current="page"] { background: rgb(255 255 255 / .95); color: #1e293b; font-weight: 700; box-shadow: 0 4px 14px rgb(146 98 0 / .07); }
-.side-link[aria-current="page"] svg { color: var(--primary-deep); }
 .category-nav { scrollbar-width: thin; scrollbar-color: var(--primary-border) transparent; }
 .category-nav::-webkit-scrollbar { height: 6px; }
 .category-nav::-webkit-scrollbar-thumb { border-radius: 9999px; background: var(--primary-border); }
@@ -285,12 +284,13 @@ h1.hero-title {
 .search-pill input::placeholder { color: #5b6a80; }
 .tile { display: flex; height: 7.5rem; flex-direction: column; justify-content: space-between; border-radius: 1.375rem; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); font-size: .9375rem; font-weight: 700; color: #1e293b; transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
 .tile:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
-.icon-chip { display: flex; width: 2.5rem; height: 2.5rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: .75rem; background: var(--primary-soft); border: 1px solid var(--primary-soft-border); color: var(--primary-deep); }
+.icon-chip { display: flex; width: 2.5rem; height: 2.5rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: .75rem; background: transparent; border: 1px solid transparent; color: var(--primary-deep); }
+.icon-chip > .custom-icon { width: 100% !important; height: 100% !important; }
 .cat-pill { display: inline-flex; align-items: center; border-radius: 9999px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: var(--primary-text); background: var(--primary-soft); border: 1px solid var(--primary-soft-border); text-transform: capitalize; }
 .icon-button { display: inline-flex; width: 2.75rem; height: 2.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(30 41 59 / .1); background: #fff; color: #1e293b; transition: background-color 150ms; }
 .icon-button:hover { background: var(--primary-soft); }
 .icon-button:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
-.icon-button[aria-pressed="true"] svg { fill: var(--primary); }
+.icon-button[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary-deep); }
 .icon-button:disabled { opacity: .5; }
 /* Equal-size opportunity card; the title link stretches over the whole card. */
 .opp-card { position: relative; display: flex; height: 12.25rem; flex-direction: column; gap: .625rem; border-radius: 1.375rem; padding: 1.125rem; background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }

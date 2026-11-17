@@ -5,6 +5,7 @@ import { getOptionalAuth, homePathForRole } from "@/lib/auth";
 
 import { AdminPortalTrigger } from "@/components/admin-portal-trigger";
 import { Icon } from "@/components/app-shell";
+import { CategoryArtwork } from "@/components/category-artwork";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +35,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <nav aria-label="Browse by type" className="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
         {tiles.map(([type, label, icon]) => <Link key={type} href={`/opportunities?type=${type}`} className="tile !h-[6.875rem]">
-          <span className="icon-chip"><Icon name={icon} size={18} /></span>{label}
+          <CategoryArtwork category={icon} />{label}
         </Link>)}
       </nav>
 

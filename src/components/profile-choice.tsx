@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "@/components/custom-icon";
+
 import { useId, useState } from "react";
 import { choiceLabel, type ProfileChoice } from "@/services/profile/choices";
 
@@ -43,11 +45,11 @@ export function ProfileMultiChoice({ name, label, hint, options, values, onChang
     <legend className="px-2 font-extrabold">{label}</legend>
     <div className="flex items-start justify-between gap-3"><p id={`${id}-hint`} className="text-sm text-navy">{hint}</p><span className="shrink-0 rounded-full bg-butter px-2.5 py-1 text-xs font-bold" aria-live="polite">{values.length} selected</span></div>
     <label className="mt-4 block"><span className="sr-only">Search {label.toLowerCase()}</span><input className="field" type="search" value={search} maxLength={120} onChange={(event) => setSearch(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); if (query && !exactMatch) addCustom(); } }} placeholder={`Type to search ${label.toLowerCase()}`} /></label>
-    {values.length > 0 && <div className="mt-3 flex flex-wrap gap-2" aria-label={`Selected ${label.toLowerCase()}`}>{values.map((value) => <button key={value} type="button" onClick={() => toggle(value)} aria-label={`Remove ${choiceLabel(value)}`} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{allOptions.find((option) => option.value === value)?.label}<span aria-hidden="true">×</span></button>)}</div>}
+    {values.length > 0 && <div className="mt-3 flex flex-wrap gap-2" aria-label={`Selected ${label.toLowerCase()}`}>{values.map((value) => <button key={value} type="button" onClick={() => toggle(value)} aria-label={`Remove ${choiceLabel(value)}`} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{allOptions.find((option) => option.value === value)?.label}<Icon name="close" size={18} /></button>)}</div>}
     {query && <div className="mt-3 max-h-64 space-y-1 overflow-y-auto rounded-xl border border-ink/10 bg-white p-2">
       {filtered.map((option) => <label key={option.value} className="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg px-2 py-1 text-sm font-semibold text-ink hover:bg-butter">
         <input className="peer sr-only" type="checkbox" name={name} value={option.value} checked={selected.has(option.value)} disabled={!selected.has(option.value) && values.length >= 50} onChange={() => toggle(option.value)} />
-        <span aria-hidden="true" className={`flex size-4 shrink-0 items-center justify-center rounded border ${selected.has(option.value) ? "border-ink bg-ink text-white" : "border-ink/30"} peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink`}>{selected.has(option.value) ? "✓" : ""}</span>
+        <span aria-hidden="true" className={`flex size-5 shrink-0 items-center justify-center rounded border ${selected.has(option.value) ? "border-ink bg-ink text-white" : "border-ink/30"} peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink`}>{selected.has(option.value) ? <Icon name="check" size={18} /> : null}</span>
         {option.label}
       </label>)}
       {!filtered.length && <p className="px-2 py-1 text-sm text-navy">No matching options.</p>}

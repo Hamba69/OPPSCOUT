@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "@/components/custom-icon";
+
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -68,7 +70,7 @@ function TagInput({ label, hint, values, onChange, placeholder }: { label: strin
       <button type="button" className="button-secondary shrink-0" onClick={add} disabled={!draft.trim()}>Add</button></div>
     <p className="mt-1 text-xs text-navy">{hint}</p>
     {values.length > 0 && <ul className="mt-3 flex flex-wrap gap-2">{values.map((value) => <li key={value}><button type="button" onClick={() => onChange(values.filter((item) => item !== value))} aria-label={`Remove ${value}`}
-      className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E]">{value}<span aria-hidden="true">×</span></button></li>)}</ul>}
+      className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E]">{value}<Icon name="close" size={18} /></button></li>)}</ul>}
   </div>;
 }
 

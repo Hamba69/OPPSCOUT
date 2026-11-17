@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/custom-icon";
 import { ExternalIcon } from "@/components/icons";
 import { useTransientMessage } from "@/hooks/use-transient-message";
 import { useEffect, useRef, useState } from "react";
@@ -76,11 +77,11 @@ export function OpportunityActions({
     <div className="flex flex-wrap items-center gap-2.5">
       <a className="button !min-h-11" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}><ExternalIcon />Apply on official site</a>
       <button type="button" className="button-secondary !min-h-11" disabled={busy} onClick={currentSavedId ? unsave : save}>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill={currentSavedId ? "var(--primary)" : "none"} stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" /></svg>
+        <Icon name="saved" size={20} />
         {busy ? "Working…" : currentSavedId ? "Unsave" : "Save for later"}
       </button>
       <button type="button" className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold text-navy hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 21V4h11l-1.5 4L16 12H5" /></svg>Report a problem
+        <Icon name="flag" size={20} />Report a problem
       </button>
     </div>
     {reporting && <form onSubmit={report} className="mt-4 space-y-3 rounded-2xl border border-ink/[.08] bg-white/70 p-5"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>

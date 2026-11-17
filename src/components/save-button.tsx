@@ -20,6 +20,6 @@ export function SaveButton({ opportunityId }: { opportunityId: string }): React.
 
   const label = state === "saved" ? "Saved" : state === "busy" ? "Saving…" : state === "error" ? "Could not save, try again" : "Save opportunity";
   return <button type="button" className="icon-button raise" aria-label={label} title={label} disabled={state === "busy"} aria-pressed={state === "saved"} onClick={save}>
-    <Icon name="saved" size={15} strokeWidth={2.2} className={state === "error" ? "text-[#B3261E]" : undefined} />
+    <Icon name={state === "error" ? "alert" : state === "saved" ? "check" : "saved"} size={20} />
   </button>;
 }

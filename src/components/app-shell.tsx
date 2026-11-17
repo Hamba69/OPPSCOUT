@@ -6,39 +6,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { Logo } from "@/components/logo";
 
-/** Stroke icons used in the sidebars, tiles and cards. Paths are 24×24. */
-export const ICON_PATHS = {
-  matches: "M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
-  saved: "M6 3h12v18l-6-4-6 4z",
-  opportunities: "M3 7h18v13H3zM9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18",
-  profile: "M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM4 21c1-5 15-5 16 0",
-  feedback: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-  signOut: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9",
-  overview: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z",
-  people: "M9 4a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM2 20c.8-4.5 13.2-4.5 14 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14c2 .6 3.5 2.6 4 6",
-  chart: "M4 20V10M10 20V4M16 20v-7M22 20H2",
-  organization: "M4 21V5l8-3 8 3v16M9 21v-5h6v5M8 8h.01M12 8h.01M16 8h.01M8 12h.01M12 12h.01M16 12h.01",
-  shield: "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z",
-  dot: "M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4z",
-  job: "M3 8h18v12H3zM9 8V5h6v3M3 13h18",
-  scholarship: "M2 9l10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5",
-  internship: "M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM5 21c1-5 13-5 14 0",
-  grant: "M3 7h18v10H3zM12 9.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM6 10v4M18 10v4",
-  chevron: "M9 6l6 6-6 6",
-  back: "M15 18l-6-6 6-6",
-  search: "M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM20 20l-3.5-3.5",
-  clock: "M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 7v5l3 2",
-  check: "M5 12l5 5L20 7",
-  plus: "M12 5v14M5 12h14",
-  edit: "M4 20h4L19 9l-4-4L4 16zM14 6l4 4",
-  menu: "M4 6h16M4 12h16M4 18h16",
-} as const;
-
-export type IconName = keyof typeof ICON_PATHS;
-
-export function Icon({ name, size = 16, className, strokeWidth = 2 }: { name: IconName; size?: number; className?: string; strokeWidth?: number }): React.JSX.Element {
-  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className}><path d={ICON_PATHS[name]} /></svg>;
-}
+import { Icon, type IconName } from "@/components/custom-icon";
+export { Icon, type IconName } from "@/components/custom-icon";
 
 export type SideLink = { label: string; href: string; icon: IconName; match?: string[] };
 export type SideGroup = { title?: string; ariaLabel?: string; links: SideLink[] };
