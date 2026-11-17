@@ -7,6 +7,9 @@ const artwork = {
   scholarship: "/images/categories/scholarship.webp",
   internship: "/images/categories/internship.webp",
   grant: "/images/categories/grant.webp",
+  fellowship: "/images/categories/fellowship.svg",
+  training: "/images/categories/training.svg",
+  exhibition: "/images/categories/exhibition.svg",
 } as const;
 
 /** Decorative category artwork; the adjacent label supplies the accessible name. */

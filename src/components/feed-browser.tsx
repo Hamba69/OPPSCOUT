@@ -18,6 +18,7 @@ const closesAt = (item: FeedItem): number => (item.deadline ? Date.parse(item.de
 const categoryOrder = ["job", "scholarship", "internship", "grant"];
 const categoryIcons: Partial<Record<string, IconName>> = {
   job: "job", scholarship: "scholarship", internship: "internship", grant: "grant",
+  fellowship: "fellowship", training: "training", exhibition: "exhibition",
 };
 
 /** Greeting, search below it, category shortcuts, then the ranked matches as a grid of equal cards. */

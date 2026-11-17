@@ -8,11 +8,13 @@ const assets = {
   menu: "menu", mail: "mail", lock: "lock", alert: "alert", settings: "settings",
   arrow: "arrow", chevron: "arrow", back: "arrow", external: "arrow",
   up: "arrow", down: "arrow", close: "plus", flag: "flag",
-  opportunities: "job", job: "job", scholarship: "scholarship", internship: "internship", grant: "grant",
+  opportunities: "job", job: "job", scholarship: "scholarship", internship: "internship",
+  grant: "grant", fellowship: "fellowship", training: "training", exhibition: "exhibition",
 } as const;
 
 export type IconName = keyof typeof assets;
-const categories = new Set(["job", "scholarship", "internship", "grant"]);
+const categories = new Set(["job", "scholarship", "internship", "grant", "fellowship", "training", "exhibition"]);
+const svgAssets = new Set(["fellowship", "training", "exhibition"]);
 const rotations: Partial<Record<IconName, string>> = {
   back: "rotate(180deg)", external: "rotate(-45deg)", up: "rotate(-90deg)", down: "rotate(90deg)", close: "rotate(45deg)",
 };
@@ -25,9 +27,10 @@ export function Icon({ name, size = 20, className = "" }: {
 }): React.JSX.Element {
   const asset = assets[name];
   const pixels = Math.max(18, size);
+  const extension = svgAssets.has(asset) ? "svg" : "webp";
   return <span aria-hidden="true" className={`custom-icon inline-block shrink-0 align-middle ${className}`}
     style={{ width: pixels, height: pixels, transform: rotations[name] }}>
-    <Image src={`/images/${categories.has(asset) ? "categories" : "icons"}/${asset}.webp`}
+    <Image src={`/images/${categories.has(asset) ? "categories" : "icons"}/${asset}.${extension}`}
       alt="" width={pixels} height={pixels} unoptimized className="block size-full object-contain" />
   </span>;
 }

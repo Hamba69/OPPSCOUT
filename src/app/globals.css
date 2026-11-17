@@ -134,6 +134,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .art-fellowship  { --a1: #ffb84d; --a2: #b9c8ff; --a3: #fff7d1; --a4: rgb(255 255 255 / .7); }
   .art-grant       { --a1: #ffd84d; --a2: #7fd1a8; --a3: #fff0b8; --a4: rgb(255 255 255 / .7); }
   .art-training    { --a1: #ffc94d; --a2: #ff9e8a; --a3: #fffae0; --a4: rgb(255 255 255 / .7); }
+  .art-exhibition  { --a1: #ffd76b; --a2: #d0b1ff; --a3: #fff5d6; --a4: rgb(255 255 255 / .7); }
   .art-consultancy { --a1: #ffe680; --a2: #f2a65a; --a3: #ffffff; --a4: rgb(255 240 200 / .8); }
   .art-default     { --a1: #ffd700; --a2: #ffb38a; --a3: #f6e0ff; --a4: rgb(255 255 255 / .7); }
 }

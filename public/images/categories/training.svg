@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Training icon">
+  <defs>
+    <linearGradient id="training-bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#ff8f6b"/>
+    </linearGradient>
+  </defs>
+  <rect x="7" y="7" width="50" height="50" rx="14" fill="url(#training-bg)"/>
+  <path d="M13 25.5 32 17l19 8.5-19 8.5L13 25.5Z" fill="#fff9df"/>
+  <path d="M22 29.5v10c0 3.8 4.4 6.5 10 6.5s10-2.7 10-6.5v-10" fill="none" stroke="#fff9df" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 23v18" stroke="#3f4d62" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M46 27v13.5c0 2.8-3.5 4.5-6.5 4.5" fill="none" stroke="#3f4d62" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M37 47.5c2.5.8 5.5.8 8.5 0" fill="none" stroke="#3f4d62" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <path d="M20.5 17v3.5c0 1.2 1 2.2 2.2 2.2H32" fill="none" stroke="#fff9df" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="18" r="4" fill="#fffaf0"/>
+  <path d="M50 12v12M44 18h12" stroke="#3f4d62" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+</svg>
