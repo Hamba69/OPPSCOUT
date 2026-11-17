@@ -1,0 +1,37 @@
+[
+  {
+    "file": "src\\components\\admin-charts.tsx",
+    "line": 65,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\components\\admin-charts.tsx",
+    "line": 92,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\components\\admin-charts.tsx",
+    "line": 134,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\components\\dashboard-charts.tsx",
+    "line": 11,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\components\\dashboard-charts.tsx",
+    "line": 42,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\components\\dashboard-charts.tsx",
+    "line": 61,
+    "reason": "data chart"
+  },
+  {
+    "file": "src\\app\\(admin)\\admin\\kpis\\page.tsx",
+    "line": 7,
+    "reason": "mathematical multiplication unit"
+  }
+]

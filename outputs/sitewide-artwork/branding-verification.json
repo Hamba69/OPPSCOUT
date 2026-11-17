@@ -1,0 +1,20 @@
+[
+  {
+    "file": "src/components/logo.tsx",
+    "unchanged": true,
+    "comparison": "text with checkout line endings normalised",
+    "sha256": "30c149cdef4b669217fb5a378a8d9ca6c4541c800a28108407c8e6dfafa287a9"
+  },
+  {
+    "file": "public/logo.png",
+    "unchanged": true,
+    "comparison": "byte-identical",
+    "sha256": "7e6824bf79581c1cd4e7f9eca4c1fd5126db385f55d9bda826b2712d0908385c"
+  },
+  {
+    "file": "src/app/icon.png",
+    "unchanged": true,
+    "comparison": "byte-identical",
+    "sha256": "151d96ac9d7c6d1db00c3c55bb589e646225eea3408148c3c19dc9b00f47b896"
+  }
+]

@@ -1,0 +1,986 @@
+[
+  {
+    "route": "/",
+    "width": 320,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 24,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "The right opportunity is already out there."
+      ],
+      "main": 1,
+      "viewport": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "password",
+          "name": "",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Log in",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "Get started",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "Jobs",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Scholarships",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Internships",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Grants",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Post an opportunity",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.5) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/",
+    "width": 1280,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 24,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "The right opportunity is already out there."
+      ],
+      "main": 1,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "password",
+          "name": "",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Log in",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "Get started",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "Jobs",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Scholarships",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Internships",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Grants",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "rgba(255, 212, 59, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Post an opportunity",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.5) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/login",
+    "width": 320,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/login",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 26,
+      "incomplete": [
+        "color-contrast",
+        "target-size"
+      ],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Welcome back"
+      ],
+      "main": 1,
+      "viewport": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Forgot password?",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Log in→",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(255, 255, 255, 0.6) 0px 1px 0px 0px inset, rgba(230, 170, 0, 0.25) 0px 6px 16px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Publisher log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutWelcome backEmailPasswordShowForgot password?Log in→Your perso",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/login",
+    "width": 1280,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/login",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 26,
+      "incomplete": [
+        "color-contrast",
+        "target-size"
+      ],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Welcome back"
+      ],
+      "main": 1,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Forgot password?",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Log in→",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(255, 255, 255, 0.6) 0px 1px 0px 0px inset, rgba(230, 170, 0, 0.25) 0px 6px 16px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Publisher log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutWelcome backEmailPasswordShowForgot password?Log in→Your perso",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/opportunities",
+    "width": 320,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/login?next=%2Fopportunities",
+    "requestedPageRendered": false,
+    "coverageNote": "Redirect destination tested; requested page content was not audited.",
+    "axe": {
+      "passes": 26,
+      "incomplete": [
+        "color-contrast",
+        "target-size"
+      ],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Welcome back"
+      ],
+      "main": 1,
+      "viewport": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Forgot password?",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Log in→",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(255, 255, 255, 0.6) 0px 1px 0px 0px inset, rgba(230, 170, 0, 0.25) 0px 6px 16px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Publisher log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutWelcome backEmailPasswordShowForgot password?Log in→Your perso",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/opportunities",
+    "width": 1280,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/login?next=%2Fopportunities",
+    "requestedPageRendered": false,
+    "coverageNote": "Redirect destination tested; requested page content was not audited.",
+    "axe": {
+      "passes": 26,
+      "incomplete": [
+        "color-contrast",
+        "target-size"
+      ],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Welcome back"
+      ],
+      "main": 1,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Forgot password?",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Log in→",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.4) 0px 0px 0px 4px, rgba(255, 255, 255, 0.6) 0px 1px 0px 0px inset, rgba(230, 170, 0, 0.25) 0px 6px 16px 0px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Publisher log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutWelcome backEmailPasswordShowForgot password?Log in→Your perso",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/organizations",
+    "width": 320,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/organizations",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 23,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Share opportunities with people who fit."
+      ],
+      "main": 1,
+      "viewport": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "fields": []
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Create a publisher account",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.6) 0px 0px 0px 4px, rgba(30, 41, 59, 0.25) 0px 8px 20px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "I already have an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Go to OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutFor publishersShare opportunities with people who fit.Create a",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Create a publisher account",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.6) 0px 0px 0px 4px, rgba(30, 41, 59, 0.25) 0px 8px 20px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "I already have an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Go to OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/organizations",
+    "width": 1280,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/organizations",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 23,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Share opportunities with people who fit."
+      ],
+      "main": 1,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "overflow": [],
+      "fields": []
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Create a publisher account",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.6) 0px 0px 0px 4px, rgba(30, 41, 59, 0.25) 0px 8px 20px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "I already have an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Go to OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutFor publishersShare opportunities with people who fit.Create a",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Create a publisher account",
+        "outline": "rgba(0, 0, 0, 0) solid 2px",
+        "shadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(255, 215, 0, 0.6) 0px 0px 0px 4px, rgba(30, 41, 59, 0.25) 0px 8px 20px 0px"
+      },
+      {
+        "tag": "A",
+        "text": "I already have an account",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "Go to OppScout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/organizations/signup",
+    "width": 320,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/organizations/signup",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 28,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Create a publisher account"
+      ],
+      "main": 1,
+      "viewport": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Show",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create publisher account",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgba(255, 215, 0, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutPublisher accountCreate a publisher accountSubmit and manage o",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      }
+    ]
+  },
+  {
+    "route": "/organizations/signup",
+    "width": 1280,
+    "status": 200,
+    "url": "http://127.0.0.1:3107/organizations/signup",
+    "requestedPageRendered": true,
+    "axe": {
+      "passes": 28,
+      "incomplete": [],
+      "violations": []
+    },
+    "layout": {
+      "title": "OppScout",
+      "h1": [
+        "Create a publisher account"
+      ],
+      "main": 1,
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "overflow": [],
+      "fields": [
+        {
+          "type": "email",
+          "name": "email",
+          "labels": [
+            "Email"
+          ],
+          "aria": null
+        },
+        {
+          "type": "password",
+          "name": "password",
+          "labels": [
+            "Password"
+          ],
+          "aria": null
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Show",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create publisher account",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgba(255, 215, 0, 0.6) 0px 0px 0px 4px"
+      },
+      {
+        "tag": "A",
+        "text": "Log in",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "NEXTJS-PORTAL",
+        "text": "",
+        "outline": "rgb(117, 117, 117) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "BODY",
+        "text": "oppscoutPublisher accountCreate a publisher accountSubmit and manage o",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      },
+      {
+        "tag": "A",
+        "text": "oppscout",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "shadow": "none"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "outline": "rgb(30, 41, 59) none 3px",
+        "shadow": "none"
+      }
+    ]
+  }
+]

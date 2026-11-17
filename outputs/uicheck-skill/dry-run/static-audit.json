@@ -1,0 +1,197 @@
+﻿{
+  "files_scanned": {
+    ".tsx": 84,
+    ".css": 2
+  },
+  "counts": {
+    "S0": 0,
+    "S1": 12,
+    "S2": 4,
+    "S3": 0
+  },
+  "symmetry": {
+    "distinct_colors_in_declarations": 47,
+    "distinct_colors_defined_as_tokens": 48,
+    "distinct_colors_total": 82,
+    "distinct_font_sizes": 22,
+    "distinct_font_weights": 7,
+    "distinct_border_radii": 11,
+    "distinct_z_index_values": 4,
+    "max_z_index": 60,
+    "important_declarations": 44,
+    "top_colors": [
+      "#1e293b (22)",
+      "#ffffff (6)",
+      "rgb(255255255/.8) (4)",
+      "rgb(255255255/.9) (4)",
+      "#3f4d62 (4)"
+    ],
+    "top_font_sizes": [
+      "1.875rem !important (6)",
+      "0.875rem (3)",
+      "0.9375rem (3)",
+      "2rem !important (2)",
+      "0.75rem (2)"
+    ],
+    "top_radii": [
+      "9999px (11)",
+      "1.75rem (6)",
+      "1.375rem (3)",
+      "0.875rem (2)",
+      "inherit (2)"
+    ]
+  },
+  "drift_notes": [
+    "47 distinct literal colors used directly in declarations; a healthy system uses roughly 8 to 16 via tokens.",
+    "22 distinct font sizes; a scale usually has 6 to 9 steps.",
+    "11 distinct border radii; typically 3 to 5.",
+    "44 `!important` declarations suggest specificity conflicts; consider @layer."
+  ],
+  "findings": [
+    {
+      "rule": "focus-outline-removed",
+      "severity": "S2",
+      "confidence": "low",
+      "file": "src\\app\\globals.css",
+      "line": 297,
+      "message": "outline removed on `.opp-card .stretch:focus-visible`; a focus replacement exists elsewhere, confirm it covers the same elements",
+      "fix": "Keep a visible focus indicator (3:1 contrast). Use `:focus-visible { outline: 2px solid; outline-offset: 2px }` and only remove outline for `:focus:not(:focus-visible)`."
+    },
+    {
+      "rule": "tiny-font",
+      "severity": "S2",
+      "confidence": "medium",
+      "file": "src\\app\\globals.css",
+      "line": 245,
+      "message": "font-size 10px is below 12px",
+      "fix": "Use at least 12px for supporting text and 16px for body; prefer rem so user text size applies."
+    },
+    {
+      "rule": "tiny-font",
+      "severity": "S2",
+      "confidence": "medium",
+      "file": "src\\app\\globals.css",
+      "line": 247,
+      "message": "font-size 10px is below 12px",
+      "fix": "Use at least 12px for supporting text and 16px for body; prefer rem so user text size applies."
+    },
+    {
+      "rule": "tiny-font",
+      "severity": "S2",
+      "confidence": "medium",
+      "file": "src\\app\\globals.css",
+      "line": 289,
+      "message": "font-size 11px is below 12px",
+      "fix": "Use at least 12px for supporting text and 16px for body; prefer rem so user text size applies."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 83,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 84,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 85,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 86,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 199,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 200,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 201,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 202,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 212,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 231,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 236,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    },
+    {
+      "rule": "input-no-label",
+      "severity": "S1",
+      "confidence": "low",
+      "file": "src\\components\\profile-form.tsx",
+      "line": 237,
+      "message": "form control with no id, aria-label or wrapping <label>",
+      "fix": "Associate a visible label (htmlFor/id, wrapping label, or aria-label)."
+    }
+  ],
+  "note": "Heuristic candidates only. Confirm before reporting. A clean scan is not a pass."
+}

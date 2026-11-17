@@ -1,0 +1,13 @@
+{
+  "environment": "local Next.js development; 1.6 Mbps download, 150ms latency, 4x CPU slowdown; one synthetic observation, not production p75",
+  "metrics": {
+    "lcpMs": 2092,
+    "cls": 0.002018351068132366,
+    "resources": 26,
+    "transferBytes": 939858
+  },
+  "offline": {
+    "url": "http://127.0.0.1:3107/login?next=%2Fopportunities%3Ftype%3Djob",
+    "text": "oppscout\nWelcome back\nEmail\nPassword\nShow\nForgot password?\nLog in\n→\n\nYour personal and publisher access use the same email and password. Sign in with those credentials on either page.\n\nNew here? Create an account\n\nPublishing for an organization? Publisher log in"
+  }
+}

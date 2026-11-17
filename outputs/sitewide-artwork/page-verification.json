@@ -1,0 +1,74 @@
+[
+  {
+    "route": "/",
+    "width": 375,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/",
+    "scrollWidth": 375,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/",
+    "width": 1280,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/",
+    "scrollWidth": 1280,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/login",
+    "width": 375,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/login",
+    "scrollWidth": 375,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/login",
+    "width": 1280,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/login",
+    "scrollWidth": 1280,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/organizations",
+    "width": 375,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/organizations",
+    "scrollWidth": 375,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/organizations",
+    "width": 1280,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/organizations",
+    "scrollWidth": 1280,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/organizations/signup",
+    "width": 375,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/organizations/signup",
+    "scrollWidth": 375,
+    "brokenImages": [],
+    "violations": []
+  },
+  {
+    "route": "/organizations/signup",
+    "width": 1280,
+    "status": 200,
+    "finalUrl": "http://127.0.0.1:3107/organizations/signup",
+    "scrollWidth": 1280,
+    "brokenImages": [],
+    "violations": []
+  }
+]

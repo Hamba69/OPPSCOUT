@@ -1,0 +1,178 @@
+[
+  {
+    "name": "search",
+    "file": "/images/icons/search.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4926,
+    "transparent": true
+  },
+  {
+    "name": "check",
+    "file": "/images/icons/check.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 7258,
+    "transparent": true
+  },
+  {
+    "name": "clock",
+    "file": "/images/icons/clock.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 7726,
+    "transparent": true
+  },
+  {
+    "name": "matches",
+    "file": "/images/icons/matches.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5672,
+    "transparent": true
+  },
+  {
+    "name": "saved",
+    "file": "/images/icons/saved.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5504,
+    "transparent": true
+  },
+  {
+    "name": "profile",
+    "file": "/images/icons/profile.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4860,
+    "transparent": true
+  },
+  {
+    "name": "feedback",
+    "file": "/images/icons/feedback.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5098,
+    "transparent": true
+  },
+  {
+    "name": "signOut",
+    "file": "/images/icons/signOut.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4656,
+    "transparent": true
+  },
+  {
+    "name": "overview",
+    "file": "/images/icons/overview.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4762,
+    "transparent": true
+  },
+  {
+    "name": "people",
+    "file": "/images/icons/people.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 7374,
+    "transparent": true
+  },
+  {
+    "name": "chart",
+    "file": "/images/icons/chart.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4892,
+    "transparent": true
+  },
+  {
+    "name": "organization",
+    "file": "/images/icons/organization.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5200,
+    "transparent": true
+  },
+  {
+    "name": "shield",
+    "file": "/images/icons/shield.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5708,
+    "transparent": true
+  },
+  {
+    "name": "plus",
+    "file": "/images/icons/plus.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4868,
+    "transparent": true
+  },
+  {
+    "name": "edit",
+    "file": "/images/icons/edit.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5682,
+    "transparent": true
+  },
+  {
+    "name": "menu",
+    "file": "/images/icons/menu.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5804,
+    "transparent": true
+  },
+  {
+    "name": "mail",
+    "file": "/images/icons/mail.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4200,
+    "transparent": true
+  },
+  {
+    "name": "lock",
+    "file": "/images/icons/lock.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5894,
+    "transparent": true
+  },
+  {
+    "name": "alert",
+    "file": "/images/icons/alert.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5548,
+    "transparent": true
+  },
+  {
+    "name": "settings",
+    "file": "/images/icons/settings.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 6306,
+    "transparent": true
+  },
+  {
+    "name": "arrow",
+    "file": "/images/icons/arrow.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 4396,
+    "transparent": true
+  },
+  {
+    "name": "flag",
+    "file": "/images/icons/flag.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 5196,
+    "transparent": true
+  }
+]

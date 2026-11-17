@@ -1,0 +1,60 @@
+[
+  {
+    "route": "/login",
+    "mode": "simulated authentication response; no provider request sent",
+    "emptyValidation": {
+      "invalid": true,
+      "focused": true
+    },
+    "passwordToggle": true,
+    "loadingDisabled": true,
+    "error": "Invalid login credentials",
+    "retryEnabled": true,
+    "inputRetained": true,
+    "intercepted": [
+      "/auth/v1/token"
+    ]
+  },
+  {
+    "route": "/organizations/login",
+    "mode": "simulated authentication response; no provider request sent",
+    "emptyValidation": {
+      "invalid": true,
+      "focused": true
+    },
+    "passwordToggle": true,
+    "loadingDisabled": true,
+    "error": "Invalid login credentials",
+    "retryEnabled": true,
+    "inputRetained": true,
+    "intercepted": [
+      "/auth/v1/token"
+    ]
+  },
+  {
+    "route": "/organizations/signup",
+    "mode": "simulated authentication response; no provider request sent",
+    "emptyValidation": {
+      "invalid": true,
+      "focused": true
+    },
+    "passwordToggle": true,
+    "loadingDisabled": true,
+    "error": "Invalid login credentials",
+    "retryEnabled": true,
+    "inputRetained": true,
+    "intercepted": [
+      "/auth/v1/signup"
+    ]
+  },
+  {
+    "flow": "landing Jobs to authentication",
+    "finalPath": "/login",
+    "next": "/opportunities?type=job"
+  },
+  {
+    "flow": "anonymous catalogue",
+    "finalPath": "/login",
+    "catalogueRendered": 0
+  }
+]
