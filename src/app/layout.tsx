@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SeekerFrame } from "@/components/app-shell";
 import { SiteHeader } from "@/components/site-header";
+import { NavigationTracker } from "@/components/back-button";
 
 import "./globals.css";
 
@@ -25,6 +26,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en" className={sans.variable}>
       <body>
         <SiteHeader />
+        <NavigationTracker />
         <SeekerFrame>{children}</SeekerFrame>
         <WebVitals />
         <Analytics />

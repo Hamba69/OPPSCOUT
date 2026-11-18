@@ -1,5 +1,4 @@
-import { Icon } from "@/components/custom-icon";
-import Link from "next/link";
+import { BackButton } from "@/components/back-button";
 import { notFound, redirect } from "next/navigation";
 
 import { FEATURE_FLAGS } from "@/config/feature-flags";
@@ -63,9 +62,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
 
   return (
     <main className="page-shell animate-in">
-      <Link href="/dashboard/candidates" className="mb-5 inline-flex text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink">
-        <Icon name="back" size={18} /> Back to matches
-      </Link>
+      <BackButton fallbackHref="/dashboard/candidates" label="Back to matches" className="mb-5" />
       <header className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl glass-card p-5 shadow-soft">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-navy">Shared candidate profile</p>

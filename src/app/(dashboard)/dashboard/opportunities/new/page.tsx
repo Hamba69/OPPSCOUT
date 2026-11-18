@@ -1,4 +1,4 @@
-import { Icon } from "@/components/custom-icon";
+import { BackButton } from "@/components/back-button";
 import Link from "next/link";
 
 import { OpportunityForm } from "@/components/opportunity-form";
@@ -29,9 +29,7 @@ export default async function NewOpportunityPage(): Promise<React.JSX.Element> {
   const choices = await getProfileChoices();
   return (
     <main className="animate-in flex flex-col gap-5">
-      <Link className="inline-flex min-h-11 items-center gap-1 text-[13px] font-bold text-navy" href="/dashboard/opportunities">
-        <Icon name="back" size={18} />Back to opportunities
-      </Link>
+      <BackButton fallbackHref="/dashboard/opportunities" label="Back to opportunities" className="self-start" />
       <header className="title-card">
         <h1>Post an opportunity</h1>
       </header>

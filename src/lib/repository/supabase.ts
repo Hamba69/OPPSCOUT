@@ -26,6 +26,15 @@ import type {
 } from "@/lib/repository/types";
 
 type DbRow = Record<string, unknown>;
+
+/**
+ * Short-lived, per-server-instance cache of catalogue reads. Every match screen reads the whole open catalogue,
+ * which is identical for all users, so re-reading it on each page view was the slowest part of loading matches.
+ * Any opportunity write through this repository clears it; other instances catch up within CATALOG_TTL_MS.
+ */
+const CATALOG_TTL_MS = 60_000;
+const catalogCache = new Map<string, { at: number; value: Promise<Opportunity[]> }>();
+export function clearCatalogCache(): void { catalogCache.clear(); }
 type DataClient = ReturnType<typeof createServiceRoleClient>;
 
 
@@ -132,6 +141,17 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   public async listOpportunities(filters: OpportunityFilters = {}): Promise<Opportunity[]> {
+    const key = JSON.stringify(filters);
+    const hit = catalogCache.get(key);
+    if (hit && Date.now() - hit.at < CATALOG_TTL_MS) return [...await hit.value];
+    const value = this.readOpportunities(filters);
+    catalogCache.set(key, { at: Date.now(), value });
+    // A failed read must not be served from the cache.
+    value.catch(() => { if (catalogCache.get(key)?.value === value) catalogCache.delete(key); });
+    return [...await value];
+  }
+
+  private async readOpportunities(filters: OpportunityFilters): Promise<Opportunity[]> {
     if (filters.statuses?.length === 0) return [];
     if (filters.opportunityIds?.length === 0) return [];
 
@@ -152,7 +172,8 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
       const { data, error } = await (cursor ? pageQuery.gt("id", cursor) : pageQuery);
       const page = checked(data, error, "Could not list opportunities");
       rows.push(...page);
-      if (!page.length) break;
+      // A short page is the last one; stopping here saves an extra empty round trip on every read.
+      if (page.length < 500) break;
       cursor = String(page[page.length - 1].id);
     }
     rows.sort((a, b) => (asDate(a.deadline)?.getTime() ?? Infinity) - (asDate(b.deadline)?.getTime() ?? Infinity));
@@ -172,6 +193,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   public async createOpportunity(input: OpportunityInput): Promise<Opportunity> {
+    clearCatalogCache();
     const now = new Date().toISOString();
     const insert = {
       ...input,
@@ -209,12 +231,14 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   public async updateOpportunity(id: string, input: Partial<OpportunityInput>): Promise<Opportunity> {
+    clearCatalogCache();
     const { data, error } = await this.client.from("Opportunity").update(input).eq("id", id).select("*").maybeSingle();
     const row = checked(data, error, "Opportunity");
     return (await this.opportunitiesWithOrganizations([row]))[0];
   }
 
   public async deleteOpportunity(id: string): Promise<void> {
+    clearCatalogCache();
     const { data, error } = await this.client.from("Opportunity").delete().eq("id", id).select("id").maybeSingle();
     checked(data, error, "Opportunity");
   }
@@ -421,6 +445,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
   }
 
   public async reviewOpportunity(id: string, input: { checklist: TrustChecklist; approved: boolean; reviewerId: string; notes?: string }): Promise<Opportunity> {
+    clearCatalogCache();
     const { data, error } = await this.client.from("Opportunity").update({
       reviewChecklist: input.checklist,
       verificationStatus: input.approved ? "verified" : "flagged",

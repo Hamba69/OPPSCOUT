@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Icon } from "@/components/app-shell";
-import { ArrowLeftIcon } from "@/components/icons";
+import { BackButton } from "@/components/back-button";
 import { PAGE, SortSelect, feedCategories, searchAndSort, type FeedItem, type Sort } from "@/components/feed-browser";
 import { MatchCard } from "@/components/match-card";
 import { choiceLabel } from "@/services/profile/choices";
@@ -24,15 +24,15 @@ export function CategoryMatches({ items, category }: { items: FeedItem[]; catego
   const visible = useMemo(() => searchAndSort(inCategory, query, sort), [inCategory, query, sort]);
 
   return <>
-    <header className="flex flex-col gap-3">
-      <Link href="/feed" className="inline-flex min-h-11 items-center gap-1.5 self-start text-[13px] font-bold text-navy transition hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon />Back to matches</Link>
-      <div className="title-card"><h1>{all ? "All matches" : `${label} matches`}</h1></div>
-    </header>
+    <h1 className="sr-only">{all ? "All matches" : `${label} matches`}</h1>
 
-    <nav aria-label="Match categories" className="nav-capsule category-nav w-full max-w-full justify-start gap-0.5 overflow-x-auto">
-      <Link href="/feed/all" aria-current={all ? "page" : undefined} className={chipClass(all)}>All</Link>
-      {categories.map((entry) => <Link key={entry.type} href={`/feed/${encodeURIComponent(entry.type)}`} aria-current={entry.type === category ? "page" : undefined} className={chipClass(entry.type === category)}>{entry.label}</Link>)}
-    </nav>
+    <div className="flex items-center gap-2.5">
+      <BackButton fallbackHref="/feed" label="Back to matches" />
+      <nav aria-label="Match categories" className="nav-capsule category-nav min-w-0 flex-1 justify-start gap-0.5 overflow-x-auto">
+        <Link replace href="/feed/all" aria-current={all ? "page" : undefined} className={chipClass(all)}>All</Link>
+        {categories.map((entry) => <Link replace key={entry.type} href={`/feed/${encodeURIComponent(entry.type)}`} aria-current={entry.type === category ? "page" : undefined} className={chipClass(entry.type === category)}>{entry.label}</Link>)}
+      </nav>
+    </div>
 
     <div className="flex flex-wrap items-center justify-between gap-3">
       <label className="search-pill !max-w-[26.25rem] flex-1">

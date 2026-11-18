@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import Link from "next/link";
-import { ArrowLeftIcon } from "@/components/icons";
+import { BackButton } from "@/components/back-button";
 import { OpportunityActions } from "@/components/opportunity-actions";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
@@ -37,7 +36,7 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   const backLabel = from === "matches" ? "Back to matches" : "Back to opportunities";
   const factBox = (label: string, value: React.ReactNode, accent = false): React.JSX.Element => <div className={`fact ${accent ? "fact-accent" : ""}`}><p className="text-xs font-semibold text-navy">{label}</p><div className="mt-1.5 text-lg font-extrabold capitalize text-ink">{value}</div></div>;
   return <main className="animate-in flex flex-col gap-6">
-    <Link href={backHref} className="inline-flex min-h-11 items-center gap-1.5 self-start text-[13px] font-bold text-navy transition hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf"><ArrowLeftIcon />{backLabel}</Link>
+    <BackButton fallbackHref={backHref} label={backLabel} className="self-start" />
     <section className="surface !rounded-[1.75rem] !px-6 !py-7 sm:!px-8">
       <h1 className="!m-0 !text-left !text-2xl !font-extrabold !leading-tight text-ink sm:!text-[2rem]">{opportunity.title}</h1>
       <p className="mt-1.5 text-[15px] font-semibold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>

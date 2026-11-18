@@ -10,7 +10,7 @@ import type { UserProfile } from "@/core/entities/domain";
 /** The seeker's ranked matches shaped for the feed cards. Shared by the home feed and the per-category pages. */
 export async function loadFeedItems(userId: string, profile: UserProfile, now = new Date()): Promise<FeedItem[]> {
   const repository = await getRepository();
-  const matches = await buildRankedFeed(repository, userId, now, undefined, { persist: false, profile });
+  const matches = await buildRankedFeed(repository, userId, now, undefined, { persist: false, profile, includePersistedMatches: false });
   return matches.map((match) => {
     const opportunity = match.opportunity!;
     const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - now.getTime()) / 86_400_000) : null;

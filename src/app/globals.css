@@ -76,7 +76,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .button-secondary {
     background: rgb(255 255 255 / .55); border-color: rgb(255 255 255 / .9);
     box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 4px 14px rgb(146 98 0 / .06);
-    -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
     @apply inline-flex border min-h-9 items-center justify-center gap-1.5 rounded-full
       px-5 py-2 text-sm font-bold text-ink
       transition hover:bg-white/80
@@ -97,8 +96,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     min-height: 46px;
     border-radius: 14px;
     /* Frosted input; the ink border keeps the edge clearly visible. */
-    background: rgb(255 255 255 / .7);
-    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    background: rgb(255 255 255 / .78);
   }
   .field:focus {
     background: #fff;
@@ -297,16 +295,17 @@ h1.hero-title {
 .tile-tinted {
   --tile-tint: 255 214 102;
   position: relative; overflow: hidden; isolation: isolate; justify-content: flex-start; min-height: 8.25rem; font-size: 1rem; font-weight: 800;
-  /* Frosted glass carrying the category colour: strongest top-left, fading to clear glass bottom-right. */
-  background:
-    radial-gradient(120% 90% at 0% 0%, rgb(var(--tile-tint) / .55), transparent 70%),
-    linear-gradient(150deg, rgb(var(--tile-tint) / .35) 0%, rgb(255 255 255 / .5) 100%);
+  /* Every tile is the same clear glass at rest; its category colour only appears as a highlight on hover, focus or tap. */
+  background: rgb(255 255 255 / .38);
   border: 1px solid rgb(255 255 255 / .75);
-  box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 -1px 0 rgb(var(--tile-tint) / .25) inset, 0 12px 28px rgb(var(--tile-tint) / .22);
-  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 8px 24px rgb(146 98 0 / .05);
+  transition: transform 180ms ease-out, box-shadow 220ms ease-out, background-color 220ms ease-out, border-color 220ms ease-out;
 }
-/* Soft glass sheen across the top of every tinted tile. */
-.tile-tinted::before { content: ""; position: absolute; inset: 0 0 55% 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgb(255 255 255 / .55), transparent); }
+/* The category highlight: a soft wash from the top-left corner, faded in on hover/focus/tap. */
+.tile-tinted::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 220ms ease-out;
+  background: radial-gradient(120% 95% at 0% 0%, rgb(var(--tile-tint) / .5), transparent 72%); }
+.tile-tinted:hover, .tile-tinted:focus-visible, .tile-tinted:active { background: rgb(255 255 255 / .55); border-color: rgb(var(--tile-tint) / .55); }
+.tile-tinted:hover::before, .tile-tinted:focus-visible::before, .tile-tinted:active::before { opacity: 1; }
 /* One tint per category (RGB channels); the label stays dark ink on every tint. */
 .tint-job { --tile-tint: 255 206 64; }
 .tint-scholarship { --tile-tint: 240 150 210; }
@@ -323,7 +322,7 @@ h1.hero-title {
 /* A simple line icon in a chip gets a soft yellow tile so it reads as a deliberate badge, not a missing picture. */
 .icon-chip:has(> .line-icon) { background: var(--primary-soft); border-color: var(--primary-soft-border); }
 .cat-pill { display: inline-flex; align-items: center; border-radius: 9999px; padding: .25rem .625rem; font-size: .75rem; font-weight: 700; color: var(--primary-text); background: var(--primary-soft); border: 1px solid var(--primary-soft-border); text-transform: capitalize; }
-.icon-button { display: inline-flex; width: 2.75rem; height: 2.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(255 255 255 / .9); background: rgb(255 255 255 / .6); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 4px 12px rgb(146 98 0 / .06); color: #1e293b; transition: background-color 150ms; }
+.icon-button { display: inline-flex; width: 2.75rem; height: 2.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(255 255 255 / .9); background: rgb(255 255 255 / .6); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 4px 12px rgb(146 98 0 / .06); color: #1e293b; transition: background-color 150ms; }
 .icon-button:hover { background: var(--primary-soft); }
 .icon-button:focus-visible { outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
 .icon-button[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary-deep); }
@@ -334,6 +333,8 @@ h1.hero-title {
 .opp-card .stretch:focus-visible { outline: 2px solid transparent; }
 .opp-card:focus-within { box-shadow: 0 0 0 3px var(--primary), var(--glass-shadow); }
 .opp-card .raise { position: relative; z-index: 1; }
+/* Blur is reserved for large surfaces (header, tabs, panels). Small repeated elements (cards, buttons, fields, badges)
+   use translucent white without blur: over the smooth background wash the blur is invisible but costly to draw on phones. */
 /* Glass helpers for component panels: a standard card, a lighter inset section, and a tinted notice. */
 .glass-card { background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 .glass-inset { background: linear-gradient(150deg, rgb(255 236 170 / .32), rgb(255 255 255 / .25)); border: 1px solid rgb(246 201 76 / .3); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset; }
@@ -345,9 +346,9 @@ h1.hero-title {
 .score-block { --score-tint: 255 214 102; background: linear-gradient(150deg, rgb(var(--score-tint) / .5), rgb(var(--score-tint) / .18)); border: 1px solid rgb(255 255 255 / .8); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset; }
 .score-strong { --score-tint: 140 205 100; color: #2F5A0A; }
 .score-good { --score-tint: 255 206 64; color: #6B4E00; }
-.score-fair { --score-tint: 170 182 200; color: #3F4D62; }
+.score-fair { --score-tint: 255 160 90; color: #8A3B00; }
 .score-none { --score-tint: 255 226 140; }
-.deadline-urgent { align-self: flex-start; margin-top: .25rem; border-radius: 9999px; background: rgb(253 214 205 / .7); border: 1px solid rgb(255 255 255 / .8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: .375rem .625rem; font-size: .75rem; font-weight: 700; color: #9B1C1C; }
+.deadline-urgent { align-self: flex-start; margin-top: .25rem; border-radius: 9999px; background: rgb(253 214 205 / .7); border: 1px solid rgb(255 255 255 / .8); padding: .375rem .625rem; font-size: .75rem; font-weight: 700; color: #9B1C1C; }
 .deadline-calm { align-self: flex-start; margin-top: .25rem; font-size: .8125rem; font-weight: 600; color: var(--slate); }
 .opp-card-foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .625rem; border-top: 1px solid rgb(30 41 59 / .07); font-size: .75rem; color: var(--slate); }
 .clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
@@ -359,7 +360,7 @@ h1.hero-title {
 .orb-lg { width: 4rem; height: 4rem; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .tile:hover, .opp-card:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 16px 36px rgb(146 98 0 / .1); }
-  .tile-tinted:hover { box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 16px 36px rgb(var(--tile-tint) / .32); }
+  .tile-tinted:hover { box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 14px 32px rgb(var(--tile-tint) / .28); }
   .opp-card { transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
 }
 
