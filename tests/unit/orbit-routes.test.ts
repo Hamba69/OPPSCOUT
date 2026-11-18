@@ -47,7 +47,7 @@ describe("OrbitMatch route rendering", () => {
     for (const [index, match] of matches.slice(0, cards.length).entries()) {
       expect(match.score).toBeGreaterThanOrEqual(0);
       expect(match.score).toBeLessThanOrEqual(100);
-      expect(cards[index].querySelector(".match-score")?.textContent).toContain(`${match.score}%`);
+      expect(cards[index].querySelector(".score-block")?.textContent).toContain(`${match.score}%`);
       expect(cards[index].textContent).not.toContain("Why it fits");
       for (const factor of [...match.matchedFactors, ...match.missingFactors]) expect(cards[index].textContent).not.toContain(factor.detail);
     }

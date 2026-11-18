@@ -83,7 +83,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
         </dl>
       )}
       <form ref={formRef} className="mt-4 space-y-3" onSubmit={(event) => { event.preventDefault(); void review(true); }}>
-        <details className="rounded-xl border border-ink/10 bg-white/70 px-4">
+        <details className="rounded-xl glass-inset px-4">
           <summary className="min-h-11 cursor-pointer py-3 text-sm font-bold text-navy">Description and how to apply</summary>
           <div className="space-y-3 border-t border-ink/10 py-3">
             <p className="text-sm leading-6 text-navy">{description}</p>
@@ -91,7 +91,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
             <label><span className="label">Review note (optional)</span><textarea name="notes" className="field min-h-20" /></label>
           </div>
         </details>
-        <label className="flex items-start gap-3 rounded-xl bg-butter p-3 text-sm font-medium text-ink">
+        <label className="flex items-start gap-3 rounded-xl glass-notice p-3 text-sm font-medium text-ink">
           <input type="checkbox" className="mt-0.5 size-4 shrink-0 accent-leaf" name="requirementsChecked" />
           I checked the source: the listing is genuine, open to Ugandans, free to apply and the deadline is right
         </label>
@@ -99,7 +99,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
           <button className="button" disabled={done}>Approve</button>
           <button type="button" className="button-secondary" disabled={done} onClick={() => void review(false)}>Flag and remove</button>
         </div>
-        {message && <p className="rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+        {message && <p className="rounded-xl glass-notice p-3 text-sm font-bold text-ink" role="status">{message}</p>}
       </form>
     </article>
   );

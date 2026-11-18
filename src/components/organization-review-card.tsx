@@ -75,7 +75,7 @@ export function OrganizationReviewCard(props: OrganizationReviewCardProps): Reac
           </a>
         )}
       </div>
-      <details className="mt-4 rounded-xl border border-ink/10 bg-white/70 px-4">
+      <details className="mt-4 rounded-xl glass-inset px-4">
         <summary className="min-h-11 cursor-pointer py-3 text-sm font-bold text-navy">Organization details</summary>
         <dl className="grid gap-3 border-t border-ink/10 py-3 text-sm">
           <div><dt className="font-bold text-navy">Official email</dt><dd className="break-words text-ink">{props.officialEmail ?? "Not supplied"}</dd></div>
@@ -107,7 +107,7 @@ export function OrganizationReviewCard(props: OrganizationReviewCardProps): Reac
         </button>
         <button type="button" className="button-secondary" disabled={done || busy} onClick={() => void decide(false)}>Flag</button>
       </div>
-      {message && <p className="mt-3 rounded-xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+      {message && <p className="mt-3 rounded-xl glass-notice p-3 text-sm font-bold text-ink" role="status">{message}</p>}
     </article>
   );
 }

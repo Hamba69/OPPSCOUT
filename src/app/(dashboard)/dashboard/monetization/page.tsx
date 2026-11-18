@@ -21,8 +21,8 @@ export default async function MonetizationPage(): Promise<React.JSX.Element> {
         </div>
         <span className="pill capitalize">{organization.subscriptionTier} plan</span>
       </header>
-      <section className={`overflow-hidden rounded-2xl border bg-white shadow-soft ${readiness.ready ? "border-leaf/40" : "border-ink/[.08]"}`}>
-        <div className={`flex flex-wrap items-center justify-between gap-4 px-5 py-4 ${readiness.ready ? "bg-leaf/[.06]" : "bg-cream/60"}`}>
+      <section className={`overflow-hidden rounded-2xl glass-card shadow-soft ${readiness.ready ? "border-leaf/40" : "border-ink/[.08]"}`}>
+        <div className={`flex flex-wrap items-center justify-between gap-4 px-5 py-4 ${readiness.ready ? "bg-leaf/[.06]" : "bg-white/30"}`}>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">Activation status</p>
             <h2 className="mt-1 text-lg font-extrabold text-ink">{readiness.ready ? "Ready for controlled activation" : "Activation safely blocked"}</h2>

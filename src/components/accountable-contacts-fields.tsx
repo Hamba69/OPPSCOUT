@@ -31,7 +31,7 @@ export function AccountableContactsFields({ contacts, onChange }: AccountableCon
         </button>
       </div>
       {contacts.map((contact, index) => (
-        <fieldset key={index} className="grid gap-4 rounded-2xl border border-ink/10 bg-cream/50 p-4 md:grid-cols-2">
+        <fieldset key={index} className="grid gap-4 rounded-2xl glass-inset p-4 md:grid-cols-2">
           <legend className="px-1 text-sm font-bold text-navy">Contact {index + 1}</legend>
           <label>
             <span className="label">Name</span>

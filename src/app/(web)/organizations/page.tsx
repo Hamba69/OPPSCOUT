@@ -23,7 +23,7 @@ export default function OrganizationsPage(): React.JSX.Element {
     <section className="mt-20" aria-labelledby="how-publishing-works">
       <h2 id="how-publishing-works" className="text-center text-2xl font-extrabold text-ink sm:text-3xl">How publishing works</h2>
       <ol className="mt-8 grid gap-4 md:grid-cols-3">
-        {steps.map(([title, body], index) => <li key={title} className={`rounded-2xl border border-ink/[.08] bg-white p-6 ${index === 3 ? "md:col-span-3" : ""}`}>
+        {steps.map(([title, body], index) => <li key={title} className={`rounded-2xl glass-card p-6 ${index === 3 ? "md:col-span-3" : ""}`}>
           <span className="publisher-step !h-8 !w-8 !text-sm">{index + 1}</span>
           <h3 className="mt-4 font-bold text-ink">{title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-navy">{body.replace("{hours}", hours)}</p>

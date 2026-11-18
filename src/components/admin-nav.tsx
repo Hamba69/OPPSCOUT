@@ -5,8 +5,8 @@ import { LockPortal } from "@/components/admin-controls";
 
 const icons: Partial<Record<string, IconName>> = {
   overview: "overview", users: "people", opportunities: "opportunities", organizations: "organization", matching: "people",
-  algorithm: "chart", performance: "chart", activity: "clock", notifications: "feedback", feedback: "feedback",
-  kpis: "chart", slo: "clock", review: "shield", fixes: "shield", exports: "saved", "access-log": "shield",
+  algorithm: "chart", performance: "chart", activity: "history", notifications: "feedback", feedback: "feedback",
+  kpis: "chart", slo: "history", review: "shield", fixes: "shield", exports: "saved", "access-log": "shield",
 };
 const names: Partial<Record<string, string>> = { review: "Review queue", fixes: "Catalogue fixes", opportunities: "Catalogue", organizations: "Publishers", kpis: "KPIs", slo: "System health", "access-log": "Access log" };
 // Day-to-day work first: what needs a decision, what is in the catalogue, who is using it.

@@ -66,7 +66,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
       <Link href="/dashboard/candidates" className="mb-5 inline-flex text-sm font-semibold text-navy underline underline-offset-4 hover:text-ink">
         <Icon name="back" size={18} /> Back to matches
       </Link>
-      <header className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-ink/[.08] bg-white p-5 shadow-soft">
+      <header className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl glass-card p-5 shadow-soft">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-navy">Shared candidate profile</p>
           <h1 className="mt-1 !text-left !font-extrabold">{profile.name}</h1>
@@ -81,7 +81,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
       </header>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <section className="overflow-hidden rounded-2xl border border-ink/[.08] bg-white shadow-soft" aria-labelledby="match-breakdown-heading">
+        <section className="overflow-hidden rounded-2xl glass-card shadow-soft" aria-labelledby="match-breakdown-heading">
           <div className="border-b border-ink/[.08] px-5 py-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">Opportunity</p>
             <h2 id="match-breakdown-heading" className="mt-1 text-lg font-extrabold text-ink">
@@ -118,7 +118,7 @@ export default async function CandidatePage({ params }: { params: Promise<{ seek
           </div>
         </section>
 
-        <section className="overflow-hidden rounded-2xl border border-ink/[.08] bg-white shadow-soft" aria-labelledby="profile-details-heading">
+        <section className="overflow-hidden rounded-2xl glass-card shadow-soft" aria-labelledby="profile-details-heading">
           <div className="border-b border-ink/[.08] px-5 py-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">Candidate details</p>
             <h2 id="profile-details-heading" className="mt-1 text-lg font-extrabold text-ink">Education and skills</h2>

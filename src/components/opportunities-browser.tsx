@@ -56,42 +56,34 @@ export function OpportunitiesBrowser({
   }, [items, type, deferredQuery, sort]);
 
   const pick = (value: string): void => { setType(value); setLimit(PAGE); };
-  const clear = (): void => { setType(""); setQuery(""); setLimit(PAGE); };
 
   return (
     <>
-      <form role="search" className="w-full" onSubmit={(event) => event.preventDefault()}>
-        <label className="search-pill !max-w-[26.25rem]">
-          <Icon name="search" className="shrink-0 text-navy" />
-          <span className="sr-only">Search</span>
-          <input type="search" name="q" value={query} placeholder="Institution, skill, title, or place"
-            onChange={(event) => { setQuery(event.target.value); setLimit(PAGE); }} />
-        </label>
-      </form>
+      <div role="group" aria-label="Filter by category" className="nav-capsule category-nav w-full max-w-full justify-start gap-0.5 overflow-x-auto">
+        <button type="button" className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${!type ? "border-[#F5D76E] bg-white/85 text-ink shadow-sm" : "border-transparent"}`} aria-pressed={!type} onClick={() => pick("")}>All</button>
+        {categories.map((name) => (
+          <button key={name} type="button" className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${type === name ? "border-[#F5D76E] bg-white/85 text-ink shadow-sm" : "border-transparent"}`} aria-pressed={type === name} onClick={() => pick(name)}>
+            {choiceLabel(name)}
+          </button>
+        ))}
+      </div>
 
-      <div className="flex flex-col gap-3">
-        <div role="group" aria-label="Filter by category" className="nav-capsule category-nav w-full max-w-full justify-start gap-0.5 overflow-x-auto">
-          <button type="button" className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${!type ? "border-[#F5D76E] bg-white text-ink shadow-sm" : "border-transparent"}`} aria-pressed={!type} onClick={() => pick("")}>All</button>
-          {categories.map((name) => (
-            <button key={name} type="button" className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold text-navy transition hover:text-ink focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 ${type === name ? "border-[#F5D76E] bg-white text-ink shadow-sm" : "border-transparent"}`} aria-pressed={type === name} onClick={() => pick(name)}>
-              {choiceLabel(name)}
-            </button>
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center justify-end gap-3">
-          {(query || type) && (
-            <button type="button" onClick={clear} className="inline-flex min-h-11 items-center text-sm font-semibold text-navy underline underline-offset-4">
-              Clear filters
-            </button>
-          )}
-          <label>
-            <span className="sr-only">Sort opportunities</span>
-            <select className="chip cursor-pointer appearance-none !pr-4" value={sort} onChange={(event) => { setSort(event.target.value as Sort); setLimit(PAGE); }}>
-              <option value="best">Best matches</option>
-              <option value="closing">Closing soon</option>
-            </select>
+      <div className="flex flex-wrap items-center gap-3">
+        <form role="search" className="min-w-0 flex-1" onSubmit={(event) => event.preventDefault()}>
+          <label className="search-pill !max-w-[26.25rem]">
+            <Icon name="search" className="shrink-0 text-navy" />
+            <span className="sr-only">Search</span>
+            <input type="search" name="q" value={query} placeholder="Institution, skill, title, or place"
+              onChange={(event) => { setQuery(event.target.value); setLimit(PAGE); }} />
           </label>
-        </div>
+        </form>
+        <label>
+          <span className="sr-only">Sort opportunities</span>
+          <select className="chip cursor-pointer appearance-none !pr-4" value={sort} onChange={(event) => { setSort(event.target.value as Sort); setLimit(PAGE); }}>
+            <option value="best">Best matches</option>
+            <option value="closing">Closing soon</option>
+          </select>
+        </label>
       </div>
 
       <section aria-label="Opportunities" className="flex flex-col gap-4">
@@ -103,8 +95,7 @@ export function OpportunitiesBrowser({
         ) : (
           <section className="surface text-center">
             <h2 className="text-lg font-extrabold text-ink">No opportunities found</h2>
-            <p className="mt-2 text-sm text-navy">Try different words, another category, or clear your filters.</p>
-            <button type="button" onClick={clear} className="button mt-4">Show all</button>
+            <p className="mt-2 text-sm text-navy">Try different words, or tap All or another category above.</p>
           </section>
         )}
         {visible.length > limit && (

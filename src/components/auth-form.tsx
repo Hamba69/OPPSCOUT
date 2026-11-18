@@ -135,7 +135,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               <input
                 id="auth-email"
                 ref={emailInput}
-                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
+                className="w-full rounded-2xl border border-ink/10 bg-white/70 backdrop-blur-md focus:bg-white py-3.5 pl-11 pr-4 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -158,7 +158,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               </span>
               <input
                 id="auth-password"
-                className="w-full rounded-2xl border border-ink/10 bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
+                className="w-full rounded-2xl border border-ink/10 bg-white/70 backdrop-blur-md focus:bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 minLength={isSignin ? undefined : 12}

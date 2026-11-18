@@ -77,14 +77,14 @@ export function OpportunityActions({
     <div className="flex flex-wrap items-center gap-2.5">
       <a className="button !min-h-11" href={sourceUrl} target="_blank" rel="noopener noreferrer" onClick={trackSourceClick}><ExternalIcon />Apply on official site</a>
       <button type="button" className="button-secondary !min-h-11" disabled={busy} onClick={currentSavedId ? unsave : save}>
-        <Icon name="saved" size={20} />
+        <Icon name="bookmark" size={20} />
         {busy ? "Working…" : currentSavedId ? "Unsave" : "Save for later"}
       </button>
       <button type="button" className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold text-navy hover:text-ink" aria-expanded={reporting} onClick={() => setReporting(!reporting)}>
         <Icon name="flag" size={20} />Report a problem
       </button>
     </div>
-    {reporting && <form onSubmit={report} className="mt-4 space-y-3 rounded-2xl border border-ink/[.08] bg-white/70 p-5"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
+    {reporting && <form onSubmit={report} className="mt-4 space-y-3 rounded-2xl glass-card/70 p-5"><label><span className="label">What looks wrong with this listing?</span><textarea className="field min-h-24" value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} required placeholder="For example: it asks for a payment, or the link does not match the organization." /></label>
       <div className="flex gap-2"><button className="button" disabled={busy || !reason.trim()}>{busy ? "Sending…" : "Submit report"}</button><button type="button" className="button-secondary" onClick={() => setReporting(false)} disabled={busy}>Cancel</button></div></form>}
     {message && <p className="mt-3 text-sm font-semibold text-[#6B4E00]" role="status" aria-live="polite">{message}</p>}
   </div>;

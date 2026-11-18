@@ -108,7 +108,7 @@ export function PublisherAuthForm({ mode, nextPath }: { mode: Mode; nextPath: st
     <button className="publisher-submit mt-5" disabled={busy}>{busy ? "Please wait…" : <>{signup ? "Create publisher account" : "Log in"}<ArrowIcon /></>}</button>
 
     {confirmationPending && <button type="button" className="mt-3 text-sm font-bold underline underline-offset-4" disabled={busy} onClick={resendConfirmation}>Resend confirmation email</button>}
-    {message && <p className="mt-4 rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+    {message && <p className="mt-4 rounded-2xl glass-notice p-3 text-sm font-bold text-ink" role="status">{message}</p>}
     <p className="mt-4 text-center text-xs leading-5 text-navy">Your personal and publisher access use the same email and password. Sign in with those credentials on either page.</p>
   </form>;
 }

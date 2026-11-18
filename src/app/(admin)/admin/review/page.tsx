@@ -105,6 +105,11 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
       <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Publishers · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
     </AdminHeader>
 
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
+      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
+    </div>
+
     <form action="/admin/review" method="get" role="search" className="surface flex flex-wrap items-end gap-3">
       <input type="hidden" name="tab" value={tab} />
       <input type="hidden" name="flag" value={flagFilter} />
@@ -122,11 +127,6 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
       <button className="button">Search</button>
       {search && <Link className="button-secondary" href={href({ search: null, page: null, review: null })}>Clear search</Link>}
     </form>
-
-    <div className="flex flex-wrap items-center justify-between gap-3">
-      <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
-      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
-    </div>
 
     {(openListing || openOrganization) && <section aria-label="Review details" className="surface flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3"><h2 className="surface-title">Reviewing {openListing?.title ?? openOrganization?.name}</h2><Link href={href({ review: null })} className="button-secondary">Close</Link></div>

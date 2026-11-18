@@ -74,7 +74,7 @@ export function ResetPasswordForm({ returnTo = "/feed" }: { returnTo?: "/feed" |
       <form className="space-y-4" onSubmit={submit}>
         <label><span className="label">New password</span><input className="field" type="password" name="password" minLength={12} autoComplete="new-password" required disabled={busy || !sessionValid || complete} /></label>
         <button className="button w-full" disabled={busy || !sessionValid || complete}>{busy ? "Please wait…" : "Update password"}</button>
-        {message && <p className="rounded-2xl border border-honey bg-butter p-3 text-sm font-bold text-ink" role="status">{message}</p>}
+        {message && <p className="rounded-2xl glass-notice p-3 text-sm font-bold text-ink" role="status">{message}</p>}
         {!complete && <Link href="/login" className="inline-block text-sm font-semibold text-navy underline underline-offset-4">Request a new reset email</Link>}
       </form>
     </section>

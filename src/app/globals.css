@@ -17,16 +17,19 @@
   --primary-text: #6b4e00;
   --slate: #3f4d62;
   --match: #436200;
-  --glass: rgb(255 255 255 / 0.62);
-  --glass-strong: rgb(255 255 255 / 0.85);
+  --glass: rgb(255 255 255 / 0.5);
+  --glass-strong: rgb(255 255 255 / 0.72);
   --glass-border: rgb(255 255 255 / 0.85);
   --glass-blur: blur(22px) saturate(150%);
   --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 10px 30px rgb(146 98 0 / 0.06);
   --orb: radial-gradient(circle at 32% 28%, #fffbe0 0%, #ffe14d 30%, #ffb800 62%, #ff8a3d 100%);
+  /* Warm colour wash with soft blobs, so frosted surfaces have colour to pick up. */
   --app-bg:
-    radial-gradient(55% 45% at 85% 0%, rgb(255 215 0 / 0.22), transparent 70%),
-    radial-gradient(45% 40% at 0% 35%, rgb(255 236 170 / 0.6), transparent 70%),
-    radial-gradient(50% 45% at 100% 100%, rgb(255 214 170 / 0.35), transparent 70%),
+    radial-gradient(40% 30% at 88% 4%, rgb(255 200 40 / 0.38), transparent 70%),
+    radial-gradient(38% 30% at 4% 30%, rgb(255 222 130 / 0.55), transparent 70%),
+    radial-gradient(34% 28% at 96% 52%, rgb(140 215 180 / 0.22), transparent 70%),
+    radial-gradient(40% 32% at 10% 82%, rgb(255 165 120 / 0.28), transparent 70%),
+    radial-gradient(36% 30% at 80% 98%, rgb(240 160 210 / 0.18), transparent 70%),
     linear-gradient(170deg, #fffcf4 0%, #fff8e4 55%, #fff3e6 100%);
 }
 
@@ -69,10 +72,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
     box-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 6px 16px rgb(230 170 0 / 0.25);
   }
 
+  /* Secondary: clear frosted glass pill. */
   .button-secondary {
-    @apply inline-flex border border-ink/[.12] bg-white min-h-9 items-center justify-center gap-1.5 rounded-full
+    background: rgb(255 255 255 / .55); border-color: rgb(255 255 255 / .9);
+    box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 4px 14px rgb(146 98 0 / .06);
+    -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+    @apply inline-flex border min-h-9 items-center justify-center gap-1.5 rounded-full
       px-5 py-2 text-sm font-bold text-ink
-      transition hover:bg-cream
+      transition hover:bg-white/80
       focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40
       active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50;
   }
@@ -89,9 +96,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
     @apply w-full border border-ink/[.12] px-4 py-3 text-ink outline-none transition placeholder:text-navy/60;
     min-height: 46px;
     border-radius: 14px;
-    background: #fff;
+    /* Frosted input; the ink border keeps the edge clearly visible. */
+    background: rgb(255 255 255 / .7);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   }
   .field:focus {
+    background: #fff;
     border-color: #e8b500;
     box-shadow: 0 0 0 4px rgb(255 215 0 / .25);
   }
@@ -284,11 +294,36 @@ h1.hero-title {
 .search-pill input { min-width: 0; flex: 1 1 0%; border: 0; background: transparent; outline: none; font-size: .875rem; color: #1e293b; }
 .search-pill input::placeholder { color: #5b6a80; }
 .tile { display: flex; min-height: 7.5rem; flex-direction: column; justify-content: space-between; gap: .75rem; border-radius: 1.375rem; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); font-size: .9375rem; font-weight: 700; color: #1e293b; transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
+.tile-tinted {
+  --tile-tint: 255 214 102;
+  position: relative; overflow: hidden; isolation: isolate; justify-content: flex-start; min-height: 8.25rem; font-size: 1rem; font-weight: 800;
+  /* Frosted glass carrying the category colour: strongest top-left, fading to clear glass bottom-right. */
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgb(var(--tile-tint) / .55), transparent 70%),
+    linear-gradient(150deg, rgb(var(--tile-tint) / .35) 0%, rgb(255 255 255 / .5) 100%);
+  border: 1px solid rgb(255 255 255 / .75);
+  box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 -1px 0 rgb(var(--tile-tint) / .25) inset, 0 12px 28px rgb(var(--tile-tint) / .22);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+/* Soft glass sheen across the top of every tinted tile. */
+.tile-tinted::before { content: ""; position: absolute; inset: 0 0 55% 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgb(255 255 255 / .55), transparent); }
+/* One tint per category (RGB channels); the label stays dark ink on every tint. */
+.tint-job { --tile-tint: 255 206 64; }
+.tint-scholarship { --tile-tint: 240 150 210; }
+.tint-internship { --tile-tint: 110 210 170; }
+.tint-grant { --tile-tint: 140 205 100; }
+.tint-fellowship { --tile-tint: 150 170 255; }
+.tint-training { --tile-tint: 255 150 120; }
+.tint-exhibition { --tile-tint: 195 150 255; }
+.tint-consultancy { --tile-tint: 245 170 90; }
+.tile .tile-art { position: absolute; right: -.375rem; bottom: -.375rem; width: 4.75rem; height: 4.75rem; }
 .tile:focus-visible { outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
 .icon-chip { display: flex; width: 2.5rem; height: 2.5rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: .75rem; background: transparent; border: 1px solid transparent; color: var(--primary-deep); }
 .icon-chip > .custom-icon { width: 100% !important; height: 100% !important; }
+/* A simple line icon in a chip gets a soft yellow tile so it reads as a deliberate badge, not a missing picture. */
+.icon-chip:has(> .line-icon) { background: var(--primary-soft); border-color: var(--primary-soft-border); }
 .cat-pill { display: inline-flex; align-items: center; border-radius: 9999px; padding: .25rem .625rem; font-size: .75rem; font-weight: 700; color: var(--primary-text); background: var(--primary-soft); border: 1px solid var(--primary-soft-border); text-transform: capitalize; }
-.icon-button { display: inline-flex; width: 2.75rem; height: 2.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(30 41 59 / .1); background: #fff; color: #1e293b; transition: background-color 150ms; }
+.icon-button { display: inline-flex; width: 2.75rem; height: 2.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(255 255 255 / .9); background: rgb(255 255 255 / .6); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 4px 12px rgb(146 98 0 / .06); color: #1e293b; transition: background-color 150ms; }
 .icon-button:hover { background: var(--primary-soft); }
 .icon-button:focus-visible { outline: 2px solid transparent; outline-offset: 2px; box-shadow: 0 0 0 4px rgb(255 212 59 / .6); }
 .icon-button[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary-deep); }
@@ -299,6 +334,21 @@ h1.hero-title {
 .opp-card .stretch:focus-visible { outline: 2px solid transparent; }
 .opp-card:focus-within { box-shadow: 0 0 0 3px var(--primary), var(--glass-shadow); }
 .opp-card .raise { position: relative; z-index: 1; }
+/* Glass helpers for component panels: a standard card, a lighter inset section, and a tinted notice. */
+.glass-card { background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+.glass-inset { background: linear-gradient(150deg, rgb(255 236 170 / .32), rgb(255 255 255 / .25)); border: 1px solid rgb(246 201 76 / .3); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset; }
+.glass-notice { background: rgb(255 243 196 / .7); border: 1px solid rgb(246 201 76 / .7); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+/* Score-first card: match % in a coloured block on the left, details on the right. */
+.score-card { min-height: 0; flex-direction: row; gap: .875rem; padding: .875rem; }
+.score-block { display: flex; width: 4.75rem; flex-shrink: 0; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; border-radius: 1rem; }
+.score-block .score-value { font-size: 1.5rem; line-height: 1; font-weight: 800; }
+.score-block { --score-tint: 255 214 102; background: linear-gradient(150deg, rgb(var(--score-tint) / .5), rgb(var(--score-tint) / .18)); border: 1px solid rgb(255 255 255 / .8); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset; }
+.score-strong { --score-tint: 140 205 100; color: #2F5A0A; }
+.score-good { --score-tint: 255 206 64; color: #6B4E00; }
+.score-fair { --score-tint: 170 182 200; color: #3F4D62; }
+.score-none { --score-tint: 255 226 140; }
+.deadline-urgent { align-self: flex-start; margin-top: .25rem; border-radius: 9999px; background: rgb(253 214 205 / .7); border: 1px solid rgb(255 255 255 / .8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: .375rem .625rem; font-size: .75rem; font-weight: 700; color: #9B1C1C; }
+.deadline-calm { align-self: flex-start; margin-top: .25rem; font-size: .8125rem; font-weight: 600; color: var(--slate); }
 .opp-card-foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .625rem; border-top: 1px solid rgb(30 41 59 / .07); font-size: .75rem; color: var(--slate); }
 .clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -309,6 +359,7 @@ h1.hero-title {
 .orb-lg { width: 4rem; height: 4rem; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .tile:hover, .opp-card:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 16px 36px rgb(146 98 0 / .1); }
+  .tile-tinted:hover { box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 16px 36px rgb(var(--tile-tint) / .32); }
   .opp-card { transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
 }
 

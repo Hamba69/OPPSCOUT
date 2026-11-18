@@ -44,7 +44,7 @@ export default async function CandidatesPage(): Promise<React.JSX.Element> {
           const displayName = `${firstName} ${rest.at(-1)?.charAt(0).toUpperCase() ?? ""}.`;
 
           return (
-            <article className="overflow-hidden rounded-2xl border border-ink/[.08] bg-white shadow-soft" key={`${row.userId}-${opportunity?.id}`}>
+            <article className="overflow-hidden rounded-2xl glass-card shadow-soft" key={`${row.userId}-${opportunity?.id}`}>
               <div className="flex items-start justify-between gap-4 border-b border-ink/[.08] px-5 py-4">
                 <div className="min-w-0">
                   <h2 className="truncate text-lg font-extrabold text-ink">{displayName}</h2>
@@ -70,14 +70,14 @@ export default async function CandidatesPage(): Promise<React.JSX.Element> {
                   <p className="mt-1 line-clamp-2 text-sm text-ink">{(profile?.skills ?? []).slice(0, 5).join(" · ") || "No skills listed"}</p>
                 </div>
               </div>
-              <div className="flex justify-end border-t border-ink/[.08] bg-cream/40 px-5 py-3">
+              <div className="flex justify-end border-t border-white/70 bg-white/30 px-5 py-3">
                 <Link className="button-secondary" href={`/dashboard/candidates/${row.userId}`}>View shared profile</Link>
               </div>
             </article>
           );
         })}
         {!candidates.length && (
-          <section className="rounded-2xl border border-dashed border-ink/20 bg-white px-6 py-10 text-center xl:col-span-2">
+          <section className="rounded-2xl border border-dashed border-ink/20 bg-white/45 backdrop-blur-md px-6 py-10 text-center xl:col-span-2">
             <h2 className="text-lg font-extrabold text-ink">No matches yet</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-navy">
               Profiles appear here when someone matches an open, verified opportunity and has opted to share their information.

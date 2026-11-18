@@ -31,7 +31,7 @@ export default async function ProviderAnalyticsPage(): Promise<React.JSX.Element
       </header>
       <section aria-label="Engagement totals" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([label, value]) => (
-          <article className="rounded-2xl border border-ink/[.08] bg-white px-5 py-4 shadow-soft" key={label}>
+          <article className="rounded-2xl glass-card px-5 py-4 shadow-soft" key={label}>
             <p className="text-xs font-semibold uppercase tracking-wide text-navy">{label}</p>
             <p className="mt-2 text-3xl font-extrabold text-ink">{value}</p>
           </article>
