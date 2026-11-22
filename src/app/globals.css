@@ -391,6 +391,8 @@ h1.hero-title {
 /* ---------- Accessibility: enlarged text and forced colours ---------- */
 /* Long words in large headings wrap instead of overflowing at 200% text size or zoom. */
 h1, h2, h3 { overflow-wrap: break-word; hyphens: auto; }
+/* Short display headings must never break a word with a hyphen ("al-ready"). */
+h1.hero-title, .greeting h1, .briefing-greeting { hyphens: manual; -webkit-hyphens: manual; }
 
 /* Category tile grids: one column when the container is narrow in rem terms, so enlarged
    root text collapses the grid instead of overlapping labels. Phone: 2, wide: 4. */
