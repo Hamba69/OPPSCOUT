@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
-import { ClosingSoon, NewThisWeek, ProfileStrength, TodayCard } from "@/components/home-briefing";
+import { ClosingSoon, NewToday, ProfileStrength, TodayCard } from "@/components/home-briefing";
 import { requirePageAuth } from "@/lib/auth";
 import { APP_TIME_ZONE } from "@/lib/dates";
-import { loadMatchClosing, loadNewThisWeek, loadSavedClosing } from "@/lib/home-briefing";
+import { loadMatchClosing, loadNewToday, loadSavedClosing } from "@/lib/home-briefing";
 import { getUserProfile } from "@/lib/profile-store";
 import type { UserProfile } from "@/core/entities/domain";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
@@ -38,7 +38,7 @@ export default async function FeedPage({ searchParams }: { searchParams: Promise
   const firstName = profile.name?.trim().split(/\s+/)[0] || undefined;
   const ready = isProfileCompleteForMatching(profile);
 
-  const [savedClosing, newTiles] = await Promise.all([loadSavedClosing(userId, now), loadNewThisWeek(now)]);
+  const [savedClosing, newTiles] = await Promise.all([loadSavedClosing(userId, now), loadNewToday(now)]);
 
   return (
     <main className="animate-in flex flex-col gap-7">
@@ -46,7 +46,7 @@ export default async function FeedPage({ searchParams }: { searchParams: Promise
       {savedClosing.length
         ? <ClosingSoon items={savedClosing} fromSaved />
         : ready && <Suspense fallback={null}><MatchClosing userId={userId} profile={profile} now={now} /></Suspense>}
-      <NewThisWeek tiles={newTiles} />
+      <NewToday tiles={newTiles} />
       <ProfileStrength nudge={profileNudge(profile)} />
     </main>
   );

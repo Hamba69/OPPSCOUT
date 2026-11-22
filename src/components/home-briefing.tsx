@@ -60,15 +60,15 @@ export function ClosingSoon({ items, fromSaved }: { items: ClosingItem[]; fromSa
   </section>;
 }
 
-/** Listings published this week, by type. Each tile opens the Opportunities page filtered to that type. */
-export function NewThisWeek({ tiles }: { tiles: NewTile[] }): React.JSX.Element | null {
+/** Listings published today, by type. Each tile opens the Opportunities page filtered to that type. */
+export function NewToday({ tiles }: { tiles: NewTile[] }): React.JSX.Element | null {
   if (!tiles.length) return null;
-  return <section className="rise rise-3 flex flex-col gap-3.5" aria-labelledby="new-this-week-title">
+  return <section className="rise rise-3 flex flex-col gap-3.5" aria-labelledby="new-today-title">
     <div className="flex items-baseline justify-between px-1">
-      <h2 id="new-this-week-title" className="text-base font-bold text-ink">New this week</h2>
+      <h2 id="new-today-title" className="text-base font-bold text-ink">New today</h2>
       <Link href="/opportunities" className="text-[13px] font-bold text-[#6B4E00] hover:text-ink">Browse all</Link>
     </div>
-    <nav aria-label="New this week by type" className="new-tiles">
+    <nav aria-label="New today by type" className="new-tiles">
       {tiles.map((tile) => <Link key={tile.type} href={`/opportunities?type=${encodeURIComponent(tile.type)}`} className={`tile tile-tinted tint-${tile.type} new-tile`}>
         <span className="text-2xl font-extrabold leading-none">{tile.count}</span>
         <span className="text-xs font-bold">{tile.label}</span>

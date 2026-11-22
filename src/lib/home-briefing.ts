@@ -1,7 +1,6 @@
 import "server-only";
 
-import { isNewListing } from "@/components/score-first-card";
-import { formatDate } from "@/lib/dates";
+import { APP_TIME_ZONE, formatDate } from "@/lib/dates";
 import { loadFeedItems } from "@/lib/feed-items";
 import { allOpportunityTypes } from "@/lib/opportunity-types";
 import { getRepository } from "@/lib/repository";
@@ -50,13 +49,21 @@ export async function loadMatchClosing(userId: string, profile: UserProfile, now
     .map((item) => ({ opportunityId: item.opportunityId, title: item.title, detail: `${item.score}% match · closes ${closesOn(item.deadline!)}`, daysLeft: item.daysLeft! }));
 }
 
-/** Open listings published in the last week, counted by type. Types with nothing new are left out. */
-export async function loadNewThisWeek(now = new Date()): Promise<NewTile[]> {
+/** The calendar day of a moment in Uganda time, as YYYY-MM-DD. */
+const ugandaDay = (moment: Date): string => new Intl.DateTimeFormat("en-CA", { timeZone: APP_TIME_ZONE, year: "numeric", month: "2-digit", day: "2-digit" }).format(moment);
+
+/**
+ * Open listings that went live on OppScout today (Uganda time), counted by type: the day they were approved,
+ * not the day the source posted them, so a listing seeded today counts even if it was posted last week.
+ * Types with nothing new today are left out.
+ */
+export async function loadNewToday(now = new Date()): Promise<NewTile[]> {
   const repository = await getRepository();
   const open = await repository.listOpportunities({ statuses: ["open", "closing_soon"] });
+  const today = ugandaDay(now);
   const counts = new Map<string, number>();
   for (const item of open) {
-    if (!isUserVisibleOpportunity(item, now) || !isNewListing(item.publicationDate, now)) continue;
+    if (!isUserVisibleOpportunity(item, now) || ugandaDay(item.reviewedAt ?? item.publicationDate) !== today) continue;
     counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
   }
   return allOpportunityTypes([...counts.keys()]).map((type) => ({ type, label: choiceLabel(type), count: counts.get(type) ?? 0 }));

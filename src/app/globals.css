@@ -428,7 +428,7 @@ h1, h2, h3 { overflow-wrap: break-word; hyphens: auto; }
 .days-badge-urgent { background: rgb(253 214 205 / .8); color: #9b1c1c; }
 .new-tiles { display: grid; gap: .625rem; grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr)); }
 .tile.new-tile { min-height: 5.75rem; justify-content: space-between; gap: .375rem; padding: .875rem; }
-/* New-this-week tiles show their category colour all the time, not only on hover. */
+/* New-today tiles show their category colour all the time, not only on hover. */
 .tile-tinted.new-tile { background: rgb(255 255 255 / .55); border-color: rgb(var(--tile-tint) / .55); }
 .tile-tinted.new-tile::before { opacity: 1; }
 .profile-ring { display: flex; width: 3.5rem; height: 3.5rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; background: conic-gradient(#1f7e6e 0 var(--progress), rgb(30 41 59 / .1) var(--progress) 100%); }

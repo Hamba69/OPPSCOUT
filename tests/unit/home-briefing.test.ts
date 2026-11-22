@@ -3,7 +3,7 @@ import { createElement, type ReactNode } from "react";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ClosingSoon, NewThisWeek, ProfileStrength, TodayCard } from "@/components/home-briefing";
+import { ClosingSoon, NewToday, ProfileStrength, TodayCard } from "@/components/home-briefing";
 import { MATCHING_STEPS, MatchingProgress } from "@/components/matching-progress";
 import { profileNudge } from "@/services/profile/nudge";
 
@@ -54,14 +54,14 @@ describe("Matches home briefing", () => {
   it("leaves out empty sections", () => {
     const { container } = render(createElement("div", null,
       createElement(ClosingSoon, { fromSaved: true, items: [] }),
-      createElement(NewThisWeek, { tiles: [] }),
+      createElement(NewToday, { tiles: [] }),
       createElement(ProfileStrength, { nudge: null })));
 
     expect(container.textContent).toBe("");
   });
 
-  it("links each new-this-week tile to the Opportunities page filtered by type", () => {
-    render(createElement(NewThisWeek, { tiles: [{ type: "job", label: "Jobs", count: 5 }, { type: "internship", label: "Internships", count: 2 }] }));
+  it("links each new-today tile to the Opportunities page filtered by type", () => {
+    render(createElement(NewToday, { tiles: [{ type: "job", label: "Jobs", count: 5 }, { type: "internship", label: "Internships", count: 2 }] }));
 
     expect(screen.getByRole("link", { name: /5\s*Jobs/ }).getAttribute("href")).toBe("/opportunities?type=job");
     expect(screen.getByRole("link", { name: "Browse all" }).getAttribute("href")).toBe("/opportunities");
