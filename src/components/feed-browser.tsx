@@ -1,11 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
-
-import { Icon, type IconName } from "@/components/app-shell";
-import { CategoryArtwork } from "@/components/category-artwork";
-import { MatchCard, type MatchCardProps } from "@/components/match-card";
+import type { IconName } from "@/components/app-shell";
+import type { MatchCardProps } from "@/components/match-card";
 
 export type FeedItem = MatchCardProps & { category: string; categoryLabel: string };
 export type Sort = "best" | "closing";
@@ -52,56 +48,4 @@ export function SortSelect({ sort, onChange }: { sort: Sort; onChange: (sort: So
       <option value="closing">Closing soon</option>
     </select>
   </label>;
-}
-
-/**
- * Greeting, search, then category tiles that each open that category's matches on their own page.
- * "Recommended for you" is shown from tablet width up; on phones it only appears while searching, to keep the home screen short.
- */
-export function FeedBrowser({ items, salutation, firstName }: { items: FeedItem[]; salutation: string; firstName?: string }): React.JSX.Element {
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<Sort>("best");
-  const [limit, setLimit] = useState(PAGE);
-  const categories = useMemo(() => feedCategories(items), [items]);
-  const visible = useMemo(() => searchAndSort(items, query, sort), [items, query, sort]);
-  const searching = query.trim().length > 0;
-
-  const results = (
-    <section aria-label="Matches" className={`${searching ? "flex" : "hidden sm:flex"} flex-col gap-4`}>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="section-title">{searching ? "Search results" : "Recommended for you"}</h2>
-        <SortSelect sort={sort} onChange={(next) => { setSort(next); setLimit(PAGE); }} />
-      </div>
-      {visible.length
-        ? <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">{visible.slice(0, limit).map((item) => <MatchCard key={item.opportunityId} {...item} />)}</div>
-        : <div className="surface text-center"><h2 className="text-lg font-bold text-ink">Nothing matches that search</h2><p className="mt-2 text-sm text-navy">Try a different word, or browse a category below.</p></div>}
-      {visible.length > limit && <button type="button" className="button-secondary self-center" onClick={() => setLimit((current) => current + PAGE)}>Show more ({visible.length - limit} more)</button>}
-    </section>
-  );
-
-  return <>
-    <section className="greeting">
-      <div className="orb orb-lg" aria-hidden="true" />
-      <h1>{salutation}{firstName ? <> <strong>{firstName}</strong></> : null}, here&apos;s what fits you today.</h1>
-    </section>
-
-    <label className="search-pill self-center !max-w-[40rem]">
-      <Icon name="search" className="shrink-0 text-navy" />
-      <span className="sr-only">Search opportunities</span>
-      <input type="search" placeholder="Search by title, organization or place" value={query}
-        onChange={(event) => { setQuery(event.target.value); setLimit(PAGE); }} />
-    </label>
-
-    {searching && results}
-
-    <div className="tile-grid-wrap"><nav aria-label="Browse by type" className="tile-grid">
-      {categories.map((tile) => <Link key={tile.type} href={`/feed/${encodeURIComponent(tile.type)}`} className={`tile tile-tinted tint-${tile.type}`}>
-        <span className="relative z-[1] pr-6">{tile.label}</span>
-        <CategoryArtwork category={tile.type} className="tile-art" />
-      </Link>)}
-    </nav></div>
-
-    {!searching && results}
-
-  </>;
 }

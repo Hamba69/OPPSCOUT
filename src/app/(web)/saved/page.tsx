@@ -6,7 +6,6 @@ import { choiceLabel } from "@/services/profile/choices";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
-import { formatDate } from "@/lib/dates";
 
 export const dynamic = "force-dynamic";
 
@@ -42,14 +41,6 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
       )}
       {items.length ? <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
         {items.map(({ item, opportunity }) => {
-          const daysLeft = daysUntil(opportunity.deadline);
-          const urgent = daysLeft !== null && daysLeft > 0 && daysLeft <= 3;
-          const countdown = opportunity.deadline
-            ? daysLeft !== null && daysLeft > 0
-              ? urgent ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}` : `${daysLeft} days left`
-              : `Closed ${formatDate(opportunity.deadline, { dateStyle: "medium" })}`
-            : "Deadline not published";
-
           return (
             <article key={item.id} className="opp-card">
               <div className="flex items-center justify-between gap-2">
@@ -62,8 +53,7 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
                 <p className="clamp-1 text-xs font-semibold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
                 <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink"><Link className="stretch focus-visible:underline" href={`/opportunity/${opportunity.id}`}>{opportunity.title}</Link></h2>
               </div>
-              <div className="opp-card-foot">
-                <span className={urgent ? "font-bold text-[#9B1C1C]" : undefined}>{countdown}</span>
+              <div className="opp-card-foot !justify-end">
                 <span aria-hidden="true" className="font-semibold">View details</span>
               </div>
             </article>

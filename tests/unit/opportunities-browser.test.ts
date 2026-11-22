@@ -8,7 +8,7 @@ import { OpportunitiesBrowser } from "@/components/opportunities-browser";
 afterEach(cleanup);
 
 describe("opportunity category filters", () => {
-  it("shows supplied categories in a single horizontally scrollable capsule row", () => {
+  it("shows supplied categories in one row that scrolls sideways", () => {
     render(createElement(OpportunitiesBrowser, {
       items: [],
       categories: ["job", "internship"],
@@ -16,15 +16,13 @@ describe("opportunity category filters", () => {
     }));
 
     const categoryGroup = screen.getByRole("group", { name: "Filter by category" });
-    expect(categoryGroup.className).toContain("overflow-x-auto");
-    expect(categoryGroup.className).toContain("category-nav");
-    expect(categoryGroup.className).toContain("w-full");
+    expect(categoryGroup.className).toContain("chip-row");
     expect(screen.getByRole("button", { name: "Jobs" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Internships" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Grants" })).toBeNull();
   });
 
-  it("adds a thin yellow outline to the active category", () => {
+  it("marks the active category as pressed", () => {
     render(createElement(OpportunitiesBrowser, {
       items: [],
       categories: ["job", "internship"],
@@ -32,7 +30,7 @@ describe("opportunity category filters", () => {
       initialType: "job",
     }));
 
-    expect(screen.getByRole("button", { name: "Jobs" }).className).toContain("border-[#F5D76E]");
-    expect(screen.getByRole("button", { name: "Internships" }).className).toContain("border-transparent");
+    expect(screen.getByRole("button", { name: "Jobs" }).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByRole("button", { name: "Internships" }).getAttribute("aria-pressed")).toBe("false");
   });
 });

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { CategoryArtwork } from "@/components/category-artwork";
 import { SaveButton } from "@/components/save-button";
 import { formatDate } from "@/lib/dates";
 
@@ -37,7 +36,7 @@ export interface ScoreFirstCardProps {
 
 /**
  * "Score first" card shared by matches and the Opportunities page: the match percentage sits in a coloured
- * block on the left (green strong, yellow good, neutral fair); a listing with no score shows its category artwork there.
+ * block on the left (green strong, yellow good, neutral fair). A listing with no score has no block.
  */
 export function ScoreFirstCard(props: ScoreFirstCardProps): React.JSX.Element {
   const { score, daysLeft } = props;
@@ -49,9 +48,7 @@ export function ScoreFirstCard(props: ScoreFirstCardProps): React.JSX.Element {
 
   return (
     <article className="opp-card score-card">
-      {score !== null
-        ? <div className={`score-block score-${scoreTier(score)}`}><span className="score-value">{score}%</span><span className="text-[11px] font-bold">match</span></div>
-        : <div className="score-block score-none"><CategoryArtwork category={props.category.trim().toLowerCase()} className="size-14" /></div>}
+      {score !== null && <div className={`score-block score-${scoreTier(score)}`}><span className="score-value">{score}%</span><span className="text-[11px] font-bold">match</span></div>}
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-bold text-[#8A6400]">{props.categoryLabel}{props.isNew ? <> · <span className="text-[#2F5A0A]">New</span></> : null}</span>

@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import FeedPage from "@/app/(web)/feed/page";
+import CategoryMatchesPage from "@/app/(web)/feed/[category]/page";
 import SavedPage from "@/app/(web)/saved/page";
 import OpportunityPage from "@/app/(web)/opportunity/[id]/page";
 import { GET as explainMatch } from "@/app/api/v1/matches/[id]/explanation/route";
@@ -40,9 +41,13 @@ describe("OrbitMatch route rendering", () => {
   it("shows seekers only a bounded score, saves a card, and keeps the explanation server-side", async () => {
     const matches = await buildRankedFeed(repository, DEMO_USER_ID);
     expect(matches.length).toBeGreaterThan(0);
-    const feed = new JSDOM(renderToStaticMarkup(await FeedPage({ searchParams: Promise.resolve({}) })), { url: "http://localhost/" }).window.document;
+    // The Matches home is a briefing; its one button opens today's matches, where the cards are.
+    const home = new JSDOM(renderToStaticMarkup(await FeedPage({ searchParams: Promise.resolve({}) })), { url: "http://localhost/" }).window.document;
+    expect([...home.querySelectorAll("a")].find((a) => a.textContent?.includes("View today"))?.getAttribute("href")).toBe("/feed/all");
+    expect(home.querySelectorAll("article")).toHaveLength(0);
+    const feed = new JSDOM(renderToStaticMarkup(await CategoryMatchesPage({ params: Promise.resolve({ category: "all" }) })), { url: "http://localhost/" }).window.document;
     const cards = [...feed.querySelectorAll("article")];
-    // The feed mounts its first page of cards; "Show more" reveals the rest.
+    // Today's matches mounts its first page of cards; "Show more" reveals the rest.
     expect(cards).toHaveLength(Math.min(matches.length, 6));
     for (const [index, match] of matches.slice(0, cards.length).entries()) {
       expect(match.score).toBeGreaterThanOrEqual(0);
