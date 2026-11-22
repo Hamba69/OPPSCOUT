@@ -1,3 +1,4 @@
+import { isMatchScore } from "@/config/match-threshold";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -25,7 +26,7 @@ export default async function OpportunityPage({ params, searchParams }: Props): 
   if (!opportunity || !isUserVisibleOpportunity(opportunity)) notFound();
   const [match, saved] = await Promise.all([
     buildRankedFeed(repository, userId, new Date(), undefined, { persist: false, telemetry: false, opportunityIds: new Set([id]), opportunities: [opportunity] })
-      .then((matches) => matches.find((item) => item.opportunityId === id)),
+      .then((matches) => matches.find((item) => item.opportunityId === id && isMatchScore(item.score))),
     repository.listSaved(userId),
   ]);
   const savedId = saved.find((item) => item.opportunityId === id)?.id;

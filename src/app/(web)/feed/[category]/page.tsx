@@ -33,7 +33,7 @@ export default async function CategoryMatchesPage({ params }: Props): Promise<Re
   }
   return (
     <main className="animate-in flex flex-col gap-6">
-      <CategoryMatches key={category} items={items} category={decodeURIComponent(category).trim().toLowerCase()} />
+      <CategoryMatches items={items} category={decodeURIComponent(category).trim().toLowerCase()} />
     </main>
   );
 }

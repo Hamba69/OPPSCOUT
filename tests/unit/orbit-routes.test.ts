@@ -11,6 +11,7 @@ import { DEMO_USER_ID, MemoryRepository } from "@/lib/repository/memory";
 import { setRepositoryForTests } from "@/lib/repository";
 import { requireSeekerProfile } from "@/lib/page-access";
 import { buildRankedFeed } from "@/services/matching/feed";
+import { isMatchScore } from "@/config/match-threshold";
 import type { MatchResult } from "@/core/interfaces/match-engine";
 import { requirePageAuth } from "@/lib/auth";
 import { getUserProfile } from "@/lib/profile-store";
@@ -39,7 +40,10 @@ describe("OrbitMatch route rendering", () => {
   });
 
   it("shows seekers only a bounded score, saves a card, and keeps the explanation server-side", async () => {
-    const matches = await buildRankedFeed(repository, DEMO_USER_ID);
+    const scored = await buildRankedFeed(repository, DEMO_USER_ID);
+    expect(scored.length).toBeGreaterThan(0);
+    // Only scores at or above the match bar are shown to seekers as matches.
+    const matches = scored.filter((item) => isMatchScore(item.score));
     expect(matches.length).toBeGreaterThan(0);
     // The Matches home is a briefing; its one button opens today's matches, where the cards are.
     const home = new JSDOM(renderToStaticMarkup(await FeedPage({ searchParams: Promise.resolve({}) })), { url: "http://localhost/" }).window.document;

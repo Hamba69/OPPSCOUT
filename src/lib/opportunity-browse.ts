@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { OpportunityListItem } from "@/components/opportunity-list-card";
+import { isMatchScore } from "@/config/match-threshold";
 import { allOpportunityTypes } from "@/lib/opportunity-types";
 import { getRepository } from "@/lib/repository";
 import { buildRankedFeed } from "@/services/matching/feed";
@@ -32,7 +33,8 @@ export async function browseOpportunities(userId: string, filters: { type?: stri
         includePersistedMatches: false,
       })
     : [];
-  const scores = new Map(matches.map((match) => [match.opportunityId, match.score]));
+  // Only real matches carry a score; a poor fit is listed like any other opportunity.
+  const scores = new Map(matches.filter((match) => isMatchScore(match.score)).map((match) => [match.opportunityId, match.score]));
   const items = visible
     .sort((a, b) => (scores.get(b.id) ?? -1) - (scores.get(a.id) ?? -1) ||
       (a.deadline?.getTime() ?? Infinity) - (b.deadline?.getTime() ?? Infinity))
