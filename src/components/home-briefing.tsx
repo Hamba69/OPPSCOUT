@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Icon } from "@/components/app-shell";
 import { SaveButton } from "@/components/save-button";
-import type { ClosingItem, NewTile } from "@/lib/home-briefing";
+import type { ClosingItem, MostMatchedRow } from "@/lib/home-briefing";
 import type { ProfileNudge } from "@/services/profile/nudge";
 
 /** The breathing orb. While matching runs it turns and sends out a second ripple. */
@@ -61,19 +61,28 @@ export function ClosingSoon({ items, fromSaved }: { items: ClosingItem[]; fromSa
 }
 
 /** Listings published today, by type. Each tile opens the Opportunities page filtered to that type. */
-export function NewToday({ tiles }: { tiles: NewTile[] }): React.JSX.Element | null {
-  if (!tiles.length) return null;
-  return <section className="rise rise-3 flex flex-col gap-3.5" aria-labelledby="new-today-title">
-    <div className="flex items-baseline justify-between px-1">
-      <h2 id="new-today-title" className="text-base font-bold text-ink">New today</h2>
+/** The opportunities matched to the most people across OppScout this week, the same for everyone. */
+export function MostMatched({ rows }: { rows: MostMatchedRow[] }): React.JSX.Element | null {
+  if (!rows.length) return null;
+  return <section className="briefing-panel rise rise-3" aria-labelledby="most-matched-title">
+    <div className="flex items-baseline justify-between gap-2">
+      <h2 id="most-matched-title" className="text-base font-bold text-ink">Most matched this week</h2>
       <Link href="/opportunities" className="text-[13px] font-bold text-[#6B4E00] hover:text-ink">Browse all</Link>
     </div>
-    <nav aria-label="New today by type" className="new-tiles">
-      {tiles.map((tile) => <Link key={tile.type} href={`/opportunities?type=${encodeURIComponent(tile.type)}`} className={`tile tile-tinted tint-${tile.type} new-tile`}>
-        <span className="text-2xl font-extrabold leading-none">{tile.count}</span>
-        <span className="text-xs font-bold">{tile.label}</span>
-      </Link>)}
-    </nav>
+    <p className="-mt-1 text-xs text-navy">The opportunities that suit the most people on OppScout right now.</p>
+    <ul className="flex flex-col gap-3.5">
+      {rows.map((row) => <li key={row.opportunityId} className="relative flex items-center gap-3">
+        <span className="pick-score score-block score-good" aria-label={`Matched to ${row.seekers} ${row.seekers === 1 ? "person" : "people"}`}>
+          <span className="text-base font-extrabold leading-none" aria-hidden="true">{row.seekers}</span>
+          <span className="mt-0.5 text-[10px] font-bold" aria-hidden="true">{row.seekers === 1 ? "match" : "matches"}</span>
+        </span>
+        <span className="min-w-0 flex-1">
+          <Link href={`/opportunity/${row.opportunityId}`} className="stretch clamp-1 block text-sm font-bold text-ink focus-visible:underline">{row.title}</Link>
+          <span className="mt-0.5 block clamp-1 text-xs text-navy">{row.detail}</span>
+        </span>
+        <SaveButton opportunityId={row.opportunityId} />
+      </li>)}
+    </ul>
   </section>;
 }
 

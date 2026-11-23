@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
-import { ClosingSoon, NewToday, ProfileStrength, TodayCard } from "@/components/home-briefing";
+import { ClosingSoon, MostMatched, ProfileStrength, TodayCard } from "@/components/home-briefing";
 import { requirePageAuth } from "@/lib/auth";
 import { APP_TIME_ZONE } from "@/lib/dates";
-import { loadMatchClosing, loadNewToday, loadSavedClosing } from "@/lib/home-briefing";
+import { loadFeedItems } from "@/lib/feed-items";
+import { loadMostMatched, loadSavedClosing, matchClosing } from "@/lib/home-briefing";
 import { getUserProfile } from "@/lib/profile-store";
 import type { UserProfile } from "@/core/entities/domain";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
@@ -17,7 +18,13 @@ export const dynamic = "force-dynamic";
 
 /** With nothing saved closing soon, falls back to the seeker's matches. Streams in, because it runs matching. */
 async function MatchClosing({ userId, profile, now }: { userId: string; profile: UserProfile; now: Date }): Promise<React.JSX.Element | null> {
-  return <ClosingSoon items={await loadMatchClosing(userId, profile, now)} fromSaved={false} />;
+  return <ClosingSoon items={matchClosing(await loadFeedItems(userId, profile, now))} fromSaved={false} />;
+}
+
+/** The same list for everyone, cached for a few hours. Streams in so it never holds up the page. */
+async function MostMatchedSection({ now }: { now: Date }): Promise<React.JSX.Element | null> {
+  const rows = await loadMostMatched(now).catch(() => []);
+  return <MostMatched rows={rows} />;
 }
 
 /**
@@ -41,15 +48,14 @@ export default async function FeedPage({ searchParams }: { searchParams: Promise
   const firstName = profile.name?.trim().split(/\s+/)[0] || undefined;
   const ready = isProfileCompleteForMatching(profile);
 
-  const [savedClosing, newTiles] = await Promise.all([loadSavedClosing(userId, now), loadNewToday(now)]);
+  const savedClosing = await loadSavedClosing(userId, now);
 
   return (
     <main className="animate-in flex flex-col gap-7">
       <TodayCard dateLine={dateLine} salutation={salutation} firstName={firstName} ready={ready} />
-      {savedClosing.length
-        ? <ClosingSoon items={savedClosing} fromSaved />
-        : ready && <Suspense fallback={null}><MatchClosing userId={userId} profile={profile} now={now} /></Suspense>}
-      <NewToday tiles={newTiles} />
+      {savedClosing.length > 0 && <ClosingSoon items={savedClosing} fromSaved />}
+      {!savedClosing.length && ready && <Suspense fallback={null}><MatchClosing userId={userId} profile={profile} now={now} /></Suspense>}
+      <Suspense fallback={null}><MostMatchedSection now={now} /></Suspense>
       <ProfileStrength nudge={profileNudge(profile)} />
     </main>
   );

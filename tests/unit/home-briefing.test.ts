@@ -3,7 +3,7 @@ import { createElement, type ReactNode } from "react";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ClosingSoon, NewToday, ProfileStrength, TodayCard } from "@/components/home-briefing";
+import { ClosingSoon, MostMatched, ProfileStrength, TodayCard } from "@/components/home-briefing";
 import { MATCHING_STEPS, MatchingProgress } from "@/components/matching-progress";
 import { profileNudge } from "@/services/profile/nudge";
 
@@ -54,17 +54,22 @@ describe("Matches home briefing", () => {
   it("leaves out empty sections", () => {
     const { container } = render(createElement("div", null,
       createElement(ClosingSoon, { fromSaved: true, items: [] }),
-      createElement(NewToday, { tiles: [] }),
+      createElement(MostMatched, { rows: [] }),
       createElement(ProfileStrength, { nudge: null })));
 
     expect(container.textContent).toBe("");
   });
 
-  it("links each new-today tile to the Opportunities page filtered by type", () => {
-    render(createElement(NewToday, { tiles: [{ type: "job", label: "Jobs", count: 5 }, { type: "internship", label: "Internships", count: 2 }] }));
+  it("lists the most matched opportunities across OppScout with how many people each suits", () => {
+    render(createElement(MostMatched, { rows: [
+      { opportunityId: "a", title: "Data Analyst", detail: "UNICEF Uganda · closes 4 Dec", seekers: 124 },
+      { opportunityId: "b", title: "Research Fellow", detail: "Makerere University · open until filled", seekers: 1 },
+    ] }));
 
-    expect(screen.getByRole("link", { name: /5\s*Jobs/ }).getAttribute("href")).toBe("/opportunities?type=job");
-    expect(screen.getByRole("link", { name: "Browse all" }).getAttribute("href")).toBe("/opportunities");
+    expect(screen.getByRole("heading", { name: "Most matched this week" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Data Analyst" }).getAttribute("href")).toBe("/opportunity/a");
+    expect(screen.getByLabelText("Matched to 124 people")).toBeTruthy();
+    expect(screen.getByLabelText("Matched to 1 person")).toBeTruthy();
   });
 });
 

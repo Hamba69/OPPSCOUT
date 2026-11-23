@@ -427,12 +427,9 @@ h1.hero-title, .greeting h1, .briefing-greeting { hyphens: manual; -webkit-hyphe
 .briefing-panel .stretch:focus-visible { outline: 2px solid transparent; }
 .briefing-panel .raise { position: relative; z-index: 1; }
 .days-badge { display: flex; width: 3.25rem; flex-shrink: 0; flex-direction: column; align-items: center; border-radius: .875rem; padding: .5rem 0; background: rgb(255 243 196 / .9); border: 1px solid rgb(255 255 255 / .8); color: var(--primary-text); }
+.score-block.pick-score { width: 3.25rem; padding: .5rem 0; gap: 0; border-radius: .875rem; }
 .days-badge-urgent { background: rgb(253 214 205 / .8); color: #9b1c1c; }
-.new-tiles { display: grid; gap: .625rem; grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr)); }
-.tile.new-tile { min-height: 5.75rem; justify-content: space-between; gap: .375rem; padding: .875rem; }
 /* New-today tiles show their category colour all the time, not only on hover. */
-.tile-tinted.new-tile { background: rgb(255 255 255 / .55); border-color: rgb(var(--tile-tint) / .55); }
-.tile-tinted.new-tile::before { opacity: 1; }
 .profile-ring { display: flex; width: 3.5rem; height: 3.5rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; background: conic-gradient(#1f7e6e 0 var(--progress), rgb(30 41 59 / .1) var(--progress) 100%); }
 .profile-ring > span { display: flex; width: 2.75rem; height: 2.75rem; align-items: center; justify-content: center; border-radius: 9999px; background: #fffcf4; font-size: .8125rem; font-weight: 800; color: #1e293b; }
 

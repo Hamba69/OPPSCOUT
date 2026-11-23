@@ -1,13 +1,11 @@
 import "server-only";
 
-import { APP_TIME_ZONE, formatDate } from "@/lib/dates";
-import { loadFeedItems } from "@/lib/feed-items";
-import { allOpportunityTypes } from "@/lib/opportunity-types";
+import { formatDate } from "@/lib/dates";
+import type { FeedItem } from "@/components/feed-browser";
 import { getRepository } from "@/lib/repository";
 import { displayTitle } from "@/lib/opportunity-title";
-import type { UserProfile } from "@/core/entities/domain";
-import { choiceLabel } from "@/services/profile/choices";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
+import { mostMatchedOpportunities } from "@/services/matching/most-matched";
 
 /** "Closing soon" covers deadlines within this many days. */
 export const CLOSING_WINDOW_DAYS = 14;
@@ -15,7 +13,7 @@ export const CLOSING_WINDOW_DAYS = 14;
 const CLOSING_ROWS = 2;
 
 export interface ClosingItem { opportunityId: string; title: string; detail: string; daysLeft: number }
-export interface NewTile { type: string; label: string; count: number }
+export interface MostMatchedRow { opportunityId: string; title: string; detail: string; seekers: number }
 
 const daysUntil = (deadline: Date, now: Date): number => Math.ceil((deadline.getTime() - now.getTime()) / 86_400_000);
 const closesOn = (deadline: Date | string): string => formatDate(deadline, { day: "numeric", month: "short" });
@@ -41,8 +39,8 @@ export async function loadSavedClosing(userId: string, now = new Date()): Promis
 }
 
 /** With nothing saved closing soon: the seeker's own matches with the nearest deadlines. Runs matching. */
-export async function loadMatchClosing(userId: string, profile: UserProfile, now = new Date()): Promise<ClosingItem[]> {
-  const items = await loadFeedItems(userId, profile, now);
+/** The seeker's matches closing first, from feed items already loaded. */
+export function matchClosing(items: FeedItem[]): ClosingItem[] {
   return items
     .filter((item) => item.deadline && item.daysLeft !== null && item.daysLeft > 0 && item.daysLeft <= CLOSING_WINDOW_DAYS)
     .sort((a, b) => a.daysLeft! - b.daysLeft!)
@@ -50,22 +48,32 @@ export async function loadMatchClosing(userId: string, profile: UserProfile, now
     .map((item) => ({ opportunityId: item.opportunityId, title: item.title, detail: `${item.score}% match · closes ${closesOn(item.deadline!)}`, daysLeft: item.daysLeft! }));
 }
 
-/** The calendar day of a moment in Uganda time, as YYYY-MM-DD. */
-const ugandaDay = (moment: Date): string => new Intl.DateTimeFormat("en-CA", { timeZone: APP_TIME_ZONE, year: "numeric", month: "2-digit", day: "2-digit" }).format(moment);
+/** How many listings the "Most matched this week" section shows. */
+export const MOST_MATCHED_ROWS = 5;
+/** Scoring every seeker is heavy, so the result is reused for this long. */
+const MOST_MATCHED_TTL_MS = 6 * 60 * 60 * 1000;
+let mostMatchedCache: { at: number; value: Promise<MostMatchedRow[]> } | null = null;
 
 /**
- * Open listings that went live on OppScout today (Uganda time), counted by type: the day they were approved,
- * not the day the source posted them, so a listing seeded today counts even if it was posted last week.
- * Types with nothing new today are left out.
+ * The opportunities matched to the most people across OppScout: the same list for everyone, refreshed every
+ * few hours. Shows counts only, never who matched.
  */
-export async function loadNewToday(now = new Date()): Promise<NewTile[]> {
-  const repository = await getRepository();
-  const open = await repository.listOpportunities({ statuses: ["open", "closing_soon"] });
-  const today = ugandaDay(now);
-  const counts = new Map<string, number>();
-  for (const item of open) {
-    if (!isUserVisibleOpportunity(item, now) || ugandaDay(item.reviewedAt ?? item.publicationDate) !== today) continue;
-    counts.set(item.category, (counts.get(item.category) ?? 0) + 1);
-  }
-  return allOpportunityTypes([...counts.keys()]).map((type) => ({ type, label: choiceLabel(type), count: counts.get(type) ?? 0 }));
+export async function loadMostMatched(now = new Date()): Promise<MostMatchedRow[]> {
+  if (mostMatchedCache && now.getTime() - mostMatchedCache.at < MOST_MATCHED_TTL_MS) return mostMatchedCache.value;
+  const value = (async () => {
+    const ranked = await mostMatchedOpportunities(await getRepository(), now, MOST_MATCHED_ROWS);
+    return ranked.map(({ opportunity, seekers }) => {
+      const organization = opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization";
+      return {
+        opportunityId: opportunity.id,
+        title: displayTitle(opportunity.title, organization),
+        detail: [organization, opportunity.deadline ? `closes ${closesOn(opportunity.deadline)}` : "open until filled"].join(" · "),
+        seekers,
+      };
+    });
+  })();
+  mostMatchedCache = { at: now.getTime(), value };
+  // A failed run must not be served from the cache.
+  value.catch(() => { if (mostMatchedCache?.value === value) mostMatchedCache = null; });
+  return value;
 }
