@@ -1,14 +1,13 @@
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { DimensionScore } from "@/services/matching/rule-based/field-relevance";
-import { includesNormalized, normalize } from "@/services/matching/rule-based/normalize";
+import { placeOf } from "@/data/uganda-locations";
+import { locationSimilarity } from "@/services/matching/orbit/canonical";
 
 export function scoreLocation(profile: UserProfile, opportunity: Opportunity): DimensionScore {
-  const remote = opportunity.workMode === "remote" || normalize(opportunity.location) === "remote";
+  const remote = opportunity.workMode === "remote" || placeOf(opportunity.location)?.kind === "remote";
   const preferences = [profile.location ?? "", ...profile.preferredLocations].filter(Boolean);
-  const matches =
-    remote ||
-    includesNormalized(preferences, opportunity.location) ||
-    normalize(opportunity.location) === "uganda";
+  // Same district (however it is written), anywhere in Uganda, or a district next door counts as a fit.
+  const matches = remote || preferences.some((place) => locationSimilarity(place, opportunity.location) >= 0.85);
   return matches
     ? {
         ratio: 1,

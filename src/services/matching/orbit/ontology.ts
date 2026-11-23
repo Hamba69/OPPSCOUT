@@ -141,13 +141,5 @@ export const SKILL_TO_FIELD: Record<string, string> = {
   hospitality: "hospitality and tourism", "graphic design": "arts and design", "photography and video": "arts and design",
 };
 
-// Location hierarchy: child -> parent. Siblings inherit partial credit through a shared parent.
-export const LOCATION_PARENT: Record<string, string> = {
-  kampala: "central", wakiso: "central", mukono: "central", entebbe: "central", matugga: "central", masaka: "central",
-  jinja: "eastern", mbale: "eastern", tororo: "eastern", busia: "eastern", iganga: "eastern", soroti: "eastern",
-  gulu: "northern", lira: "northern", arua: "northern", kitgum: "northern",
-  mbarara: "western", "fort portal": "western", kabale: "western", kasese: "western", hoima: "western",
-  central: "uganda", eastern: "uganda", northern: "uganda", western: "uganda",
-};
 // Short-hop travel pairs treated as one commuting zone.
 export const COMMUTE_ZONES: string[][] = [["kampala", "wakiso", "mukono", "entebbe", "matugga"], ["jinja", "iganga"]];

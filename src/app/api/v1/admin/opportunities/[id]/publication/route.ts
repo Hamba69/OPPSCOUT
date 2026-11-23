@@ -5,6 +5,7 @@ import { apiHandler, success } from "@/lib/api";
 import { getRepository } from "@/lib/repository";
 import { parseJson } from "@/lib/validation";
 import { readmitOpportunity, withdrawOpportunity } from "@/services/trust/publication";
+import { notifyPoster } from "@/services/notifications/poster-updates";
 
 type Context = { params: Promise<{ id: string }> };
 
@@ -24,6 +25,7 @@ export async function POST(request: Request, context: Context): Promise<Response
     const updated = input.action === "withdraw"
       ? await withdrawOpportunity(repository, id, "admin-portal", input.reason)
       : await readmitOpportunity(repository, id, "admin-portal", input.note);
-    return success({ id: updated.id, verificationStatus: updated.verificationStatus, status: updated.status });
+    const notice = await notifyPoster(repository, updated, input.action === "withdraw" ? "withdrawn" : "readmitted", input.action === "withdraw" ? input.reason : input.note);
+    return success({ id: updated.id, verificationStatus: updated.verificationStatus, status: updated.status, posterEmailed: notice.emailed });
   });
 }

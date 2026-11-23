@@ -35,7 +35,7 @@ export function PublicationActions({ id, title, mode }: { id: string; title: str
   }
   return <div className="flex min-w-[220px] flex-col gap-2">
     <label className="text-xs font-semibold text-navy">
-      {withdraw ? "Why are you withdrawing it?" : "Note (optional)"}
+      {withdraw ? "Why are you withdrawing it? (sent to the poster)" : "Note (optional, sent to the poster)"}
       <input className="field mt-1 !min-h-10 !text-[13px]" value={text} maxLength={500} onChange={(event) => setText(event.target.value)} placeholder={withdraw ? "e.g. Position filled early" : "e.g. Deadline extended to 30 Jan"} />
     </label>
     {!withdraw && <label className="flex items-start gap-2 text-xs font-medium text-ink">

@@ -65,7 +65,8 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
     if (approved && !requirementsChecked) { setMessage("Tick the confirmation box before approving."); return; }
     const checklist = Object.fromEntries(checks.map((name) => [name, approved && requirementsChecked]));
     const response = await fetch(`/api/v1/reports/review/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checklist, approved, notes: String(data.get("notes") ?? "") }) });
-    setMessage(response.ok ? (approved ? "Approved. It is now live for matching." : "Flagged and removed from the queue.") : "Review could not be saved. Approval requires a future closing date (or a rolling listing), a safe application link and every check.");
+    const emailed = response.ok ? Boolean((await response.json().catch(() => null) as { data?: { posterEmailed?: boolean } } | null)?.data?.posterEmailed) : false;
+    setMessage(response.ok ? `${approved ? "Approved. It is now live for matching." : "Flagged and removed from the queue."}${submitterContact ? (emailed ? " The poster has been emailed." : " The poster could not be emailed; contact them directly.") : ""}` : "Review could not be saved. Approval requires a future closing date (or a rolling listing), a safe application link and every check.");
     if (response.ok) {
       setDone(true);
       router.refresh();
@@ -94,7 +95,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
           <div className="space-y-3 border-t border-ink/10 py-3">
             <p className="text-sm leading-6 text-navy">{description}</p>
             {applicationMethod && <p className="text-sm leading-6 text-navy"><strong className="text-ink">How to apply:</strong> {applicationMethod}</p>}
-            <label><span className="label">Review note (optional)</span><textarea name="notes" className="field min-h-20" /></label>
+            <label><span className="label">Review note (optional)</span><textarea name="notes" className="field min-h-20" />{submitterContact && <span className="mt-1 block text-xs text-navy">For member posts this note is included in the email telling the poster your decision.</span>}</label>
           </div>
         </details>
         <label className="flex items-start gap-3 rounded-xl glass-notice p-3 text-sm font-medium text-ink">

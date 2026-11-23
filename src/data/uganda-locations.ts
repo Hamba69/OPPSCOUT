@@ -46,3 +46,34 @@ export function canonicalPreferredLocation(value: string | null | undefined): st
   if (value?.trim().toLowerCase() === ANYWHERE_IN_UGANDA.toLowerCase()) return ANYWHERE_IN_UGANDA;
   return canonicalUgandaLocation(value);
 }
+
+/** District names as whole words, longest first, so "Fort Portal" wins over shorter names inside it. */
+const DISTRICT_PATTERNS = [...BY_KEY.entries()]
+  .sort((a, b) => b[0].length - a[0].length)
+  .map(([alias, place]) => ({ place, pattern: new RegExp(`(^|[^a-z])${alias.replace(/ /g, "[^a-z]+")}($|[^a-z])`) }));
+
+export type Place = { kind: "district"; name: string } | { kind: "uganda" } | { kind: "remote" } | { kind: "other"; key: string };
+
+/**
+ * What a free-text location means, for matching. Listings write places many ways ("Masindi District,
+ * Uganda", "Kampala, Uganda (Hybrid)", "Head Office, Kampala"); profiles hold a district name. The first
+ * Ugandan district named wins; text that names only Uganda means anywhere in the country.
+ */
+export function placeOf(text: string | null | undefined): Place | null {
+  const value = text?.trim();
+  if (!value) return null;
+  const direct = canonicalUgandaLocation(value);
+  if (direct) return { kind: "district", name: direct };
+  const lower = value.toLowerCase();
+  let first: { name: string; at: number } | null = null;
+  for (const { place, pattern } of DISTRICT_PATTERNS) {
+    const found = pattern.exec(lower);
+    if (found && (!first || found.index < first.at)) first = { name: place, at: found.index };
+  }
+  if (first) return { kind: "district", name: first.name };
+  if (/\buganda\b/.test(lower)) return { kind: "uganda" };
+  // Areas that include Uganda: open to applicants here wherever they live in the country.
+  if (/\b(east africa|sub-?saharan africa|africa(-wide)?|global|worldwide|international|anywhere)\b/.test(lower) && !/\b(remote|online|virtual)\b/.test(lower)) return { kind: "uganda" };
+  if (/\b(remote|online|virtual)\b/.test(lower)) return { kind: "remote" };
+  return { kind: "other", key: lower.replace(/[^a-z0-9]+/g, " ").trim() };
+}

@@ -1,5 +1,6 @@
 import { observeUnmatched } from "@/services/matching/telemetry";
-import { COMMUTE_ZONES, FIELD_CONCEPTS, FIELD_RELATIONS, LOCATION_PARENT, SKILL_CONCEPTS, SKILL_RELATIONS, type Concept } from "@/services/matching/orbit/ontology";
+import { COMMUTE_ZONES, FIELD_CONCEPTS, FIELD_RELATIONS, SKILL_CONCEPTS, SKILL_RELATIONS, type Concept } from "@/services/matching/orbit/ontology";
+import { placeOf, ugandaRegion } from "@/data/uganda-locations";
 
 const STOP = new Set(["and", "of", "the", "in", "for", "with", "to", "a", "an", "on", "at", "or", "skill", "ability", "basic", "strong", "good", "knowledge", "experience"]);
 
@@ -93,14 +94,23 @@ export class ConceptIndex {
 export const SKILL_INDEX = new ConceptIndex(SKILL_CONCEPTS, SKILL_RELATIONS);
 export const FIELD_INDEX = new ConceptIndex(FIELD_CONCEPTS, FIELD_RELATIONS, "field");
 
-// Location symmetry: same place 1, same commuting zone 0.85, same region 0.5, anything else 0.
+// Location symmetry: same district 1, anywhere in Uganda 1, same commuting zone 0.85, same region 0.5,
+// anything else 0. Both sides are read with placeOf, so "Gulu" matches "Gulu District, Uganda".
 export function locationSimilarity(a: string, b: string): number {
-  const x = canonicalPhrase(a), y = canonicalPhrase(b);
-  for (const [raw,key] of [[a,x],[b,y]]) if (key && key !== "uganda" && key !== "remote" && !LOCATION_PARENT[key] && !COMMUTE_ZONES.some(zone => zone.includes(key))) observeUnmatched("location",raw);
+  const x = placeOf(a), y = placeOf(b);
   if (!x || !y) return 0;
-  if (x === y || y === "uganda" || x === "uganda") return 1;
-  if (COMMUTE_ZONES.some((zone) => zone.includes(x) && zone.includes(y))) return 0.85;
-  const px = LOCATION_PARENT[x] ?? x, py = LOCATION_PARENT[y] ?? y;
-  if (px === py && px !== "uganda") return 0.5;
-  return 0;
+  for (const [raw, place] of [[a, x], [b, y]] as const) if (place.kind === "other") observeUnmatched("location", raw);
+  if (x.kind === "remote" || y.kind === "remote") return x.kind === y.kind ? 1 : 0;
+  if (x.kind === "other" || y.kind === "other") return x.kind === "other" && y.kind === "other" && x.key === y.key ? 1 : 0;
+  if (x.kind === "uganda" || y.kind === "uganda") return 1;
+  if (x.name === y.name) return 1;
+  const nx = x.name.toLowerCase(), ny = y.name.toLowerCase();
+  if (COMMUTE_ZONES.some((zone) => zone.includes(nx) && zone.includes(ny))) return 0.85;
+  const rx = ugandaRegion(x.name), ry = ugandaRegion(y.name);
+  return rx && rx === ry ? 0.5 : 0;
+}
+
+/** True when a listing's location only says "Uganda": open across the country. */
+export function isNationwide(location: string): boolean {
+  return placeOf(location)?.kind === "uganda";
 }

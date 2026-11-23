@@ -2,7 +2,8 @@ import { observeUnmatched } from "@/services/matching/telemetry";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import type { MatchEngine, MatchFactor, MatchResult } from "@/core/interfaces/match-engine";
 import { orbitWeightsFor, type OrbitMatchingWeights } from "@/config/matching-weights";
-import { canonicalPhrase, contentTokens, dice, FIELD_INDEX, locationSimilarity, SKILL_INDEX, trigrams } from "@/services/matching/orbit/canonical";
+import { canonicalPhrase, contentTokens, dice, FIELD_INDEX, isNationwide, locationSimilarity, SKILL_INDEX, trigrams } from "@/services/matching/orbit/canonical";
+import { placeOf } from "@/data/uganda-locations";
 import { choiceLabel } from "@/services/profile/choices";
 import { educationLabel, educationRank, inferEducation, inferExperience, inferFields, inferSkills } from "@/services/matching/orbit/infer";
 
@@ -179,14 +180,14 @@ export class OrbitMatchEngine implements MatchEngine {
 
   private location(profile: UserProfile, opp: Opportunity): Dim {
     const prefs = [profile.location ?? "", ...profile.preferredLocations].filter(Boolean);
-    const remote = opp.workMode === "remote" || canonicalPhrase(opp.location) === "remote";
+    const remote = opp.workMode === "remote" || placeOf(opp.location)?.kind === "remote";
     if (remote) return { ratio: 1, evidence: 1, matched: [{ label: "Location", detail: "This can be done remotely." }], missing: [] };
     if (!prefs.length) return NONE([{ label: "Location", detail: "Add your location to sharpen this match." }]);
     // A listing that only says "Uganda" tells us little about the commute.
-    const nationwide = canonicalPhrase(opp.location) === "uganda";
+    const nationwide = isNationwide(opp.location);
     let best = 0;
     for (const p of prefs) {
-      const s = this.o.soft ? locationSimilarity(p, opp.location) : (canonicalPhrase(p) === canonicalPhrase(opp.location) || nationwide ? 1 : 0);
+      const s = this.o.soft ? locationSimilarity(p, opp.location) : (locationSimilarity(p, opp.location) === 1 ? 1 : 0);
       best = Math.max(best, s);
     }
     const evidence = nationwide ? 0.3 : 1;
