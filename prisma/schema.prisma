@@ -38,6 +38,7 @@ enum OpportunitySource {
 enum OpportunityOrigin {
   catalog
   organization
+  community
 }
 
 enum DeadlineType {
@@ -202,6 +203,10 @@ model Opportunity {
   reviewNotes        String?
   reviewerId         String?
   reviewedAt         DateTime?
+  /// The signed-in member who posted it (member posts only). Not shown to seekers.
+  submittedBy        String?            @db.Uuid
+  /// How a reviewer reaches the poster: { name, email, phone, relationship }. Not shown to seekers.
+  submitterContact   Json?
   organization       Organization?      @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   matches            MatchResult[]
   savedBy            SavedOpportunity[]
@@ -209,6 +214,7 @@ model Opportunity {
 
   @@index([verificationStatus, status, deadline])
   @@index([organizationId, title, deadline])
+  @@index([submittedBy])
 }
 
 model MatchResult {

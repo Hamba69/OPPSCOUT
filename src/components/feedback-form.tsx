@@ -3,9 +3,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { deviceClass } from "@/lib/route-template";
 
-export function FeedbackForm():React.JSX.Element {
-  const [state,setState]=useState<"loading"|"ready"|"sent"|"already"|"unavailable">("loading"),[message,setMessage]=useState(""),[contact,setContact]=useState(false),[rating,setRating]=useState(0),[error,setError]=useState(""),[busy,setBusy]=useState(false);
-  useEffect(()=>{let active=true;void fetch("/api/v1/feedback",{cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error();const data=await response.json();if(active)setState(data.submitted?"already":"ready");}).catch(()=>{if(active)setState("unavailable");});return()=>{active=false;};},[]);
+/**
+ * `initialState` comes from the server-rendered page, so the form shows immediately. Without it (or if the
+ * server check failed) the form asks the API whether this visitor has already sent feedback.
+ */
+export function FeedbackForm({initialState}:{initialState?:"ready"|"already"}={}):React.JSX.Element {
+  const [state,setState]=useState<"loading"|"ready"|"sent"|"already"|"unavailable">(initialState??"loading"),[message,setMessage]=useState(""),[contact,setContact]=useState(false),[rating,setRating]=useState(0),[error,setError]=useState(""),[busy,setBusy]=useState(false);
+  useEffect(()=>{if(initialState)return;let active=true;void fetch("/api/v1/feedback",{cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error();const data=await response.json();if(active)setState(data.submitted?"already":"ready");}).catch(()=>{if(active)setState("unavailable");});return()=>{active=false;};},[initialState]);
   async function submit(event:React.FormEvent<HTMLFormElement>){event.preventDefault();setError("");if(!rating){setError("Choose a satisfaction rating.");return;}setBusy(true);const data=new FormData(event.currentTarget);try{const response=await fetch("/api/v1/feedback",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({category:data.get("category"),rating,message,contact,contactEmail:contact?String(data.get("contactEmail")??""):"",website:data.get("website"),deviceClass:deviceClass(innerWidth,navigator.userAgent)})});if(response.ok){setState("sent");return;}if(response.status===409){setState("already");return;}const body=await response.json().catch(()=>null) as {error?:{message?:string}}|null;setError(response.status===429?"Please try again later. This network has reached its feedback limit.":body?.error?.message??"We could not save your feedback. Your message is still here; please try again.");}catch{setError("We could not save your feedback. Please try again.");}finally{setBusy(false);}}
   if(state==="loading") return <p className="card" role="status">Loading feedback form…</p>;
   if(state==="unavailable") return <p className="card" role="alert">Feedback is unavailable right now. Please reload and try again later.</p>;

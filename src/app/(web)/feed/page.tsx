@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
@@ -9,6 +10,8 @@ import { getUserProfile } from "@/lib/profile-store";
 import type { UserProfile } from "@/core/entities/domain";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
 import { profileNudge } from "@/services/profile/nudge";
+
+export const metadata: Metadata = { title: "Home" };
 
 export const dynamic = "force-dynamic";
 

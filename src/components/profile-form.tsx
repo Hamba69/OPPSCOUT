@@ -2,12 +2,12 @@
 
 import { Icon } from "@/components/custom-icon";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { ProfileMultiChoice, ProfileSelect } from "@/components/profile-choice";
-import { calculateProfileCompleteness, getIncompleteProfileFields } from "@/services/profile/completeness";
+import { dateOfBirthProblem } from "@/lib/date-of-birth";
+import { calculateProfileCompleteness, getMissingCoreFields, getMissingOptionalFields } from "@/services/profile/completeness";
 import type { ProfileChoice, ProfileChoices } from "@/services/profile/choices";
 
 export interface ExperienceItem { title: string; organization: string; months: number }
@@ -29,7 +29,7 @@ type State = Omit<ProfileFormInitial, "githubUrl" | "portfolioUrl" | "otherLinks
   githubUrl: string; portfolioUrl: string; otherLinks: ProfileLinkItem[]; projects: ProjectItem[];
   shareWithOrganizations: boolean; shareContactDetails: boolean;
 };
-type Errors = Partial<Record<"name" | "email" | "phone" | "dateOfBirth", string>>;
+type Errors = Partial<Record<"name" | "email" | "phone" | "dateOfBirth" | "location", string>>;
 
 const EDUCATION_ORDER = ["no formal education", "secondary", "certificate", "diploma", "bachelors", "masters", "phd"];
 const GRADUATION: ProfileChoice[] = [
@@ -106,7 +106,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [dirty, setDirty] = useState(false);
   useEffect(() => {
-    if (status !== "saved" && status !== "error") return;
+    if (status !== "error") return;
     const timeout = window.setTimeout(() => setStatus("idle"), 10000);
     return () => window.clearTimeout(timeout);
   }, [status]);
@@ -123,13 +123,12 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
   function set<K extends keyof State>(key: K, value: State[K]): void { setState((current) => ({ ...current, [key]: value })); setDirty(true); setStatus("idle"); }
 
   const done = {
-    personal: Boolean(state.name.trim() && state.phone.trim() && state.location),
+    personal: Boolean(state.name.trim() && state.phone.trim() && state.dateOfBirth && state.location),
     education: Boolean(state.educationLevel && state.fieldOfStudy && state.graduationStatus),
     skills: state.skills.length > 0 && state.languages.length > 0,
     experience: state.workExperience.length + state.internshipExperience.length > 0,
     preferences: state.opportunityCategories.length > 0 && state.preferredLocations.length > 0,
     work: Boolean(state.githubUrl || state.portfolioUrl || state.otherLinks.length || state.projects.length),
-    visibility: state.shareWithOrganizations,
   };
   const completenessProfile = {
     ...state,
@@ -137,19 +136,18 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
     workModePreference: state.workModePreference || null,
   };
   const completeness = calculateProfileCompleteness(completenessProfile);
-  const incompleteFields = getIncompleteProfileFields(completenessProfile);
-  const remainingLabel = incompleteFields.length ? `Fields remaining: ${incompleteFields.join(", ")}` : "All profile fields are complete.";
-  const birthDate = state.dateOfBirth ? new Date(`${state.dateOfBirth}T00:00:00Z`) : null;
-  const now = new Date();
-  const adult = Boolean(birthDate && (now.getUTCFullYear() - birthDate.getUTCFullYear() - (
-    now.getUTCMonth() < birthDate.getUTCMonth() || (now.getUTCMonth() === birthDate.getUTCMonth() && now.getUTCDate() < birthDate.getUTCDate()) ? 1 : 0)) >= 18);
+  const incompleteFields = getMissingCoreFields(completenessProfile);
+  const optionalFields = getMissingOptionalFields(completenessProfile);
+  const remainingLabel = `${incompleteFields.length ? `Fields remaining: ${incompleteFields.join(", ")}.` : "All profile fields are complete."}${optionalFields.length ? ` Optional extras: ${optionalFields.join(", ")}.` : ""}`;
 
   function validate(): Errors {
     const next: Errors = {};
     if (state.name.trim().length < 2) next.name = "Enter your full name.";
     if (state.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) next.email = "Enter a valid email address.";
     if (state.phone && !/^\+?[0-9\s-]{7,16}$/.test(state.phone.trim())) next.phone = "Enter a valid phone number, for example +256 700 000000.";
-    if (state.dateOfBirth && state.dateOfBirth > today) next.dateOfBirth = "Date of birth cannot be in the future.";
+    const birthProblem = dateOfBirthProblem(state.dateOfBirth);
+    if (birthProblem) next.dateOfBirth = birthProblem;
+    if (!state.location) next.location = "Choose the district in Uganda where you live.";
     return next;
   }
 
@@ -157,7 +155,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
     event.preventDefault();
     const found = validate();
     setErrors(found);
-    if (Object.keys(found).length) { setStatus("error"); document.getElementById("personal")?.scrollIntoView({ behavior: "smooth" }); return; }
+    if (Object.keys(found).length) { setStatus("error"); document.getElementById("personal")?.scrollIntoView?.({ behavior: "smooth" }); return; }
     setStatus("saving");
     const experience = (items: ExperienceItem[]): { title: string; organization?: string; months: number }[] => items.filter((item) => item.title.trim())
       .map((item) => ({ title: item.title.trim(), ...(item.organization.trim() ? { organization: item.organization.trim() } : {}), months: item.months }));
@@ -171,14 +169,15 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
       githubUrl: state.githubUrl.trim() || null, portfolioUrl: state.portfolioUrl.trim() || null,
       otherLinks: state.otherLinks.filter((item) => item.label.trim() && item.url.trim()),
       projects: state.projects.filter((item) => item.title.trim()).map((item) => ({ ...item, url: item.url.trim() || undefined, role: item.role.trim() || undefined })),
-      shareWithOrganizations: adult && state.shareWithOrganizations, shareContactDetails: adult && state.shareContactDetails,
+      // Sharing profiles with organisations is retired; saving turns off any earlier opt-in.
+      shareWithOrganizations: false, shareContactDetails: false,
     };
     try {
       const response = await fetch("/api/v1/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!response.ok) { setStatus("error"); return; }
+      // Every successful save, first-time or edit, goes straight to the matches, refreshed for the new profile.
       setDirty(false); setStatus("saved");
-      if (isNew) { router.push(nextPath); router.refresh(); return; }
-      router.refresh();
+      router.push(nextPath); router.refresh();
     } catch { setStatus("error"); }
   }
 
@@ -189,21 +188,25 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
         <div aria-hidden="true" role="tooltip" className="pointer-events-none absolute left-0 top-full z-20 hidden max-h-64 w-72 max-w-[calc(100vw-2rem)] overflow-y-auto rounded-xl border border-white/80 bg-white/90 p-3 backdrop-blur-xl text-xs text-navy shadow-soft group-hover:block group-focus-within:block">
           <strong className="text-ink">{incompleteFields.length ? "Fields remaining" : "Profile complete"}</strong>
           {incompleteFields.length > 0 && <ul className="mt-1 list-inside list-disc">{incompleteFields.map((field) => <li key={field}>{field}</li>)}</ul>}
+          {optionalFields.length > 0 && <><strong className="mt-2 block text-ink">Optional extras</strong><p className="mt-0.5">Not counted in the percentage: {optionalFields.join(", ")}.</p></>}
         </div>
       </div>
       <p id="profile-completeness-details" className="sr-only">{remainingLabel}</p>
       <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-ink/10" role="progressbar" aria-valuenow={completeness} aria-valuemin={0} aria-valuemax={100} aria-label="Profile completeness"><div className="h-full rounded-full bg-gradient-to-r from-[#FFE27A] to-[#FFC700]" style={{ width: `${completeness}%` }} /></div>
     </div>
 
-    <form onSubmit={submit} noValidate className="space-y-5">
+    <form onSubmit={submit} noValidate className="space-y-5 [&_input]:scroll-mb-28 [&_select]:scroll-mb-28 [&_textarea]:scroll-mb-28">
       <Section id="personal" title="Personal details" hint="Used to contact you about opportunities. Never shown to other users." done={done.personal}>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Full name" required error={errors.name}><input className="field" value={state.name} autoComplete="name" maxLength={120} required aria-invalid={Boolean(errors.name)} onChange={(event) => set("name", event.target.value)} placeholder="e.g. Amina Nakato" /></Field>
           <Field label="Email address" error={errors.email}><input className="field" type="email" value={state.email} autoComplete="email" aria-invalid={Boolean(errors.email)} onChange={(event) => set("email", event.target.value)} placeholder="name@example.com" /></Field>
           <Field label="Phone number" hint="Include the country code. Used for SMS alerts if you enable them." error={errors.phone}><input className="field" type="tel" value={state.phone} autoComplete="tel" aria-invalid={Boolean(errors.phone)} onChange={(event) => set("phone", event.target.value)} placeholder="+256 700 000000" /></Field>
-          <Field label="Date of birth" hint="Some opportunities have age limits." error={errors.dateOfBirth}><input className="field" type="date" value={state.dateOfBirth} max={today} aria-invalid={Boolean(errors.dateOfBirth)} onChange={(event) => set("dateOfBirth", event.target.value)} /></Field>
+          <Field label="Date of birth" required hint="Some opportunities have age limits." error={errors.dateOfBirth}><input className="field" type="date" value={state.dateOfBirth} max={today} required aria-invalid={Boolean(errors.dateOfBirth)} onChange={(event) => set("dateOfBirth", event.target.value)} /></Field>
         </div>
-        <ProfileSelect name="location" label="Current location" options={choices.location} value={state.location} onChange={(v) => set("location", v)} allowCustom />
+        <div>
+          <ProfileSelect name="location" label="Current location (district in Uganda)" options={choices.location} value={state.location} onChange={(v) => set("location", v)} />
+          {errors.location && <span className="mt-1 block text-xs font-semibold text-[#B3261E]" role="alert">{errors.location}</span>}
+        </div>
       </Section>
 
       <Section id="education" title="Education" hint="Eligibility is checked against these details first." done={done.education}>
@@ -229,7 +232,7 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
       <Section id="preferences" title="Opportunity preferences" hint="Tell us what you are looking for so we can rank it first." done={done.preferences}>
         <ProfileMultiChoice name="opportunityCategories" label="Opportunity types" hint="Choose the types you want to see." options={choices.opportunityCategories} values={state.opportunityCategories} onChange={(v) => set("opportunityCategories", v)} />
         <ProfileMultiChoice name="careerInterests" label="Career interests" hint="Sectors or areas you want to work in." options={choices.careerInterests} values={state.careerInterests} onChange={(v) => set("careerInterests", v)} />
-        <ProfileMultiChoice name="preferredLocations" label="Preferred locations" hint="Where you would be willing to work or study." options={choices.preferredLocations} values={state.preferredLocations} onChange={(v) => set("preferredLocations", v)} />
+        <ProfileMultiChoice name="preferredLocations" label="Preferred locations" hint="Districts in Uganda where you would be willing to work or study, or anywhere in Uganda." options={choices.preferredLocations} values={state.preferredLocations} onChange={(v) => set("preferredLocations", v)} allowCustom={false} />
         <Field label="Work arrangement"><select className="field" value={state.workModePreference} onChange={(event) => set("workModePreference", event.target.value as State["workModePreference"])}>{WORK_MODES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></Field>
       </Section>
 
@@ -248,17 +251,11 @@ export function ProfileForm({ initial, choices, isNew, nextPath }: { initial: Pr
         </div>
       </Section>
 
-      <Section id="visibility" title="Visibility" hint="You control what verified organizations can see." done={done.visibility}>
-        <p className="text-sm text-navy">Let verified organizations that you match with see your profile summary, links and projects. They never see your date of birth, your other matches or your activity. Your contact details and research papers are shared only if you turn them on separately. You can switch this off at any time and it takes effect immediately.</p>
-        {!adult && <p className="text-sm font-semibold text-navy">Add a date of birth showing you are 18 or older to enable organization sharing.</p>}
-        <label className="flex items-start gap-3"><input type="checkbox" className="mt-1 size-5" disabled={!adult} checked={state.shareWithOrganizations} onChange={(event) => set("shareWithOrganizations", event.target.checked)} /><span><span className="font-bold text-ink">Share my profile with matched organizations</span><span className="block text-sm text-navy">Optional and off by default.</span></span></label>
-        <label className="flex items-start gap-3"><input type="checkbox" className="mt-1 size-5" disabled={!adult} checked={state.shareContactDetails} onChange={(event) => set("shareContactDetails", event.target.checked)} /><span><span className="font-bold text-ink">Share my contact details</span><span className="block text-sm text-navy">Only shared when profile sharing is enabled.</span></span></label>
-      </Section>
 
-      <div className="sticky bottom-24 z-10 flex flex-wrap items-center gap-3 rounded-3xl glass-strong p-3 shadow-soft md:bottom-4">
-        <button className="button" disabled={status === "saving"}>{status === "saving" ? "Saving…" : isNew ? "Save and see my matches" : "Save changes"}</button>
+      {/* Sits at the bottom edge (there is no bottom navigation), and fields keep clear of it when focused. */}
+      <div className="sticky bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-10 flex flex-wrap items-center gap-3 rounded-3xl glass-strong p-3 shadow-soft md:bottom-4">
+        <button className="button" disabled={status === "saving" || status === "saved"}>{status === "saving" || status === "saved" ? "Saving…" : isNew ? "Save and see my matches" : "Save changes"}</button>
         <p className="min-w-0 flex-1 text-sm" role="status" aria-live="polite">
-          {status === "saved" && <span className="font-medium text-[#6B4E00]">Profile saved. <Link href="/feed" className="underline">View my matches</Link></span>}
           {status === "error" && <span className="font-medium text-[#6B4E00]">{Object.keys(errors).length ? "Please correct the highlighted fields." : "We could not save your profile. Please try again."}</span>}
           {status === "idle" && dirty && <span className="text-navy">You have unsaved changes.</span>}
         </p>

@@ -21,13 +21,13 @@ function isActive(pathname: string, link: SideLink): boolean {
 export function AppSidebar({ id, label, home, badge, groups, signOut = true, phone = "strip", footer, mobileOpen = false, onMobileClose }: {
   id?: string;
   label: string; home: string; badge?: { text: string; dark?: boolean }; groups: SideGroup[];
-  signOut?: boolean; phone?: "strip" | "hidden" | "drawer"; footer?: React.ReactNode;
+  signOut?: boolean; phone?: "strip" | "wrap" | "hidden" | "drawer"; footer?: React.ReactNode;
   mobileOpen?: boolean; onMobileClose?: () => void;
 }): React.JSX.Element {
   const pathname = usePathname();
   return <aside
     id={id}
-    className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : phone === "drawer" ? `seeker-sidebar-drawer ${mobileOpen ? "is-open" : ""}` : "app-sidebar-scroll"}`}
+    className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : phone === "drawer" ? `seeker-sidebar-drawer ${mobileOpen ? "is-open" : ""}` : phone === "wrap" ? "app-sidebar-scroll app-sidebar-wrap" : "app-sidebar-scroll"}`}
     role={phone === "drawer" && mobileOpen ? "dialog" : undefined}
     aria-modal={phone === "drawer" && mobileOpen ? true : undefined}
     aria-label={phone === "drawer" && mobileOpen ? label : undefined}
@@ -59,13 +59,17 @@ export function AppFrame({ sidebar, children }: { sidebar: React.ReactNode; chil
   </div>;
 }
 
-export const SEEKER_PATHS = ["/feed", "/saved", "/opportunities", "/opportunity", "/profile", "/settings", "/feedback"];
+export const SEEKER_PATHS = ["/feed", "/saved", "/opportunities", "/opportunity", "/profile", "/settings", "/feedback", "/post", "/my-postings"];
 
 const seekerGroups: SideGroup[] = [
   { title: "DISCOVER", links: [
     { label: "Matches", href: "/feed", icon: "matches", match: ["/opportunity"] },
     { label: "Saved", href: "/saved", icon: "saved" },
     { label: "Opportunities", href: "/opportunities", icon: "opportunities" },
+  ] },
+  { title: "SHARE", links: [
+    { label: "Post an opportunity", href: "/post", icon: "plus" },
+    { label: "My postings", href: "/my-postings", icon: "edit" },
   ] },
   { title: "ACCOUNT", links: [
     { label: "My profile", href: "/profile", icon: "profile", match: ["/settings"] },

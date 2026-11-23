@@ -11,12 +11,23 @@ describe("profile choice vocabulary", () => {
     expect(options.educationLevel).toContainEqual({ value: "Bachelor of Science", label: "Bachelor Of Science" });
     expect(options.graduationStatus.map((option) => option.value)).toContain("completed semester 6");
     expect(options.languages.map((option) => option.value)).toContain("Kiswahili");
-    expect(options.location.map((option) => option.value)).toContain("Kira Municipality");
+    // Locations are Ugandan districts only; listing locations are never offered as choices.
+    expect(options.location.map((option) => option.value)).not.toContain("Kira Municipality");
+    expect(options.location.map((option) => option.value)).toContain("Wakiso");
     expect(options.skills.map((option) => option.value)).toContain("geospatial analysis");
     expect(options.fieldOfStudy.map((option) => option.value)).toContain("geoinformatics");
     expect(options.opportunityCategories.map((option) => option.value)).toContain("research placement");
     const profile = (await new MemoryRepository().getProfile(DEMO_USER_ID))!;
     expect(evaluateHardGates({ ...profile, educationLevel: "Bachelor of Science", graduationStatus: "completed semester 6", languages: ["Kiswahili"], location: "Kira Municipality" }, opportunity).eligible).toBe(true);
+  });
+
+  it("a location rule naming Uganda, or a district in any spelling, is met by a seeker's district", async () => {
+    const base = getDemoCatalog().opportunities[0]!;
+    const profile = (await new MemoryRepository().getProfile(DEMO_USER_ID))!;
+    const rule = (allowedValues: string[]) => ({ ...base, eligibility: { programmeRules: [{ field: "location" as const, allowedValues, label: "Location" }] } });
+    expect(evaluateHardGates({ ...profile, location: "Gulu" }, rule(["Uganda"])).eligible).toBe(true);
+    expect(evaluateHardGates({ ...profile, location: "Kampala" }, rule(["Kampala, Uganda"])).eligible).toBe(true);
+    expect(evaluateHardGates({ ...profile, location: "Gulu" }, rule(["Kampala"])).eligible).toBe(false);
   });
 
   it("keeps engine choices available when the catalog is empty", () => {

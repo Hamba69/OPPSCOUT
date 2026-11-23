@@ -3,6 +3,7 @@ import type { Organization, Opportunity } from "@/core/entities/domain";
 import Link from "next/link";
 import { AdminHeader, ChipLinks } from "@/components/admin-header";
 import { OrganizationReviewCard } from "@/components/organization-review-card";
+import { PublicationActions } from "@/components/publication-actions";
 import { ReviewCard } from "@/components/review-card";
 import { requireAdminPortal } from "@/lib/admin-portal";
 import { getRepository } from "@/lib/repository";
@@ -10,11 +11,12 @@ import { createServiceRoleClient } from "@/lib/supabase/admin";
 import { choiceLabel } from "@/services/profile/choices";
 import { formatDate } from "@/lib/dates";
 import { isPublisherOrganization } from "@/services/admin/catalogue-summary";
+import { canReadmit, canWithdraw } from "@/services/trust/publication";
 
 export const dynamic = "force-dynamic";
 
-type Flag = "new" | "link";
-const FLAG_LABEL: Record<Flag, string> = { new: "New submission", link: "Link mismatch" };
+type Flag = "new" | "link" | "member";
+const FLAG_LABEL: Record<Flag, string> = { new: "New submission", link: "Link mismatch", member: "Member post" };
 
 const hostOf = (value: string | null | undefined): string | null => {
   if (!value) return null;
@@ -23,6 +25,8 @@ const hostOf = (value: string | null | undefined): string | null => {
 
 /** A link mismatch is an apply link outside the organization's official website or email domain. */
 function flagFor(item: Opportunity, organization: Organization | null): Flag {
+  // Member posts have no organisation account to compare against; the reviewer checks with the poster.
+  if (item.origin === "community") return "member";
   const source = hostOf(item.sourceUrl);
   const official = [...(organization?.officialLinks ?? []).map(hostOf), organization?.officialEmail?.split("@")[1]?.toLowerCase() ?? null].filter((host): host is string => Boolean(host));
   if (source && official.length && !official.some((host) => source === host || source.endsWith(`.${host}`))) return "link";
@@ -32,13 +36,15 @@ function flagFor(item: Opportunity, organization: Organization | null): Flag {
 const day = (value: Date | string | null | undefined): string => value ? formatDate(value, { day: "numeric", month: "short" }) : "—";
 
 function FlagPill({ flag }: { flag: Flag }): React.JSX.Element {
-  const tone = flag === "new" ? "text-[#6B4E00] bg-[#FFF3C4]" : "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]";
+  const tone = flag === "link" ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : flag === "member" ? "text-[#145347] bg-[rgba(20,83,71,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]";
   return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ${tone}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{FLAG_LABEL[flag]}</span>;
 }
 
 function StatusPill({ status }: { status: string }): React.JSX.Element {
-  const flagged = status === "flagged";
-  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold capitalize ${flagged ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]"}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{flagged ? "Flagged" : status}</span>;
+  const flagged = status === "flagged" || status === "removed";
+  const live = status === "open" || status === "closing soon";
+  const tone = flagged ? "text-[#9B1C1C] bg-[rgba(220,38,38,.08)]" : live ? "text-[#145347] bg-[rgba(20,83,71,.08)]" : "text-[#6B4E00] bg-[#FFF3C4]";
+  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold capitalize ${tone}`}><span className="size-1.5 rounded-full bg-current" aria-hidden="true" />{status === "flagged" ? "Flagged" : status}</span>;
 }
 
 const th = "px-4 pb-3 text-left text-xs font-bold uppercase tracking-[.06em] text-[#5B6A80]";
@@ -48,23 +54,30 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
   await requireAdminPortal();
   const repository = await getRepository();
   const raw = await searchParams;
-  const tab = raw.tab === "organizations" ? "organizations" : "opportunities";
-  const flagFilter = (["new", "link"] as const).find((value) => value === raw.flag) ?? "all";
+  const tab = (["organizations", "verified", "flagged"] as const).find((value) => value === raw.tab) ?? "opportunities";
+  const flagFilter = (["new", "link", "member"] as const).find((value) => value === raw.flag) ?? "all";
   const page = Math.max(1, Number(raw.page ?? 1) || 1);
   const reviewing = raw.review ?? null;
 
   // Flagged records have already been decided and are not part of the active review queue.
   const search = (raw.search ?? "").trim();
-  const query = (status: string): URLSearchParams => new URLSearchParams({
+  const query = (status: string, onlyOpen: boolean, forTab: string): URLSearchParams => new URLSearchParams({
     verificationStatus: status,
-    status: "open",
-    page: String(page),
+    ...(onlyOpen ? { status: "open" } : {}),
+    page: tab === forTab ? String(page) : "1",
     ...(search ? { search } : {}),
   });
-  const [pendingListings, organizationQueue] = await Promise.all([
-    repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending"))),
+  // Verified and flagged listings are decided records. They are listed so a reviewer can withdraw a live
+  // listing or re-admit a flagged one, soonest closing date first.
+  const decided = (status: "verified" | "flagged"): URLSearchParams => { const next = query(status, false, status); next.set("sort", "deadline"); next.set("direction", "asc"); return next; };
+  const [pendingListings, verifiedListings, flaggedListings, organizationQueue] = await Promise.all([
+    repository.adminPage("opportunities", parseAdminQuery("opportunities", query("pending", true, "opportunities"))),
+    repository.adminPage("opportunities", parseAdminQuery("opportunities", decided("verified"))),
+    repository.adminPage("opportunities", parseAdminQuery("opportunities", decided("flagged"))),
     repository.listOrganizationReviewQueue(),
   ]);
+  const decidedPage = tab === "verified" ? verifiedListings : tab === "flagged" ? flaggedListings : null;
+  const decidedRows = (decidedPage?.rows ?? []) as unknown as Opportunity[];
   const listings = pendingListings.rows as unknown as Opportunity[];
   // Only organisations that signed up in the app need verification. Providers created by seeding
   // are trusted through each listing's own review, so they never wait in this queue.
@@ -96,32 +109,33 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
     if (next.get("page") === "1") next.delete("page");
     return `?${next.toString()}`;
   };
-  const pages = Math.max(1, Math.ceil(Math.max(pendingListings.total, organizationTotal) / 25));
+  const tabTotal = tab === "opportunities" ? listingTotal : tab === "organizations" ? organizationTotal : decidedPage?.total ?? 0;
+  const pages = Math.max(1, Math.ceil(tabTotal / 25));
   const openListing = tab === "opportunities" && reviewing ? listings.find((item) => item.id === reviewing) : undefined;
   const openOrganization = tab === "organizations" && reviewing ? publisherQueue.find((item) => item.id === reviewing) : undefined;
 
   return <main className="animate-in flex min-w-0 flex-col gap-6">
-    <AdminHeader title="Review queue" subtitle="Approve or reject listings, and verify organisations that signed up to post.">
-      <ChipLinks label="Review type" current={tab} options={[["opportunities", `Opportunities · ${listingTotal}`], ["organizations", `Publishers · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
+    <AdminHeader title="Review queue" subtitle="Check member posts with the person who posted them, then approve or reject each listing.">
+      <ChipLinks label="Review type" current={tab} options={[["opportunities", `To review · ${listingTotal}`], ["verified", `Verified · ${verifiedListings.total}`], ["flagged", `Flagged · ${flaggedListings.total}`], ["organizations", `Publishers · ${organizationTotal}`]]} href={(value) => href({ tab: value, flag: null, page: null, review: null })} />
     </AdminHeader>
 
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h2 className="section-title">{tab === "opportunities" ? listingTotal : organizationTotal} waiting for a decision</h2>
-      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["new", "New submissions"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
+      <h2 className="section-title">{tab === "verified" ? `${tabTotal} verified` : tab === "flagged" ? `${tabTotal} flagged or withdrawn` : `${tabTotal} waiting for a decision`}</h2>
+      {tab === "opportunities" && <ChipLinks label="Filter by flag" current={flagFilter} options={[["all", "All"], ["member", "Member posts"], ["new", "New submissions"], ["link", "Link mismatch"]]} href={(value) => href({ flag: value, page: null, review: null })} />}
     </div>
 
     <form action="/admin/review" method="get" role="search" className="surface flex flex-wrap items-end gap-3">
       <input type="hidden" name="tab" value={tab} />
       <input type="hidden" name="flag" value={flagFilter} />
       <label className="min-w-[220px] flex-1 text-sm font-semibold text-navy">
-        Search review queue
+        {tab === "organizations" ? "Search publishers" : "Search listings"}
         <input
           className="field mt-1"
           type="search"
           name="search"
           defaultValue={raw.search ?? ""}
           maxLength={200}
-          placeholder="Organization or opportunity name"
+          placeholder="Opportunity title"
         />
       </label>
       <button className="button">Search</button>
@@ -130,17 +144,31 @@ export default async function ReviewQueuePage({searchParams}:{searchParams:Promi
 
     {(openListing || openOrganization) && <section aria-label="Review details" className="surface flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3"><h2 className="surface-title">Reviewing {openListing?.title ?? openOrganization?.name}</h2><Link href={href({ review: null })} className="button-secondary">Close</Link></div>
-      {openListing && <ReviewCard id={openListing.id} title={openListing.title} organization={openListing.organization?.name ?? openListing.organizationName ?? "Unknown organization"} sourceUrl={openListing.sourceUrl} status={openListing.verificationStatus} description={openListing.description} category={choiceLabel(openListing.category)} location={openListing.location} deadline={openListing.deadline ? new Date(openListing.deadline).toISOString() : null} applicationMethod={openListing.applicationMethod} reviewNotes={openListing.reviewNotes} />}
+      {openListing && <ReviewCard id={openListing.id} title={openListing.title} organization={openListing.organization?.name ?? openListing.organizationName ?? "Unknown organization"} sourceUrl={openListing.sourceUrl} status={openListing.verificationStatus} description={openListing.description} category={choiceLabel(openListing.category)} location={openListing.location} deadline={openListing.deadline ? new Date(openListing.deadline).toISOString() : null} applicationMethod={openListing.applicationMethod} reviewNotes={openListing.reviewNotes} submitterContact={openListing.submitterContact ?? null} />}
       {openOrganization && <OrganizationReviewCard id={openOrganization.id} name={openOrganization.name} sector={openOrganization.sector} officialLinks={openOrganization.officialLinks} officialEmail={openOrganization.officialEmail} registrationProof={openOrganization.registrationProof} registrationProofDocumentId={openOrganization.dashboardUsers.map((userId) => proofByUser.get(userId)).find(Boolean) ?? null} accountableContact={openOrganization.accountableContact} accountableContacts={openOrganization.accountableContacts} additionalAccountableContact={openOrganization.additionalAccountableContact} additionalAccountableContactPhone={openOrganization.additionalAccountableContactPhone} status={openOrganization.verificationStatus} />}
     </section>}
 
-    {tab === "opportunities" ? <section aria-labelledby="review-opportunities" className="surface">
+    {decidedPage ? <section aria-labelledby="decided-opportunities" className="surface">
+      <h2 id="decided-opportunities" className="surface-title mb-1">{tab === "verified" ? "Verified opportunities" : "Flagged opportunities"}</h2>
+      <p className="mb-4 text-sm text-navy">{tab === "verified" ? "Withdraw a listing to take it out of every feed straight away. You will be asked for a reason." : "Re-admit a listing after re-checking its source. It must still pass the approval rules, including a future closing date."}</p>
+      {decidedRows.length ? <div className="overflow-x-auto"><table className="w-full min-w-[760px] table-fixed border-collapse">
+        <colgroup><col className="w-[32%]" /><col className="w-[14%]" /><col className="w-[14%]" /><col className="w-[16%]" /><col className="w-[24%]" /></colgroup>
+        <thead><tr><th scope="col" className={th}>Listing</th><th scope="col" className={th}>Type</th><th scope="col" className={th}>Status</th><th scope="col" className={th}>Closes</th><th scope="col" className={th}><span className="sr-only">Action</span></th></tr></thead>
+        <tbody>{decidedRows.map((item) => <tr key={item.id}>
+          <td className={td}><a href={item.sourceUrl} target="_blank" rel="noreferrer" className="block truncate font-bold hover:underline">{item.title}</a><span className="block truncate text-xs text-navy">{item.organization?.name ?? item.organizationName ?? "Unknown organization"} · decided {day(item.reviewedAt)}</span></td>
+          <td className={td}><span className="cat-pill">{choiceLabel(item.category)}</span></td>
+          <td className={td}><StatusPill status={item.verificationStatus === "flagged" ? "flagged" : item.status === "removed" ? "removed" : item.status.replace("_", " ")} /></td>
+          <td className={td}>{item.deadline ? day(item.deadline) : "Rolling"}</td>
+          <td className={td}>{canWithdraw(item) ? <PublicationActions id={item.id} title={item.title} mode="withdraw" /> : canReadmit(item) ? <PublicationActions id={item.id} title={item.title} mode="readmit" /> : null}</td>
+        </tr>)}</tbody>
+      </table></div> : <QueueClear title={tab === "verified" ? "No verified listings" : "Nothing flagged"} text={tab === "verified" ? "Approved listings will appear here." : "Listings you reject or withdraw will appear here so you can re-admit them later."} />}
+    </section> : tab === "opportunities" ? <section aria-labelledby="review-opportunities" className="surface">
       <h2 id="review-opportunities" className="surface-title mb-4">Opportunities</h2>
       {visibleRows.length ? <div className="overflow-x-auto"><table className="w-full min-w-[720px] table-fixed border-collapse">
         <colgroup><col className="w-[30%]" /><col className="w-[16%]" /><col className="w-[20%]" /><col className="w-[18%]" /><col className="w-[16%]" /></colgroup>
         <thead><tr><th scope="col" className={th}>Listing</th><th scope="col" className={th}>Type</th><th scope="col" className={th}>Flag</th><th scope="col" className={th}>Submitted</th><th scope="col" className={th}><span className="sr-only">Action</span></th></tr></thead>
         <tbody>{visibleRows.map(({ item, flag }) => <tr key={item.id}>
-          <td className={td}><strong className="block truncate font-bold">{item.title}</strong><span className="block truncate text-xs text-navy">{item.organization?.name ?? item.organizationName ?? "Unknown organization"}</span></td>
+          <td className={td}><strong className="block truncate font-bold">{item.title}</strong><span className="block truncate text-xs text-navy">{item.organization?.name ?? item.organizationName ?? "Unknown organization"}{item.submitterContact ? ` · posted by ${item.submitterContact.name}` : ""}</span></td>
           <td className={td}><span className="cat-pill">{choiceLabel(item.category)}</span></td>
           <td className={td}><FlagPill flag={flag} /></td>
           <td className={td}>Submitted {day(item.publicationDate)}</td>

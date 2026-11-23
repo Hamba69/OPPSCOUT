@@ -269,6 +269,8 @@ h1.hero-title {
   .app-sidebar-scroll .app-brand, .app-sidebar-scroll .app-badge, .app-sidebar-scroll .app-group { display: none; }
   .app-sidebar-scroll nav { flex-direction: row !important; }
   .app-sidebar-scroll .side-link { white-space: nowrap; width: auto; }
+  .app-sidebar-wrap { flex-wrap: wrap; overflow-x: visible; }
+  .app-sidebar-wrap nav { flex-wrap: wrap; }
   .seeker-mobile-nav { display: flex; padding: .5rem 1rem 0; }
   .seeker-sidebar-drawer { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(19rem, 88vw); height: 100dvh; overflow-y: auto; padding: 1.25rem 1rem; background: var(--glass-strong); border-right: 1px solid var(--glass-border); box-shadow: 0 20px 60px rgb(30 41 59 / .2); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); transform: translateX(-105%); visibility: hidden; pointer-events: none; transition: transform 180ms ease, visibility 180ms; }
   .seeker-sidebar-drawer.is-open { transform: translateX(0); visibility: visible; pointer-events: auto; }

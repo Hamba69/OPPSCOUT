@@ -24,20 +24,26 @@ test("user sees scored matches, saves one, and updates preferences", async ({ pa
   expect(consoleErrors).toEqual([]);
 });
 
-test("organization submission enters the admin review queue", async ({ page }) => {
+test("any signed-in member can post an opportunity, and it waits in the review queue", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
-  await page.goto("/dashboard/opportunities/new");
-  await page.getByLabel("Opportunity title").fill("Youth Climate Data Fellowship");
-  await page.getByLabel("Clear description").fill("A practical fellowship for young Ugandans using community data to support climate resilience projects.");
-  await page.getByLabel("Accepted education levels").fill("bachelors");
-  await page.getByLabel("Location").fill("Kampala");
-  await page.getByLabel("Deadline").fill(new Date(Date.now() + 31 * 86_400_000).toISOString().slice(0, 10));
-  await page.getByLabel("How to apply").fill("Complete the official programme form");
-  await page.getByLabel("Official HTTPS source").fill("https://example.org/nile-innovation/climate-fellowship");
+  await page.goto("/post");
+  await page.getByLabel("Title").fill("Youth Climate Data Fellowship");
+  await page.getByLabel("Organisation offering it").fill("Nile Innovation");
+  await page.getByLabel("Location").selectOption("Kampala");
+  await page.getByLabel("Description").fill("A practical fellowship for young Ugandans using community data to support climate resilience projects.");
+  await page.getByLabel("Official application link").fill("https://example.org/nile-innovation/climate-fellowship");
+  await page.getByLabel("Closing date").fill(new Date(Date.now() + 31 * 86_400_000).toISOString().slice(0, 10));
+  await page.getByLabel("Application instructions").fill("Complete the official programme form");
+  await page.getByLabel("Your name").fill("Amina Nakato");
+  await page.getByLabel("Phone or WhatsApp number").fill("+256 700 000001");
+  await page.getByLabel("Email").fill("amina@example.org");
+  await page.getByLabel("I work at this organisation").check();
   await page.getByRole("button", { name: "Submit for review" }).click();
-  await expect(page.getByText(/safely waiting for review/)).toBeVisible();
+  await page.waitForURL("**/my-postings?posted=1");
+  await expect(page.getByText("Thanks, your opportunity was submitted.")).toBeVisible();
+  await expect(page.getByText("Youth Climate Data Fellowship")).toBeVisible();
   await page.goto("/admin/review");
-  await expect(page.getByRole("heading", { name: "Youth Climate Data Fellowship" }).first()).toBeVisible();
+  await expect(page.getByText("Youth Climate Data Fellowship").first()).toBeVisible();
   expect(consoleErrors).toEqual([]);
 });

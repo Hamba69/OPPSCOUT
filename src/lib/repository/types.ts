@@ -30,6 +30,8 @@ export interface OpportunityFilters {
   organizationId?: string;
   opportunityIds?: string[];
   origin?: OpportunityOrigin;
+  /** Member posts by this user. */
+  submittedBy?: string;
 }
 
 export interface StoredMatchResult {
@@ -133,7 +135,7 @@ export interface Repository extends AdminRepository {
   listOrganizationReviewQueue(): Promise<Organization[]>;
   getOrganization(id: string): Promise<Organization | null>;
   createOrganization(input: OrganizationInput): Promise<Organization>;
-  updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization>;
+  updateOrganization(id: string, input: Partial<OrganizationInput> & { verificationStatus?: Organization["verificationStatus"] }): Promise<Organization>;
   reviewOrganization(id: string, approved: boolean): Promise<Organization>;
   updateOrganizationMonetization(id: string, input: { subscriptionTier?: Organization["subscriptionTier"]; subscriptionStatus?: Organization["subscriptionStatus"]; monetizationEnabled?: boolean; promotedListingCredits?: number; promotionPolicy?: Record<string, unknown> }): Promise<Organization>;
   upsertMatch(input: Omit<StoredMatchResult, "id" | "createdAt" | "opportunity">): Promise<StoredMatchResult>;
@@ -152,5 +154,7 @@ export interface Repository extends AdminRepository {
   listEvents(filters?: { eventType?: EventType; since?: Date }): Promise<EventLog[]>;
   listReviewQueue(): Promise<Opportunity[]>;
   reviewOpportunity(id: string, input: { checklist: TrustChecklist; approved: boolean; reviewerId: string; notes?: string }): Promise<Opportunity>;
+  /** Replaces the review notes without changing the decision, e.g. to log contact with the poster. */
+  setReviewNotes(id: string, notes: string): Promise<Opportunity>;
   setOpportunityFlagged(id: string): Promise<Opportunity>;
 }

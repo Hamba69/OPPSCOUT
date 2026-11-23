@@ -29,8 +29,31 @@ export function getIncompleteProfileFields(profile: ProfileInput): string[] {
   return PROFILE_COMPLETENESS_FIELDS.filter((field) => !field.isFilled(profile)).map((field) => field.label);
 }
 
+/**
+ * The fields the completeness percentage counts, in the order the home card suggests them: what matching
+ * relies on first. Optional extras (phone, certifications, experience, internships, links and projects)
+ * are listed separately and never lower the percentage, so the home card and the profile page always
+ * show the same number.
+ */
+export const CORE_PROFILE_FIELDS: readonly string[] = [
+  "Field of study", "Education level", "Skills", "Opportunity types", "Current location", "Study status", "Languages",
+  "Career interests", "Preferred locations", "Work arrangement", "Date of birth", "Institution", "Email address", "Full name",
+];
+
+/** Core fields still empty, in suggestion order. */
+export function getMissingCoreFields(profile: ProfileInput): string[] {
+  const missing = new Set(getIncompleteProfileFields(profile));
+  return CORE_PROFILE_FIELDS.filter((label) => missing.has(label));
+}
+
+/** Optional extras still empty. They help publishers but do not count towards the percentage. */
+export function getMissingOptionalFields(profile: ProfileInput): string[] {
+  return getIncompleteProfileFields(profile).filter((label) => !CORE_PROFILE_FIELDS.includes(label));
+}
+
+/** The one profile completeness percentage, shown on the home card and the profile page and stored on the profile. */
 export function calculateProfileCompleteness(profile: ProfileInput): number {
-  return Math.round(((PROFILE_COMPLETENESS_FIELDS.length - getIncompleteProfileFields(profile).length) / PROFILE_COMPLETENESS_FIELDS.length) * 100);
+  return Math.round(((CORE_PROFILE_FIELDS.length - getMissingCoreFields(profile).length) / CORE_PROFILE_FIELDS.length) * 100);
 }
 
 /** The details matching depends on. A profile with all of these is "complete" for the purpose of finding matches. */

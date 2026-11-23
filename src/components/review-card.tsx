@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 
 import { ExternalIcon } from "@/components/icons";
 import { StatusBadge } from "@/components/status-badge";
+import { PosterContactPanel } from "@/components/poster-contact-panel";
+import type { SubmitterContact } from "@/core/entities/domain";
+import { contactLogLines } from "@/services/trust/poster-contact";
 
 const checks = [
   "sourceAuthentic",
@@ -29,6 +32,8 @@ export interface ReviewCardProps {
   applicationMethod?: string;
   /** Research evidence written by the seeding pipeline: source, retrieval time and verbatim quotes. */
   reviewNotes?: string | null;
+  /** Member posts: who posted it and how to reach them. */
+  submitterContact?: SubmitterContact | null;
 }
 
 /** Pulls the quoted evidence lines out of the pipeline's notes so the reviewer can check them at a glance. */
@@ -47,7 +52,7 @@ export function evidenceLines(notes: string | null | undefined): Array<{ label: 
   return lines;
 }
 
-export function ReviewCard({ id, title, organization, sourceUrl, status, description, category, location, deadline, applicationMethod, reviewNotes }: ReviewCardProps): React.JSX.Element {
+export function ReviewCard({ id, title, organization, sourceUrl, status, description, category, location, deadline, applicationMethod, reviewNotes, submitterContact }: ReviewCardProps): React.JSX.Element {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState("");
@@ -77,6 +82,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
         </div>
         <a className="button-secondary shrink-0" href={sourceUrl} target="_blank" rel="noreferrer">Check site <ExternalIcon /></a>
       </div>
+      {submitterContact && <div className="mt-4"><PosterContactPanel id={id} title={title} contact={submitterContact} initialLog={contactLogLines(reviewNotes)} /></div>}
       {evidence.length > 0 && (
         <dl className="mt-4 space-y-2 rounded-xl bg-ink/[.04] p-3 text-sm">
           {evidence.map((item) => <div key={item.label}><dt className="text-xs font-bold text-navy">{item.label}</dt><dd className="text-ink">{item.text}</dd></div>)}
@@ -93,7 +99,7 @@ export function ReviewCard({ id, title, organization, sourceUrl, status, descrip
         </details>
         <label className="flex items-start gap-3 rounded-xl glass-notice p-3 text-sm font-medium text-ink">
           <input type="checkbox" className="mt-0.5 size-4 shrink-0 accent-leaf" name="requirementsChecked" />
-          I checked the source: the listing is genuine, open to Ugandans, free to apply and the deadline is right
+          {submitterContact ? "I checked the source and confirmed with the poster: the listing is genuine, open to Ugandans, free to apply and the deadline is right" : "I checked the source: the listing is genuine, open to Ugandans, free to apply and the deadline is right"}
         </label>
         <div className="flex flex-wrap gap-2">
           <button className="button" disabled={done}>Approve</button>

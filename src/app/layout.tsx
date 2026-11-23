@@ -1,5 +1,6 @@
 import { WebVitals } from "@/components/web-vitals";
 import type { Metadata } from "next";
+import { publicSiteUrl } from "@/config/app";
 import { Montserrat } from "next/font/google";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
@@ -16,9 +17,22 @@ const sans = Montserrat({
   variable: "--font-sans",
 });
 
+const description = "Meet your opportunities. Jobs, scholarships, grants and internships in Uganda, reviewed by our team and matched to you.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(publicSiteUrl()),
   title: { default: "OppScout", template: "%s · OppScout" },
-  description: "Meet your opportunities. Verified jobs, scholarships, grants and internships matched to you.",
+  description,
+  applicationName: "OppScout",
+  openGraph: {
+    type: "website",
+    siteName: "OppScout",
+    title: "OppScout",
+    description,
+    url: "/",
+    images: [{ url: "/logo.png", width: 512, height: 512, alt: "OppScout" }],
+  },
+  twitter: { card: "summary", title: "OppScout", description, images: ["/logo.png"] },
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>): Promise<React.JSX.Element> {

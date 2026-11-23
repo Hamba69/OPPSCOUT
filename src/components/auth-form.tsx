@@ -5,6 +5,9 @@ import { Icon } from "@/components/custom-icon";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import Link from "next/link";
+
+import { LEGAL } from "@/config/legal";
 import { validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
@@ -64,6 +67,11 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
       router.refresh();
       return;
     }
+    if (data.get("consent") !== "on") {
+      setBusy(false);
+      setMessage("Please agree to the Terms of Use and Privacy Policy to create an account.");
+      return;
+    }
     const passwordError = validateSignupPassword(password);
     if (passwordError) {
       setBusy(false);
@@ -74,7 +82,8 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
     const { data: result, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: redirectTo },
+      // Record what the person agreed to, and when, with their account.
+      options: { emailRedirectTo: redirectTo, data: { termsVersion: LEGAL.termsVersion, termsAcceptedAt: new Date().toISOString(), consentToStorageOutsideUganda: true } },
     });
     setBusy(false);
     if (error) {
@@ -190,6 +199,13 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
             )}
           </div>
 
+          {!isSignin && (
+            <label className="flex items-start gap-3 text-sm leading-6 text-ink">
+              <input type="checkbox" name="consent" required className="mt-1 size-4 shrink-0 accent-leaf" />
+              <span>I agree to the <Link href="/terms" target="_blank" className="font-semibold underline underline-offset-2">Terms of Use</Link> and <Link href="/privacy" target="_blank" className="font-semibold underline underline-offset-2">Privacy Policy</Link>, including my data being stored by OppScout&apos;s service providers outside Uganda.</span>
+            </label>
+          )}
+
           <button
             type="submit"
             className="mt-2 flex min-h-[3.125rem] w-full items-center justify-center gap-2 rounded-full bg-[#FFD43B] px-4 text-[15px] font-bold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_6px_16px_rgba(230,170,0,0.25)] transition hover:brightness-105 active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/40 disabled:cursor-not-allowed disabled:opacity-50"
@@ -221,10 +237,6 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
             </p>
           )}
         </form>
-
-        <p className="mt-4 text-center text-xs leading-5 text-navy">
-          Your personal and publisher access use the same email and password. Sign in with those credentials on either page.
-        </p>
 
         {/* Footer switch */}
         <div className="mt-6 border-t border-ink/[0.06] pt-5 text-center text-sm text-navy">

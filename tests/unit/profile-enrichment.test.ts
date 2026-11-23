@@ -53,7 +53,9 @@ describe("profile enrichment", () => {
       projects: [{ title: "Research tool", description: "Built a useful tool.", tags: [] }],
     };
     expect(calculateProfileCompleteness(complete)).toBe(100);
-    expect(calculateProfileCompleteness({ ...complete, portfolioUrl: null })).toBeLessThan(100);
+    // Optional extras are listed but never lower the percentage; core fields do.
+    expect(calculateProfileCompleteness({ ...complete, portfolioUrl: null })).toBe(100);
+    expect(calculateProfileCompleteness({ ...complete, languages: [] })).toBeLessThan(100);
     expect(getIncompleteProfileFields({ ...complete, portfolioUrl: null })).toContain("Portfolio website");
   });
 });

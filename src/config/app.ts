@@ -18,3 +18,11 @@ export function appUrl(): string {
   if (process.env.NODE_ENV === "production") throw new AppError("The public application URL is not configured.", 503, "APP_URL_NOT_CONFIGURED");
   return productionAppUrl;
 }
+
+/**
+ * For metadata, robots and the sitemap: the configured app URL, or the production URL when none is set.
+ * These are built at compile time, so they must not throw the way appUrl() does in production.
+ */
+export function publicSiteUrl(): string {
+  try { return appUrl(); } catch { return productionAppUrl; }
+}

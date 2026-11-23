@@ -65,7 +65,8 @@ export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<Auth
 }
 
 export function homePathForRole(role: AppRole): string {
-  return role === "organization" ? "/dashboard" : "/feed";
+  // The publisher dashboard is retired; people who held publisher access manage their listings here.
+  return role === "organization" ? "/my-postings" : "/feed";
 }
 
 /** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */
@@ -79,6 +80,11 @@ const getPageContext = cache(async () => {
   if (!result.configured || !result.user) return { context: null, configured: result.configured } as const;
   return { context: await contextFromUser(result.user), configured: true } as const;
 });
+
+/** The signed-in person's account email, for prefilling forms. Null when signed out. */
+export async function getPageUserEmail(): Promise<string | null> {
+  return (await getPageUser()).user?.email ?? null;
+}
 
 export async function hasPageSession(): Promise<boolean> {
   return Boolean((await getPageUser()).user);

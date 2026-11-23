@@ -3,16 +3,16 @@ import { describe, expect, it } from "vitest";
 import { DEMO_ORG_ID, DEMO_ORG_USER_ID, MemoryRepository } from "@/lib/repository/memory";
 import { refreshOpportunityLifecycle } from "@/services/ingestion/freshness";
 import { ingestManualOpportunity } from "@/services/ingestion/manual";
-import { submitOrganizationOpportunity } from "@/services/ingestion/org-submission";
+import { submitMemberOpportunity } from "@/services/ingestion/member-submission";
 
 describe("ingestion quality", () => {
-  it("keeps catalog listings separate from organization submissions with the same title", async () => {
+  it("keeps catalog listings separate from member posts with the same title", async () => {
     const repository = new MemoryRepository();
     const catalog = (await repository.listOpportunities({ organizationId: DEMO_ORG_ID }))[0];
     expect(catalog.origin).toBe("catalog");
-    const submitted = await submitOrganizationOpportunity(repository, DEMO_ORG_USER_ID, {
+    const submitted = await submitMemberOpportunity(repository, DEMO_ORG_USER_ID, {
       title: catalog.title,
-      organizationId: catalog.organizationId,
+      organizationName: "Nile Innovation",
       category: catalog.category,
       description: catalog.description,
       eligibility: catalog.eligibility,
@@ -23,14 +23,13 @@ describe("ingestion quality", () => {
       deadline: catalog.deadline,
       applicationMethod: catalog.applicationMethod,
       sourceUrl: catalog.sourceUrl,
-      verificationStatus: "pending",
-      source: "scraped",
-      status: "open",
+      submitterContact: { name: "Amina Nakato", email: "amina@example.org", phone: "+256700000001", relationship: "work_there" },
     });
     expect(submitted.id).not.toBe(catalog.id);
-    expect(submitted.origin).toBe("organization");
-    expect(submitted.source).toBe("org_submitted");
-    expect((await repository.listOpportunities({ organizationId: DEMO_ORG_ID, origin: "organization" })).map((item) => item.id)).toEqual([submitted.id]);
+    expect(submitted.origin).toBe("community");
+    expect(submitted.verificationStatus).toBe("pending");
+    expect((await repository.listOpportunities({ submittedBy: DEMO_ORG_USER_ID })).map((item) => item.id)).toEqual([submitted.id]);
+    expect((await repository.getOpportunity(catalog.id))?.title).toBe(catalog.title);
   });
 
   it("merges canonical organization/title/deadline duplicates", async () => {

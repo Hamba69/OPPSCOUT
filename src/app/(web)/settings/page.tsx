@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Icon } from "@/components/app-shell";
 import { SettingsForm } from "@/components/settings-form";
+import { AccountDataActions } from "@/components/account-data-actions";
 import { ProfileArea } from "@/components/profile-area";
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
@@ -34,10 +35,18 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
         <p className="mt-1 text-[13px] text-navy">Choose how and when we notify you about new matches and closing dates.</p>
         <SettingsForm channel={profile?.preferredChannel ?? "email"} secondaryChannels={profile?.secondaryChannels ?? []} frequency={profile?.notificationFrequency ?? "instant"} enabled={profile?.notificationsEnabled ?? true} />
       </section>
-      <section className="surface" aria-labelledby="publisher-access">
-        <h2 id="publisher-access" className="surface-title">Publisher access</h2>
-        <p className="mt-3 text-[13px] leading-6 text-navy">Use the same email and password for your personal and publisher access.</p>
-        <Link href="/organizations/login" className="button-secondary mt-4"><Icon name="organization" size={15} strokeWidth={2.2} />Open publisher workspace</Link>
+      <section className="surface" aria-labelledby="your-data">
+        <h2 id="your-data" className="surface-title">Your data</h2>
+        <div className="mt-3"><AccountDataActions /></div>
+        <p className="mt-4 text-xs text-navy">How we use your data: <Link className="underline" href="/privacy">Privacy Policy</Link> · <Link className="underline" href="/terms">Terms of Use</Link></p>
+      </section>
+      <section className="surface" aria-labelledby="share-opportunities">
+        <h2 id="share-opportunities" className="surface-title">Share opportunities</h2>
+        <p className="mt-3 text-[13px] leading-6 text-navy">Anyone can post an opportunity. Our team reviews every post before it goes live.</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link href="/post" className="button-secondary"><Icon name="plus" size={15} strokeWidth={2.2} />Post an opportunity</Link>
+          <Link href="/my-postings" className="button-secondary">My postings</Link>
+        </div>
       </section>
     </ProfileArea>
   </main>;

@@ -6,14 +6,17 @@ import Link from "next/link";
 import { Icon } from "@/components/app-shell";
 import type { Opportunity } from "@/core/entities/domain";
 import { formatDate } from "@/lib/dates";
+import { choiceLabel } from "@/services/profile/choices";
 
 type ListingFilter = "All" | "Published" | "In review" | "Changes requested" | "Closed";
 
 const filters: ListingFilter[] = ["All", "Published", "In review", "Changes requested", "Closed"];
 
-function listingStatus(opportunity: Opportunity): Exclude<ListingFilter, "All"> {
+function listingStatus(opportunity: Opportunity, now = new Date()): Exclude<ListingFilter, "All"> {
   if (opportunity.verificationStatus === "flagged") return "Changes requested";
   if (["closed", "stale", "removed"].includes(opportunity.status) || opportunity.verificationStatus === "unverified") return "Closed";
+  // A listing whose closing date has passed is no longer shown to anyone, whatever its review state.
+  if (opportunity.deadline && new Date(opportunity.deadline) <= now) return "Closed";
   if (opportunity.verificationStatus === "pending") return "In review";
   return "Published";
 }
@@ -46,11 +49,14 @@ export function PublisherOpportunityTable({
   title,
   action,
   filterable = false,
+  emptyText = "No opportunities match this status.",
 }: {
   opportunities: Opportunity[];
   title: string;
   action?: { href: string; label: string };
   filterable?: boolean;
+  /** Shown when there is nothing to list (before any filter is applied, or when a filter matches nothing). */
+  emptyText?: string;
 }): React.JSX.Element {
   const [filter, setFilter] = useState<ListingFilter>("All");
   const filteredOpportunities = useMemo(
@@ -93,15 +99,15 @@ export function PublisherOpportunityTable({
                 {filteredOpportunities.map((item) => (
                   <tr key={item.id}>
                     <th scope="row" className="max-w-[280px] px-3 py-3.5 text-left font-bold text-ink">{item.title}</th>
-                    <td className="px-3 py-3.5"><span className="cat-pill">{item.category}</span></td>
+                    <td className="px-3 py-3.5"><span className="cat-pill">{choiceLabel(item.category)}</span></td>
                     <td className="px-3 py-3.5"><StatusPill status={listingStatus(item)} /></td>
                     <td className="whitespace-nowrap px-3 py-3.5 text-navy">
                       {item.deadline
                         ? formatDate(item.deadline, { day: "2-digit", month: "short", year: "numeric" })
-                        : "-"}
+                        : "Open until filled"}
                     </td>
                     <td className="px-3 py-3.5">
-                      <Link className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap text-[13px] font-bold text-[#6B4E00]" href={`/dashboard/opportunities/${item.id}/edit`}>
+                      <Link className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap text-[13px] font-bold text-[#6B4E00]" href={`/my-postings/${item.id}/edit`}>
                         <Icon name="edit" size={14} />Edit
                       </Link>
                     </td>
@@ -111,7 +117,7 @@ export function PublisherOpportunityTable({
             </table>
           </div>
         ) : (
-          <p className="text-sm text-navy">No opportunities match this status.</p>
+          <p className="text-sm text-navy">{opportunities.length ? "No opportunities match this status." : emptyText}</p>
         )}
       </section>
     </>

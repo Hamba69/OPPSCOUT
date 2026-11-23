@@ -52,7 +52,9 @@ function organizationFromRow(row: DbRow): Organization {
 function opportunityFromRow(row: DbRow, organization?: DbRow): Opportunity {
   return {
     ...row,
-    origin: row.origin === "organization" ? "organization" : "catalog",
+    origin: row.origin === "organization" || row.origin === "community" ? row.origin : "catalog",
+    submittedBy: (row.submittedBy as string | null | undefined) ?? null,
+    submitterContact: (row.submitterContact as Opportunity["submitterContact"]) ?? null,
     deadline: asDate(row.deadline),
     publicationDate: asDate(row.publicationDate)!,
     checkedAt: asDate(row.checkedAt)!,
@@ -104,7 +106,11 @@ function matchFromRow(row: DbRow, opportunity?: Opportunity): StoredMatchResult 
   };
 }
 
-function checked<T>(data: T | null, error: { message: string } | null, operation: string): T {
+/** Postgres "invalid input syntax", e.g. a malformed UUID in a URL. Nothing can exist under that id. */
+const INVALID_TEXT_REPRESENTATION = "22P02";
+
+function checked<T>(data: T | null, error: { message: string; code?: string } | null, operation: string): T {
+  if (error?.code === INVALID_TEXT_REPRESENTATION) throw new NotFoundError(operation);
   if (error) throw new Error(`${operation}: ${error.message}`);
   if (data === null) throw new NotFoundError(operation);
   return data;
@@ -163,6 +169,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     if (filters.organizationId) query = query.eq("organizationId", filters.organizationId);
     if (filters.opportunityIds) query = query.in("id", filters.opportunityIds);
     if (filters.origin) query = query.eq("origin", filters.origin);
+    if (filters.submittedBy) query = query.eq("submittedBy", filters.submittedBy);
 
     // Read every page: the Data API otherwise silently caps a growing catalog.
     const rows: DbRow[] = [];
@@ -186,6 +193,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
 
   public async getOpportunity(id: string): Promise<Opportunity | null> {
     const { data, error } = await this.client.from("Opportunity").select("*").eq("id", id).maybeSingle();
+    if (error?.code === INVALID_TEXT_REPRESENTATION) return null;
     if (error) throw new Error(`Could not read opportunity: ${error.message}`);
     if (!data) return null;
     const values = await this.opportunitiesWithOrganizations([data]);
@@ -206,7 +214,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     const created = checked(data, error, "Could not create opportunity");
 
     try {
-      if (!input.organizationId || input.origin === "catalog") return (await this.opportunitiesWithOrganizations([created]))[0];
+      if (!input.organizationId || input.origin !== "organization") return (await this.opportunitiesWithOrganizations([created]))[0];
       const { data: organizationRow, error: organizationError } = await this.client
         .from("Organization")
         .select("postingHistory")
@@ -259,6 +267,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
 
   public async getOrganization(id: string): Promise<Organization | null> {
     const { data, error } = await this.client.from("Organization").select("*").eq("id", id).maybeSingle();
+    if (error?.code === INVALID_TEXT_REPRESENTATION) return null;
     if (error) throw new Error(`Could not read organization: ${error.message}`);
     return data ? organizationFromRow(data) : null;
   }
@@ -277,7 +286,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
     return organizationFromRow(checked(data, error, "Could not create organization"));
   }
 
-  public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
+  public async updateOrganization(id: string, input: Partial<OrganizationInput> & { verificationStatus?: Organization["verificationStatus"] }): Promise<Organization> {
     const { data, error } = await this.client.from("Organization")
       .update({ ...input, updatedAt: new Date().toISOString() })
       .eq("id", id)
@@ -333,6 +342,7 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
 
   public async getMatch(userId: string, id: string): Promise<StoredMatchResult | null> {
     const { data, error } = await this.client.from("MatchResult").select("*").eq("id", id).eq("userId", userId).maybeSingle();
+    if (error?.code === INVALID_TEXT_REPRESENTATION) return null;
     if (error) throw new Error(`Could not read match: ${error.message}`);
     if (!data) return null;
     const opportunity = await this.getOpportunity(data.opportunityId);
@@ -453,6 +463,13 @@ export class SupabaseRepository extends AdminDataRepository implements Repositor
       reviewNotes: input.notes,
       reviewedAt: new Date().toISOString(),
     }).eq("id", id).select("*").maybeSingle();
+    const row = checked(data, error, "Opportunity");
+    return (await this.opportunitiesWithOrganizations([row]))[0];
+  }
+
+  public async setReviewNotes(id: string, notes: string): Promise<Opportunity> {
+    clearCatalogCache();
+    const { data, error } = await this.client.from("Opportunity").update({ reviewNotes: notes }).eq("id", id).select("*").maybeSingle();
     const row = checked(data, error, "Opportunity");
     return (await this.opportunitiesWithOrganizations([row]))[0];
   }

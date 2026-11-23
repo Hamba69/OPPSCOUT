@@ -1,10 +1,30 @@
 import { z } from "zod";
 
 import { ValidationError } from "@/core/errors/app-error";
+import { canonicalPreferredLocation, canonicalUgandaLocation } from "@/data/uganda-locations";
+import { dateOfBirthProblem } from "@/lib/date-of-birth";
 
 export const ORG_SHARING_CONSENT_VERSION = "2026-10-v1";
 
 const nullableText = z.string().trim().max(240).nullable().optional();
+/** A Ugandan district, stored under its canonical name. Profiles are strictly within Uganda. */
+const ugandaLocation = z.string().trim().max(120).transform((value, context) => {
+  const place = canonicalUgandaLocation(value);
+  if (!place) { context.addIssue({ code: z.ZodIssueCode.custom, message: "Choose a district in Uganda." }); return z.NEVER; }
+  return place;
+});
+const preferredUgandaLocations = z.array(z.string().trim().max(120).transform((value, context) => {
+  const place = canonicalPreferredLocation(value);
+  if (!place) { context.addIssue({ code: z.ZodIssueCode.custom, message: "Preferred locations must be districts in Uganda, or anywhere in Uganda." }); return z.NEVER; }
+  return place;
+})).max(50).transform((places) => [...new Set(places)]);
+/** Required once given: it can be changed but not cleared, because listings can set age limits. */
+const dateOfBirth = z.unknown().transform((value, context) => {
+  const usable = value === null || value === undefined ? null : typeof value === "string" || value instanceof Date ? value : "invalid";
+  const problem = dateOfBirthProblem(usable);
+  if (problem) { context.addIssue({ code: z.ZodIssueCode.custom, message: problem }); return z.NEVER; }
+  return typeof usable === "string" ? new Date(`${usable.slice(0, 10)}T00:00:00Z`) : usable as Date;
+});
 const stringList = z.array(z.string().trim().min(1).max(120)).max(50);
 const experience = z.object({ title: z.string().trim().min(1).max(160), organization: z.string().trim().max(160).optional(), months: z.number().int().min(0).max(600) });
 const plainText = (max: number, min = 0) => z.string().trim().max(max)
@@ -50,13 +70,13 @@ export const profileSchema = z.object({
   institution: nullableText,
   fieldOfStudy: nullableText,
   graduationStatus: nullableText,
-  dateOfBirth: z.coerce.date().max(new Date(), "Date of birth cannot be in the future.").nullable().optional(),
+  dateOfBirth: dateOfBirth.optional(),
   skills: stringList.optional(),
   workExperience: z.array(experience).max(30).optional(),
   internshipExperience: z.array(experience).max(30).optional(),
   certifications: stringList.optional(),
-  location: nullableText,
-  preferredLocations: stringList.optional(),
+  location: ugandaLocation.optional(),
+  preferredLocations: preferredUgandaLocations.optional(),
   careerInterests: stringList.optional(),
   opportunityCategories: stringList.optional(),
   workModePreference: z.enum(["remote", "onsite", "hybrid"]).nullable().optional(),
@@ -70,6 +90,9 @@ export const profileSchema = z.object({
   orgSharingConsentAt: z.coerce.date().nullable().optional(),
   orgSharingConsentVersion: z.string().max(40).nullable().optional(),
 }).strict();
+
+/** Creating a profile needs a name, a date of birth and a current location in Uganda. */
+export const newProfileSchema = profileSchema.extend({ name: z.string().trim().min(2).max(120), dateOfBirth, location: ugandaLocation });
 
 export const eligibilitySchema = z.object({
   additionalRequirements: z.array(z.string().trim().min(1).max(500)).max(30).optional(),
@@ -177,6 +200,37 @@ export const trustChecklistSchema = z.object({
   noSensitiveDataAsk: z.boolean(),
   deadlinePlausible: z.boolean(),
   duplicateChecked: z.boolean(),
+}).strict();
+
+/** How a reviewer reaches the member who posted. Required on every member post. */
+export const submitterContactSchema = z.object({
+  name: z.string().trim().min(2, "Enter your name.").max(120),
+  email: z.string().trim().email("Enter an email address we can reach you on.").max(254),
+  phone: z.string().trim().regex(/^\+?[0-9\s().-]{7,32}$/, "Enter a phone number, for example +256 700 000000."),
+  relationship: z.enum(["work_there", "recruiting_for_them", "sharing_public_listing"]),
+}).strict();
+
+/**
+ * An opportunity posted by any signed-in member. No organisation account is needed: the poster names the
+ * organisation offering it, and leaves contact details so a reviewer can check with them before approval.
+ */
+export const memberOpportunitySchema = z.object({
+  title: z.string().trim().min(4).max(180),
+  organizationName: z.string().trim().min(2, "Enter the organisation offering this opportunity.").max(180),
+  category: z.string().trim().min(2).max(80),
+  description: z.string().trim().min(20, "Describe the opportunity in at least 20 characters.").max(12_000),
+  eligibility: eligibilitySchema.default({}),
+  requiredSkills: stringList.default([]),
+  preferredSkills: stringList.default([]),
+  location: z.string().trim().min(2).max(120),
+  workMode: z.enum(["remote", "onsite", "hybrid"]),
+  deadline: z.union([
+    z.coerce.date().refine((date) => date > new Date(), "The closing date must be in the future.").nullable(),
+    z.literal("").transform(() => null),
+  ]),
+  applicationMethod: z.string().trim().min(5).max(500),
+  sourceUrl: publicHttpsUrl,
+  submitterContact: submitterContactSchema,
 }).strict();
 
 export async function parseJson<TSchema extends z.ZodTypeAny>(request: Request, schema: TSchema): Promise<z.output<TSchema>> {

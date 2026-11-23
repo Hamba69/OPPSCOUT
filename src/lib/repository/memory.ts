@@ -178,7 +178,8 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       (!filters.verificationStatus || item.verificationStatus === filters.verificationStatus) &&
       (!filters.statuses || filters.statuses.includes(item.status)) &&
       (!filters.organizationId || item.organizationId === filters.organizationId) &&
-      (!filters.origin || (item.origin ?? "catalog") === filters.origin)
+      (!filters.origin || (item.origin ?? "catalog") === filters.origin) &&
+      (!filters.submittedBy || item.submittedBy === filters.submittedBy)
     ));
   }
 
@@ -202,7 +203,7 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       reviewedAt: null,
     };
     this.opportunities.set(opportunity.id, opportunity);
-    if (organization && input.origin !== "catalog") {
+    if (organization && input.origin === "organization") {
       organization.postingHistory = [...organization.postingHistory, { opportunityId: opportunity.id, postedAt: opportunity.publicationDate.toISOString() }];
       organization.updatedAt = new Date();
       this.organizations.set(organization.id, organization);
@@ -243,7 +244,7 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
     return copy(organization);
   }
 
-  public async updateOrganization(id: string, input: Partial<OrganizationInput>): Promise<Organization> {
+  public async updateOrganization(id: string, input: Partial<OrganizationInput> & { verificationStatus?: Organization["verificationStatus"] }): Promise<Organization> {
     const current = this.organizations.get(id);
     if (!current) throw new NotFoundError("Organization");
     const organization = { ...current, ...copy(input), id, updatedAt: new Date() };
@@ -363,6 +364,14 @@ export class MemoryRepository extends AdminDataRepository implements Repository 
       reviewerId: input.reviewerId,
       reviewedAt: new Date(),
     };
+    this.opportunities.set(id, opportunity);
+    return copy(opportunity);
+  }
+
+  public async setReviewNotes(id: string, notes: string): Promise<Opportunity> {
+    const current = this.opportunities.get(id);
+    if (!current) throw new NotFoundError("Opportunity");
+    const opportunity: Opportunity = { ...current, reviewNotes: notes };
     this.opportunities.set(id, opportunity);
     return copy(opportunity);
   }

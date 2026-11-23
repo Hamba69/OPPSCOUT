@@ -17,9 +17,9 @@ export function ProfileSelect({ name, label, options, value, onChange, allowCust
   </select></label>{custom && <label className="mt-2 block"><span className="label">{name === "location" ? "Your location" : `Your ${label.toLowerCase()}`}</span><input className="field" value={value} maxLength={120} onChange={(event) => onChange(event.target.value)} placeholder="Type here" /></label>}</div>;
 }
 
-interface MultiProps { name: string; label: string; hint: string; options: ProfileChoice[]; values: string[]; onChange: (values: string[]) => void }
+interface MultiProps { name: string; label: string; hint: string; options: ProfileChoice[]; values: string[]; onChange: (values: string[]) => void; allowCustom?: boolean }
 
-export function ProfileMultiChoice({ name, label, hint, options, values, onChange }: MultiProps): React.JSX.Element {
+export function ProfileMultiChoice({ name, label, hint, options, values, onChange, allowCustom = true }: MultiProps): React.JSX.Element {
   const id = useId();
   const [search, setSearch] = useState("");
   const selected = new Set(values);
@@ -35,7 +35,7 @@ export function ProfileMultiChoice({ name, label, hint, options, values, onChang
   function toggle(value: string): void { onChange(selected.has(value) ? values.filter((item) => item !== value) : [...values, value]); }
   function addCustom(): void {
     const value = query;
-    if (!value || values.length >= 50) return;
+    if (!allowCustom || !value || values.length >= 50) return;
     const known = options.find((option) => option.value.toLowerCase() === value.toLowerCase() || option.label.toLowerCase() === value.toLowerCase());
     const resolved = known?.value ?? value;
     if (!selected.has(resolved)) onChange([...values, resolved]);
@@ -52,9 +52,9 @@ export function ProfileMultiChoice({ name, label, hint, options, values, onChang
         {option.label}
       </label>)}
       {!filtered.length && <p className="px-2 py-1 text-sm text-navy">No matching options.</p>}
-      {!exactMatch && <button type="button" className="button-secondary mt-2" onClick={addCustom} disabled={!query || values.length >= 50}>Add “{query}”</button>}
+      {allowCustom && !exactMatch && <button type="button" className="button-secondary mt-2" onClick={addCustom} disabled={!query || values.length >= 50}>Add “{query}”</button>}
     </div>}
-    {!query && <p className="mt-2 text-xs text-navy">Start typing to find an option, or add your own.</p>}
+    {!query && <p className="mt-2 text-xs text-navy">{allowCustom ? "Start typing to find an option, or add your own." : "Start typing to find an option."}</p>}
     {values.length > 0 && <div className="mt-3 flex flex-wrap gap-2" aria-label={`Selected ${label.toLowerCase()}`}>{values.map((value) => <button key={value} type="button" onClick={() => toggle(value)} aria-label={`Remove ${choiceLabel(value)}`} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#FBE7A1] bg-[#FFF8DC] px-3 py-1 text-sm font-semibold text-ink hover:border-[#F5D76E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{allOptions.find((option) => option.value === value)?.label}<Icon name="close" size={18} /></button>)}</div>}
   </fieldset>;
 }

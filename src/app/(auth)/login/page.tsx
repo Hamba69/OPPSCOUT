@@ -1,7 +1,9 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getOptionalAuth } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
+
+export const metadata: Metadata = { title: "Log in" };
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +30,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps): Promi
 
         <div className="flex flex-1 flex-col justify-center">
           <AuthForm nextPath={nextPath} initialMode={mode === "signup" ? "signup" : "signin"} />
-          <p className="mt-5 text-center text-[13px] text-navy">Publishing for an organization? <Link href="/organizations/login" className="font-bold text-ink underline underline-offset-2">Publisher log in</Link></p>
         </div>
       </div>
     </main>

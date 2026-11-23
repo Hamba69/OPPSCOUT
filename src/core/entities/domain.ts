@@ -4,7 +4,11 @@ export type WorkMode = "remote" | "onsite" | "hybrid";
 export type VerificationStatus = "unverified" | "pending" | "verified" | "flagged";
 export type OpportunitySource = "org_submitted" | "scraped" | "partner_feed";
 /** How the listing entered OppScout; separate from the source of its information. */
-export type OpportunityOrigin = "catalog" | "organization";
+/** catalog: researched by the OppScout team; organization: legacy publisher accounts; community: posted by any member. */
+export type OpportunityOrigin = "catalog" | "organization" | "community";
+/** How a reviewer reaches the member who posted a listing. Never shown to seekers. */
+export interface SubmitterContact { name: string; email: string; phone: string; relationship: SubmitterRelationship }
+export type SubmitterRelationship = "work_there" | "recruiting_for_them" | "sharing_public_listing";
 /** `fixed` closes on `deadline`; `rolling` has no closing date but must be re-checked regularly. Absent means `fixed`. */
 export type DeadlineType = "fixed" | "rolling";
 export type OpportunityStatus = "open" | "closing_soon" | "closed" | "stale" | "removed";
@@ -149,6 +153,9 @@ export interface Opportunity {
   reviewNotes: string | null;
   reviewerId: string | null;
   reviewedAt: Date | null;
+  /** Member posts: who posted it and how to reach them. */
+  submittedBy?: string | null;
+  submitterContact?: SubmitterContact | null;
 }
 
 export interface SavedOpportunity {

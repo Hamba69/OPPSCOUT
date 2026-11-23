@@ -13,7 +13,7 @@ describe("auth proxy", () => {
     const response = await proxy(new NextRequest(`http://localhost:3000${path}`));
     const location = new URL(response.headers.get("location")!);
     // Publisher areas send signed-out visitors to the publisher login; everything else to the seeker login.
-    expect(location.pathname).toBe(path.startsWith("/dashboard") ? "/organizations/login" : "/login");
+    expect(location.pathname).toBe("/login"); // One sign-in for everyone; the publisher login is retired.
     expect(location.searchParams.get("next")).toBe(path);
   });
   it("returns the response carrying refreshed cookies", async () => {

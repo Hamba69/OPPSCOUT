@@ -1,5 +1,6 @@
 import type { Opportunity } from "@/core/entities/domain";
-import { FIELD_CONCEPTS, LOCATION_PARENT, SKILL_CONCEPTS } from "@/services/matching/orbit/ontology";
+import { ANYWHERE_IN_UGANDA, UGANDA_LOCATIONS, ugandaRegion } from "@/data/uganda-locations";
+import { FIELD_CONCEPTS, SKILL_CONCEPTS } from "@/services/matching/orbit/ontology";
 
 export interface ProfileChoice { value: string; label: string; keywords?: string[] }
 export type ProfileChoiceField = "educationLevel" | "fieldOfStudy" | "graduationStatus" | "location" | "skills" | "careerInterests" | "preferredLocations" | "opportunityCategories" | "languages";
@@ -25,14 +26,16 @@ function choices(values: string[]): ProfileChoice[] {
 
 export function buildProfileChoices(opportunities: Opportunity[] = []): ProfileChoices {
   const rules = opportunities.flatMap((opportunity) => opportunity.eligibility.programmeRules ?? []);
-  const places = [...Object.keys(LOCATION_PARENT).filter((place) => !["central", "eastern", "northern", "western"].includes(place)).map(choiceLabel), "Remote", "Uganda", ...opportunities.map((opportunity) => opportunity.location), ...rules.filter((rule) => rule.field === "location").flatMap((rule) => rule.allowedValues)];
+  // Locations are strictly Ugandan districts, never free text or listing locations (which include
+  // notes such as "To confirm"). Search also matches the region, e.g. typing "northern".
+  const districts: ProfileChoice[] = UGANDA_LOCATIONS.map((place) => ({ value: place, label: place, keywords: [ugandaRegion(place) ?? "", `${ugandaRegion(place) ?? ""} region`] }));
   const skills = choices([...SKILL_CONCEPTS.map((concept) => concept.id), "typescript", "react", "node js", ...opportunities.flatMap((opportunity) => [...opportunity.requiredSkills, ...opportunity.preferredSkills])]);
   for (const skill of skills) skill.keywords = SKILL_CONCEPTS.find((concept) => concept.id === skill.value)?.aliases;
   return {
     educationLevel: choices(["secondary", "certificate", "diploma", "bachelors", "masters", "phd", "no formal education", ...opportunities.flatMap((opportunity) => opportunity.eligibility.educationLevels ?? [])]),
     fieldOfStudy: choices([...FIELD_CONCEPTS.flatMap((concept) => [concept.id, ...concept.aliases.filter((alias) => alias.length > 2)]), ...opportunities.flatMap((opportunity) => opportunity.eligibility.fieldsOfStudy ?? [])]),
     graduationStatus: choices(["studying", "first year", "second year", "third year", "final year", "graduated", "graduate", "graduated within 12 months", "masters student", "phd student", ...rules.filter((rule) => rule.field === "graduationStatus").flatMap((rule) => rule.allowedValues)]),
-    location: choices(places), preferredLocations: choices(places), skills,
+    location: districts, preferredLocations: [{ value: ANYWHERE_IN_UGANDA, label: "Anywhere in Uganda", keywords: ["any", "all", "country"] }, ...districts], skills,
     careerInterests: choices(["technology", "data", "research", "social impact", "community development", "health", "agriculture", "finance", "business", "policy", "environment", "media", "education", "security"]),
     opportunityCategories: choices(["job", "internship", "scholarship", "fellowship", "consultancy", "grant", "training", "exhibition", ...opportunities.map((opportunity) => opportunity.category)]),
     languages: choices(["English", "Luganda", "Swahili", "French", "Arabic", "Runyankore", "Acholi", "Ateso", "Lusoga", "Luo", "Lugbara", ...rules.filter((rule) => rule.field === "language").flatMap((rule) => rule.allowedValues)]),

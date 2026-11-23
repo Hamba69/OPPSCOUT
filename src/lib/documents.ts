@@ -37,16 +37,13 @@ export function hasDocumentSignature(bytes: Uint8Array, extension: keyof typeof 
   return bytes[0] === 0x50 && bytes[1] === 0x4b && bytes[2] === 0x03 && bytes[3] === 0x04;
 }
 
-export async function canAccessDocument(auth: AuthContext, document: { ownerId: string; ownerType: string; purpose: string; status: string; shareWithOrganizations: boolean }, context: { seeker: { dateOfBirth: Date | null; shareWithOrganizations: boolean } | null; organizationVerified: boolean; hasMatch: boolean }): Promise<boolean> {
+/**
+ * Only the person who uploaded a document, and admins, can open it. Organisations used to be able to see
+ * documents of matched seekers who opted in; that publisher feature is retired.
+ */
+export function canAccessDocument(auth: AuthContext, document: { ownerId: string; ownerType: string }): boolean {
   if (auth.role === "admin") return true;
-  if ((auth.role === "user" || auth.role === "organization") && document.ownerType === "user" && document.ownerId === auth.userId) return true;
-  if (auth.role !== "organization" || document.ownerType !== "user" || document.purpose !== "research_paper") return false;
-  if (!context.organizationVerified || document.status !== "ready" || !document.shareWithOrganizations || !context.seeker?.shareWithOrganizations || !context.hasMatch) return false;
-  const dob = context.seeker.dateOfBirth;
-  if (!dob) return false;
-  const now = new Date();
-  const age = now.getUTCFullYear() - dob.getUTCFullYear() - ((now.getUTCMonth() < dob.getUTCMonth() || (now.getUTCMonth() === dob.getUTCMonth() && now.getUTCDate() < dob.getUTCDate())) ? 1 : 0);
-  return age >= 18;
+  return document.ownerType === "user" && document.ownerId === auth.userId;
 }
 
 export async function hashBytes(bytes: Uint8Array): Promise<string> {

@@ -1,54 +1,77 @@
+import { z } from "zod";
+
+import type { Opportunity } from "@/core/entities/domain";
 import { apiHandler, success } from "@/lib/api";
-import { requireAuth, requireRole } from "@/lib/auth";
+import { requireAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
 import type { OpportunityFilters, OpportunityInput } from "@/lib/repository/types";
-import { ForbiddenError, NotFoundError } from "@/core/errors/app-error";
-import { submitOrganizationOpportunity } from "@/services/ingestion/org-submission";
+import { memberOpportunitySchema, opportunitySchema, parseJson } from "@/lib/validation";
 import { ingestManualOpportunity } from "@/services/ingestion/manual";
-import { opportunitySchema, parseJson } from "@/lib/validation";
-import { publisherCanPost } from "@/lib/publisher-verification";
+import { listOwnListings, submitMemberOpportunity } from "@/services/ingestion/member-submission";
+import { publicOpportunity } from "@/services/trust/public-opportunity";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
+const listQuery = z.object({
+  scope: z.enum(["catalog", "mine"]).optional(),
+  category: z.string().trim().max(80).optional(),
+  location: z.string().trim().max(120).optional(),
+  workMode: z.enum(["remote", "onsite", "hybrid"]).optional(),
+  search: z.string().trim().max(200).optional(),
+  verificationStatus: z.enum(["unverified", "pending", "verified", "flagged"]).optional(),
+  organizationId: z.string().uuid().optional(),
+  limit: z.coerce.number().int().min(1).max(500).optional(),
+});
+
+/**
+ * GET /api/v1/opportunities
+ * - Default: the verified, open catalogue, for anyone signed in. Moderation and poster fields are stripped.
+ * - ?scope=mine: the listings you posted, in every review state.
+ * - Admins get every listing and may filter by verificationStatus and organizationId.
+ * Optional filters: category, location, workMode, search, limit (1 to 500).
+ */
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
     const auth = await requireAuth(request);
-    const url = new URL(request.url);
-    const filters: OpportunityFilters = {
-      category: url.searchParams.get("category") ?? undefined,
-      location: url.searchParams.get("location") ?? undefined,
-      workMode: (url.searchParams.get("workMode") as OpportunityFilters["workMode"]) ?? undefined,
-      search: url.searchParams.get("search") ?? undefined,
-      verificationStatus: auth.role === "user" ? "verified" : (url.searchParams.get("verificationStatus") as OpportunityFilters["verificationStatus"]) ?? undefined,
-      statuses: auth.role === "user" ? ["open", "closing_soon"] : undefined,
-      organizationId: auth.role === "organization" ? auth.organizationId ?? undefined : url.searchParams.get("organizationId") ?? undefined,
-      origin: auth.role === "organization" ? "organization" : undefined,
-    };
+    const query = listQuery.parse(Object.fromEntries(new URL(request.url).searchParams));
     const repository = await getRepository();
-    const rows = await repository.listOpportunities(filters);
     const now = new Date();
-    const opportunities = auth.role === "user" ? rows.filter((item) => isUserVisibleOpportunity(item, now)) : rows;
-    const freshest = opportunities.reduce((date, item) => item.checkedAt > date ? item.checkedAt : date, new Date(0));
-    return success(opportunities, 200, freshest.getTime() ? freshest : new Date());
+    if (query.scope === "mine") {
+      const mine = (await listOwnListings(repository, auth)).slice(0, query.limit);
+      return success(mine, 200, now);
+    }
+    const admin = auth.role === "admin";
+    const filters: OpportunityFilters = {
+      category: query.category,
+      location: query.location,
+      workMode: query.workMode,
+      search: query.search,
+      ...(admin
+        ? { verificationStatus: query.verificationStatus, organizationId: query.organizationId }
+        : { verificationStatus: "verified" as const, statuses: ["open", "closing_soon"] as Opportunity["status"][] }),
+    };
+    const rows = await repository.listOpportunities(filters);
+    const visible = (admin ? rows : rows.filter((item) => isUserVisibleOpportunity(item, now))).slice(0, query.limit);
+    const freshest = visible.reduce((date, item) => item.checkedAt > date ? item.checkedAt : date, new Date(0));
+    return success(admin ? visible : visible.map(publicOpportunity), 200, freshest.getTime() ? freshest : now);
   });
 }
 
+/**
+ * POST /api/v1/opportunities
+ * Anyone signed in can post. It waits for a reviewer, who contacts the poster before approving it.
+ * Admins can still add catalogue listings directly with the full listing schema.
+ */
 export async function POST(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
     const auth = await requireAuth(request);
-    requireRole(auth, ["organization", "admin"]);
-    const input = await parseJson(request, opportunitySchema) as OpportunityInput;
     const repository = await getRepository();
-    if (auth.role === "organization") {
-      if (!auth.organizationId) throw new ForbiddenError();
-      const organization = await repository.getOrganization(auth.organizationId);
-      if (!organization) throw new NotFoundError("Organization");
-      if (!await publisherCanPost(organization)) {
-        throw new ForbiddenError("Publisher verification and valid official contact details are required before posting opportunities.");
-      }
+    if (auth.role === "admin") {
+      const input = await parseJson(request, opportunitySchema) as OpportunityInput;
+      const created = await ingestManualOpportunity(repository, input);
+      return success(created, 201, created.checkedAt);
     }
-    const opportunity = auth.role === "organization"
-      ? await submitOrganizationOpportunity(repository, auth.userId, input)
-      : await ingestManualOpportunity(repository, input);
-    return success(opportunity, 201, opportunity.checkedAt);
+    const input = await parseJson(request, memberOpportunitySchema);
+    const created = await submitMemberOpportunity(repository, auth.userId, input);
+    return success(created, 201, created.checkedAt);
   });
 }

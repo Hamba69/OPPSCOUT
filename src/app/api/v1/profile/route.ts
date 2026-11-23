@@ -1,11 +1,9 @@
-import { z } from "zod";
-
 import { ValidationError } from "@/core/errors/app-error";
 import { apiHandler, noContent, success } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
 import { createUserProfile, deleteUserProfile, getUserProfile, updateUserProfile } from "@/lib/profile-store";
 import { calculateProfileCompleteness } from "@/services/profile/completeness";
-import { ORG_SHARING_CONSENT_VERSION, parseJson, profileSchema } from "@/lib/validation";
+import { newProfileSchema, ORG_SHARING_CONSENT_VERSION, parseJson, profileSchema } from "@/lib/validation";
 
 function isAdult(dateOfBirth: Date | null | undefined): boolean {
   if (!dateOfBirth) return false;
@@ -27,7 +25,7 @@ export async function GET(request: Request): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
     const auth = await requireAuth(request);
-    const input = await parseJson(request, profileSchema.extend({ name: z.string().trim().min(2).max(120) }));
+    const input = await parseJson(request, newProfileSchema);
     const profileCompletenessScore = calculateProfileCompleteness(input);
     const profile = await createUserProfile(auth.userId, { ...input, profileCompletenessScore });
     return success(profile, 201);

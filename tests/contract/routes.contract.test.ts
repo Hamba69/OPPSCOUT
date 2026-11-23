@@ -17,23 +17,18 @@ import * as savedStatusRoute from "@/app/api/v1/saved/[id]/status/route";
 import * as notificationsRoute from "@/app/api/v1/notifications/route";
 import * as preferencesRoute from "@/app/api/v1/notifications/preferences/route";
 import * as notificationRunRoute from "@/app/api/v1/notifications/run/route";
-import * as organizationsRoute from "@/app/api/v1/organizations/route";
-import * as analyticsRoute from "@/app/api/v1/organizations/[id]/analytics/route";
-import * as organizationRoute from "@/app/api/v1/organizations/[id]/route";
 import * as organizationReviewRoute from "@/app/api/v1/organizations/review/route";
 import * as organizationReviewItemRoute from "@/app/api/v1/organizations/review/[id]/route";
 import * as kpiRoute from "@/app/api/v1/monitoring/kpis/route";
 import * as scrapingShadowRoute from "@/app/api/v1/ingestion/scraping/shadow/route";
 import * as ussdCredentialsRoute from "@/app/api/v1/ussd/credentials/route";
 import * as ussdSessionRoute from "@/app/api/v1/ussd/session/route";
-import * as monetizationRoute from "@/app/api/v1/organizations/[id]/monetization/route";
 import * as reportsRoute from "@/app/api/v1/reports/route";
 import * as reviewRoute from "@/app/api/v1/reports/review/route";
 import * as reviewItemRoute from "@/app/api/v1/reports/review/[id]/route";
 import * as sloRoute from "@/app/api/v1/monitoring/slo/route";
 import { getRepository, setRepositoryForTests } from "@/lib/repository";
 import { DEMO_ADMIN_ID, DEMO_ORG_ID, DEMO_ORG_USER_ID, DEMO_USER_ID, MemoryRepository } from "@/lib/repository/memory";
-import { publisherCanPost } from "@/lib/publisher-verification";
 
 // These contracts use injected test identity/data, never a live auth provider.
 // Keep the real role authorization checks while replacing authentication only.
@@ -81,32 +76,43 @@ describe("every Phase 1 /api/v1 route", () => {
   });
 
   it("supports verified opportunity reads, events, and organization-owned CRUD", async () => {
-    expect((await opportunitiesRoute.GET(request("/api/v1/opportunities"))).status).toBe(200);
+    const catalogue = await data<Array<Record<string, unknown>>>(await opportunitiesRoute.GET(request("/api/v1/opportunities")));
+    expect(catalogue.length).toBeGreaterThan(0);
+    expect(catalogue.every((item) => !("reviewNotes" in item) && !("reviewChecklist" in item))).toBe(true);
+    // Everyone browsing gets the same catalogue; their own posts need ?scope=mine.
+    expect((await data<unknown[]>(await opportunitiesRoute.GET(request("/api/v1/opportunities", "GET", undefined, orgHeaders)))).length).toBe(catalogue.length);
+    expect((await opportunitiesRoute.GET(request("/api/v1/opportunities?scope=mine"))).status).toBe(200);
+    expect((await opportunitiesRoute.GET(request("/api/v1/opportunities?limit=abc"))).status).toBe(400);
+    expect((await data<unknown[]>(await opportunitiesRoute.GET(request("/api/v1/opportunities?limit=1")))).length).toBe(1);
+    expect((await opportunityRoute.GET(request("/api/v1/opportunities/not-a-uuid"), { params: Promise.resolve({ id: "not-a-uuid" }) })).status).toBe(404);
     expect((await opportunityRoute.GET(request(`/api/v1/opportunities/${opportunityId}`), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(200);
     const catalogEdit = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${opportunityId}`, "PATCH", { title: "Changed by organization" }, orgHeaders), { params: Promise.resolve({ id: opportunityId }) });
     expect(catalogEdit.status).toBe(403);
     const catalogDelete = await opportunityRoute.DELETE(request(`/api/v1/opportunities/${opportunityId}`, "DELETE", undefined, orgHeaders), { params: Promise.resolve({ id: opportunityId }) });
     expect(catalogDelete.status).toBe(403);
     expect((await eventsRoute.POST(request(`/api/v1/opportunities/${opportunityId}/events`, "POST", { eventType: "view" }), { params: Promise.resolve({ id: opportunityId }) })).status).toBe(201);
+    // Anyone signed in can post; the post waits for review and keeps the poster's contact details private.
     const createdResponse = await opportunitiesRoute.POST(request("/api/v1/opportunities", "POST", {
-      title: "Community Research Fellowship", organizationId: DEMO_ORG_ID, category: "fellowship",
+      title: "Community Research Fellowship", organizationName: "Nile Innovation", category: "fellowship",
       description: "A six-month fellowship helping Ugandan communities turn local evidence into practical programmes.",
       eligibility: { educationLevels: ["bachelors"] }, requiredSkills: ["research"], preferredSkills: [], location: "Kampala",
       workMode: "hybrid", deadline: new Date(Date.now() + 30 * 86_400_000).toISOString(), applicationMethod: "Apply through the official form",
-      sourceUrl: "https://example.org/nile-innovation/fellowship", verificationStatus: "pending", source: "org_submitted", status: "open",
-    }, orgHeaders));
+      sourceUrl: "https://example.org/nile-innovation/fellowship",
+      submitterContact: { name: "Amina Nakato", email: "amina@example.org", phone: "+256700000001", relationship: "work_there" },
+    }));
     expect(createdResponse.status).toBe(201);
-    const created = await data<{ id: string; origin: string }>(createdResponse);
-    expect(created.origin).toBe("organization");
-    const organizationListings = await data<Array<{ id: string; origin: string }>>(await opportunitiesRoute.GET(request("/api/v1/opportunities", "GET", undefined, orgHeaders)));
-    expect(organizationListings.map((item) => item.id)).toContain(created.id);
-    expect(organizationListings.every((item) => item.origin === "organization")).toBe(true);
-    const selfApproval = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { verificationStatus: "verified" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });
-    expect((await data<{ verificationStatus: string }>(selfApproval)).verificationStatus).toBe("pending");
-    const transfer = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { organizationId: "44444444-4444-4444-8444-444444444445" }, orgHeaders), { params: Promise.resolve({ id: created.id }) });
-    expect(transfer.status).toBe(403);
-    expect((await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { title: "Community Evidence Fellowship" }, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(200);
-    expect((await opportunityRoute.DELETE(request(`/api/v1/opportunities/${created.id}`, "DELETE", undefined, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(204);
+    const created = await data<{ id: string; origin: string; verificationStatus: string; submittedBy: string }>(createdResponse);
+    expect(created).toMatchObject({ origin: "community", verificationStatus: "pending", submittedBy: DEMO_USER_ID });
+    const mine = await data<Array<{ id: string }>>(await opportunitiesRoute.GET(request("/api/v1/opportunities?scope=mine")));
+    expect(mine.map((item) => item.id)).toContain(created.id);
+    // Someone else cannot edit or remove it.
+    expect((await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { title: "Hijacked" }, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(403);
+    expect((await opportunityRoute.DELETE(request(`/api/v1/opportunities/${created.id}`, "DELETE", undefined, orgHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(403);
+    // Posters cannot approve their own listing.
+    const selfApproval = await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { verificationStatus: "verified" }), { params: Promise.resolve({ id: created.id }) });
+    expect(selfApproval.status).toBe(400);
+    expect((await opportunityRoute.PATCH(request(`/api/v1/opportunities/${created.id}`, "PATCH", { title: "Community Evidence Fellowship" }), { params: Promise.resolve({ id: created.id }) })).status).toBe(200);
+    expect((await opportunityRoute.DELETE(request(`/api/v1/opportunities/${created.id}`, "DELETE"), { params: Promise.resolve({ id: created.id }) })).status).toBe(204);
   });
 
   it("returns ranked matches with complete explanations", async () => {
@@ -137,22 +143,13 @@ describe("every Phase 1 /api/v1 route", () => {
     expect((await notificationsRoute.GET(request("/api/v1/notifications"))).status).toBe(200);
   });
 
-  it("creates organizations and returns aggregate-only analytics", async () => {
-    const createdOrganizationResponse = await organizationsRoute.POST(request("/api/v1/organizations", "POST", { name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContacts: [{ name: "Jane Namuli", phone: "+256 700 000 001" }] }));
-    expect(createdOrganizationResponse.status).toBe(201);
-    const createdOrganization = await data<{ id: string }>(createdOrganizationResponse);
+  it("lets admins review organisations that already exist", async () => {
+    // Publisher sign-up is retired; organisations created before that can still be verified by an admin.
+    const created = await (await getRepository()).createOrganization({ name: "Bright Futures Uganda", sector: "Education", officialLinks: ["https://example.org/bright"], officialEmail: "hello@example.org", registrationProof: "REG-01", accountableContact: "Jane Namuli", accountableContacts: [{ name: "Jane Namuli", phone: "+256 700 000 001" }], dashboardUsers: [DEMO_ORG_USER_ID] });
     const organizationQueue = await organizationReviewRoute.GET(request("/api/v1/organizations/review", "GET", undefined, adminHeaders));
     expect(organizationQueue.status).toBe(200);
-    expect((await data<Array<{ id: string }>>(organizationQueue)).some((item) => item.id === createdOrganization.id)).toBe(true);
-    expect((await organizationReviewItemRoute.PATCH(request(`/api/v1/organizations/review/${createdOrganization.id}`, "PATCH", { approved: true }, adminHeaders), { params: Promise.resolve({ id: createdOrganization.id }) })).status).toBe(200);
-    const response = await analyticsRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/analytics`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
-    expect(response.status).toBe(200);
-    expect(JSON.stringify(await response.json())).not.toMatch(/userId|email|phone/i);
-    expect((await organizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
-    expect((await organizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}`, "PATCH", { sector: "Inclusive technology" }, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(200);
-    const readiness = await monetizationRoute.GET(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "GET", undefined, orgHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) });
-    expect(readiness.status).toBe(200); expect(JSON.stringify(await readiness.json())).not.toMatch(/userId|email|phone/i);
-    expect((await monetizationRoute.PATCH(request(`/api/v1/organizations/${DEMO_ORG_ID}/monetization`, "PATCH", { subscriptionTier: "growth", monetizationEnabled: true }, adminHeaders), { params: Promise.resolve({ id: DEMO_ORG_ID }) })).status).toBe(409);
+    expect((await data<Array<{ id: string }>>(organizationQueue)).some((item) => item.id === created.id)).toBe(true);
+    expect((await organizationReviewItemRoute.PATCH(request(`/api/v1/organizations/review/${created.id}`, "PATCH", { approved: true }, adminHeaders), { params: Promise.resolve({ id: created.id }) })).status).toBe(200);
   });
 
   it("requires explicit admin confirmation to verify an organization without URSB proof", async () => {
@@ -182,7 +179,6 @@ describe("every Phase 1 /api/v1 route", () => {
     const verified = await repository.getOrganization(organization.id);
     if (!verified) throw new Error("Verified organization was not persisted.");
     expect(verified.verificationStatus).toBe("verified");
-    expect(await publisherCanPost(verified)).toBe(true);
 
     const invalidContact = await repository.createOrganization({
       name: "Unmatched Domain Foundation",

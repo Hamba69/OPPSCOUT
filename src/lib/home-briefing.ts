@@ -4,6 +4,7 @@ import { APP_TIME_ZONE, formatDate } from "@/lib/dates";
 import { loadFeedItems } from "@/lib/feed-items";
 import { allOpportunityTypes } from "@/lib/opportunity-types";
 import { getRepository } from "@/lib/repository";
+import { displayTitle } from "@/lib/opportunity-title";
 import type { UserProfile } from "@/core/entities/domain";
 import { choiceLabel } from "@/services/profile/choices";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
@@ -33,7 +34,7 @@ export async function loadSavedClosing(userId: string, now = new Date()): Promis
     .slice(0, CLOSING_ROWS)
     .map(({ opportunity, daysLeft }) => ({
       opportunityId: opportunity.id,
-      title: opportunity.title,
+      title: displayTitle(opportunity.title, opportunity.organization?.name ?? opportunity.organizationName),
       detail: `${opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"} · closes ${closesOn(opportunity.deadline!)}`,
       daysLeft,
     }));

@@ -1,6 +1,16 @@
 import type { MatchFactor } from "@/core/interfaces/match-engine";
 import type { Opportunity, UserProfile } from "@/core/entities/domain";
 import { includesNormalized, normalize } from "@/services/matching/rule-based/normalize";
+import { ANYWHERE_IN_UGANDA, canonicalUgandaLocation } from "@/data/uganda-locations";
+
+/**
+ * Profiles hold a Ugandan district. A location rule naming that district (in any spelling) or Uganda
+ * itself is met, so "open to residents of Uganda" passes for a seeker in Gulu.
+ */
+function locationRuleValues(location: string | null | undefined): string[] {
+  const place = canonicalUgandaLocation(location);
+  return place ? [location ?? "", place, ANYWHERE_IN_UGANDA] : [location ?? ""];
+}
 
 export interface GateResult {
   eligible: boolean;
@@ -85,9 +95,12 @@ export function evaluateHardGates(profile: UserProfile, opportunity: Opportunity
     const values =
       rule.field === "language"
         ? profile.languages
-        : [rule.field === "graduationStatus" ? profile.graduationStatus ?? "" : profile.location ?? ""];
+        : rule.field === "location"
+          ? locationRuleValues(profile.location)
+          : [profile.graduationStatus ?? ""];
     const matches = rule.allowedValues.some((allowed) =>
-      values.some((value) => normalize(value) === normalize(allowed)),
+      values.some((value) => normalize(value) === normalize(allowed))
+      || (rule.field === "location" && canonicalUgandaLocation(allowed) !== null && canonicalUgandaLocation(allowed) === canonicalUgandaLocation(profile.location)),
     );
     (matches ? passed : failed).push({
       label: rule.label,

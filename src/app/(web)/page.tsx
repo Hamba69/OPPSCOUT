@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 const steps = [
   ["search", "Build your profile", "Add your studies, skills and the opportunity types you want."],
-  ["check", "Get verified matches", "Every listing is checked before it reaches you, and ranked by fit."],
+  ["check", "Get matches that fit", "Our team reviews each listing before it reaches you, and ranks it by how well it fits you."],
   ["clock", "Apply before it closes", "Save what fits and get reminded before deadlines."],
 ] as const;
 
@@ -52,11 +52,12 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-white/85 bg-white/60 px-8 py-7 shadow-[0_10px_30px_rgba(146,98,0,0.06)] backdrop-blur-xl">
         <h2 className="text-xl font-extrabold text-ink">Have an opportunity to share?</h2>
-        <Link href="/organizations" className="button-dark">Post an opportunity</Link>
+        <Link href="/post" className="button-dark">Post an opportunity</Link>
       </section>
 
       <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm text-navy">
         <AdminPortalTrigger initiallyOpen={unlock} />
+        <nav aria-label="Legal" className="flex gap-4"><Link href="/privacy" className="underline-offset-4 hover:underline">Privacy Policy</Link><Link href="/terms" className="underline-offset-4 hover:underline">Terms of Use</Link></nav>
       </footer>
     </main>
   );

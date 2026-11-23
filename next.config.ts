@@ -11,6 +11,20 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "1mb",
     },
   },
+  // The publisher area is retired: anyone signed in posts from /post and manages listings at /my-postings.
+  // Old links and bookmarks land on the new pages. Existing organisations and listings are kept.
+  async redirects() {
+    return [
+      { source: "/organizations", destination: "/post", permanent: false },
+      { source: "/organizations/login", destination: "/login?next=%2Fmy-postings", permanent: false },
+      { source: "/organizations/signup", destination: "/login?mode=signup&next=%2Fpost", permanent: false },
+      { source: "/onboarding/organization", destination: "/post", permanent: false },
+      { source: "/dashboard/opportunities/new", destination: "/post", permanent: false },
+      { source: "/dashboard/opportunities/:id/edit", destination: "/my-postings/:id/edit", permanent: false },
+      { source: "/dashboard", destination: "/my-postings", permanent: false },
+      { source: "/dashboard/:path*", destination: "/my-postings", permanent: false },
+    ];
+  },
   async headers() {
     return [
       ...["/admin/:path*", "/api/v1/admin/:path*", "/api/v1/admin-portal/:path*", "/api/v1/monitoring/:path*", "/api/v1/reports/review/:path*", "/api/v1/organizations/review/:path*"].map(source => ({ source, headers: [{ key: "Cache-Control", value: "no-store" }, { key: "X-Robots-Tag", value: "noindex, nofollow" }] })),
