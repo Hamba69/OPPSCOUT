@@ -70,7 +70,7 @@ export function OpportunityForm({ choices, initial, defaultContact }: { choices:
       const response = await fetch(initial ? `/api/v1/opportunities/${initial.id}` : "/api/v1/opportunities", { method: initial ? "PATCH" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!response.ok) { setMessage({ tone: "error", text: await apiErrorMessage(response, initial ? "We could not save these changes. Check the official link and required fields." : "We could not submit this listing. Check the official link (it must start with https://) and the required fields.") }); return; }
       setMessage({ tone: "ok", text: initial ? "Changes saved and sent for review again." : "Submitted. A reviewer will check it, and may contact you, before it goes live." });
-      router.push(`/my-postings?${initial ? "updated" : "posted"}=1`);
+      router.push(`/dashboard?${initial ? "updated" : "posted"}=1`);
       router.refresh();
       return;
     } catch { setMessage({ tone: "error", text: "Could not connect. Please check your connection and try again." }); }

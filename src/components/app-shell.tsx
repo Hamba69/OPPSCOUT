@@ -59,17 +59,13 @@ export function AppFrame({ sidebar, children }: { sidebar: React.ReactNode; chil
   </div>;
 }
 
-export const SEEKER_PATHS = ["/feed", "/saved", "/opportunities", "/opportunity", "/profile", "/settings", "/feedback", "/post", "/my-postings"];
+export const SEEKER_PATHS = ["/feed", "/saved", "/opportunities", "/opportunity", "/profile", "/settings", "/feedback"];
 
 const seekerGroups: SideGroup[] = [
   { title: "DISCOVER", links: [
     { label: "Matches", href: "/feed", icon: "matches", match: ["/opportunity"] },
     { label: "Saved", href: "/saved", icon: "saved" },
     { label: "Opportunities", href: "/opportunities", icon: "opportunities" },
-  ] },
-  { title: "SHARE", links: [
-    { label: "Post an opportunity", href: "/post", icon: "plus" },
-    { label: "My postings", href: "/my-postings", icon: "edit" },
   ] },
   { title: "ACCOUNT", links: [
     { label: "My profile", href: "/profile", icon: "profile", match: ["/settings"] },

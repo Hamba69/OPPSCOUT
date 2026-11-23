@@ -7,8 +7,7 @@ import { getOptionalAuth } from "@/lib/auth";
 export const metadata: Metadata = { title: "Page not found" };
 
 /**
- * Signed-in people go back to their matches (publishers also get their dashboard, since most also use
- * OppScout as seekers); visitors go to the front page or log in.
+ * Signed-in people go back to their matches; visitors go to the front page or log in.
  */
 export default async function NotFoundPage(): Promise<React.JSX.Element> {
   const auth = await getOptionalAuth();

@@ -65,8 +65,8 @@ export async function requirePageAuth(roles: AppRole[] = ["user"]): Promise<Auth
 }
 
 export function homePathForRole(role: AppRole): string {
-  // The publisher dashboard is retired; people who held publisher access manage their listings here.
-  return role === "organization" ? "/my-postings" : "/feed";
+  // People who held publisher access land in the publisher area, where they manage their postings.
+  return role === "organization" ? "/dashboard" : "/feed";
 }
 
 /** Returns the signed-in user's context, or null for visitors. Never throws for signed-out visitors. */

@@ -11,18 +11,24 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "1mb",
     },
   },
-  // The publisher area is retired: anyone signed in posts from /post and manages listings at /my-postings.
-  // Old links and bookmarks land on the new pages. Existing organisations and listings are kept.
+  // Posting lives in the publisher area at /dashboard; anyone signed in can use it, no organisation needed.
+  // Old publisher pages and the short-lived /post and /my-postings addresses land on their new homes.
   async redirects() {
     return [
-      { source: "/organizations", destination: "/post", permanent: false },
-      { source: "/organizations/login", destination: "/login?next=%2Fmy-postings", permanent: false },
-      { source: "/organizations/signup", destination: "/login?mode=signup&next=%2Fpost", permanent: false },
-      { source: "/onboarding/organization", destination: "/post", permanent: false },
-      { source: "/dashboard/opportunities/new", destination: "/post", permanent: false },
-      { source: "/dashboard/opportunities/:id/edit", destination: "/my-postings/:id/edit", permanent: false },
-      { source: "/dashboard", destination: "/my-postings", permanent: false },
-      { source: "/dashboard/:path*", destination: "/my-postings", permanent: false },
+      { source: "/organizations", destination: "/dashboard/new", permanent: false },
+      { source: "/organizations/login", destination: "/login?next=%2Fdashboard", permanent: false },
+      { source: "/organizations/signup", destination: "/login?mode=signup&next=%2Fdashboard%2Fnew", permanent: false },
+      { source: "/onboarding/organization", destination: "/dashboard/new", permanent: false },
+      { source: "/post", destination: "/dashboard/new", permanent: false },
+      { source: "/my-postings", destination: "/dashboard", permanent: false },
+      { source: "/my-postings/:id/edit", destination: "/dashboard/:id/edit", permanent: false },
+      { source: "/dashboard/opportunities/new", destination: "/dashboard/new", permanent: false },
+      { source: "/dashboard/opportunities/:id/edit", destination: "/dashboard/:id/edit", permanent: false },
+      { source: "/dashboard/opportunities", destination: "/dashboard", permanent: false },
+      { source: "/dashboard/organization", destination: "/dashboard", permanent: false },
+      { source: "/dashboard/analytics", destination: "/dashboard", permanent: false },
+      { source: "/dashboard/monetization", destination: "/dashboard", permanent: false },
+      { source: "/dashboard/candidates/:path*", destination: "/dashboard", permanent: false },
     ];
   },
   async headers() {

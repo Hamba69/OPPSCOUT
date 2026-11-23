@@ -11,7 +11,7 @@ export function DeletePostingButton({ id, title }: { id: string; title: string }
   const [pending, startTransition] = useTransition();
   const remove = (): void => startTransition(async () => {
     const response = await fetch(`/api/v1/opportunities/${id}`, { method: "DELETE" });
-    if (response.ok) { router.replace("/my-postings"); router.refresh(); return; }
+    if (response.ok) { router.replace("/dashboard"); router.refresh(); return; }
     setMessage("It could not be removed. Please try again.");
   });
   if (!confirming) return <button type="button" className="button-secondary !text-[#B3261E]" onClick={() => setConfirming(true)}>Remove posting</button>;

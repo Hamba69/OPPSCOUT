@@ -27,7 +27,7 @@ test("user sees scored matches, saves one, and updates preferences", async ({ pa
 test("any signed-in member can post an opportunity, and it waits in the review queue", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
-  await page.goto("/post");
+  await page.goto("/dashboard/new");
   await page.getByLabel("Title").fill("Youth Climate Data Fellowship");
   await page.getByLabel("Organisation offering it").fill("Nile Innovation");
   await page.getByLabel("Location").selectOption("Kampala");
@@ -40,7 +40,7 @@ test("any signed-in member can post an opportunity, and it waits in the review q
   await page.getByLabel("Email").fill("amina@example.org");
   await page.getByLabel("I work at this organisation").check();
   await page.getByRole("button", { name: "Submit for review" }).click();
-  await page.waitForURL("**/my-postings?posted=1");
+  await page.waitForURL("**/dashboard?posted=1");
   await expect(page.getByText("Thanks, your opportunity was submitted.")).toBeVisible();
   await expect(page.getByText("Youth Climate Data Fellowship")).toBeVisible();
   await page.goto("/admin/review");

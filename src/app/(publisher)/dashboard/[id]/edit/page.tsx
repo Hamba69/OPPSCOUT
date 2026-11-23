@@ -20,7 +20,7 @@ export default async function EditPostingPage({ params }: { params: Promise<{ id
   if (!opportunity || !ownsListing(auth, opportunity)) notFound();
   const [choices, contact] = await Promise.all([getProfileChoices(), defaultPosterContact(auth.userId)]);
   return <main className="animate-in flex flex-col gap-5">
-    <BackButton fallbackHref="/my-postings" label="Back to my postings" className="self-start" />
+    <BackButton fallbackHref="/dashboard" label="Back to my postings" className="self-start" />
     <header className="title-card">
       <h1>Edit posting</h1>
       <p>Saving sends it back to our team for review before it is shown again.</p>

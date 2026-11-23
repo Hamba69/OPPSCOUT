@@ -22,7 +22,8 @@ describe("seeker-facing listings", () => {
   it("never include moderation fields", () => {
     const listing = { ...getDemoCatalog().opportunities[0]!, reviewNotes: "Seeded from internal research", reviewerId: "admin-portal" };
     const visible = publicOpportunity(listing) as Record<string, unknown>;
-    for (const key of ["reviewNotes", "reviewerId", "reviewChecklist", "reviewedAt", "source", "origin"]) expect(visible).not.toHaveProperty(key);
+    for (const key of ["reviewNotes", "reviewerId", "reviewChecklist", "reviewedAt", "source", "origin", "verificationStatus"]) expect(visible).not.toHaveProperty(key);
+    if (visible.organization) expect(visible.organization).not.toHaveProperty("verificationStatus");
     expect(visible).toMatchObject({ id: listing.id, title: listing.title, deadline: listing.deadline, sourceUrl: listing.sourceUrl });
   });
 });

@@ -21,7 +21,6 @@ export const config = {
     "/settings/:path*",
     "/opportunity/:path*",
     "/opportunities/:path*",
-    "/post/:path*",
-    "/my-postings/:path*",
+    "/dashboard/:path*",
   ],
 };

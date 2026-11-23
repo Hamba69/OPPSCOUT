@@ -107,7 +107,7 @@ export function PublisherOpportunityTable({
                         : "Open until filled"}
                     </td>
                     <td className="px-3 py-3.5">
-                      <Link className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap text-[13px] font-bold text-[#6B4E00]" href={`/my-postings/${item.id}/edit`}>
+                      <Link className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap text-[13px] font-bold text-[#6B4E00]" href={`/dashboard/${item.id}/edit`}>
                         <Icon name="edit" size={14} />Edit
                       </Link>
                     </td>
