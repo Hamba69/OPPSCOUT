@@ -40,6 +40,11 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
         <div className="mt-3"><AccountDataActions /></div>
         <p className="mt-4 text-xs text-navy">How we use your data: <Link className="underline" href="/privacy">Privacy Policy</Link> · <Link className="underline" href="/terms">Terms of Use</Link></p>
       </section>
+      <section className="surface" aria-labelledby="switch-to-publishing">
+        <h2 id="switch-to-publishing" className="surface-title">Have an opportunity to share?</h2>
+        <p className="mt-3 text-[13px] leading-6 text-navy">Use the same account to post jobs, scholarships and other opportunities for others. Our team reviews every post before it goes live.</p>
+        <Link href="/dashboard" className="button-secondary mt-4">Switch to publishing</Link>
+      </section>
     </ProfileArea>
   </main>;
 }

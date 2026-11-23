@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const expiredMessage = "Your reset session has expired or is invalid. Request a new reset email.";
 
-export function ResetPasswordForm({ returnTo = "/feed" }: { returnTo?: "/feed" | "/settings" }): React.JSX.Element {
+export function ResetPasswordForm({ returnTo = "/feed" }: { returnTo?: "/feed" | "/settings" | "/dashboard/profile" }): React.JSX.Element {
   const router = useRouter();
   const [busy, setBusy] = useState(true);
   const [message, setMessage] = useState("");

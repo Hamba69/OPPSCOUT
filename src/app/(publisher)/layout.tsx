@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { AppFrame } from "@/components/app-shell";
-import { PublisherSidebar } from "@/components/publisher-sidebar";
+import { PublisherFrame } from "@/components/publisher-sidebar";
 import { getOptionalAuth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -13,5 +12,5 @@ export const dynamic = "force-dynamic";
 export default async function PublisherLayout({ children }: { children: React.ReactNode }): Promise<React.JSX.Element> {
   const auth = await getOptionalAuth();
   if (!auth) redirect("/login?next=%2Fdashboard");
-  return <AppFrame sidebar={<PublisherSidebar />}>{children}</AppFrame>;
+  return <PublisherFrame>{children}</PublisherFrame>;
 }

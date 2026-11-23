@@ -7,5 +7,6 @@ export const dynamic = "force-dynamic";
 
 export default async function ResetPasswordPage({ searchParams }: { searchParams: Promise<{ returnTo?: string }> }): Promise<React.JSX.Element> {
   const { returnTo } = await searchParams;
-  return <ResetPasswordForm returnTo={returnTo === "/settings" ? "/settings" : "/feed"} />;
+  // Only known pages, so the link cannot send people somewhere else after changing their password.
+  return <ResetPasswordForm returnTo={returnTo === "/settings" || returnTo === "/dashboard/profile" ? returnTo : "/feed"} />;
 }

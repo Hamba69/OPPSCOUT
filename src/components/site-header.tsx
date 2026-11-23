@@ -12,9 +12,11 @@ export function SiteHeader(): React.JSX.Element | null {
   const isLanding = pathname === "/";
   const isSeeker = seekerPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
-  const isStaff = pathname.startsWith("/dashboard") || isAdmin;
-  const home = isAdmin ? "/admin/overview" : isStaff ? "/dashboard" : "/";
-  if (isSeeker) return null;
+  // The publisher area has its own menu with the logo, like the seeker app, so it needs no header either.
+  const isPublisher = pathname === "/dashboard" || pathname.startsWith("/dashboard/");
+  const isStaff = isAdmin;
+  const home = isAdmin ? "/admin/overview" : "/";
+  if (isSeeker || isPublisher) return null;
   return <header className={isLanding ? "relative z-30" : `sticky top-0 z-30 ${isStaff ? "md:hidden" : ""} border-b border-white/70 bg-white/45 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] backdrop-blur-xl backdrop-saturate-150`}>
     <div className={`mx-auto grid ${isLanding ? "min-h-20" : "min-h-16"} max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:px-6 md:grid-cols-[1fr_auto_1fr] lg:px-8`}>
       <Link href={home} className="flex shrink-0 items-center gap-2 justify-self-start text-xl font-bold tracking-tight text-ink" aria-label="OppScout home"><Logo size={34} /><span className={isLanding ? "max-[380px]:sr-only" : undefined}>oppscout</span></Link>

@@ -1,20 +1,21 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-shell";
+import { DrawerFrame, type SideGroup } from "@/components/app-shell";
 
-/** Publisher menu. Few enough links to show all of them on a phone, so Sign out is never scrolled away. */
-export function PublisherSidebar(): React.JSX.Element {
-  return <AppSidebar
-    label="Publisher menu"
-    home="/dashboard"
-    badge={{ text: "PUBLISHER" }}
-    phone="wrap"
-    groups={[
-      { title: "PUBLISH", links: [
-        { label: "My postings", href: "/dashboard", icon: "opportunities" },
-        { label: "Post an opportunity", href: "/dashboard/new", icon: "plus" },
-      ] },
-      { title: "OPPSCOUT", links: [{ label: "Find opportunities", href: "/feed", icon: "matches" }] },
-    ]}
-  />;
+/**
+ * The publisher menu, in the same shape as the seeker menu: a sidebar on wide screens, a Menu drawer on
+ * phones. Switching to finding opportunities lives on the publisher profile page, not here.
+ */
+const publisherGroups: SideGroup[] = [
+  { title: "PUBLISH", links: [
+    { label: "Post an opportunity", href: "/dashboard/new", icon: "plus" },
+    { label: "My postings", href: "/dashboard", icon: "opportunities" },
+  ] },
+  { title: "ACCOUNT", links: [
+    { label: "Publisher profile", href: "/dashboard/profile", icon: "profile" },
+  ] },
+];
+
+export function PublisherFrame({ children }: { children: React.ReactNode }): React.JSX.Element {
+  return <DrawerFrame id="publisher-sidebar" label="Publisher navigation" home="/dashboard" groups={publisherGroups}>{children}</DrawerFrame>;
 }

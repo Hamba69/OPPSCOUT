@@ -14,20 +14,22 @@ export type SideGroup = { title?: string; ariaLabel?: string; links: SideLink[] 
 
 function isActive(pathname: string, link: SideLink): boolean {
   const paths = [link.href, ...(link.match ?? [])];
-  return paths.some((path) => pathname === path || (path !== "/dashboard" && pathname.startsWith(`${path}/`)));
+  // "/dashboard" is My postings: it covers editing a posting, but not the other publisher pages below it.
+  if (link.href === "/dashboard") return pathname === "/dashboard" || /^\/dashboard\/[^/]+\/edit$/.test(pathname);
+  return paths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
 /** Sidebar used by every signed-in area. */
 export function AppSidebar({ id, label, home, badge, groups, signOut = true, phone = "strip", footer, mobileOpen = false, onMobileClose }: {
   id?: string;
   label: string; home: string; badge?: { text: string; dark?: boolean }; groups: SideGroup[];
-  signOut?: boolean; phone?: "strip" | "wrap" | "hidden" | "drawer"; footer?: React.ReactNode;
+  signOut?: boolean; phone?: "strip" | "hidden" | "drawer"; footer?: React.ReactNode;
   mobileOpen?: boolean; onMobileClose?: () => void;
 }): React.JSX.Element {
   const pathname = usePathname();
   return <aside
     id={id}
-    className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : phone === "drawer" ? `seeker-sidebar-drawer ${mobileOpen ? "is-open" : ""}` : phone === "wrap" ? "app-sidebar-scroll app-sidebar-wrap" : "app-sidebar-scroll"}`}
+    className={`app-sidebar ${phone === "hidden" ? "max-md:hidden" : phone === "drawer" ? `seeker-sidebar-drawer ${mobileOpen ? "is-open" : ""}` : "app-sidebar-scroll"}`}
     role={phone === "drawer" && mobileOpen ? "dialog" : undefined}
     aria-modal={phone === "drawer" && mobileOpen ? true : undefined}
     aria-label={phone === "drawer" && mobileOpen ? label : undefined}
@@ -73,15 +75,17 @@ const seekerGroups: SideGroup[] = [
   ] },
 ];
 
-/** Wraps seeker pages in the sidebar frame; every other page renders as it is. */
-export function SeekerFrame({ children }: { children: React.ReactNode }): React.JSX.Element {
-  const pathname = usePathname();
-  const seeker = SEEKER_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+/**
+ * The signed-in menu: a sidebar on wide screens and a "Menu" drawer on phones. The seeker app and the
+ * publisher area both use it, each with their own links, so they look and work the same.
+ */
+export function DrawerFrame({ id, label, home, groups, children }: { id: string; label: string; home: string; groups: SideGroup[]; children: React.ReactNode }): React.JSX.Element {
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!mobileOpen) return;
+    const focusableSelector = `#${id} a[href], #${id} button:not([disabled])`;
     const closeOnEscape = (event: KeyboardEvent): void => {
       if (event.key === "Escape") {
         setMobileOpen(false);
@@ -89,7 +93,7 @@ export function SeekerFrame({ children }: { children: React.ReactNode }): React.
         return;
       }
       if (event.key === "Tab") {
-        const focusable = Array.from(document.querySelectorAll<HTMLElement>("#seeker-sidebar a[href], #seeker-sidebar button:not([disabled])"));
+        const focusable = Array.from(document.querySelectorAll<HTMLElement>(focusableSelector));
         if (!focusable.length) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
@@ -104,28 +108,35 @@ export function SeekerFrame({ children }: { children: React.ReactNode }): React.
     };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    document.querySelector<HTMLElement>("#seeker-sidebar a[href], #seeker-sidebar button:not([disabled])")?.focus();
+    document.querySelector<HTMLElement>(focusableSelector)?.focus();
     document.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", closeOnEscape);
     };
-  }, [mobileOpen]);
+  }, [mobileOpen, id]);
 
-  if (!seeker) return <>{children}</>;
   const closeMobileNav = (): void => {
     setMobileOpen(false);
     menuButton.current?.focus();
   };
   return <>
     <div className="seeker-mobile-nav md:hidden">
-      <button ref={menuButton} type="button" aria-expanded={mobileOpen} aria-controls="seeker-sidebar" onClick={() => setMobileOpen((open) => !open)}
+      <button ref={menuButton} type="button" aria-expanded={mobileOpen} aria-controls={id} onClick={() => setMobileOpen((open) => !open)}
         className="inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold text-ink glass-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-leaf">
         <Icon name="menu" size={18} />
         Menu
       </button>
     </div>
     {mobileOpen && <button type="button" className="seeker-sidebar-backdrop md:hidden" aria-label="Close navigation" onClick={closeMobileNav} />}
-    <AppFrame sidebar={<AppSidebar id="seeker-sidebar" label="Main navigation" home="/feed" groups={seekerGroups} phone="drawer" mobileOpen={mobileOpen} onMobileClose={closeMobileNav} />}>{children}</AppFrame>
+    <AppFrame sidebar={<AppSidebar id={id} label={label} home={home} groups={groups} phone="drawer" mobileOpen={mobileOpen} onMobileClose={closeMobileNav} />}>{children}</AppFrame>
   </>;
+}
+
+/** Wraps seeker pages in the drawer menu; every other page renders as it is. */
+export function SeekerFrame({ children }: { children: React.ReactNode }): React.JSX.Element {
+  const pathname = usePathname();
+  const seeker = SEEKER_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  if (!seeker) return <>{children}</>;
+  return <DrawerFrame id="seeker-sidebar" label="Main navigation" home="/feed" groups={seekerGroups}>{children}</DrawerFrame>;
 }
