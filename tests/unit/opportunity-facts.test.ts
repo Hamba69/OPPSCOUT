@@ -5,9 +5,13 @@ import { closingText, eligibilityLines } from "@/components/opportunity-facts";
 const now = new Date("2026-11-23T09:00:00Z");
 
 describe("opportunity key facts", () => {
-  it("shows the closing date with days left, and flags the last week", () => {
-    expect(closingText({ deadline: new Date("2026-12-03T21:00:00Z"), deadlineType: "fixed" }, now)).toEqual({ label: "Closes 4 Dec 2026 · 11 days left", urgent: false });
-    expect(closingText({ deadline: new Date("2026-11-26T20:00:00Z"), deadlineType: "fixed" }, now).urgent).toBe(true);
+  it("shows days left only for saved opportunities", () => {
+    // Not saved: just the date, no countdown or urgent colour.
+    expect(closingText({ deadline: new Date("2026-12-03T21:00:00Z"), deadlineType: "fixed" }, now)).toEqual({ label: "Closes 4 Dec 2026", urgent: false });
+    expect(closingText({ deadline: new Date("2026-11-26T20:00:00Z"), deadlineType: "fixed" }, now).urgent).toBe(false);
+    // Saved: the countdown appears.
+    expect(closingText({ deadline: new Date("2026-12-03T21:00:00Z"), deadlineType: "fixed" }, now, { countdown: true })).toEqual({ label: "Closes 4 Dec 2026 · 11 days left", urgent: false });
+    expect(closingText({ deadline: new Date("2026-11-26T20:00:00Z"), deadlineType: "fixed" }, now, { countdown: true }).urgent).toBe(true);
     expect(closingText({ deadline: null, deadlineType: "rolling" }, now).label).toBe("Open until filled");
   });
 

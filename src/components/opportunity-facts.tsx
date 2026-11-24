@@ -5,12 +5,16 @@ import { choiceLabel } from "@/services/profile/choices";
 const WORK_MODE: Record<string, string> = { onsite: "On-site", hybrid: "Hybrid", remote: "Remote" };
 const RULE_FIELD: Record<string, string> = { graduationStatus: "Study status", location: "Where you live", language: "Language" };
 
-/** "Closes 4 Dec 2026 · 11 days left", "Closes today", or "Open until filled". */
-export function closingText(opportunity: Pick<Opportunity, "deadline" | "deadlineType">, now = new Date()): { label: string; urgent: boolean } {
+/**
+ * "Closes 4 Dec 2026", or "Open until filled". The countdown ("· 11 days left", "· last day") and the
+ * urgent colour are only for opportunities the seeker has saved, i.e. ones they are actually pursuing.
+ */
+export function closingText(opportunity: Pick<Opportunity, "deadline" | "deadlineType">, now = new Date(), { countdown = false }: { countdown?: boolean } = {}): { label: string; urgent: boolean } {
   if (!opportunity.deadline) return { label: "Open until filled", urgent: false };
   const days = Math.ceil((new Date(opportunity.deadline).getTime() - now.getTime()) / 86_400_000);
   const date = formatDate(opportunity.deadline, { day: "numeric", month: "short", year: "numeric" });
   if (days <= 0) return { label: `Closed ${date}`, urgent: true };
+  if (!countdown) return { label: `Closes ${date}`, urgent: false };
   if (days === 1) return { label: `Closes ${date} · last day`, urgent: true };
   return { label: `Closes ${date} · ${days} days left`, urgent: days <= 7 };
 }
@@ -37,8 +41,8 @@ export function eligibilityLines(eligibility: Opportunity["eligibility"]): strin
   return lines;
 }
 
-export function OpportunityFacts({ opportunity, now = new Date() }: { opportunity: Opportunity; now?: Date }): React.JSX.Element {
-  const closing = closingText(opportunity, now);
+export function OpportunityFacts({ opportunity, saved = false, now = new Date() }: { opportunity: Opportunity; saved?: boolean; now?: Date }): React.JSX.Element {
+  const closing = closingText(opportunity, now, { countdown: saved });
   const workMode = WORK_MODE[opportunity.workMode];
   const who = eligibilityLines(opportunity.eligibility);
   const facts: Array<[string, string, boolean?]> = [

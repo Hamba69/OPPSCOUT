@@ -59,11 +59,12 @@ Every field you can fill from the page, fill. Quote the page for the three claim
 
 - `deadlineType`: `fixed` or `rolling`. For `fixed`, give the exact `deadline` with a timezone offset
   (`2027-01-12T12:00:00Z` or `2027-01-12T23:59:00+03:00`). If the page gives only a date, use
-  `00:00` at the start of that date in the provider's timezone; this is the cautious choice. Write "closing
-  time not published" in the description. If you cannot tell which date is the deadline (several rounds,
+  `00:00` at the start of that date in the provider's timezone; this is the cautious choice. Do not mention
+  the missing time in the description: seekers read "no closing time" as "no closing date". At most, write
+  "Apply at least a day early to be safe." If you cannot tell which date is the deadline (several rounds,
   conflicting pages), put it in `unresolved`; do not choose one.
 - **A missing closing time is not "unresolved".** If the page gives a date but no time or timezone, use the 00:00
-  rule above and say "closing time not published" in the description. Use `unresolved` only for a real conflict or
+  rule above and leave the missing time out of the description. Use `unresolved` only for a real conflict or
   a fact you cannot find.
 - `deadlineQuote`: the sentence from the page that states the deadline (or says applications are rolling).
 - `ugandanEligibility`:

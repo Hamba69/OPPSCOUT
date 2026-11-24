@@ -17,6 +17,7 @@ import { requirePageAuth } from "@/lib/auth";
 import { getUserProfile } from "@/lib/profile-store";
 
 // Inject authenticated identity only; render the real pages, cards and engine.
+vi.mock("next/navigation", async (importOriginal) => ({ ...await importOriginal<typeof import("next/navigation")>(), useRouter: () => ({ refresh: vi.fn(), push: vi.fn(), replace: vi.fn() }) }));
 vi.mock("@/lib/page-access", () => ({ requireSeekerProfile: vi.fn() }));
 vi.mock("@/lib/auth", () => ({ requireAuth: vi.fn(async () => ({ userId: "11111111-1111-4111-8111-111111111111", role: "user", organizationId: null })), requirePageAuth: vi.fn() }));
 vi.mock("@/lib/profile-store", () => ({ getUserProfile: vi.fn() }));

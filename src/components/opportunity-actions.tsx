@@ -3,6 +3,7 @@
 import { Icon } from "@/components/custom-icon";
 import { ExternalIcon } from "@/components/icons";
 import { useTransientMessage } from "@/hooks/use-transient-message";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export function OpportunityActions({
@@ -14,6 +15,7 @@ export function OpportunityActions({
   sourceUrl: string;
   savedId?: string;
 }): React.JSX.Element {
+  const router = useRouter();
   const tracked = useRef(false);
   const [message, setMessage] = useTransientMessage<string>();
   const [busy, setBusy] = useState(false);
@@ -38,6 +40,8 @@ export function OpportunityActions({
       const body = await response.json() as { data?: { id?: string } };
       setCurrentSavedId(body.data?.id);
       setMessage("Saved. We’ll keep track of any closing date.");
+      // Re-render the page so the days-left countdown appears now that it is saved.
+      router.refresh();
     } catch { setMessage("Could not connect. Please try saving again."); }
     finally { setBusy(false); }
   }
@@ -53,6 +57,7 @@ export function OpportunityActions({
       }
       setCurrentSavedId(undefined);
       setMessage("Removed from your saved opportunities.");
+      router.refresh();
     } catch { setMessage("Could not connect. Please try again."); }
     finally { setBusy(false); }
   }
