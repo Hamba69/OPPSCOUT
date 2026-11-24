@@ -60,16 +60,19 @@ describe("Matches home briefing", () => {
     expect(container.textContent).toBe("");
   });
 
-  it("lists the most matched opportunities across OppScout with how many people each suits", () => {
+  it("shows the most matched opportunities as coloured tiles with title and organisation", () => {
     render(createElement(MostMatched, { rows: [
-      { opportunityId: "a", title: "Data Analyst", detail: "UNICEF Uganda · closes 4 Dec", seekers: 124 },
-      { opportunityId: "b", title: "Research Fellow", detail: "Makerere University · open until filled", seekers: 1 },
+      { opportunityId: "a", title: "Data Analyst", organization: "UNICEF Uganda", detail: "UNICEF Uganda · closes 4 Dec", category: "job", seekers: 124 },
+      { opportunityId: "b", title: "Research Fellow", organization: "Makerere University", detail: "Makerere University · open until filled", category: "fellowship", seekers: 1 },
     ] }));
 
     expect(screen.getByRole("heading", { name: "Most matched this week" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Data Analyst" }).getAttribute("href")).toBe("/opportunity/a");
-    expect(screen.getByLabelText("Matched to 124 people")).toBeTruthy();
-    expect(screen.getByLabelText("Matched to 1 person")).toBeTruthy();
+    const tile = screen.getByRole("link", { name: "Data Analyst UNICEF Uganda" });
+    expect(tile.getAttribute("href")).toBe("/opportunity/a");
+    expect(tile.className).toContain("tint-job");
+    expect(screen.queryByText(/124/)).toBeNull();
+    expect(screen.getByText("Makerere University")).toBeTruthy();
+    expect(screen.queryByText(/closes/)).toBeNull();
   });
 });
 
