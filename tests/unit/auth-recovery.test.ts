@@ -92,7 +92,16 @@ describe("password recovery", () => {
     await waitFor(() => expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(false));
     fireEvent.change(screen.getByLabelText("New password"), { target: { value: "short!" } });
     fireEvent.submit(screen.getByRole("button").closest("form")!);
-    await screen.findByText("Use at least 12 characters.");
+    await screen.findByText("Use at least 8 characters.");
     expect(mocks.updateUser).not.toHaveBeenCalled();
+  });
+});
+
+describe("password rules", () => {
+  it("accepts 8 characters with mixed case, a number and a symbol", async () => {
+    const { validateSignupPassword } = await import("@/lib/password");
+    expect(validateSignupPassword("Abcde1!x")).toBeNull();
+    expect(validateSignupPassword("Abcd1!x")).toBe("Use at least 8 characters.");
+    expect(validateSignupPassword("abcdefg1!")).toMatch(/uppercase/);
   });
 });

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { validateSignupPassword } from "@/lib/password";
+import { MIN_PASSWORD_LENGTH, PASSWORD_HINT, validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
 const expiredMessage = "Your reset session has expired or is invalid. Request a new reset email.";
@@ -69,10 +69,10 @@ export function ResetPasswordForm({ returnTo = "/feed" }: { returnTo?: "/feed" |
   }
 
   return <main className="page-shell animate-in">
-    <div className="text-center"><h1 className="text-3xl font-extrabold text-ink sm:text-4xl">Reset your password.</h1><p className="mx-auto mt-3 max-w-xl text-navy">Use 12+ characters with uppercase, lowercase, a number and a symbol.</p></div>
+    <div className="text-center"><h1 className="text-3xl font-extrabold text-ink sm:text-4xl">Reset your password.</h1><p className="mx-auto mt-3 max-w-xl text-navy">{PASSWORD_HINT}</p></div>
     <section className="card mx-auto mt-8 max-w-lg">
       <form className="space-y-4" onSubmit={submit}>
-        <label><span className="label">New password</span><input className="field" type="password" name="password" minLength={12} autoComplete="new-password" required disabled={busy || !sessionValid || complete} /></label>
+        <label><span className="label">New password</span><input className="field" type="password" name="password" minLength={MIN_PASSWORD_LENGTH} autoComplete="new-password" required disabled={busy || !sessionValid || complete} /></label>
         <button className="button w-full" disabled={busy || !sessionValid || complete}>{busy ? "Please wait…" : "Update password"}</button>
         {message && <p className="rounded-2xl glass-notice p-3 text-sm font-bold text-ink" role="status">{message}</p>}
         {!complete && <Link href="/login" className="inline-block text-sm font-semibold text-navy underline underline-offset-4">Request a new reset email</Link>}

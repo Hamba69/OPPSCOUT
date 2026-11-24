@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { LEGAL } from "@/config/legal";
-import { validateSignupPassword } from "@/lib/password";
+import { MIN_PASSWORD_LENGTH, PASSWORD_HINT, validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
 function MailIcon(): React.JSX.Element { return <Icon name="mail" size={20} />; }
@@ -170,7 +170,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
                 className="w-full rounded-2xl border border-ink/10 bg-white/70 backdrop-blur-md focus:bg-white py-3.5 pl-11 pr-16 text-ink outline-none transition placeholder:text-navy/45 hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                minLength={isSignin ? undefined : 12}
+                minLength={isSignin ? undefined : MIN_PASSWORD_LENGTH}
                 autoComplete={isSignin ? "current-password" : "new-password"}
                 placeholder={isSignin ? "Enter your password" : "Create a password"}
                 required
@@ -195,7 +195,7 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
               </button>
             )}
             {!isSignin && (
-              <p className="mt-1.5 text-xs text-navy/70">Use 12+ characters with uppercase, lowercase, a number and a symbol.</p>
+              <p className="mt-1.5 text-xs text-navy/70">{PASSWORD_HINT}</p>
             )}
           </div>
 
