@@ -17,11 +17,12 @@ export function MatchingProgress(): React.JSX.Element {
     const timer = window.setInterval(() => setStep((current) => Math.min(current + 1, MATCHING_STEPS.length - 1)), 750);
     return () => window.clearInterval(timer);
   }, []);
-  return <main className="flex flex-col gap-6" aria-busy="true">
-    <section className="briefing-card" aria-labelledby="matching-title">
-      <div className="relative flex items-center gap-4">
+  // The working orb sits centred above the heading, and the whole card is centred in the visible page.
+  return <main className="matching-screen" aria-busy="true">
+    <section className="briefing-card matching-card" aria-labelledby="matching-title">
+      <div className="relative flex flex-col items-center gap-3 text-center">
         <BriefingOrb working />
-        <div className="min-w-0 flex-1">
+        <div>
           <p className="briefing-eyebrow">Today&apos;s matches</p>
           <h1 id="matching-title" className="briefing-greeting"><strong>Finding your matches…</strong></h1>
         </div>

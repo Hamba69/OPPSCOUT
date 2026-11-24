@@ -2,7 +2,8 @@
 .page {
   display: flex;
   width: 100%;
-  min-height: min(70vh, 40rem);
+  /* The height of the visible page (less the phone menu button and frame padding), so the orb sits in the middle. */
+  min-height: calc(100dvh - 9rem);
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
@@ -77,6 +78,10 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   clip-path: inset(50%);
+}
+
+@media (min-width: 768px) {
+  .page { min-height: calc(100dvh - 5rem); }
 }
 
 @keyframes bar-slide {

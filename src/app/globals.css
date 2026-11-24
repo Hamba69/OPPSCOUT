@@ -444,6 +444,11 @@ h1.hero-title, .greeting h1, .briefing-greeting { hyphens: manual; -webkit-hyphe
 @keyframes orb-ripple { 0% { transform: scale(1); opacity: .5; } 100% { transform: scale(2); opacity: 0; } }
 
 /* Matching progress steps (loading screen for today's matches). */
+/* Loading screen while matching: centred in the visible page, below the phone menu button. */
+.matching-screen { display: flex; min-height: calc(100dvh - 9rem); flex-direction: column; align-items: center; justify-content: center; }
+.matching-card { width: min(26rem, 100%); }
+.matching-card .briefing-greeting { text-align: center !important; }
+@media (min-width: 768px) { .matching-screen { min-height: calc(100dvh - 5rem); } }
 .matching-step { display: flex; align-items: center; gap: .75rem; font-size: .875rem; font-weight: 500; color: #1e293b; opacity: .45; transition: opacity 200ms; }
 .matching-step.is-done { opacity: 1; }
 .matching-step.is-active { opacity: 1; font-weight: 700; }
