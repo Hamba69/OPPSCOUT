@@ -1,5 +1,5 @@
-/** Seekers must be at least this old. Matches the lowest minimum age a listing can set. */
-export const MIN_SEEKER_AGE = 13;
+/** OppScout is for adults only: people must be at least this old to use it. */
+export const MIN_SEEKER_AGE = 18;
 export const MAX_SEEKER_AGE = 100;
 
 function ageOn(birth: Date, today: Date): number {

@@ -39,7 +39,7 @@ describe("date of birth is required", () => {
   it("explains what is wrong", () => {
     expect(dateOfBirthProblem("", today)).toMatch(/Enter your date of birth/);
     expect(dateOfBirthProblem("2030-01-01", today)).toMatch(/future/);
-    expect(dateOfBirthProblem("2015-01-01", today)).toMatch(/at least 13/);
+    expect(dateOfBirthProblem("2015-01-01", today)).toMatch(/at least 18/);
     expect(dateOfBirthProblem("1900-01-01", today)).toMatch(/Check the year/);
     expect(dateOfBirthProblem("2001-05-14", today)).toBeNull();
   });

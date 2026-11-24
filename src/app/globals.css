@@ -487,18 +487,14 @@ h1.hero-title, .greeting h1, .briefing-greeting { hyphens: manual; -webkit-hyphe
 /* Privacy Policy and Terms of Use: set as a formal document, not an app screen. */
 .legal-sheet { padding: 1.5rem .75rem 3rem; }
 .legal-doc { max-width: 44rem; margin: 0 auto; padding: 3rem 3.25rem; background: #fff; color: #1a1a1a; border: 1px solid rgb(30 41 59 / .12); box-shadow: 0 1px 2px rgb(30 41 59 / .06), 0 12px 32px rgb(30 41 59 / .06);
-  font-family: Calibri, Carlito, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 11pt; line-height: 1.5; counter-reset: clause; }
+  font-family: Calibri, Carlito, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 11pt; line-height: 1.5; }
 @media (max-width: 639px) { .legal-doc { padding: 2rem 1.25rem; } }
 .legal-doc-head { text-align: center; border-bottom: 1px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
 .legal-doc-party { margin: 0; font-size: 9pt; letter-spacing: .18em; text-transform: uppercase; color: #444; }
 .legal-doc h1 { margin: .5rem 0 0 !important; font-family: inherit; font-size: 14pt !important; font-weight: 700 !important; letter-spacing: .08em; text-transform: uppercase; text-align: center !important; color: #1a1a1a; }
-.legal-doc h2 { counter-increment: clause; margin: 1.6rem 0 .4rem; font-family: inherit; font-size: 11pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #1a1a1a; }
-.legal-doc h2::before { content: counter(clause) ". "; }
+.legal-doc h2 { margin: 1.6rem 0 .4rem; font-family: inherit; font-size: 11pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #1a1a1a; }
 .legal-doc p { margin: .55rem 0 0; text-align: justify; hyphens: auto; }
 .legal-doc > p:first-of-type { margin-top: 0; }
-.legal-doc ul { margin: .5rem 0 0; padding-left: 2.25rem; list-style: none; counter-reset: point; }
-.legal-doc li { position: relative; margin-top: .35rem; text-align: justify; counter-increment: point; }
-.legal-doc li::before { content: "(" counter(point, lower-alpha) ")"; position: absolute; left: -2.25rem; width: 1.9rem; text-align: right; }
 .legal-doc strong { font-weight: 700; }
 .legal-doc a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .legal-doc-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin-top: 2.5rem; padding-top: .75rem; border-top: 1px solid rgb(30 41 59 / .2); font-size: 9pt; color: #555; }

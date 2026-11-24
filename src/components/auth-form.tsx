@@ -206,7 +206,7 @@ export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { 
           {!isSignin && (
             <label className="flex items-start gap-3 text-sm leading-6 text-ink">
               <input type="checkbox" name="consent" required className="mt-1 size-4 shrink-0 accent-leaf" />
-              <span>I agree to the <Link href="/terms" target="_blank" className="font-semibold underline underline-offset-2">Terms of Use</Link> and <Link href="/privacy" target="_blank" className="font-semibold underline underline-offset-2">Privacy Policy</Link>, including my data being stored by OppScout&apos;s service providers outside Uganda.</span>
+              <span>I agree to the <Link href="/terms" target="_blank" className="font-semibold underline underline-offset-2">Terms of Use</Link> and <Link href="/privacy" target="_blank" className="font-semibold underline underline-offset-2">Privacy Policy</Link>, including my data being stored by OppScout&apos;s service providers outside Uganda, and confirm I am 18 or older.</span>
             </label>
           )}
 
