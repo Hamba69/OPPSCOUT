@@ -7,7 +7,7 @@ import type { MatchTip } from "@/services/profile/match-tips";
 const STEP_TINTS = ["tint-job", "tint-internship", "tint-fellowship"];
 
 /**
- * Shown when someone has no or few matches: a warm card with a question, one line of why, then up to three
+ * Shown when someone has no or few matches: a warm card with a question, then up to three
  * numbered steps, each its own colour. Kept small so it never crowds the matches that are there.
  */
 export function MatchTips({ tips, hasMatches }: { tips: MatchTip[]; hasMatches: boolean }): React.JSX.Element | null {
@@ -15,10 +15,7 @@ export function MatchTips({ tips, hasMatches }: { tips: MatchTip[]; hasMatches: 
   return <section className="match-tips" aria-labelledby="match-tips-title">
     <div className="flex items-center gap-3">
       <span className="orb orb-breathing h-9 w-9" aria-hidden />
-      <div className="min-w-0">
-        <h2 id="match-tips-title" className="text-base font-bold text-ink">{hasMatches ? "Need more matches?" : "No matches yet?"}</h2>
-        <p className="text-xs leading-5 text-navy">Listings you nearly matched look for these. Add only what&apos;s true for you.</p>
-      </div>
+      <h2 id="match-tips-title" className="min-w-0 text-base font-bold text-ink">{hasMatches ? "Need more matches?" : "No matches yet?"}</h2>
     </div>
     <ol className="flex flex-col gap-2">
       {tips.map((tip, index) => <li key={tip.text}>
