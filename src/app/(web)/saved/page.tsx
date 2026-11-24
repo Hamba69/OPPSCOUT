@@ -6,7 +6,7 @@ import { choiceLabel } from "@/services/profile/choices";
 
 import { requirePageAuth } from "@/lib/auth";
 import { getRepository } from "@/lib/repository";
-import { displayTitle } from "@/lib/opportunity-title";
+import { listTitle } from "@/lib/opportunity-title";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 
 export const metadata: Metadata = { title: "Saved" };
@@ -38,7 +38,7 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
           <span className="icon-chip !size-11 !rounded-[14px]"><Icon name="clock" size={20} /></span>
           <div className="min-w-[200px] flex-1">
             <p className="text-xs font-bold text-[#9B1C1C]">{nextDays} {nextDays === 1 ? "day" : "days"} left</p>
-            <p className="mt-0.5 text-base font-bold text-ink">{displayTitle(next.opportunity.title, next.opportunity.organization?.name ?? next.opportunity.organizationName)} · {next.opportunity.organization?.name ?? next.opportunity.organizationName ?? "Source organization"}</p>
+            <p className="mt-0.5 text-base font-bold text-ink">{listTitle(next.opportunity.title, next.opportunity.organization?.name ?? next.opportunity.organizationName)} · {next.opportunity.organization?.name ?? next.opportunity.organizationName ?? "Source organization"}</p>
           </div>
           <Link className="button !min-h-11" href={`/opportunity/${next.opportunity.id}`}><Icon name="chevron" size={15} strokeWidth={2.2} />View details</Link>
         </section>
@@ -55,7 +55,7 @@ export default async function SavedPage(): Promise<React.JSX.Element> {
               </div>
               <div className="min-h-0 flex-1">
                 <p className="clamp-1 text-xs font-semibold text-navy">{opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization"}</p>
-                <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink"><Link className="stretch focus-visible:underline" href={`/opportunity/${opportunity.id}`}>{displayTitle(opportunity.title, opportunity.organization?.name ?? opportunity.organizationName)}</Link></h2>
+                <h2 className="clamp-2 mt-1 text-base font-bold leading-snug text-ink"><Link className="stretch focus-visible:underline" href={`/opportunity/${opportunity.id}`}>{listTitle(opportunity.title, opportunity.organization?.name ?? opportunity.organizationName)}</Link></h2>
               </div>
               <div className="opp-card-foot !justify-end">
                 <span aria-hidden="true" className="font-semibold">View details</span>

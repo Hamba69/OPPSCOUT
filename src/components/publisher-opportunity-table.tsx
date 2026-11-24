@@ -7,6 +7,7 @@ import { Icon } from "@/components/app-shell";
 import type { Opportunity } from "@/core/entities/domain";
 import { formatDate } from "@/lib/dates";
 import { choiceLabel } from "@/services/profile/choices";
+import { NO_DEADLINE_LABEL } from "@/lib/deadline-label";
 
 type ListingFilter = "All" | "Published" | "In review" | "Changes requested" | "Closed";
 
@@ -104,7 +105,7 @@ export function PublisherOpportunityTable({
                     <td className="whitespace-nowrap px-3 py-3.5 text-navy">
                       {item.deadline
                         ? formatDate(item.deadline, { day: "2-digit", month: "short", year: "numeric" })
-                        : "Open until filled"}
+                        : NO_DEADLINE_LABEL}
                     </td>
                     <td className="px-3 py-3.5">
                       <Link className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap text-[13px] font-bold text-[#6B4E00]" href={`/dashboard/${item.id}/edit`}>

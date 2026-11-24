@@ -36,7 +36,23 @@ describe("shortTitle", () => {
     expect(shortTitle("Mozilla Foundation Fellowships 2027–2028")).toBe("Mozilla Foundation Fellowships");
     expect(shortTitle("Information Technologist – Masindi District Local Government (1 post)", "Masindi District Local Government")).toBe("Information Technologist");
     expect(shortTitle("Assistant Lecturer - Big Data Analytics")).toBe("Assistant Lecturer - Big Data Analytics");
-    expect(shortTitle("Graduate Software Engineer, Open Source and Linux – Canonical (remote, worldwide)")).toBe("Graduate Software Engineer");
-    expect(shortTitle("Programme Officer for Monitoring and Evaluation of Climate Projects")).toBe("Programme Officer for Monitoring and Evaluation…");
+    expect(shortTitle("Graduate Software Engineer, Open Source and Linux – Canonical (remote, worldwide)")).toBe("Graduate Software Engineer, Open Source and Linux");
+    expect(shortTitle("Graduate Software Engineer, Open Source and Linux Platforms – Canonical")).toBe("Graduate Software Engineer");
+    expect(shortTitle("Programme Officer for Monitoring and Evaluation of Climate Projects")).toBe("Programme Officer for Monitoring and Evaluation");
+    expect(shortTitle("MESPOM Erasmus Mundus Master in Environmental Sciences, Policy and Management")).toBe("MESPOM Erasmus Mundus Master in Environmental Sciences");
+    expect(shortTitle("Global Citizen Prize: 2027 Cisco Youth Leadership Award ($250,000)")).toBe("Global Citizen Prize: Cisco Youth Leadership Award");
+    expect(shortTitle("Global Citizen Prize: Cisco Youth Leadership Award for Changemakers")).toBe("Global Citizen Prize");
+    expect(shortTitle("ETH Zurich Excellence Scholarship & Opportunity Programme (Master's)")).toBe("ETH Zurich Excellence Scholarship & Opportunity Programme");
+    expect(shortTitle("Senior Regional Monitoring Evaluation Learning Accountability Officer Specialist")).toBe("Senior Regional Monitoring Evaluation Learning Accountability…");
+  });
+});
+
+describe("listTitle", () => {
+  it("drops the clutter around a name without cutting it", async () => {
+    const { listTitle } = await import("@/lib/opportunity-title");
+    expect(listTitle("MMed Research Scholarship in Neuro-Infectious Diseases (5 places) – IDI / O.R. Tambo Research Chair", "Infectious Diseases Institute")).toBe("MMed Research Scholarship in Neuro-Infectious Diseases");
+    expect(listTitle("Graduate Software Engineer, Open Source and Linux – Canonical (remote, worldwide)", "Canonical")).toBe("Graduate Software Engineer, Open Source and Linux");
+    expect(listTitle("Mozilla Foundation Fellowships 2027–2028", "Mozilla Foundation")).toBe("Mozilla Foundation Fellowships 2027–2028");
+    expect(listTitle("Assistant Lecturer - Big Data Analytics", "Makerere University")).toBe("Assistant Lecturer - Big Data Analytics");
   });
 });

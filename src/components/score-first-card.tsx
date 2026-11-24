@@ -2,7 +2,8 @@ import Link from "next/link";
 
 import { SaveButton } from "@/components/save-button";
 import { formatDate } from "@/lib/dates";
-import { displayTitle } from "@/lib/opportunity-title";
+import { NO_DEADLINE_LABEL } from "@/lib/deadline-label";
+import { listTitle } from "@/lib/opportunity-title";
 
 /** Listings published within this many days carry a "New" mark. */
 export const NEW_FOR_DAYS = 7;
@@ -45,7 +46,7 @@ export function ScoreFirstCard(props: ScoreFirstCardProps): React.JSX.Element {
   const workMode = props.workMode && props.workMode !== "unknown" && props.workMode.toLowerCase() !== props.location.toLowerCase() ? props.workMode : null;
   const deadline = urgent
     ? `Closes in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}`
-    : props.deadline ? `Closes ${formatDate(props.deadline, { day: "numeric", month: "short" })}` : "Deadline not published";
+    : props.deadline ? `Closes ${formatDate(props.deadline, { day: "numeric", month: "short" })}` : NO_DEADLINE_LABEL;
 
   return (
     <article className="opp-card score-card">
@@ -56,7 +57,7 @@ export function ScoreFirstCard(props: ScoreFirstCardProps): React.JSX.Element {
           <SaveButton opportunityId={props.opportunityId} />
         </div>
         <h2 className="clamp-2 -mt-1 text-base font-bold leading-snug text-ink">
-          <Link className="stretch focus-visible:underline" href={props.href} aria-label={props.linkLabel}>{displayTitle(props.title, props.organization)}</Link>
+          <Link className="stretch focus-visible:underline" href={props.href} aria-label={props.linkLabel}>{listTitle(props.title, props.organization)}</Link>
         </h2>
         <p className="clamp-1 text-xs text-navy">{props.organization} · {props.location}{workMode ? <> · <span className="capitalize">{workMode}</span></> : null}</p>
         <span className={urgent ? "deadline-urgent" : "deadline-calm"}>{deadline}</span>

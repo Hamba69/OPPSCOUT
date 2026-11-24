@@ -1,6 +1,7 @@
 import type { Opportunity } from "@/core/entities/domain";
 import { formatDate } from "@/lib/dates";
 import { choiceLabel } from "@/services/profile/choices";
+import { NO_DEADLINE_LABEL } from "@/lib/deadline-label";
 
 const WORK_MODE: Record<string, string> = { onsite: "On-site", hybrid: "Hybrid", remote: "Remote" };
 const RULE_FIELD: Record<string, string> = { graduationStatus: "Study status", location: "Where you live", language: "Language" };
@@ -10,7 +11,7 @@ const RULE_FIELD: Record<string, string> = { graduationStatus: "Study status", l
  * urgent colour are only for opportunities the seeker has saved, i.e. ones they are actually pursuing.
  */
 export function closingText(opportunity: Pick<Opportunity, "deadline" | "deadlineType">, now = new Date(), { countdown = false }: { countdown?: boolean } = {}): { label: string; urgent: boolean } {
-  if (!opportunity.deadline) return { label: "Open until filled", urgent: false };
+  if (!opportunity.deadline) return { label: NO_DEADLINE_LABEL, urgent: false };
   const days = Math.ceil((new Date(opportunity.deadline).getTime() - now.getTime()) / 86_400_000);
   const date = formatDate(opportunity.deadline, { day: "numeric", month: "short", year: "numeric" });
   if (days <= 0) return { label: `Closed ${date}`, urgent: true };

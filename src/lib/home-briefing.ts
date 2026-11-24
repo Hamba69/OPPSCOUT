@@ -3,6 +3,7 @@ import "server-only";
 import { formatDate } from "@/lib/dates";
 import type { FeedItem } from "@/components/feed-browser";
 import { getRepository } from "@/lib/repository";
+import { NO_DEADLINE_LABEL } from "@/lib/deadline-label";
 import { displayTitle, shortTitle } from "@/lib/opportunity-title";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 import { mostMatchedOpportunities } from "@/services/matching/most-matched";
@@ -69,7 +70,7 @@ export async function loadMostMatched(now = new Date()): Promise<MostMatchedRow[
         title: displayTitle(opportunity.title, organization),
         shortTitle: shortTitle(opportunity.title, organization),
         organization,
-        detail: [organization, opportunity.deadline ? `closes ${closesOn(opportunity.deadline)}` : "open until filled"].join(" · "),
+        detail: [organization, opportunity.deadline ? `closes ${closesOn(opportunity.deadline)}` : NO_DEADLINE_LABEL.toLowerCase()].join(" · "),
         category: opportunity.category,
         seekers,
       };
