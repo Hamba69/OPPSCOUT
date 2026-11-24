@@ -62,14 +62,15 @@ describe("Matches home briefing", () => {
 
   it("shows the most matched opportunities as coloured tiles with title and organisation", () => {
     render(createElement(MostMatched, { rows: [
-      { opportunityId: "a", title: "Data Analyst", organization: "UNICEF Uganda", detail: "UNICEF Uganda · closes 4 Dec", category: "job", seekers: 124 },
-      { opportunityId: "b", title: "Research Fellow", organization: "Makerere University", detail: "Makerere University · open until filled", category: "fellowship", seekers: 1 },
+      { opportunityId: "a", title: "Data Analyst", shortTitle: "Data Analyst", organization: "UNICEF Uganda", detail: "UNICEF Uganda · closes 4 Dec", category: "job", seekers: 124 },
+      { opportunityId: "b", title: "Research Fellow", shortTitle: "Research Fellow", organization: "Makerere University", detail: "Makerere University · open until filled", category: "fellowship", seekers: 1 },
     ] }));
 
-    expect(screen.getByRole("heading", { name: "Most matched this week" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Top Opportunities" })).toBeTruthy();
     const tile = screen.getByRole("link", { name: "Data Analyst UNICEF Uganda" });
     expect(tile.getAttribute("href")).toBe("/opportunity/a");
     expect(tile.className).toContain("tint-job");
+    expect(screen.getByRole("link", { name: "Research Fellow Makerere University" }).className).toContain("tint-scholarship");
     expect(screen.queryByText(/124/)).toBeNull();
     expect(screen.getByText("Makerere University")).toBeTruthy();
     expect(screen.queryByText(/closes/)).toBeNull();

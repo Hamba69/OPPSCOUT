@@ -24,3 +24,19 @@ describe("displayTitle", () => {
     expect(displayTitle("Acme – Acme", "Acme")).toBe("Acme");
   });
 });
+
+describe("shortTitle", () => {
+  it("keeps the essence of a title for a small tile", async () => {
+    const { shortTitle } = await import("@/lib/opportunity-title");
+    expect(shortTitle("UBC International Scholarship")).toBe("UBC Scholarship");
+    expect(shortTitle("AI Reporting Grant – Pulitzer Center")).toBe("AI Reporting Grant");
+    expect(shortTitle("UNESCO/Japan Young Researchers' Fellowship 2026")).toBe("UNESCO/Japan Young Researchers' Fellowship");
+    expect(shortTitle("Asia House Fellowship 2027/2028 (£24,000 stipend, remote)")).toBe("Asia House Fellowship");
+    expect(shortTitle("2026 Young Graduate Program – TotalEnergies Marketing Uganda")).toBe("Young Graduate Program");
+    expect(shortTitle("Mozilla Foundation Fellowships 2027–2028")).toBe("Mozilla Foundation Fellowships");
+    expect(shortTitle("Information Technologist – Masindi District Local Government (1 post)", "Masindi District Local Government")).toBe("Information Technologist");
+    expect(shortTitle("Assistant Lecturer - Big Data Analytics")).toBe("Assistant Lecturer - Big Data Analytics");
+    expect(shortTitle("Graduate Software Engineer, Open Source and Linux – Canonical (remote, worldwide)")).toBe("Graduate Software Engineer");
+    expect(shortTitle("Programme Officer for Monitoring and Evaluation of Climate Projects")).toBe("Programme Officer for Monitoring and Evaluation…");
+  });
+});

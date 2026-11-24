@@ -61,18 +61,20 @@ export function ClosingSoon({ items, fromSaved }: { items: ClosingItem[]; fromSa
 }
 
 /** Listings published today, by type. Each tile opens the Opportunities page filtered to that type. */
-/** The opportunities matched to the most people across OppScout this week, the same for everyone. */
+/** One colour per position, so no two tiles look alike whatever their opportunity type. */
+const TILE_TINTS = ["tint-job", "tint-scholarship", "tint-internship", "tint-fellowship", "tint-training"];
+
+/** The opportunities matched to the most people across OppScout, the same for everyone. */
 export function MostMatched({ rows }: { rows: MostMatchedRow[] }): React.JSX.Element | null {
   if (!rows.length) return null;
-  // Same coloured tiles as the old "New today" section, tinted by opportunity type: the title and the organisation.
   return <section className="rise rise-3 flex flex-col gap-3.5" aria-labelledby="most-matched-title">
     <div className="flex items-baseline justify-between px-1">
-      <h2 id="most-matched-title" className="text-base font-bold text-ink">Most matched this week</h2>
+      <h2 id="most-matched-title" className="text-base font-bold text-ink">Top Opportunities</h2>
       <Link href="/opportunities" className="text-[13px] font-bold text-[#6B4E00] hover:text-ink">Browse all</Link>
     </div>
-    <nav aria-label="Most matched opportunities" className="new-tiles">
-      {rows.map((row) => <Link key={row.opportunityId} href={`/opportunity/${row.opportunityId}`} className={`tile tile-tinted tint-${row.category} new-tile`}>
-        <span className="clamp-3 text-sm font-bold leading-snug">{row.title}</span>
+    <nav aria-label="Top opportunities" className="new-tiles">
+      {rows.map((row, index) => <Link key={row.opportunityId} href={`/opportunity/${row.opportunityId}`} title={`${row.title} · ${row.organization}`} className={`tile tile-tinted ${TILE_TINTS[index % TILE_TINTS.length]} new-tile`}>
+        <span className="clamp-3 text-sm font-bold leading-snug">{row.shortTitle}</span>
         <span className="clamp-1 text-xs font-semibold text-navy">{row.organization}</span>
       </Link>)}
     </nav>

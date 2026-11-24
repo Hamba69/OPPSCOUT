@@ -3,7 +3,7 @@ import "server-only";
 import { formatDate } from "@/lib/dates";
 import type { FeedItem } from "@/components/feed-browser";
 import { getRepository } from "@/lib/repository";
-import { displayTitle } from "@/lib/opportunity-title";
+import { displayTitle, shortTitle } from "@/lib/opportunity-title";
 import { isUserVisibleOpportunity } from "@/services/trust/user-publication-policy";
 import { mostMatchedOpportunities } from "@/services/matching/most-matched";
 
@@ -13,7 +13,7 @@ export const CLOSING_WINDOW_DAYS = 14;
 const CLOSING_ROWS = 2;
 
 export interface ClosingItem { opportunityId: string; title: string; detail: string; daysLeft: number }
-export interface MostMatchedRow { opportunityId: string; title: string; organization: string; detail: string; category: string; seekers: number }
+export interface MostMatchedRow { opportunityId: string; title: string; shortTitle: string; organization: string; detail: string; category: string; seekers: number }
 
 const daysUntil = (deadline: Date, now: Date): number => Math.ceil((deadline.getTime() - now.getTime()) / 86_400_000);
 const closesOn = (deadline: Date | string): string => formatDate(deadline, { day: "numeric", month: "short" });
@@ -67,6 +67,7 @@ export async function loadMostMatched(now = new Date()): Promise<MostMatchedRow[
       return {
         opportunityId: opportunity.id,
         title: displayTitle(opportunity.title, organization),
+        shortTitle: shortTitle(opportunity.title, organization),
         organization,
         detail: [organization, opportunity.deadline ? `closes ${closesOn(opportunity.deadline)}` : "open until filled"].join(" · "),
         category: opportunity.category,
