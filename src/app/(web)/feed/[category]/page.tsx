@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { CategoryMatches } from "@/components/category-matches";
 import { EmptyState } from "@/components/empty-state";
 import { requirePageAuth } from "@/lib/auth";
-import { loadFeedItems } from "@/lib/feed-items";
+import { loadMatchesWithTips } from "@/lib/feed-items";
+import { MatchTips } from "@/components/match-tips";
 import { getUserProfile } from "@/lib/profile-store";
 import { isProfileCompleteForMatching } from "@/services/profile/completeness";
 
@@ -22,18 +23,22 @@ export default async function CategoryMatchesPage({ params }: Props): Promise<Re
   const profile = await getUserProfile(userId);
   if (!profile) redirect("/profile");
 
-  const items = await loadFeedItems(userId, profile);
+  const { items, tips } = await loadMatchesWithTips(userId, profile);
   if (!items.length) {
     return <main className="animate-in flex flex-col gap-6">
       <header className="title-card"><h1>Today&apos;s matches</h1></header>
       {isProfileCompleteForMatching(profile)
-        ? <EmptyState title="No matches available right now" description="There are no opportunities that fit your profile at the moment. We will notify you as soon as one becomes available." href="/opportunities" action="Browse all opportunities" />
+        ? tips.length
+          ? <MatchTips tips={tips} hasMatches={false} />
+          : <EmptyState title="No matches available right now" description="Nothing fits your profile today. New opportunities are added often, and we'll let you know when one fits." href="/opportunities" action="Browse all opportunities" />
         : <EmptyState title="We need a few more details" description="Add your education, field of study, skills and the opportunity types you want so we can find relevant matches." href="/profile" action="Complete your profile" />}
     </main>;
   }
   return (
     <main className="animate-in flex flex-col gap-6">
       <CategoryMatches items={items} category={decodeURIComponent(category).trim().toLowerCase()} />
+      {/* Only a few matches: a short card underneath, never above them. */}
+      <MatchTips tips={tips} hasMatches />
     </main>
   );
 }

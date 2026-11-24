@@ -2,7 +2,8 @@ import "server-only";
 
 import type { FeedItem } from "@/components/feed-browser";
 import { getRepository } from "@/lib/repository";
-import { isMatchScore } from "@/config/match-threshold";
+import { isMatchScore, MATCH_SCORE_THRESHOLD } from "@/config/match-threshold";
+import { FEW_MATCHES, matchTips, type MatchTip } from "@/services/profile/match-tips";
 import { buildRankedFeed } from "@/services/matching/feed";
 import { choiceLabel } from "@/services/profile/choices";
 import { isNewListing } from "@/components/score-first-card";
@@ -10,11 +11,23 @@ import type { UserProfile } from "@/core/entities/domain";
 
 /** The seeker's ranked matches (scores at or above the match bar) shaped for the feed cards. Shared by the home feed and the per-category pages. */
 export async function loadFeedItems(userId: string, profile: UserProfile, now = new Date()): Promise<FeedItem[]> {
+  return (await loadMatchesWithTips(userId, profile, now)).items;
+}
+
+/**
+ * Matches plus, for someone with few or none, tips for getting more. One matching run serves both: the tips
+ * come from the listings that scored just under the bar.
+ */
+export async function loadMatchesWithTips(userId: string, profile: UserProfile, now = new Date()): Promise<{ items: FeedItem[]; tips: MatchTip[] }> {
   const repository = await getRepository();
   const matches = await buildRankedFeed(repository, userId, now, undefined, { persist: false, profile, includePersistedMatches: false });
-  return matches.filter((match) => isMatchScore(match.score)).map((match) => {
+  const items = matches.filter((match) => isMatchScore(match.score)).map((match) => {
     const opportunity = match.opportunity!;
     const daysLeft = opportunity.deadline ? Math.ceil((opportunity.deadline.getTime() - now.getTime()) / 86_400_000) : null;
     return { daysLeft, id: match.id, opportunityId: opportunity.id, category: opportunity.category, categoryLabel: choiceLabel(opportunity.category), title: opportunity.title, organization: opportunity.organization?.name ?? opportunity.organizationName ?? "Source organization", origin: opportunity.origin ?? "catalog", score: match.score, deadline: opportunity.deadline?.toISOString() ?? null, location: opportunity.location, workMode: opportunity.workMode === "unknown" ? "" : opportunity.workMode, sourceUrl: opportunity.sourceUrl, checkedAt: opportunity.checkedAt.toISOString(), publicationDate: opportunity.publicationDate.toISOString(), isNew: isNewListing(opportunity.publicationDate, now) };
   });
+  // Near misses: within 15 points of the bar. They show what is holding the profile back.
+  const nearMisses = matches.filter((match) => !isMatchScore(match.score) && match.score >= MATCH_SCORE_THRESHOLD - 15);
+  const tips = items.length < FEW_MATCHES ? matchTips(profile, nearMisses) : [];
+  return { items, tips };
 }
