@@ -365,6 +365,8 @@ h1.hero-title {
 .fact-urgent { border-color: rgb(255 255 255 / .8); background: linear-gradient(150deg, rgb(253 190 175 / .55), rgb(253 214 205 / .25)); color: #9B1C1C; }
 .button-dark { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold text-white transition hover:brightness-110 focus:outline-none focus-visible:ring-4 focus-visible:ring-amber/50; background: var(--slate); }
 .orb-lg { width: 4rem; height: 4rem; }
+/* The orb as the logo: a tighter glow so it sits neatly beside the wordmark. */
+.orb-logo { display: inline-block; box-shadow: 0 1px 2px rgb(255 255 255 / .8) inset, 0 3px 10px rgb(255 170 0 / .35); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .tile:hover, .opp-card:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 16px 36px rgb(146 98 0 / .1); }
   .tile-tinted:hover { box-shadow: 0 1px 0 rgb(255 255 255 / .95) inset, 0 14px 32px rgb(var(--tile-tint) / .28); }
