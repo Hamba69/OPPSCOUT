@@ -6,7 +6,7 @@ import { exportAccountData } from "@/services/account/account-data";
 /** Settings > Download my data: a JSON file of everything OppScout holds about the signed-in person. */
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
-    const auth = await requireAuth(request);
+    const auth = await requireAuth(request, { allowUnconfirmedAge: true });
     const profile = await getUserProfile(auth.userId);
     const now = new Date();
     const data = await exportAccountData(auth.userId, profile?.email ?? null, now);

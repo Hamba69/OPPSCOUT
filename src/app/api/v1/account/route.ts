@@ -11,7 +11,7 @@ import { deleteAccount } from "@/services/account/account-data";
 export async function DELETE(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
     requireSameOrigin(request);
-    const auth = await requireAuth(request);
+    const auth = await requireAuth(request, { allowUnconfirmedAge: true });
     await parseJson(request, z.object({ confirm: z.literal("DELETE") }).strict());
     await deleteAccount(auth.userId);
     // Clear the session cookies; the sign-in account no longer exists.

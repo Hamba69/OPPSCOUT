@@ -15,7 +15,7 @@ const preferencesSchema = z.object({
 
 export async function GET(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
-    const auth = await requireAuth(request);
+    const auth = await requireAuth(request, { allowUnconfirmedAge: true });
     const profile = await (await getRepository()).getProfile(auth.userId);
     if (!profile) throw new NotFoundError("Profile");
     return success({ preferredChannel: profile.preferredChannel, secondaryChannels: profile.secondaryChannels, notificationFrequency: profile.notificationFrequency, notificationsEnabled: profile.notificationsEnabled });
@@ -24,7 +24,7 @@ export async function GET(request: Request): Promise<Response> {
 
 export async function PATCH(request: Request): Promise<Response> {
   return apiHandler(request, async () => {
-    const auth = await requireAuth(request);
+    const auth = await requireAuth(request, { allowUnconfirmedAge: true });
     const input = await parseJson(request, preferencesSchema);
     const profile = await (await getRepository()).updateProfile(auth.userId, input);
     return success({ preferredChannel: profile.preferredChannel, secondaryChannels: profile.secondaryChannels, notificationFrequency: profile.notificationFrequency, notificationsEnabled: profile.notificationsEnabled });

@@ -19,7 +19,23 @@ describe("auth proxy", () => {
   it("returns the response carrying refreshed cookies", async () => {
     const response = NextResponse.next();
     response.cookies.set("session-test", "refreshed");
-    mocks.refreshSession.mockResolvedValue({ configured: true, user: { id: "test-user" }, response });
+    mocks.refreshSession.mockResolvedValue({ configured: true, user: { id: "test-user", user_metadata: { dateOfBirth: "2000-03-01" } }, response });
+    expect(await proxy(new NextRequest("http://localhost:3000/feed"))).toBe(response);
+  });
+
+  it.each([
+    ["no date of birth", {}],
+    ["a date of birth under 18", { dateOfBirth: `${new Date().getUTCFullYear() - 15}-01-01` }],
+  ])("sends a signed-in account with %s to confirm their age first", async (_label, metadata) => {
+    mocks.refreshSession.mockResolvedValue({ configured: true, user: { id: "test-user", user_metadata: metadata }, response: NextResponse.next() });
+    const location = new URL((await proxy(new NextRequest("http://localhost:3000/dashboard/new"))).headers.get("location")!);
+    expect(location.pathname).toBe("/confirm-age");
+    expect(location.searchParams.get("next")).toBe("/dashboard/new");
+  });
+
+  it("lets reviewers through without a date of birth", async () => {
+    const response = NextResponse.next();
+    mocks.refreshSession.mockResolvedValue({ configured: true, user: { id: "admin", app_metadata: { role: "admin" } }, response });
     expect(await proxy(new NextRequest("http://localhost:3000/feed"))).toBe(response);
   });
 });

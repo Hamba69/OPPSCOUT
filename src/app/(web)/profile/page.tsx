@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ProfileForm, type ProfileFormInitial } from "@/components/profile-form";
 import { ProfileArea } from "@/components/profile-area";
-import { requirePageAuth } from "@/lib/auth";
+import { getPageUserBirthDate, requirePageAuth } from "@/lib/auth";
 import { getProfileChoices } from "@/lib/profile-options";
 import { getUserProfile } from "@/lib/profile-store";
 import { canonicalPreferredLocation, canonicalUgandaLocation } from "@/data/uganda-locations";
@@ -13,14 +13,14 @@ export const dynamic = "force-dynamic";
 export default async function ProfilePage({ searchParams }: { searchParams: Promise<{ next?: string }> }): Promise<React.JSX.Element> {
   const { userId } = await requirePageAuth(["user"]);
   const { next } = await searchParams;
-  const [profile, choices] = await Promise.all([getUserProfile(userId), getProfileChoices()]);
+  const [profile, choices, accountBirthDate] = await Promise.all([getUserProfile(userId), getProfileChoices(), getPageUserBirthDate()]);
   const nextPath = next?.startsWith("/") && !next.startsWith("//") ? next : "/feed";
   const experience = (items: { title: string; organization?: string; months: number }[] | undefined): { title: string; organization: string; months: number }[] =>
     (items ?? []).map((item) => ({ title: item.title, organization: item.organization ?? "", months: item.months }));
   // Older profiles may hold places outside Uganda or free text. Those are mapped to a district when
   // possible and otherwise left empty, so the seeker picks a Ugandan district on their next save.
   const initial: ProfileFormInitial = {
-    name: profile?.name ?? "", email: profile?.email ?? "", phone: profile?.phone ?? "", dateOfBirth: profile?.dateOfBirth?.toISOString().slice(0, 10) ?? "", location: canonicalUgandaLocation(profile?.location) ?? "",
+    name: profile?.name ?? "", email: profile?.email ?? "", phone: profile?.phone ?? "", dateOfBirth: profile?.dateOfBirth?.toISOString().slice(0, 10) ?? accountBirthDate ?? "", location: canonicalUgandaLocation(profile?.location) ?? "",
     educationLevel: profile?.educationLevel ?? "", institution: profile?.institution ?? "", fieldOfStudy: profile?.fieldOfStudy ?? "", graduationStatus: profile?.graduationStatus ?? "",
     skills: profile?.skills ?? [], certifications: profile?.certifications ?? [], languages: profile?.languages ?? [],
     workExperience: experience(profile?.workExperience), internshipExperience: experience(profile?.internshipExperience),

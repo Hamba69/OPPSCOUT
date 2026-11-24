@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { LEGAL } from "@/config/legal";
+import { dateOfBirthProblem } from "@/lib/date-of-birth";
 import { MIN_PASSWORD_LENGTH, PASSWORD_HINT, validateSignupPassword } from "@/lib/password";
 import { createClient } from "@/lib/supabase/client";
 
@@ -68,6 +69,14 @@ export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { 
       router.refresh();
       return;
     }
+    // OppScout is adults only. The proxy and API enforce this too; checking here gives a clear message first.
+    const dateOfBirth = String(data.get("dateOfBirth") ?? "");
+    const birthProblem = dateOfBirthProblem(dateOfBirth);
+    if (birthProblem) {
+      setBusy(false);
+      setMessage(birthProblem);
+      return;
+    }
     if (data.get("consent") !== "on") {
       setBusy(false);
       setMessage("Please agree to the Terms of Use and Privacy Policy to create an account.");
@@ -84,7 +93,7 @@ export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { 
       email,
       password,
       // Record what the person agreed to, and when, with their account.
-      options: { emailRedirectTo: redirectTo, data: { termsVersion: LEGAL.termsVersion, termsAcceptedAt: new Date().toISOString(), consentToStorageOutsideUganda: true } },
+      options: { emailRedirectTo: redirectTo, data: { dateOfBirth, termsVersion: LEGAL.termsVersion, termsAcceptedAt: new Date().toISOString(), consentToStorageOutsideUganda: true } },
     });
     setBusy(false);
     if (error) {
@@ -202,6 +211,22 @@ export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { 
               <p className="mt-1.5 text-xs text-navy/70">{PASSWORD_HINT}</p>
             )}
           </div>
+
+          {!isSignin && (
+            <div>
+              <label htmlFor="auth-dob" className="mb-1.5 block text-sm font-semibold text-ink">Date of birth</label>
+              <input
+                id="auth-dob"
+                className="w-full rounded-2xl border border-ink/10 bg-white/70 backdrop-blur-md focus:bg-white px-4 py-3.5 text-ink outline-none transition hover:border-honey hover:ring-4 hover:ring-honey/30 focus:border-amber focus:ring-4 focus:ring-amber/40"
+                type="date"
+                name="dateOfBirth"
+                autoComplete="bday"
+                max={new Date().toISOString().slice(0, 10)}
+                required
+              />
+              <p className="mt-1.5 text-xs text-navy/70">OppScout is for adults aged 18 and over.</p>
+            </div>
+          )}
 
           {!isSignin && (
             <label className="flex items-start gap-3 text-sm leading-6 text-ink">

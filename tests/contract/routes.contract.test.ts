@@ -40,9 +40,13 @@ vi.mock("@/lib/auth", async (importOriginal) => ({
       userId: role === "admin" ? DEMO_ADMIN_ID : role === "organization" ? DEMO_ORG_USER_ID : DEMO_USER_ID,
       role,
       organizationId: role === "organization" ? DEMO_ORG_ID : null,
+      adult: true,
     };
   },
 }));
+
+// Recording a date of birth on the sign-in account needs live Supabase; here it is a no-op.
+vi.mock("@/lib/account-birth-date", () => ({ recordAccountBirthDate: async () => undefined }));
 
 vi.mock("@/lib/profile-store", () => ({
   getUserProfile: async (userId: string) => (await getRepository()).getProfile(userId),
