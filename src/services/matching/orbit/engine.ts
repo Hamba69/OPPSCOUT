@@ -13,7 +13,15 @@ import { educationLabel, educationRank, inferEducation, inferExperience, inferFi
  * only visible reason was location. v2 reads requirements out of the listing text, adds qualification
  * and opportunity-type fit, and treats anything still unknown as a neutral prior, never as a match.
  */
-export const ORBIT_ENGINE_VERSION = "2.0.0";
+/*
+ * 2.1.0: score on what the listing states. v2.0 gave every unstated dimension a flat 35% and kept its full
+ * weight, so a candidate meeting every stated requirement still scored a median 74 (a quarter of listings 58
+ * or less), because listings state field of study and experience less than half the time. Each dimension's
+ * weight now scales with how much the listing told us (never below minEvidenceWeight), so unstated parts
+ * neither help nor sink the score. Measured on 267 catalogue listings: a perfect-fit profile moved from a
+ * median of 74 to 93, while a poor-fit profile moved only from 43 to 46.
+ */
+export const ORBIT_ENGINE_VERSION = "2.1.0";
 
 export interface OrbitOptions {
   /** Concept orbits + token-boundary matching instead of substring. */
@@ -22,12 +30,17 @@ export interface OrbitOptions {
   soft: boolean;
   /** 0..1. Final score is multiplied by (1 - anchor) + anchor * competence, so a perfect location cannot carry an unqualified match. */
   anchor: number;
-  /** Credit for a dimension neither the listing nor its text describes. Kept below 0.5 so "unknown" never looks like "good fit". */
-  emptyPrior: number;
+  /**
+   * Weight kept by a dimension the listing does not describe, as a share of its full weight. Low, so unstated
+   * requirements barely count either way; above zero, so a listing that states almost nothing cannot score high.
+   */
+  minEvidenceWeight: number;
+  /** Retired in 2.1.0 (unstated dimensions are now down-weighted instead of given a flat credit). Ignored. */
+  emptyPrior?: number;
   weights?: (category: string) => OrbitMatchingWeights;
 }
 
-export const ORBIT_DEFAULTS: OrbitOptions = { canonical: true, soft: true, anchor: 0.25, emptyPrior: 0.35 };
+export const ORBIT_DEFAULTS: OrbitOptions = { canonical: true, soft: true, anchor: 0.25, minEvidenceWeight: 0.15 };
 
 type DimKey = "skills" | "fieldRelevance" | "education" | "experience" | "careerInterest" | "categoryFit" | "location" | "workMode";
 /** ratio: how well the profile fits (0..1). evidence: how much the listing actually told us (0..1). */
@@ -256,14 +269,15 @@ export class OrbitMatchEngine implements MatchEngine {
       experience: this.experience(profile, opp), careerInterest: this.interest(profile, opp), categoryFit: this.categoryFit(profile, opp),
       location: this.location(profile, opp), workMode: this.workMode(profile, opp),
     };
-    const prior = this.o.emptyPrior;
     const keys = (Object.keys(dims) as DimKey[]).filter((k) => w[k] > 0);
-    const effective = (k: DimKey) => dims[k].evidence * dims[k].ratio + (1 - dims[k].evidence) * prior;
+    // Each dimension counts in proportion to how much the listing told us about it.
+    const weight = (k: DimKey) => w[k] * Math.max(dims[k].evidence, this.o.minEvidenceWeight);
     const max = keys.reduce((s, k) => s + w[k], 0);
-    const raw = keys.reduce((s, k) => s + w[k] * effective(k), 0) / max;
+    const weighted = keys.reduce((s, k) => s + weight(k), 0);
+    const raw = weighted ? keys.reduce((s, k) => s + weight(k) * dims[k].ratio, 0) / weighted : 0;
     const competenceKeys = (["skills", "fieldRelevance", "education", "experience"] as const).filter((k) => w[k] > 0);
-    const competenceMax = competenceKeys.reduce((s, k) => s + w[k], 0);
-    const competence = competenceMax ? competenceKeys.reduce((s, k) => s + w[k] * effective(k), 0) / competenceMax : 1;
+    const competenceWeight = competenceKeys.reduce((s, k) => s + weight(k), 0);
+    const competence = competenceWeight ? competenceKeys.reduce((s, k) => s + weight(k) * dims[k].ratio, 0) / competenceWeight : 1;
     const gated = raw * ((1 - this.o.anchor) + this.o.anchor * competence);
 
     // Strongest real evidence first, so the card's one-line reason is the one that moved the score most.
