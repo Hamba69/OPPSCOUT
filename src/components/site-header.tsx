@@ -23,7 +23,7 @@ export function SiteHeader(): React.JSX.Element | null {
       <div className="flex items-center gap-2 justify-self-end">
         {isLanding && <>
           <Link href="/login" className="button-secondary !min-h-11 !px-3 text-sm sm:!px-5">Log in</Link>
-          <Link href="/profile" className="button !min-h-11 !px-3 text-sm sm:!px-5">Get started</Link>
+          <Link href="/login?mode=signup&next=%2Fprofile" className="button !min-h-11 !px-3 text-sm sm:!px-5">Get started</Link>
         </>}
       </div>
     </div>

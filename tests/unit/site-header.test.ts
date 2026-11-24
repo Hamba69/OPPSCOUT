@@ -35,6 +35,6 @@ describe("site header", () => {
     render(createElement(SiteHeader));
 
     expect(screen.getByRole("link", { name: "Log in" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Get started" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Get started" }).getAttribute("href")).toBe("/login?mode=signup&next=%2Fprofile");
   });
 });

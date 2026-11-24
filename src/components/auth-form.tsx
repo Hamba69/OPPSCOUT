@@ -15,7 +15,8 @@ function MailIcon(): React.JSX.Element { return <Icon name="mail" size={20} />; 
 
 function LockIcon(): React.JSX.Element { return <Icon name="lock" size={20} />; }
 
-export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: string; initialMode?: "signin" | "signup" }): React.JSX.Element {
+/** `reason` explains why the person was asked to log in or sign up (e.g. they tapped "Jobs" on the home page). */
+export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { nextPath: string; initialMode?: "signin" | "signup"; reason?: string | null }): React.JSX.Element {
   const router = useRouter();
   const [mode, setMode] = useState<"signin" | "signup">(initialMode);
   const [message, setMessage] = useState("");
@@ -129,6 +130,9 @@ export function AuthForm({ nextPath, initialMode = "signin" }: { nextPath: strin
           <h1 className="!text-[1.625rem] !font-extrabold !leading-tight tracking-tight text-ink">
             {isSignin ? "Welcome back" : "Create your account"}
           </h1>
+          {reason
+            ? <p className="mt-2 text-sm leading-6 text-navy">{reason}</p>
+            : !isSignin && <p className="mt-2 text-sm leading-6 text-navy">It&apos;s free and takes a minute.</p>}
         </div>
 
         <form className="mt-6 space-y-4" onSubmit={submit}>

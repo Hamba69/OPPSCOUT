@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getOptionalAuth } from "@/lib/auth";
 import { AuthForm } from "@/components/auth-form";
+import { loginReason } from "@/lib/login-reason";
 
 export const metadata: Metadata = { title: "Log in" };
 
@@ -29,7 +30,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps): Promi
         )}
 
         <div className="flex flex-1 flex-col justify-center">
-          <AuthForm nextPath={nextPath} initialMode={mode === "signup" ? "signup" : "signin"} />
+          <AuthForm nextPath={nextPath} initialMode={mode === "signup" ? "signup" : "signin"} reason={loginReason(nextPath, Boolean(requested))} />
         </div>
       </div>
     </main>
