@@ -5,7 +5,7 @@ import { inferExperience } from "@/services/matching/orbit/infer";
 import { choiceLabel } from "@/services/profile/choices";
 
 /** A near miss: a listing that scored close to, but under, the match bar. */
-export interface NearMiss { score: number; missingFactors: MatchFactor[]; opportunity?: Opportunity }
+export interface NearMiss { score: number; missingFactors: MatchFactor[]; matchedFactors?: MatchFactor[]; opportunity?: Opportunity }
 export interface MatchTip { text: string; href: string }
 
 /** People with fewer matches than this see tips for getting more. */
@@ -18,6 +18,10 @@ const lower = (value: string): string => value.trim().toLowerCase();
 const words = (items: string[], joiner = "or"): string => items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(", ")} ${joiner} ${items[items.length - 1]}`;
 const years = (months: number): string => months < 12 ? `${months} months` : `${Math.round(months / 6) / 2} year${months >= 18 ? "s" : ""}`;
 
+/** A skill as written in a sentence: lower case, but acronyms such as IT or SQL keep their capitals. */
+const SKILL_ACRONYMS = new Set(["it", "sql", "ict", "hr", "gis", "ui", "ux", "seo", "crm", "erp", "aws", "api", "m&e", "mel"]);
+const displaySkill = (skill: string): string => skill.split(" ").map((word) => SKILL_ACRONYMS.has(word) ? word.toUpperCase() : word).join(" ");
+
 /** The values near misses share that this profile lacks, most common first. */
 function topCounts(values: string[], limit: number): string[] {
   const counts = new Map<string, number>();
@@ -25,16 +29,31 @@ function topCounts(values: string[], limit: number): string[] {
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit).map(([value]) => value);
 }
 
-/** Near misses that were held back by this factor. */
+/** Evidence that a listing connects to the person's own background, not just their location or chosen types. */
+const LANE_SIGNALS = ["Field of study", "Related field", "Skills", "Related skills", "Career direction"];
+/** Experience gaps bigger than this are a matter of time, not a missing profile entry, so they are not suggested. */
+const REACHABLE_GAP_MONTHS = 24;
+
+/**
+ * A near miss in this person's lane: it does not ask for a different field, and it shares their field, a skill
+ * or a career interest. Listings that only came close on location or opportunity type (a medical scholarship
+ * for a computer scientist, say) say nothing about what this person should add, so tips never learn from them.
+ */
+const inLane = (miss: NearMiss): boolean =>
+  !miss.missingFactors.some((factor) => factor.label === "Field of study")
+  && (miss.matchedFactors ?? []).some((factor) => LANE_SIGNALS.includes(factor.label));
+
+/** In-lane near misses that were held back by this factor. */
 const heldBackBy = (nearMisses: NearMiss[], ...labels: string[]): NearMiss[] =>
-  nearMisses.filter((miss) => miss.missingFactors.some((factor) => labels.includes(factor.label)));
+  nearMisses.filter((miss) => inLane(miss) && miss.missingFactors.some((factor) => labels.includes(factor.label)));
 
 /**
  * Up to three short steps that would get this person more matches. Each names what is specific to them:
  * the skills, opportunity types, career areas or places that the listings they nearly matched ask for and
  * their profile lacks, or how much experience those listings want against what the profile shows. Steps are
- * ranked by how many near misses they would help, with missing basics first. A step with nothing specific
- * to say is left out. Never suggests adding things they do not have.
+ * ranked by how many near misses they would help, with missing basics first. Only near misses in the person's
+ * lane count (see inLane), and an experience gap too large to be a missing entry is not suggested. A step with
+ * nothing specific to say is left out. Never suggests adding things they do not have.
  */
 export function matchTips(profile: UserProfile, nearMisses: NearMiss[]): MatchTip[] {
   const out: Array<{ weight: number; tip: MatchTip }> = [];
@@ -50,17 +69,18 @@ export function matchTips(profile: UserProfile, nearMisses: NearMiss[]): MatchTi
     const asked = heldBackBy(nearMisses, "Skills", "Skills to strengthen", "Related skills")
       .flatMap((miss) => (miss.opportunity?.requiredSkills ?? []).map(lower))
       .filter((skill) => skill && !have.some((h) => h === skill || h.includes(skill) || skill.includes(h)));
-    const skills = topCounts(asked, 3);
+    const skills = topCounts(asked, 3).map(displaySkill);
     if (skills.length) out.push({ weight: asked.length, tip: { text: `Add skills you have, like ${words(skills)}`, href: "/profile#skills" } });
   }
 
   // Experience: what the near misses want against what the profile shows.
   const experienceMisses = heldBackBy(nearMisses, "Experience gap", "Experience");
-  const wanted = experienceMisses.map((miss) => miss.opportunity ? inferExperience(miss.opportunity)?.value.months ?? 0 : 0).filter((months) => months > 0).sort((a, b) => a - b);
-  if (wanted.length) {
-    const shown = [...profile.workExperience, ...profile.internshipExperience].reduce((sum, item) => sum + Math.max(item.months, 0), 0);
-    const typical = wanted[Math.floor(wanted.length / 2)]!;
-    if (typical > shown) out.push({ weight: experienceMisses.length, tip: {
+  const wanted = experienceMisses.map((miss) => miss.opportunity ? inferExperience(miss.opportunity)?.value.months ?? 0 : 0).filter((months) => months > 0);
+  const shown = [...profile.workExperience, ...profile.internshipExperience].reduce((sum, item) => sum + Math.max(item.months, 0), 0);
+  const reachable = wanted.filter((months) => months - shown <= REACHABLE_GAP_MONTHS).sort((a, b) => a - b);
+  if (reachable.length) {
+    const typical = reachable[Math.floor(reachable.length / 2)]!;
+    if (typical > shown) out.push({ weight: reachable.length, tip: {
       text: shown ? `Add any jobs or internships you've left out: your profile shows ${years(shown)}, close matches want about ${years(typical)}` : `Add your jobs and internships: close matches want about ${years(typical)} of experience`,
       href: "/profile#experience" } });
   }
@@ -73,12 +93,14 @@ export function matchTips(profile: UserProfile, nearMisses: NearMiss[]): MatchTi
 
   // Career areas the near misses are about, which the profile has not chosen.
   const interests = profile.careerInterests.map(lower);
-  const areaHits = heldBackBy(nearMisses, "Career direction").flatMap((miss) => {
-    const text = lower(`${miss.opportunity?.title ?? ""} ${miss.opportunity?.description ?? ""}`);
+  const areasByListing = heldBackBy(nearMisses, "Career direction").map((miss) => {
+    const text = lower(miss.opportunity?.title ?? "");
     return CAREER_AREAS.filter((area) => !interests.includes(area) && new RegExp(`\\b${area}\\b`).test(text));
   });
-  const areas = topCounts(areaHits, 2);
-  if (areas.length) out.push({ weight: areaHits.length, tip: { text: `Add ${words(areas)} to your career interests, if they interest you`, href: "/profile#preferences" } });
+  const areaHits = areasByListing.flat();
+  // Titles only, and named by at least two listings: descriptions mention "business" or "health" in passing.
+  const areas = topCounts(areaHits, 4).filter((area) => areaHits.filter((hit) => hit === area).length >= 2).slice(0, 2);
+  if (areas.length) out.push({ weight: areasByListing.filter((found) => found.some((area) => areas.includes(area))).length, tip: { text: `Add ${words(areas)} to your career interests, if they interest you`, href: "/profile#preferences" } });
 
   // Places the near misses are in, which the profile does not cover.
   if (!profile.preferredLocations.includes(ANYWHERE_IN_UGANDA)) {
