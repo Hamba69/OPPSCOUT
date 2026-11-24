@@ -17,7 +17,7 @@ export function MatchTips({ tips, hasMatches }: { tips: MatchTip[]; hasMatches: 
       <span className="orb orb-breathing h-9 w-9" aria-hidden />
       <div className="min-w-0">
         <h2 id="match-tips-title" className="text-base font-bold text-ink">{hasMatches ? "Need more matches?" : "No matches yet?"}</h2>
-        <p className="text-xs leading-5 text-navy">{hasMatches ? "These would open up listings you nearly matched." : "Listings you nearly matched are looking for these."}</p>
+        <p className="text-xs leading-5 text-navy">Listings you nearly matched look for these. Add only what&apos;s true for you.</p>
       </div>
     </div>
     <ol className="flex flex-col gap-2">

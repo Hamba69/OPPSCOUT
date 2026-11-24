@@ -9,23 +9,24 @@ const profile = (overrides: Partial<UserProfile>): UserProfile => ({
 }) as UserProfile;
 const listing = (overrides: Partial<Opportunity>): Opportunity => ({ title: "Role", description: "", category: "job", location: "Kampala", requiredSkills: [], eligibility: {}, ...overrides }) as Opportunity;
 const factors = (labels: string[]) => labels.map((label) => ({ label, detail: "" }));
-/** A near miss in the person's lane: it shares their field. */
-const miss = (labels: string[], opportunity: Partial<Opportunity>, matched = ["Related field"]) =>
+/** A near miss in the person's lane: it fits their field. */
+const miss = (labels: string[], opportunity: Partial<Opportunity>, matched = ["Field of study"]) =>
   ({ score: 48, missingFactors: factors(labels), matchedFactors: factors(matched), opportunity: listing(opportunity) });
 
 describe("tips for getting more matches are specific to the person", () => {
   it("names the skills their near matches ask for that they don't list", () => {
     const tips = matchTips(profile({}), [miss(["Skills"], { requiredSkills: ["Data analysis", "Report writing"] }), miss(["Skills"], { requiredSkills: ["Data analysis", "Excel"] })]);
-    expect(tips[0]).toEqual({ text: "Add skills you have, like data analysis or report writing", href: "/profile#skills" });
+    expect(tips[0]).toEqual({ text: "Do you have data analysis or report writing? If so, add them to your skills", href: "/profile#skills" });
   });
 
-  it("compares their experience with what near matches want, ignoring senior roles out of reach", () => {
+  it("asks about left-out experience without quoting what listings want, and not for senior roles out of reach", () => {
     const tips = matchTips(profile({}), [
       miss(["Experience gap"], { eligibility: { minimumExperienceMonths: 24 } }),
       miss(["Experience gap"], { eligibility: { minimumExperienceMonths: 24 } }),
       miss(["Experience gap"], { eligibility: { minimumExperienceMonths: 96 } }),
     ]);
-    expect(tips[0]?.text).toBe("Add any jobs or internships you've left out: your profile shows 6 months, close matches want about 2 years");
+    expect(tips[0]?.text).not.toMatch(/want|need|require/);
+    expect(tips[0]?.text).toBe("Have more jobs, internships or volunteer work than the 6 months on your profile? Add them");
     expect(matchTips(profile({}), [miss(["Experience gap"], { eligibility: { minimumExperienceMonths: 96 } })])).toEqual([]);
   });
 
@@ -36,9 +37,9 @@ describe("tips for getting more matches are specific to the person", () => {
       miss(["Opportunity type", "Career direction"], { category: "scholarship", title: "Research scholarship in health data" }),
     ]);
     expect(tips.map((tip) => tip.text)).toEqual([
-      "Add Scholarships and Fellowships to the opportunity types you want, if you'd consider them",
-      "Add research or health to your career interests, if they interest you",
-      "Add Wakiso to places you'd work, or choose Anywhere in Uganda",
+      "Open to Scholarships or Fellowships? Add them to the types you want",
+      "Interested in research or health? Add them to your career interests",
+      "Open to working in Wakiso? Add it to places you'd work",
     ]);
   });
 
@@ -48,6 +49,9 @@ describe("tips for getting more matches are specific to the person", () => {
       miss(["Skills to strengthen"], { requiredSkills: ["process engineering"] }, ["Location", "Opportunity type"]),
     ];
     expect(matchTips(profile({}), offField)).toEqual([]);
+    // A merely related field plus a broad shared interest (a process engineer role for a computer scientist) is not their lane.
+    const related = miss(["Skills to strengthen"], { requiredSkills: ["process engineering", "process simulation"] }, ["Related field", "Career direction", "Location"]);
+    expect(matchTips(profile({}), [related, related])).toEqual([]);
     const wordy = [1, 2].map(() => miss(["Career direction"], { title: "Software developer", description: "Health insurance and business hours apply." }));
     expect(matchTips(profile({}), wordy)).toEqual([]);
   });
