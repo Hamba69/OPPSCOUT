@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { LegalPage } from "@/components/legal-page";
 import { LEGAL } from "@/config/legal";
@@ -57,8 +56,8 @@ export default function PrivacyPage(): React.JSX.Element {
     <h2>Your rights</h2>
     <p>Under Ugandan law you can ask to see the data we hold about you, have it corrected or deleted, and object to or stop processing that harms you. You can do most of this yourself:</p>
     <ul>
-      <li>Edit your details on <Link className="underline" href="/profile">My profile</Link>.</li>
-      <li>Download a copy of your data, or delete your account, in <Link className="underline" href="/settings">Settings</Link>.</li>
+      <li>Edit your details on My profile.</li>
+      <li>Download a copy of your data, or delete your account, in Settings.</li>
       <li>Turn alerts on or off in Settings.</li>
     </ul>
     <p>For anything else, contact us below. If you are not satisfied with our answer, you can complain to Uganda&apos;s Personal Data Protection Office (pdpo.go.ug).</p>

@@ -57,7 +57,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6 text-sm text-navy">
         <AdminPortalTrigger initiallyOpen={unlock} />
-        <nav aria-label="Legal" className="flex gap-4"><Link href="/privacy" className="underline-offset-4 hover:underline">Privacy Policy</Link><Link href="/terms" className="underline-offset-4 hover:underline">Terms of Use</Link></nav>
+        <nav aria-label="Legal" className="flex gap-3 text-[11px]"><Link href="/privacy" className="underline-offset-4 hover:underline">Privacy Policy</Link><Link href="/terms" className="underline-offset-4 hover:underline">Terms of Use</Link></nav>
       </footer>
     </main>
   );

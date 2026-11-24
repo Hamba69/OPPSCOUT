@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { LegalPage } from "@/components/legal-page";
 
@@ -7,7 +6,7 @@ export const metadata: Metadata = { title: "Terms of Use" };
 
 export default function TermsPage(): React.JSX.Element {
   return <LegalPage title="Terms of Use">
-    <p>These terms apply when you use OppScout. By creating an account you agree to them and to our <Link className="underline" href="/privacy">Privacy Policy</Link>.</p>
+    <p>These terms apply when you use OppScout. By creating an account you agree to them and to our Privacy Policy.</p>
 
     <h2>What OppScout does</h2>
     <p>OppScout lists jobs, internships, scholarships, fellowships, grants and training offered by other organisations, and matches them to your profile. We are not the employer or funder, and we do not run their selection. Applications go through each organisation&apos;s own website or process.</p>
