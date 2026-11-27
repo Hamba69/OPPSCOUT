@@ -93,7 +93,15 @@ export function AuthForm({ nextPath, initialMode = "signin", reason = null }: { 
       email,
       password,
       // Record what the person agreed to, and when, with their account.
-      options: { emailRedirectTo: redirectTo, data: { dateOfBirth, termsVersion: LEGAL.termsVersion, termsAcceptedAt: new Date().toISOString(), consentToStorageOutsideUganda: true } },
+      options: { emailRedirectTo: redirectTo, data: {
+        dateOfBirth,
+        termsVersion: LEGAL.termsVersion,
+        privacyVersion: LEGAL.privacyVersion,
+        termsAcceptedAt: new Date().toISOString(),
+        adultConfirmedAt: new Date().toISOString(),
+        consentToStorageOutsideUganda: true,
+      },
+      },
     });
     setBusy(false);
     if (error) {

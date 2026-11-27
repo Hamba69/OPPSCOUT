@@ -11,4 +11,5 @@ export const LEGAL = {
   postalAddress: process.env.NEXT_PUBLIC_POSTAL_ADDRESS?.trim() || null,
   /** Change this when the text changes; sign-up records which version a person agreed to. */
   termsVersion: "2026-11-24",
+  privacyVersion: "2026-11-27",
 } as const;

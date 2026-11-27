@@ -9,13 +9,14 @@ export default function TermsPage(): React.JSX.Element {
     <p>These terms apply when you use OppScout. By creating an account you agree to them and to our Privacy Policy.</p>
 
     <h2>What OppScout does</h2>
-    <p>OppScout lists jobs, internships, scholarships, fellowships, grants and training offered by other organisations, and matches them to your profile. We are not the employer or funder, and we do not run their selection. Applications go through each organisation&apos;s own website or process.</p>
+    <p>OppScout lists jobs, internships, scholarships, fellowships, grants and training offered by other organisations, and matches them to your profile. We are not the employer or funder, and we do not make selection decisions. Applications go through each organisation&apos;s own process.</p>
 
     <h2>Listings and matches</h2>
-    <p>Our team reviews each listing before publishing it, checking that it comes from the organisation&apos;s own source, is open to people in Uganda, is free to apply for and has a believable deadline. Reviewing is not a guarantee: organisations can change or withdraw opportunities, and details can be wrong, so always check the details on the official page before you apply. Match scores are an estimate of fit based on your profile and do not mean you will be selected. Genuine opportunities never ask you to pay to apply; if one does, do not pay, and use “Report a problem” on the listing.</p>
+    <p>Our team reviews listings against source, eligibility, fee, sensitive-data and deadline checks before publication. This review is a trust control, not a warranty. Organisations can change or withdraw opportunities and we cannot guarantee that every detail remains accurate. Always check the official application page. Match scores estimate profile fit only and do not predict selection or admission.</p>
+    <p>A genuine opportunity should not charge an applicant or request inappropriate sensitive personal or financial information. Do not pay or provide unnecessary documents. Report suspicious details through “Report a problem”.</p>
 
     <h2>Your account</h2>
-    <p>OppScout is only for adults, and you must be 18 or older to create an account or use it. Give accurate information, especially your date of birth and district, because eligibility depends on them. Keep your password private, as you are responsible for what happens under your account. You can delete your account at any time in Settings.</p>
+    <p>OppScout is only for adults. You must be 18 or older to create or use an account. Give accurate information, especially your date of birth and district, because eligibility and age gates may depend on them. Keep sign-in details private and do not let another person use your account. You may delete the account in Settings, subject to published security and accountability checks.</p>
 
     <h2>Posting opportunities</h2>
     <p>Only post real opportunities that are currently open, with a link to the organisation&apos;s own page. Do not post anything that charges applicants, asks for sensitive personal data it does not need, is misleading, discriminatory or unlawful, or that you are not allowed to share. Give contact details we can reach you on: our review team may contact you before publishing your post, and may edit, decline or remove any post. By posting, you allow OppScout to publish the listing and show it to the people it suits.</p>
